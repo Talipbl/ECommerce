@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerceNetCore.Application\ECommerceNetCore.Application.csproj" />
+    <ProjectReference Include="..\ECommerceNetCore.Persistance\ECommerceNetCore.Persistance.csproj" />
+    <ProjectReference Include="..\ECommerceNetCore.Service\ECommerceNetCore.Service.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -7,6 +7,7 @@ namespace ECommerceNetCore.Persistance.Context;
 
 public partial class EcommerceNetCoreContext : DbContext
 {
+    //Scaffold-DbContext "Server=talipbulundu.com\MSSQLSERVER2014;Database=ECommerceNetCore;User Id=root;Password=34Q1wt&n5; Encrypt=false;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
     public EcommerceNetCoreContext()
     {
     }

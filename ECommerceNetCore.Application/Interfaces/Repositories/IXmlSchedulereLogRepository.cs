@@ -2,7 +2,7 @@
 
 namespace ECommerceNetCore.Application.Interfaces.Repositories
 {
-    public interface IXmlSchedulereLogRepository : IBaseEntityRepository<GnlXmlSchedulereLog>
+    public interface IXmlSchedulereLogRepository : IBaseEntityRepository<GnlXmlSchedulerLog>
     {
 
     }

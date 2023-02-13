@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ECommerceNetCore.Domain.Entities;
 
-public partial class GnlXmlSchedulere : BaseEntity
+public partial class GnlXmlScheduler : BaseEntity
 {
 
     public int? XmlId { get; set; }
@@ -18,7 +18,7 @@ public partial class GnlXmlSchedulere : BaseEntity
 
     public int? StatusId { get; set; }
 
-    public virtual ICollection<GnlXmlSchedulereLog> GnlXmlSchedulereLogs { get; } = new List<GnlXmlSchedulereLog>();
+    public virtual ICollection<GnlXmlSchedulerLog> GnlXmlSchedulereLogs { get; } = new List<GnlXmlSchedulerLog>();
 
     public virtual SysStatusType? Status { get; set; }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ECommerceNetCore.Domain.Entities;
 
-public partial class GnlXmlSchedulereLog : BaseEntity
+public partial class GnlXmlSchedulerLog : BaseEntity
 {
 
     public int SchedulereId { get; set; }
@@ -14,7 +14,7 @@ public partial class GnlXmlSchedulereLog : BaseEntity
 
     public bool IsSuccess { get; set; }
 
-    public virtual GnlXmlSchedulere Schedulere { get; set; } = null!;
+    public virtual GnlXmlScheduler Schedulere { get; set; } = null!;
 
     public virtual GnlProductXml Xml { get; set; } = null!;
 }

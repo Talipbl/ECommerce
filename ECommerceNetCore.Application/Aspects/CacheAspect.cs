@@ -8,10 +8,10 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using ECommerceNetCore.Application.Caching;
 using ECommerceNetCore.Application.MethodInterceptors;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Application.ServiceRegistrations;
+using ECommerceNetCore.Application.CrossCuttingConcerns.Caching;
 
 namespace ECommerceNetCore.Application.Aspects
 {

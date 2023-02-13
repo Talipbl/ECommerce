@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Application.Caching
+namespace ECommerceNetCore.Application.CrossCuttingConcerns.Caching
 {
     public interface ICacheManager
     {

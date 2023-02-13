@@ -57,9 +57,9 @@ public partial class EcommerceNetCoreContext : DbContext
 
     public virtual DbSet<GnlUserMailQueue> GnlUserMailQueues { get; set; }
 
-    public virtual DbSet<GnlXmlSchedulere> GnlXmlScheduleres { get; set; }
+    public virtual DbSet<GnlXmlScheduler> GnlXmlScheduleres { get; set; }
 
-    public virtual DbSet<GnlXmlSchedulereLog> GnlXmlSchedulereLogs { get; set; }
+    public virtual DbSet<GnlXmlSchedulerLog> GnlXmlSchedulereLogs { get; set; }
 
     public virtual DbSet<SysCurrency> SysCurrencies { get; set; }
 
@@ -579,7 +579,7 @@ public partial class EcommerceNetCoreContext : DbContext
                 .HasConstraintName("Gnl_UserMailQueues_Gnl_Users_Id_fk");
         });
 
-        modelBuilder.Entity<GnlXmlSchedulere>(entity =>
+        modelBuilder.Entity<GnlXmlScheduler>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Gnl_XmlScheduleres_pk");
 
@@ -597,7 +597,7 @@ public partial class EcommerceNetCoreContext : DbContext
                 .HasConstraintName("Gnl_XmlScheduleres_Gnl_ProductXmls_Id_fk");
         });
 
-        modelBuilder.Entity<GnlXmlSchedulereLog>(entity =>
+        modelBuilder.Entity<GnlXmlSchedulerLog>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Gnl_XmlSchedulereLogs_pk");
 

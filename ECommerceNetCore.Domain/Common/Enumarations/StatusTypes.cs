@@ -10,6 +10,8 @@ namespace ECommerceNetCore.Domain.Common
     {
         All = 0,
         Active = 1,
-        Passive = 2
+        Passive = 2,
+        PaymentExpecting = 3,
+        PaymentConfirmed = 4,
     }
 }

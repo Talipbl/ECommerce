@@ -4,7 +4,7 @@ using ECommerceNetCore.Persistance.Context;
 
 namespace ECommerceNetCore.Persistance.Repositories.Concretes.EntityFramework
 {
-    public class EfXmlSchedulereRepository : EfBaseEntityRepository<GnlXmlSchedulere, EcommerceNetCoreContext>, IXmlSchedulereRepository
+    public class EfXmlSchedulereRepository : EfBaseEntityRepository<GnlXmlScheduler, EcommerceNetCoreContext>, IXmlSchedulereRepository
     {
 
     }

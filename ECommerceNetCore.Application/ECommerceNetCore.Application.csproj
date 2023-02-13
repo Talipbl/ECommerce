@@ -7,10 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="CrossCuttingConcerns\Caching\Redis\" />
+    <Folder Include="CrossCuttingConcerns\Logging\" />
+    <Folder Include="CrossCuttingConcerns\SecurityOperation\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Interfaces\Services\" />
     <Folder Include="ServiceRegistrations\Autofac\" />
-    <Folder Include="Services\Concretes\" />
     <Folder Include="Validators\Domains\" />
   </ItemGroup>
 

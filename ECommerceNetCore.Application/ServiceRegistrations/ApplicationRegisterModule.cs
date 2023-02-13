@@ -11,8 +11,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using ECommerceNetCore.Application.Caching;
 using ECommerceNetCore.Application.MethodInterceptors;
+using ECommerceNetCore.Application.CrossCuttingConcerns.Caching.InMemory;
+using ECommerceNetCore.Application.CrossCuttingConcerns.Caching;
 
 namespace ECommerceNetCore.Application.ServiceRegistrations
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ECommerceNetCore.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceNetCore.Persistance.Context;
@@ -57,11 +56,13 @@ public partial class EcommerceNetCoreContext : DbContext
 
     public virtual DbSet<GnlUserMailQueue> GnlUserMailQueues { get; set; }
 
-    public virtual DbSet<GnlXmlScheduler> GnlXmlScheduleres { get; set; }
+    public virtual DbSet<GnlXmlScheduler> GnlXmlSchedulers { get; set; }
 
-    public virtual DbSet<GnlXmlSchedulerLog> GnlXmlSchedulereLogs { get; set; }
+    public virtual DbSet<GnlXmlSchedulerLog> GnlXmlSchedulerLogs { get; set; }
 
     public virtual DbSet<SysCurrency> SysCurrencies { get; set; }
+
+    public virtual DbSet<SysErrorLog> SysErrorLogs { get; set; }
 
     public virtual DbSet<SysMailType> SysMailTypes { get; set; }
 
@@ -583,16 +584,16 @@ public partial class EcommerceNetCoreContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("Gnl_XmlScheduleres_pk");
 
-            entity.ToTable("Gnl_XmlScheduleres", "dbo");
+            entity.ToTable("Gnl_XmlSchedulers", "dbo");
 
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.LastWorkingTime).HasColumnType("datetime");
 
-            entity.HasOne(d => d.Status).WithMany(p => p.GnlXmlScheduleres)
+            entity.HasOne(d => d.Status).WithMany(p => p.GnlXmlSchedulers)
                 .HasForeignKey(d => d.StatusId)
                 .HasConstraintName("Gnl_XmlScheduleres_Sys_StatusTypes_Id_fk");
 
-            entity.HasOne(d => d.Xml).WithMany(p => p.GnlXmlScheduleres)
+            entity.HasOne(d => d.Xml).WithMany(p => p.GnlXmlSchedulers)
                 .HasForeignKey(d => d.XmlId)
                 .HasConstraintName("Gnl_XmlScheduleres_Gnl_ProductXmls_Id_fk");
         });
@@ -601,16 +602,16 @@ public partial class EcommerceNetCoreContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("Gnl_XmlSchedulereLogs_pk");
 
-            entity.ToTable("Gnl_XmlSchedulereLogs", "dbo");
+            entity.ToTable("Gnl_XmlSchedulerLogs", "dbo");
 
             entity.Property(e => e.WorkedTime).HasColumnType("datetime");
 
-            entity.HasOne(d => d.Schedulere).WithMany(p => p.GnlXmlSchedulereLogs)
+            entity.HasOne(d => d.Schedulere).WithMany(p => p.GnlXmlSchedulerLogs)
                 .HasForeignKey(d => d.SchedulereId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Gnl_XmlSchedulereLogs_Gnl_XmlScheduleres_Id_fk");
 
-            entity.HasOne(d => d.Xml).WithMany(p => p.GnlXmlSchedulereLogs)
+            entity.HasOne(d => d.Xml).WithMany(p => p.GnlXmlSchedulerLogs)
                 .HasForeignKey(d => d.XmlId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Gnl_XmlSchedulereLogs_Gnl_ProductXmls_Id_fk");
@@ -624,6 +625,16 @@ public partial class EcommerceNetCoreContext : DbContext
 
             entity.Property(e => e.CurrencyCode).HasMaxLength(10);
             entity.Property(e => e.CurrencyName).HasMaxLength(25);
+        });
+
+        modelBuilder.Entity<SysErrorLog>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Sys_ErrorLogs_pk");
+
+            entity.ToTable("Sys_ErrorLogs", "dbo");
+
+            entity.Property(e => e.ErrorMessage).HasMaxLength(1000);
+            entity.Property(e => e.MethodName).HasMaxLength(100);
         });
 
         modelBuilder.Entity<SysMailType>(entity =>

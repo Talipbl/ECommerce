@@ -12,8 +12,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ECommerceNetCore.Application.MethodInterceptors;
-using ECommerceNetCore.Application.CrossCuttingConcerns.Caching.InMemory;
 using ECommerceNetCore.Application.CrossCuttingConcerns.Caching;
+using ECommerceNetCore.Application.CrossCuttingConcerns.Logging;
+using ECommerceNetCore.Application.CrossCuttingConcerns.Logging.DbLogger;
 
 namespace ECommerceNetCore.Application.ServiceRegistrations
 {
@@ -24,6 +25,7 @@ namespace ECommerceNetCore.Application.ServiceRegistrations
         public static IServiceCollection AddApplicationService(this IServiceCollection services)
         {
             services.AddSingleton<ICacheManager, CacheManager>();
+            services.AddSingleton<ILogManager, DbLogManager>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             ServiceProvider = services.BuildServiceProvider();

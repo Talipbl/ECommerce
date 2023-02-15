@@ -1,4 +1,4 @@
-﻿using ECommerceNetCore.Application.Interfaces.Repositories;
+﻿using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,8 +10,8 @@ namespace ECommerceNetCore.Application.CrossCuttingConcerns.Logging.DbLogger
 {
     public class DbLogManager : ILogManager
     {
-        ISystemRepository<SysErrorLog> _systemRepository;
-        public DbLogManager(ISystemRepository<SysErrorLog> systemRepository)
+        ISystemRepository _systemRepository;
+        public DbLogManager(ISystemRepository systemRepository)
         {
             _systemRepository = systemRepository;
         }

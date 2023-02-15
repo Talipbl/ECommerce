@@ -1,8 +1,8 @@
-﻿using ECommerceNetCore.Application.Interfaces.Services;
+﻿using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Entities;
 
-namespace ECommerceNetCore.Application.Services.Concretes
+namespace ECommerceNetCore.Application.Services
 {
     public class OrderService : IOrderService
     {

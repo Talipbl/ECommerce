@@ -88,9 +88,9 @@ public partial class GnlProductXml : BaseEntity
 
     public DateTime? UpdatedDate { get; set; }
 
-    public virtual ICollection<GnlXmlSchedulerLog> GnlXmlSchedulereLogs { get; } = new List<GnlXmlSchedulerLog>();
+    public virtual ICollection<GnlXmlSchedulerLog> GnlXmlSchedulerLogs { get; } = new List<GnlXmlSchedulerLog>();
 
-    public virtual ICollection<GnlXmlScheduler> GnlXmlScheduleres { get; } = new List<GnlXmlScheduler>();
+    public virtual ICollection<GnlXmlScheduler> GnlXmlSchedulers { get; } = new List<GnlXmlScheduler>();
 
     public virtual SysStatusType Status { get; set; } = null!;
 }

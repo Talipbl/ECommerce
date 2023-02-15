@@ -1,9 +1,8 @@
 ﻿using ECommerceNetCore.Domain.Entities;
 
-namespace ECommerceNetCore.Application.Interfaces.Repositories
+namespace ECommerceNetCore.Application.Interfaces
 {
-    public interface ISystemRepository<TEntity> : IBaseEntityRepository<TEntity>
-        where TEntity : class, IEntity, new()
+    public interface ISystemRepository
     {
         void LogError(SysErrorLog errorLog);
     }

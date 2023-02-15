@@ -1,15 +1,29 @@
-﻿using ECommerceNetCore.Application.Interfaces.Repositories;
+﻿using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Domain.Entities;
 using ECommerceNetCore.Persistance.Context;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
-namespace ECommerceNetCore.Persistance.Repositories.Concretes.EntityFramework
+namespace ECommerceNetCore.Persistance.Repositories
 {
-    public class EfSystemRepository<TEntity> : EfBaseEntityRepository<TEntity, EcommerceNetCoreContext>, ISystemRepository<TEntity>
-        where TEntity : class, IEntity, new()
+    public class EfSystemRepository
     {
+        private object BaseOperation(object entity, EntityState state)
+        {
+            using (EcommerceNetCoreContext context = new EcommerceNetCoreContext())
+            {
+                context.Entry(entity).State = state;
+                if (context.SaveChanges() > 0)
+                {
+                    return entity;
+                }
+                return entity;
+            }
+        }
         public void LogError(SysErrorLog errorLog)
         {
-            this.Add(errorLog as TEntity);
+            BaseOperation(errorLog, EntityState.Added);
         }
     }
 }

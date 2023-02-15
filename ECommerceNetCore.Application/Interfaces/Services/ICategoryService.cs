@@ -2,7 +2,7 @@
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;
 
-namespace ECommerceNetCore.Application.Interfaces.Services
+namespace ECommerceNetCore.Application.Interfaces
 {
     public interface ICategoryService
     {

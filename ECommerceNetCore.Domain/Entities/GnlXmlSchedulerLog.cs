@@ -14,7 +14,7 @@ public partial class GnlXmlSchedulerLog : BaseEntity
 
     public bool IsSuccess { get; set; }
 
-    public virtual GnlXmlScheduler Schedulere { get; set; } = null!;
+    public virtual GnlXmlScheduler Scheduler { get; set; } = null!;
 
     public virtual GnlProductXml Xml { get; set; } = null!;
 }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Application.Interfaces.Services
+namespace ECommerceNetCore.Application.Interfaces
 {
     public interface IAuthService
     {

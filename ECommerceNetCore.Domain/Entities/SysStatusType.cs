@@ -22,5 +22,5 @@ public partial class SysStatusType :BaseEntity
 
     public virtual ICollection<GnlUser> GnlUsers { get; } = new List<GnlUser>();
 
-    public virtual ICollection<GnlXmlScheduler> GnlXmlScheduleres { get; } = new List<GnlXmlScheduler>();
+    public virtual ICollection<GnlXmlScheduler> GnlXmlSchedulers { get; } = new List<GnlXmlScheduler>();
 }

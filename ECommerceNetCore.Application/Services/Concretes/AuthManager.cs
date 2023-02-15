@@ -1,18 +1,17 @@
-﻿
-using ECommerceNetCore.Application.DataTransferObjects;
+﻿using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Helpers;
-using ECommerceNetCore.Application.Interfaces.Services;
+using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;
 
-namespace ECommerceNetCore.Application.Services.Concretes
+namespace ECommerceNetCore.Application.Services
 {
-    public class AuthManager : IAuthService
+    public class AuthService : IAuthService
     {
         public IUserService _userService;
 
-        public AuthManager(IUserService userService)
+        public AuthService(IUserService userService)
         {
             _userService = userService;
         }

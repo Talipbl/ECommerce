@@ -1,4 +1,4 @@
-﻿using ECommerceNetCore.Application.Interfaces.Services;
+﻿using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Application.Services.Concretes
+namespace ECommerceNetCore.Application.Services
 {
     public class AdminService : IAdminService
     {

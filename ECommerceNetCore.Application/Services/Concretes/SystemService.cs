@@ -1,6 +1,6 @@
-﻿using ECommerceNetCore.Application.Interfaces.Services;
+﻿using ECommerceNetCore.Application.Interfaces;
 
-namespace ECommerceNetCore.Application.Services.Concretes
+namespace ECommerceNetCore.Application.Services
 {
     public class SystemService : ISystemService
     {

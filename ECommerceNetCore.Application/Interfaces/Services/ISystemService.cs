@@ -1,4 +1,4 @@
-﻿namespace ECommerceNetCore.Application.Interfaces.Services
+﻿namespace ECommerceNetCore.Application.Interfaces
 {
     public interface ISystemService
     {

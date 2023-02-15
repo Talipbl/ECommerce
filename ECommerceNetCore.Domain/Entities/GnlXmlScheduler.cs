@@ -18,7 +18,7 @@ public partial class GnlXmlScheduler : BaseEntity
 
     public int? StatusId { get; set; }
 
-    public virtual ICollection<GnlXmlSchedulerLog> GnlXmlSchedulereLogs { get; } = new List<GnlXmlSchedulerLog>();
+    public virtual ICollection<GnlXmlSchedulerLog> GnlXmlSchedulerLogs { get; } = new List<GnlXmlSchedulerLog>();
 
     public virtual SysStatusType? Status { get; set; }
 

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using ECommerceNetCore.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceNetCore.Persistance.Context;
 
 public partial class EcommerceNetCoreContext : DbContext
 {
-    //Scaffold-DbContext "Server=talipbulundu.com\MSSQLSERVER2014;Database=ECommerceNetCore;User Id=root;Password=34Q1wt&n5; Encrypt=false;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
     public EcommerceNetCoreContext()
     {
     }
@@ -100,6 +100,7 @@ public partial class EcommerceNetCoreContext : DbContext
                 .HasMaxLength(60)
                 .IsUnicode(false);
             entity.Property(e => e.RegisterDate).HasColumnType("datetime");
+            entity.Property(e => e.SecurityLevel).HasDefaultValueSql("((5))");
             entity.Property(e => e.UserName).HasMaxLength(30);
         });
 
@@ -606,7 +607,7 @@ public partial class EcommerceNetCoreContext : DbContext
 
             entity.Property(e => e.WorkedTime).HasColumnType("datetime");
 
-            entity.HasOne(d => d.Schedulere).WithMany(p => p.GnlXmlSchedulerLogs)
+            entity.HasOne(d => d.Scheduler).WithMany(p => p.GnlXmlSchedulerLogs)
                 .HasForeignKey(d => d.SchedulereId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Gnl_XmlSchedulereLogs_Gnl_XmlScheduleres_Id_fk");

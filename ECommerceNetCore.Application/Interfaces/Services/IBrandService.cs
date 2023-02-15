@@ -1,7 +1,7 @@
 ﻿using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Entities;
 
-namespace ECommerceNetCore.Application.Interfaces.Services
+namespace ECommerceNetCore.Application.Interfaces
 {
     public interface IBrandService
     {

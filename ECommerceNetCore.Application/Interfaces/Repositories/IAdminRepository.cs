@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Application.Interfaces.Repositories
+namespace ECommerceNetCore.Application.Interfaces
 {
     public interface IAdminRepository : IBaseEntityRepository<DefAdmin>
     {

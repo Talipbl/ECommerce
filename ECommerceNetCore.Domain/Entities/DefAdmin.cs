@@ -25,4 +25,6 @@ public partial class DefAdmin : BaseEntity
     public bool? IsEnable2Fa { get; set; }
 
     public bool? IsActive { get; set; }
+
+    public int SecurityLevel { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using ECommerceNetCore.Application.DataTransferObjects;
+﻿using ECommerceNetCore.Application.Aspects;
+using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Helpers;
 using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Results;
@@ -15,7 +16,7 @@ namespace ECommerceNetCore.Application.Services
         {
             _userService = userService;
         }
-
+        [SecurityOperationAspect(Level:(int)UserLevels.VeryLow)]
         public IDataResult<LoginDto> Login(LoginDto loginUser)
         {
             var result = _userService.GetUser(loginUser.UserName, loginUser.Mail);

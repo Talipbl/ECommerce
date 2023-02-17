@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Application.CrossCuttingConcerns.Logging.DbLogger
+namespace ECommerceNetCore.Application.CrossCuttingConcerns
 {
     public class DbLogManager : ILogManager
     {
-        ISystemRepository _systemRepository;
-        public DbLogManager(ISystemRepository systemRepository)
+        ISystemService _systemSrv;
+        public DbLogManager(ISystemService systemSrv)
         {
-            _systemRepository = systemRepository;
+            _systemSrv = systemSrv;
         }
         public void LogError(string methodName, string message)
         {
@@ -22,7 +22,7 @@ namespace ECommerceNetCore.Application.CrossCuttingConcerns.Logging.DbLogger
             errorLog.ErrorMessage = message;
             errorLog.CreatedDate = DateTime.Now;
 
-            _systemRepository.LogError(errorLog);
+            _systemSrv.LogError(errorLog);
         }
     }
 }

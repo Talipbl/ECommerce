@@ -1,4 +1,5 @@
-﻿using ECommerceNetCore.Application.Interfaces;
+﻿using ECommerceNetCore.Application.Aspects;
+using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;
@@ -22,6 +23,8 @@ namespace ECommerceNetCore.Application.Services
             throw new NotImplementedException();
         }
 
+        [LogAspect]
+        [CacheAspect(Duration: 300)]
         public IDataResult<DefAdmin> GetAdmin(int adminId)
         {
             throw new NotImplementedException();

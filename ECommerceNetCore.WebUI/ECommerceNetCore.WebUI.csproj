@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerceNetCore.Application\ECommerceNetCore.Application.csproj" />
+    <ProjectReference Include="..\ECommerceNetCore.Persistance\ECommerceNetCore.Persistance.csproj" />
+  </ItemGroup>
+
 </Project>

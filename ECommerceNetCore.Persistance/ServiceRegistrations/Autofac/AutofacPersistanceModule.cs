@@ -8,12 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ECommerceNetCore.Application.MethodInterceptors;
-using ECommerceNetCore.Application.CrossCuttingConcerns.Logging;
-using ECommerceNetCore.Application.CrossCuttingConcerns.Logging.DbLogger;
-using ECommerceNetCore.Application.CrossCuttingConcerns.Caching;
+using ECommerceNetCore.Application.CrossCuttingConcerns;
 using ECommerceNetCore.Persistance.Repositories;
 using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Services;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace ECommerceNetCore.Persistance.ServiceRegistrations
 {
@@ -27,7 +26,7 @@ namespace ECommerceNetCore.Persistance.ServiceRegistrations
 
             builder.RegisterType<CacheManager>().As<ICacheManager>().SingleInstance();
             builder.RegisterType<DbLogManager>().As<ILogManager>().SingleInstance();
-            
+
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.ManifestModule.Name.Contains("ECommerceNetCore.Persistance.dll") || x.ManifestModule.Name.Contains("ECommerceNetCore.Application.dll")).ToArray();
             builder.RegisterAssemblyTypes(assemblies).AsImplementedInterfaces()
                 .EnableInterfaceInterceptors(new ProxyGenerationOptions()

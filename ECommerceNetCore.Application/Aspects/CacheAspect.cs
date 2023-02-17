@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using ECommerceNetCore.Application.MethodInterceptors;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Application.ServiceRegistrations;
-using ECommerceNetCore.Application.CrossCuttingConcerns.Caching;
+using ECommerceNetCore.Application.CrossCuttingConcerns;
 
 namespace ECommerceNetCore.Application.Aspects
 {
@@ -19,9 +19,9 @@ namespace ECommerceNetCore.Application.Aspects
     {
         ICacheManager _memCache;
         int _duration;
-        public CacheAspect(int duration = 300)
+        public CacheAspect(int Duration = 300)
         {
-            _duration = duration;
+            _duration = Duration;
             _memCache = ApplicationRegisterModule.ServiceProvider.GetService<ICacheManager>();
         }
         protected override void OnBefore(IInvocation invocation)

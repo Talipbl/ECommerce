@@ -1,7 +1,23 @@
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+using ECommerceNetCore.Application.ServiceRegistrations;
+using ECommerceNetCore.Persistance.ServiceRegistrations;
+using ECommerceNetCore.Application.Interfaces;
+using ECommerceNetCore.Persistance.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<ISystemRepository, EfSystemRepository>();
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddMemoryCache();
+builder.Services.AddResponseCaching();
+builder.Services.AddApplicationService();
+
+//bkz: https://learn.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=aspnetcore-6.0
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacPersistanceModule()));
 
 var app = builder.Build();
 

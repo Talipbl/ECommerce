@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ECommerceNetCore.Application.ServiceRegistrations;
 
-namespace ECommerceNetCore.Application.CrossCuttingConcerns.Caching
+namespace ECommerceNetCore.Application.CrossCuttingConcerns
 {
     public class CacheManager : ICacheManager
     {

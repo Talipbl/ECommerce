@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace ECommerceNetCore.Persistance.Repositories
 {
-    public class EfSystemRepository
+    public class EfSystemRepository : ISystemRepository
     {
         private object BaseOperation(object entity, EntityState state)
         {

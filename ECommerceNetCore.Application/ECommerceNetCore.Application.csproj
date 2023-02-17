@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Folder Include="CrossCuttingConcerns\Caching\Redis\" />
-    <Folder Include="CrossCuttingConcerns\SecurityOperation\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Validators\Domains\" />
   </ItemGroup>

@@ -12,18 +12,20 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ECommerceNetCore.Application.MethodInterceptors;
-using ECommerceNetCore.Application.CrossCuttingConcerns.Caching;
-using ECommerceNetCore.Application.CrossCuttingConcerns.Logging;
-using ECommerceNetCore.Application.CrossCuttingConcerns.Logging.DbLogger;
+using ECommerceNetCore.Application.CrossCuttingConcerns;
+using ECommerceNetCore.Application.Interfaces;
+using ECommerceNetCore.Application.Services;
+using Autofac;
 
 namespace ECommerceNetCore.Application.ServiceRegistrations
 {
     //bkz: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0
     public static class ApplicationRegisterModule
     {
-        public static IServiceProvider ServiceProvider  { get; private set; }
+        public static IServiceProvider ServiceProvider { get; private set; }
         public static IServiceCollection AddApplicationService(this IServiceCollection services)
         {
+            services.AddSingleton<ISystemService, SystemService>();
             services.AddSingleton<ICacheManager, CacheManager>();
             services.AddSingleton<ILogManager, DbLogManager>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

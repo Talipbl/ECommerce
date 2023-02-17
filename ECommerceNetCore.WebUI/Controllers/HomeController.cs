@@ -1,4 +1,5 @@
-﻿using ECommerceNetCore.WebUI.Models;
+﻿using ECommerceNetCore.Application.Interfaces;
+using ECommerceNetCore.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,14 +8,17 @@ namespace ECommerceNetCore.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        IAdminService _adminService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAdminService adminService, ISystemRepository systemRepository)
         {
             _logger = logger;
+            _adminService = adminService;
         }
 
         public IActionResult Index()
         {
+            var result = _adminService.GetAdmin(1);
             return View();
         }
 

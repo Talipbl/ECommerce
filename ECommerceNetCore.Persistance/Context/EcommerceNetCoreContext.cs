@@ -100,7 +100,7 @@ public partial class EcommerceNetCoreContext : DbContext
                 .HasMaxLength(60)
                 .IsUnicode(false);
             entity.Property(e => e.RegisterDate).HasColumnType("datetime");
-            entity.Property(e => e.SecurityLevel).HasDefaultValueSql("((5))");
+            entity.Property(e => e.SecurityLevel).HasDefaultValueSql("((1))");
             entity.Property(e => e.UserName).HasMaxLength(30);
         });
 

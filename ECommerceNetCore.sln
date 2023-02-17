@@ -11,17 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{2E27C47C-4E60-42B4-92AD-0A39CFE66A4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceNetCore.Application", "ECommerceNetCore.Application\ECommerceNetCore.Application.csproj", "{8AB8B2AC-0918-454F-8471-AEFDA6373E55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceNetCore.Application", "ECommerceNetCore.Application\ECommerceNetCore.Application.csproj", "{8AB8B2AC-0918-454F-8471-AEFDA6373E55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceNetCore.Domain", "ECommerceNetCore.Domain\ECommerceNetCore.Domain.csproj", "{2CB769C3-0980-4E18-B3EF-C9DAF74B19F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceNetCore.Domain", "ECommerceNetCore.Domain\ECommerceNetCore.Domain.csproj", "{2CB769C3-0980-4E18-B3EF-C9DAF74B19F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceNetCore.Persistance", "ECommerceNetCore.Persistance\ECommerceNetCore.Persistance.csproj", "{7764EDA1-B3B3-428D-AA95-C21D6247AC3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceNetCore.Persistance", "ECommerceNetCore.Persistance\ECommerceNetCore.Persistance.csproj", "{7764EDA1-B3B3-428D-AA95-C21D6247AC3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceNetCore.Service", "ECommerceNetCore.Service\ECommerceNetCore.Service.csproj", "{38B96A1F-E5BB-44F7-BC1D-B688D092185B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceNetCore.Service", "ECommerceNetCore.Service\ECommerceNetCore.Service.csproj", "{38B96A1F-E5BB-44F7-BC1D-B688D092185B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceNetCore.Test", "ECommerceNetCore.Test\ECommerceNetCore.Test.csproj", "{1246E23B-1CB5-4B9F-857C-908FFE176E4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceNetCore.Test", "ECommerceNetCore.Test\ECommerceNetCore.Test.csproj", "{1246E23B-1CB5-4B9F-857C-908FFE176E4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceNetCore.WebUI", "ECommerceNetCore.WebUI\ECommerceNetCore.WebUI.csproj", "{74EDA176-2F2F-460F-830F-D4C56DE636E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceNetCore.WebUI", "ECommerceNetCore.WebUI\ECommerceNetCore.WebUI.csproj", "{74EDA176-2F2F-460F-830F-D4C56DE636E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

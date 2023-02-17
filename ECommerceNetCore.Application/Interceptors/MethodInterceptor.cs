@@ -6,6 +6,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ECommerceNetCore.Application.Results;
+using ECommerceNetCore.Application.CrossCuttingConcerns;
+using ECommerceNetCore.Application.ServiceRegistrations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommerceNetCore.Application.MethodInterceptors
 {
@@ -28,6 +31,9 @@ namespace ECommerceNetCore.Application.MethodInterceptors
             }
             catch (Exception e)
             {
+                var logManager = ApplicationRegisterModule.ServiceProvider.GetService<ILogManager>();
+                logManager.LogError(invocation.Method.Name, e.Message);
+                invocation.ReturnValue = new ErrorResult(e.Message);
                 IsSuccess = false;
                 OnException(invocation, e);
             }

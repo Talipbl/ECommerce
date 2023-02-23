@@ -18,7 +18,7 @@ namespace ECommerceNetCore.Application.Interfaces
         IDataResult<DefSubCategory> AddSubCategory(DefSubCategory subCategory);
         IResult UpdateSubCategory(DefSubCategory subCategory);
         IResult DeleteSubCategory(int subCategoryId);
-        IListResult<DefSubCategory> GetSubCategories(int parentId = (int)CategoryTypes.All);
+        IListResult<DefSubCategory> GetSubCategories(int parentId = (int)CategoryTypes.All, bool isParent = false);
         IDataResult<DefSubCategory> GetSubCategory(int subCategoryId);
         #endregion
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ECommerceNetCore.Application.Results
 {
-    public interface IListResult<T>
+    public interface IListResult<T> : IDataResult<List<T>>
     {
         public int Count { get; }
     }

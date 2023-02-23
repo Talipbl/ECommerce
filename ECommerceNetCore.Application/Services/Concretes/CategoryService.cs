@@ -6,6 +6,11 @@ namespace ECommerceNetCore.Application.Services
 {
     public class CategoryService : ICategoryService
     {
+        ICategoryRepository _categoryRepo;
+        public CategoryService(ICategoryRepository categoryRepo)
+        {
+            _categoryRepo = categoryRepo;
+        }
         #region Category
         public IDataResult<DefCategory> AddCategory(DefCategory category)
         {
@@ -19,7 +24,7 @@ namespace ECommerceNetCore.Application.Services
 
         public IListResult<DefCategory> GetCategories()
         {
-            throw new NotImplementedException();
+            return _categoryRepo.GetCategories();
         }
 
         public IDataResult<DefCategory> GetCategory(int categoryId)
@@ -44,9 +49,9 @@ namespace ECommerceNetCore.Application.Services
             throw new NotImplementedException();
         }
 
-        public IListResult<DefSubCategory> GetSubCategories(int parentId = 0)
+        public IListResult<DefSubCategory> GetSubCategories(int parentId = 0, bool isParent = false)
         {
-            throw new NotImplementedException();
+            return _categoryRepo.GetSubCategories(parentId, isParent);
         }
 
         public IDataResult<DefSubCategory> GetSubCategory(int subCategoryId)

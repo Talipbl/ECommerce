@@ -17,6 +17,7 @@ namespace ECommerceNetCore.Application.Interfaces
         public T Get(Expression<Func<T, bool>> filter);
         public IEnumerable<T> GetAll<TSorted>(Expression<Func<T, bool>> filter = null, Expression<Func<T, TSorted>> sortedBy = null, int sortOrder = (int)SortOrder.Ascending, params Expression<Func<T, object>>[] includes);
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null);
+        IEnumerable<T> GetAll<T>(Expression<Func<T, bool>> filter = null) where T : class, IEntity, new();
         public int GetCount();
         public bool Update(T entity);
     }

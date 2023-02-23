@@ -8,6 +8,8 @@ public partial class GnlProductOption : BaseEntity
 
     public int ProductId { get; set; }
 
+    public string OptionName { get; set; } = null!;
+
     public string? StockCode { get; set; }
 
     public decimal? UnitOfStock { get; set; }

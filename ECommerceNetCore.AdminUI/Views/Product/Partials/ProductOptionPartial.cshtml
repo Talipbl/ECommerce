@@ -1,0 +1,126 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="card">
+    <form id="option-form">
+        <div class="card-body">
+            <div class="col-12 row">
+                <div class="col-md-8 col-sm-12">
+                    <div class="col-md-12 col-sm-12 row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Genel Bilgileri</label>
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label>Varyasyon Adı</label>
+                                <input type="text" class="form-control" id="option-name" name="OptionName" placeholder="Ürün seçeneğinin adı">
+                                <code>Maximum 50 karakter</code>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label>Stok Kodu</label>
+                                <input type="text" class="form-control" id="stock-code" name="StokCode" placeholder="Stok kodu">
+                                <code>Maximum 15 karakter<br />Türkçe ve özel karakter içermemeli!</code>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="brand">Durumu</label>
+                                <select class="form-control" id="status" name="StatusId" style="width: 100%;">
+                                    <option value="1" selected="selected">Aktif</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="col-md-12 col-sm-12 row">
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label for="brand">Stok Birimi</label>
+                                <select class="form-control" id="unit-typpe" name="UnitTypeId" style="width: 100%;">
+                                    <option value="1" selected="selected">Adet</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>Stok Miktarı</label>
+                                <input type="text" class="form-control" id="unit-stock" name="UnitOfStock" placeholder="Stok Miktarı">
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="col-md-12 col-sm-12 row">
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label for="brand">Uzunluk Birimi</label>
+                                <select class="form-control" id="length-typpe" name="LengthTypeId" style="width: 100%;">
+                                    <option value="1" selected="selected">Santimetre</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>Uzunluk</label>
+                                <input type="text" class="form-control" id="length" name="Length" placeholder="Uzunluk">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>Yükseklik</label>
+                                <input type="text" class="form-control" id="height" name="Height" placeholder="Yükseklik">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>Genişlik</label>
+                                <input type="text" class="form-control" id="width" name="Width" placeholder="Genişlik">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>Ağırlık</label>
+                                <input type="text" class="form-control" id="weight" name="Weight" placeholder="Ağırlık">
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Görselleri</label>
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-sm-12 row">
+                                <div class="col-6">
+                                    <a href="#" data-toggle="lightbox" data-gallery="gallery">
+                                        <img src="~/dist/img/add-image.png" class="img-fluid ml-5 w-50" alt="white sample" />
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group" style="position:absolute; top:40%;">
+                                        <label>Görsel Ekle</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 row" id="option-images">
+                    </div>
+                </div>
+                <div class="col-12" style="display:flex; justify-content:end">
+                    <button type="button" id="btn-remove" onclick="remove(this)" class="btn btn-danger">Kaldır</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

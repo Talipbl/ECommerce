@@ -11,4 +11,8 @@
     <Folder Include="wwwroot\plugins\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerceNetCore.Persistance\ECommerceNetCore.Persistance.csproj" />
+  </ItemGroup>
+
 </Project>

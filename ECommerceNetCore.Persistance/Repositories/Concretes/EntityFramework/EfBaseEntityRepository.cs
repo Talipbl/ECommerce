@@ -13,7 +13,7 @@ using ECommerceNetCore.Domain.Entities;
 namespace ECommerceNetCore.Persistance.Repositories
 {
     public class EfBaseEntityRepository<TEntity, TContext> : IBaseEntityRepository<TEntity>
-        where TEntity : class, IEntity ,new()
+        where TEntity : class, IEntity, new()
         where TContext : DbContext, new()
     {
         public TEntity Add(TEntity entity)
@@ -66,6 +66,14 @@ namespace ECommerceNetCore.Persistance.Repositories
             using (TContext context = new TContext())
             {
                 IQueryable<TEntity> query = context.Set<TEntity>();
+                return filter != null ? query.Where(filter).ToList() : query.ToList();
+            }
+        }
+        public IEnumerable<T> GetAll<T>(Expression<Func<T, bool>> filter = null) where T : class, IEntity, new()
+        {
+            using (TContext context = new TContext())
+            {
+                IQueryable<T> query = context.Set<T>();
                 return filter != null ? query.Where(filter).ToList() : query.ToList();
             }
         }

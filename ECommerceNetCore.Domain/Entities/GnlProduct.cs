@@ -8,7 +8,7 @@ public partial class GnlProduct : BaseEntity
 
     public int BrandId { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
     public string Description { get; set; } = null!;
 
@@ -37,6 +37,7 @@ public partial class GnlProduct : BaseEntity
     public string? SellerCode { get; set; }
 
     public string? SellerUrl { get; set; }
+    public string? StockCode { get; set; }
 
     public DateTime? AvailableDate { get; set; }
 

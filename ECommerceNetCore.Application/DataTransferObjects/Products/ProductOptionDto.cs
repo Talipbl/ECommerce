@@ -28,5 +28,6 @@ namespace ECommerceNetCore.Application.DataTransferObjects
         public int CurrencyId { get; set; }
         public int VatRatioId { get; set; }
         public bool IsSale { get; set; }
+        public string[] ProductImages { get; set; }
     }
 }

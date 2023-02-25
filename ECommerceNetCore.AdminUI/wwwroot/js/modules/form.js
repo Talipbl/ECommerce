@@ -18,7 +18,7 @@ export function getFormJson(form) {
     const formToJSON = elements => [].reduce.call(elements, (data, element) => {
         if (isValidElement(element) && isValidValue) {
             if (isCheckbox(element)) {
-                data[element.name] = (data[element.name] || []).concat(element.checked);
+                data[element.name] = (data[element.name] || []).concat(element.checked).concat(element.value);
             } else if (isMultiSelect(element)) {
                 data[element.name] = getSelectValues(element);
             } else {

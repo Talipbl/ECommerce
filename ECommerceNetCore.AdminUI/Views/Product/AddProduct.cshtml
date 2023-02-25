@@ -5,6 +5,7 @@
 
 @section Header{
     <link rel="stylesheet" href="~/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="~/plugins/ekko-lightbox/ekko-lightbox.css">
 }
 
 <div class="content-wrapper">
@@ -363,36 +364,21 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12 col-sm-12 row">
+                                                    <div class="col-md-12 col-sm-12">
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label>Görselleri</label>
                                                                 <hr />
                                                             </div>
                                                         </div>
-                                                        <div class="card col-2">
-                                                            <div class="card-body">
-                                                                <a href="#" data-toggle="lightbox" data-gallery="gallery">
-                                                                    <img src="~/dist/img/add-image.png" class="img-fluid ml-5 w-50" alt="white sample" />
-                                                                </a>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="exampleInputFile">
+                                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-10 row" id="option-images">
-                                                            <div class="col-md-3 col-sm-6 mb-3">
-                                                                <a href="#" data-toggle="lightbox" data-gallery="gallery">
-                                                                    <img src="~/dist/img/prod-2.jpg" class="img-fluid ml-5 w-50" alt="white sample" />
-                                                                </a>
-                                                            </div>
-                                                            <div class="col-md-3 col-sm-6 mb-3">
-                                                                <a href="#" data-toggle="lightbox" data-gallery="gallery">
-                                                                    <img src="~/dist/img/prod-4.jpg" class="img-fluid ml-5 w-50" alt="white sample" />
-                                                                </a>
-                                                            </div>
-                                                            <div class="col-md-3 col-sm-6 mb-3">
-                                                                <a href="#" data-toggle="lightbox" data-gallery="gallery">
-                                                                    <img src="~/dist/img/prod-5.jpg" class="img-fluid ml-5 w-50" alt="white sample" />
-                                                                </a>
-                                                            </div>
+                                                        <div class="col-12 row" id="option-images">
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -455,6 +441,8 @@
 
 @section Script{
     @*Modules*@
+    <script src="~/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <script src="~/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="~/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
     <script src="~/js/libs/products.js" type="module"></script>
 }

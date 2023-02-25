@@ -2,7 +2,7 @@
 export function getFormJson(form) {
 
     const isValidElement = element => {
-        return element.name;
+        return element.name && element.value;
     };
     const isValidValue = element => {
         return (!['checkbox', 'radio'].includes(element.type) || element.checked);
@@ -18,7 +18,7 @@ export function getFormJson(form) {
     const formToJSON = elements => [].reduce.call(elements, (data, element) => {
         if (isValidElement(element) && isValidValue) {
             if (isCheckbox(element)) {
-                data[element.name] = (data[element.name] || []).concat(element.value);
+                data[element.name] = (data[element.name] || []).concat(element.checked);
             } else if (isMultiSelect(element)) {
                 data[element.name] = getSelectValues(element);
             } else {

@@ -1,7 +1,10 @@
 ﻿import { getFormJson } from '../modules/form.js'
 
+
 let subCategoryId = [];
 let subSelect = document.querySelector('#sub-category');
+let date = new Date;
+date.setDate(date.getDate() + 1);
 
 window.onload = function () {
     initialize();
@@ -32,19 +35,20 @@ function initialize() {
     $('#description').summernote({
         height: 350
     });
-}
-function addProduct() {
 
-    const productForm = document.querySelector('#product-form');
-    const CategoryForm = document.querySelector('#category-form');
-    const OptionForm = document.querySelectorAll('#option-form');
+    //Date and time picker
+    $('#discountdatetime').datetimepicker({
+        format: 'DD/MM/YYYY HH:mm',
+        icons: { time: 'far fa-clock' },
+        minDate: new Date($.now()),
+        defaultDate: date,
+    });
 
-    let product = getFormJson(productForm);
-    let category = getFormJson(CategoryForm);
-    let option = [];
-
-    OptionForm.forEach(form => {
-        option.push(getFormJson(form));
+    $('#availabledatetime').datetimepicker({
+        format: 'DD/MM/YYYY HH:mm',
+        icons: { time: 'far fa-clock' },
+        minDate: new Date($.now()),
+        defaultDate: date,
     });
 }
 function removeOption(card) {
@@ -75,12 +79,67 @@ function checkSubCategory(e) {
     }
 }
 
+async function addProduct() {
+
+    $('#collapseErrors').collapse('hide');
+
+    let answer = await swal.fire({ title: 'İşlemi tamamlamak istediğinize emin misiniz?', icon: 'question', confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', showCancelButton: true, confirmButtonText: 'Evet', cancelButtonText: 'Hayır' });
+    if (!answer.value) {
+        return;
+    }
+
+    swal.fire({
+        title: "İşleniyor...", text: "Lütfen bekleyiniz...", allowOutsideClick: false, allowEscapeKey: false, allowEnterKey: false, didOpen: () => {
+            swal.showLoading();
+        }
+    });
+
+    const productForm = document.querySelector('#product-form');
+    const CategoryForm = document.querySelector('#category-form');
+    const OptionForm = document.querySelectorAll('#option-form');
+
+    let product = getFormJson(productForm);
+    let category = getFormJson(CategoryForm);
+
+    delete product["files"];
+
+    let options = [];
+    OptionForm.forEach(form => {
+        let opt = getFormJson(form);
+        opt["IsSale"] = opt["IsSale"][0];
+        opt["IsAvailable"] = opt["IsAvailable"][0];
+        options.push(opt);
+    });
+
+    Object.assign(product, category);
+    product["ProductOptions"] = options;
+
+    const jsonData = JSON.stringify(product);
+
+    let result = await fetch("/products/add", { method: 'POST', body: jsonData, headers: { 'Content-Type': 'application/json' } });
+    let jsonResult = await result.json();
+    if (!jsonResult.success) {
+        let errors = "";
+        jsonResult.data.forEach(error => {
+            errors += '<li>' + error.errorMessage + '</li>';
+        });
+        document.querySelector('#errors').innerHTML = '<ul><h5 class="text-danger">Ürün bilgilerinde hata var. Lütfen kontrol edip tekrar deneyiniz.</h5>' + errors + '</ul>';
+        $('#collapseErrors').collapse('show');
+        swal.close();
+        return;
+    }
+    $('#collapseErrors').collapse('hide');
+    await swal.fire({ type: 'success', position: 'center', title: json.Message, showConfirmButton: false, timer: 1500 });
+    location.reload();
+}
 async function addOption() {
     let options = document.querySelector('#options-section');
     let result = await fetch("/products/option/partial");
     let htmlData = await result.json();
 
-    options.innerHTML += htmlData;
+    let div = document.createElement('div');
+    div.innerHTML = htmlData;
+    options.appendChild(div);
 }
 async function addSubCategory() {
     subCategoryId.push(subSelect.value);

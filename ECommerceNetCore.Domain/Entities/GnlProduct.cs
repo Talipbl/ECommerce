@@ -30,16 +30,13 @@ public partial class GnlProduct : BaseEntity
 
     public int StatusId { get; set; }
 
-    public bool? IsAvailable { get; set; }
-
     public int? XmlId { get; set; }
 
     public string? SellerCode { get; set; }
 
     public string? SellerUrl { get; set; }
-    public string? StockCode { get; set; }
 
-    public DateTime? AvailableDate { get; set; }
+    public string? StockCode { get; set; }
 
     public DateTime CreatedDate { get; set; }
 

@@ -13,8 +13,8 @@ namespace ECommerceNetCore.Application.Validators
     {
         public ProductMasterModelValidator()
         {
-            RuleFor(x => x.Name).Must(x => x.Length > 10 && x.Length < 100).WithMessage("Ürün adı 10 ile 100 karakter arasında olmalıdır.");
-            RuleFor(x => x.Description).Must(x => x.Length > 100 && x.Length < 2000).WithMessage("Ürün açıklaması 100 ile 2000 karakter arasında olmalıdır.");
+            RuleFor(x => x.Name).Must(x => BeNotNullAndInRange(x, 10, 100)).WithMessage("Ürün adı 10 ile 100 karakter arasında olmalıdır.");
+            RuleFor(x => x.Description).Must(x => BeNotNullAndInRange(x, 100, 2000)).WithMessage("Ürün açıklaması 100 ile 2000 karakter arasında olmalıdır.");
             RuleFor(x => x.BrandId).Must(x => x > 0).WithMessage("Ürün markası boş geçilemez.");
             RuleFor(x => x.MinmumOrder).Must(x => x > 0).WithMessage("Minimum sipariş adedi 0'dan büyük olmalıdır.");
             RuleFor(x => x.CategoryId).Must(x => x > 0).WithMessage("Ana kategori boş geçilemez");
@@ -28,34 +28,41 @@ namespace ECommerceNetCore.Application.Validators
 
             RuleFor(x => x.ProductOptions).Custom((options, context) =>
             {
-                foreach (var option in options)
+                if (options is not null)
                 {
-                    var index = options.FindIndex(x => x.OptionName == option.OptionName) + 1;
-                    if (BeNotNullAndLessThan(option.OptionName, 50))
-                        context.AddFailure(index + "numaralı varyasyonun adı boş veya 15 karakterden fazla olamaz.");
-                    if (BeNullOrLessThan(option.StockCode, 15))
-                        context.AddFailure(index + "numaralı varyasyonun stok kodu 15 karakterden fazla olamaz.");
-                    if (option.ProductPrice.Price !> 0.00M)
-                        context.AddFailure(index + "numaralı varyasyonun fiyatı 0 olamaz.");
+                    var index = 0;
+                    foreach (var option in options)
+                    {
+                        index++;
+                        if (!BeNotNullAndInRange(option.OptionName,2, 50))
+                            context.AddFailure(index + " numaralı varyasyonun adı boş veya 15 karakterden fazla olamaz.");
+                        if (!BeNullOrLessThan(option.StockCode, 15))
+                            context.AddFailure(index + ". varyasyonun stok kodu 15 karakterden fazla olamaz.");
+                        if (option.Price! > 0.00M)
+                            context.AddFailure(index + ". varyasyonun fiyatı 0 olamaz.");
+                    }
                 }
+                else context.AddFailure("En az 1 adet ürün seçeneği olmalıdır.");
             });
 
         }
         private bool BeNullOrLessThan(string? arg, int length)
         {
             if (arg is not null)
-                return arg.Length <= length ? true : false;
+                return arg.Length <= length;
             return true;
         }
         private bool BeNotNullAndLessThan(string? arg, int length)
         {
             if (arg is not null)
-                return arg.Length <= length ? true : false;
+                return arg.Length <= length;
             return false;
         }
         private bool BeNotNullAndInRange(string? arg, int min, int max)
         {
-            return false;//Aralık kontrolü yapılacak.
+            if (arg is not null)
+                return arg.Length >= min && arg.Length <= max;
+            return false;
         }
     }
 }

@@ -270,15 +270,11 @@ public partial class EcommerceNetCoreContext : DbContext
 
             entity.ToTable("Gnl_Products", "dbo");
 
-            entity.Property(e => e.AvailableDate).HasColumnType("datetime");
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(2000);
             entity.Property(e => e.Ean)
                 .HasMaxLength(20)
                 .HasColumnName("EAN");
-            entity.Property(e => e.IsAvailable)
-                .IsRequired()
-                .HasDefaultValueSql("((1))");
             entity.Property(e => e.Isbn)
                 .HasMaxLength(20)
                 .HasColumnName("ISBN");
@@ -367,7 +363,12 @@ public partial class EcommerceNetCoreContext : DbContext
             entity.Property(e => e.UnitOfStock).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.Weight).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.Width).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.AvailableDate).HasColumnType("datetime");
 
+
+            entity.Property(e => e.IsAvailable)
+                .IsRequired()
+                .HasDefaultValueSql("((1))");
             entity.HasOne(d => d.LengthType).WithMany(p => p.GnlProductOptionLengthTypes)
                 .HasForeignKey(d => d.LengthTypeId)
                 .HasConstraintName("Gnl_ProductOptions_Sys_UnitTypeId_Id_fk2");

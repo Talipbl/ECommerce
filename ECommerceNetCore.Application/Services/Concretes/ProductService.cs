@@ -1,4 +1,5 @@
-﻿using ECommerceNetCore.Application.Interfaces;
+﻿using ECommerceNetCore.Application.DataTransferObjects;
+using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Entities;
 
@@ -8,6 +9,11 @@ namespace ECommerceNetCore.Application.Services
     {
         #region Product
         public IDataResult<GnlProduct> AddProduct(GnlProduct product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDataResult<ProductMasterModelDto> AddProduct(ProductMasterModelDto product)
         {
             throw new NotImplementedException();
         }

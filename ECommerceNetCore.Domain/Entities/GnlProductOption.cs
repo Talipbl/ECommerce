@@ -28,6 +28,10 @@ public partial class GnlProductOption : BaseEntity
 
     public int StatusId { get; set; }
 
+    public bool? IsAvailable { get; set; }
+
+    public DateTime? AvailableDate { get; set; }
+
     public virtual ICollection<GnlProductImage> GnlProductImages { get; } = new List<GnlProductImage>();
 
     public virtual ICollection<GnlProductPrice> GnlProductPrices { get; } = new List<GnlProductPrice>();

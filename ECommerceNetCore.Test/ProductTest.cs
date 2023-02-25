@@ -3,7 +3,7 @@ using ECommerceNetCore.Application.Validators;
 
 namespace ECommerceNetCore.Test
 {
-    public class UnitTest1
+    public class ProductTest
     {
         ProductMasterModelValidator validator = new ProductMasterModelValidator();
         [Fact]

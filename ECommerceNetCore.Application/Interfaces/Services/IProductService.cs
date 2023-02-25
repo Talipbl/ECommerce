@@ -1,4 +1,5 @@
-﻿using ECommerceNetCore.Application.Results;
+﻿using ECommerceNetCore.Application.DataTransferObjects;
+using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;
 
@@ -8,6 +9,7 @@ namespace ECommerceNetCore.Application.Interfaces
     {
         #region Product
         IDataResult<GnlProduct> AddProduct(GnlProduct product);
+        IDataResult<ProductMasterModelDto> AddProduct(ProductMasterModelDto product);
         IResult UpdateProduct(GnlProduct product);
         IResult DeleteProduct(int id);
         IListResult<GnlProduct> GetAllProducts();

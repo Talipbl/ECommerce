@@ -1,4 +1,5 @@
-﻿using ECommerceNetCore.Application.DataTransferObjects;
+﻿using ECommerceNetCore.Application.Aspects;
+using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Entities;
@@ -7,10 +8,27 @@ namespace ECommerceNetCore.Application.Services
 {
     public class ProductService : IProductService
     {
+        IProductRepository _productRepo;
+        IProductImageRepository _imageRepo;
+        IProductPriceRepository _priceRepo;
+        IProductOptionRepository _optionRepo;
+        IProductCategoryRepository _categoryRepo;
+
+        public ProductService(IProductRepository productRepo, IProductCategoryRepository proCategoryRepo, IProductOptionRepository productOptionRepo, IProductImageRepository imageRepo, IProductPriceRepository priceRepo)
+        {
+            _productRepo = productRepo;
+            _categoryRepo = proCategoryRepo;
+            _optionRepo = productOptionRepo;
+            _imageRepo = imageRepo;
+            _priceRepo = priceRepo;
+        }
         #region Product
+
+        [LogAspect]
         public IDataResult<GnlProduct> AddProduct(GnlProduct product)
         {
-            throw new NotImplementedException();
+            var result = _productRepo.Add(product);
+            return new SuccessDataResult<GnlProduct>(result);
         }
 
         public IDataResult<ProductMasterModelDto> AddProduct(ProductMasterModelDto product)
@@ -45,9 +63,12 @@ namespace ECommerceNetCore.Application.Services
         #endregion
 
         #region Product Image
+
+        [LogAspect]
         public IDataResult<GnlProductImage> AddProductImage(GnlProductImage image)
         {
-            throw new NotImplementedException();
+            var result = _imageRepo.Add(image);
+            return new SuccessDataResult<GnlProductImage>(result);
         }
 
         public IResult DeleteProductImage(int id)
@@ -62,9 +83,12 @@ namespace ECommerceNetCore.Application.Services
         #endregion
 
         #region Product Price
+
+        [LogAspect]
         public IDataResult<GnlProductPrice> AddProductPrice(GnlProductPrice price)
         {
-            throw new NotImplementedException();
+            var result = _priceRepo.Add(price);
+            return new SuccessDataResult<GnlProductPrice>(result);
         }
 
         public IResult DeleteProductPrice(int id)
@@ -94,9 +118,12 @@ namespace ECommerceNetCore.Application.Services
         #endregion
 
         #region Product Option
+
+        [LogAspect]
         public IDataResult<GnlProductOption> AddProductOption(GnlProductOption option)
         {
-            throw new NotImplementedException();
+            var result = _optionRepo.Add(option);
+            return new SuccessDataResult<GnlProductOption>(result);
         }
 
         public IResult DeleteProductOption(int id)

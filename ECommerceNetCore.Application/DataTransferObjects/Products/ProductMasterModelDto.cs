@@ -18,7 +18,7 @@ namespace ECommerceNetCore.Application.DataTransferObjects
         public string? Jan { get; set; }
         public string? Isbn { get; set; }
         public string? Mpn { get; set; }
-        public int MinmumOrder { get; set; }
+        public int MinimumOrder { get; set; }
         public int CategoryId { get; set; }
         public int SubCategoryId { get; set; }
         public int StatusId { get; set; }

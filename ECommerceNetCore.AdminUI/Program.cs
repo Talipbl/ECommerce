@@ -4,11 +4,14 @@ using ECommerceNetCore.Application.ServiceRegistrations;
 using ECommerceNetCore.Persistance.ServiceRegistrations;
 using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Persistance.Repositories;
+using ECommerceNetCore.AdminUI.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddSingleton<ISystemRepository, EfSystemRepository>();
+builder.Services.AddSingleton<IFileHelper, FileHelper>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddApplicationService();

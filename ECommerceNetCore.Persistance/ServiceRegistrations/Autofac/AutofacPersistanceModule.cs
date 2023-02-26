@@ -13,6 +13,8 @@ using ECommerceNetCore.Persistance.Repositories;
 using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Services;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace ECommerceNetCore.Persistance.ServiceRegistrations
 {
@@ -21,11 +23,14 @@ namespace ECommerceNetCore.Persistance.ServiceRegistrations
         //Autofac
         protected override void Load(ContainerBuilder builder)
         {
-            LoadRepositories(builder);
-            LoadServices(builder);
+            var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true).Build();
 
             builder.RegisterType<CacheManager>().As<ICacheManager>().SingleInstance();
             builder.RegisterType<DbLogManager>().As<ILogManager>().SingleInstance();
+            builder.RegisterInstance(configuration);
+
+            LoadRepositories(builder);
+            LoadServices(builder);
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.ManifestModule.Name.Contains("ECommerceNetCore.Persistance.dll") || x.ManifestModule.Name.Contains("ECommerceNetCore.Application.dll")).ToArray();
             builder.RegisterAssemblyTypes(assemblies).AsImplementedInterfaces()

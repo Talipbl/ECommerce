@@ -105,19 +105,19 @@
                             <div class="col-md-3 col-sm-12">
                                 <div class="form-group">
                                     <label>İndirim Bitiş Tarihi</label>
-                                    <div class="input-group">
-                                        <input type="text" name="DiscountExpireDate" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric" />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    <div class="input-group date" data-target-input="nearest">
+                                        <input readonly type="text" name="DiscountExpireDate" class="form-control datetimepicker-input" />
+                                        <div class="input-group-append" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6 p-4">
                                 <div class="form-check-inline">
-                                    <div>
-                                        <input type="checkbox" id="is-sale" name="IsSale">
-                                        <label for="is-sale">İndirimdeki Ürün</label>
+                                    <div class="icheck-primary">
+                                        <input type="checkbox" name="IsSale">
+                                        <label>İndirimdeki Ürün</label>
                                     </div>
                                 </div>
                             </div>
@@ -149,19 +149,19 @@
                             <div class="col-md-3 col-sm-12">
                                 <div class="form-group">
                                     <label>Stoğa Girme Tarihi</label>
-                                    <div class="input-group">
-                                        <input type="text" name="AvailableDate" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric" />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    <div class="input-group date" data-target-input="nearest">
+                                        <input readonly type="text" name="AvailableDate" class="form-control datetimepicker-input" />
+                                        <div class="input-group-append" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6 p-4">
                                 <div class="form-check-inline">
-                                    <div>
-                                        <input type="checkbox" id="is-available" name="IsAvailable">
-                                        <label for="is-available">Stokta Var</label>
+                                    <div class="icheck-primary">
+                                        <input type="checkbox" name="IsAvailable">
+                                        <label>Stokta Var</label>
                                     </div>
                                 </div>
                             </div>
@@ -209,22 +209,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 col-sm-12 row">
+                <div class="col-md-12 col-sm-12">
                     <div class="col-12">
                         <div class="form-group">
                             <label>Görselleri</label>
                             <hr />
                         </div>
                     </div>
-                    <div class="card col-2">
-                        <div class="card-body">
-                            <a href="#" data-toggle="lightbox" data-gallery="gallery">
-                                <img src="~/dist/img/add-image.png" class="img-fluid ml-5 w-50" alt="white sample" />
-                            </a>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="exampleInputFile">
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                         </div>
                     </div>
-                    <div class="col-10 row" id="option-images">
-
+                    <div class="col-12 row" id="option-images">
                     </div>
                 </div>
             </div>

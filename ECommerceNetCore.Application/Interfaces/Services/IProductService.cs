@@ -1,4 +1,5 @@
-﻿using ECommerceNetCore.Application.DataTransferObjects;
+﻿using ECommerceNetCore.Application.Aspects;
+using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;
@@ -8,6 +9,7 @@ namespace ECommerceNetCore.Application.Interfaces
     public interface IProductService
     {
         #region Product
+
         IDataResult<GnlProduct> AddProduct(GnlProduct product);
         IDataResult<ProductMasterModelDto> AddProduct(ProductMasterModelDto product);
         IResult UpdateProduct(GnlProduct product);
@@ -19,12 +21,14 @@ namespace ECommerceNetCore.Application.Interfaces
         #endregion
 
         #region ProductImage
+
         IDataResult<GnlProductImage> AddProductImage(GnlProductImage image);
         IResult UpdateProductImage(GnlProductImage image);
         IResult DeleteProductImage(int id);
         #endregion
 
         #region Product Option
+
         IDataResult<GnlProductOption> AddProductOption(GnlProductOption option);
         IResult UpdateProductOption(GnlProductOption option);
         IResult DeleteProductOption(int id);
@@ -34,6 +38,7 @@ namespace ECommerceNetCore.Application.Interfaces
         #endregion
 
         #region Product Price
+
         IDataResult<GnlProductPrice> AddProductPrice(GnlProductPrice price);
         IResult UpdateProductPrice(GnlProductPrice price);
         IResult DeleteProductPrice(int id);

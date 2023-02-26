@@ -1,6 +1,7 @@
 ﻿using ECommerceNetCore.AdminUI.Helpers;
 using ECommerceNetCore.Application.Aspects;
 using ECommerceNetCore.Application.DataTransferObjects;
+using ECommerceNetCore.Application.Helpers;
 using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Application.Validators;
@@ -11,7 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
+using System.Globalization;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ECommerceNetCore.AdminUI.Controllers
 {
@@ -21,10 +24,12 @@ namespace ECommerceNetCore.AdminUI.Controllers
     {
         ICategoryService _categorySrv;
         IProductService _productSrv;
-        public ProductController(ICategoryService categorySrv, IProductService productSrv)
+        IFileHelper _fileHelper;
+        public ProductController(ICategoryService categorySrv, IProductService productSrv, IFileHelper fileHelper)
         {
             _categorySrv = categorySrv;
             _productSrv = productSrv;
+            _fileHelper = fileHelper;
         }
 
         [HttpGet]
@@ -37,9 +42,9 @@ namespace ECommerceNetCore.AdminUI.Controllers
 
         [HttpPost]
         [Route("add")]
-        public JsonResult AddProduct([FromBody] ProductMasterModelDto masterProduct)
+        public JsonResult AddProductAsync([FromBody] ProductMasterModelDto masterProduct)
         {
-            ProductMasterModelValidator validator = new ProductMasterModelValidator();
+            ProductMasterModelValidator validator = new ProductMasterModelValidator();//Product ManufacturerId hatası var.
             var validationResult = validator.Validate(masterProduct);
 
             if (!validationResult.IsValid)
@@ -59,7 +64,7 @@ namespace ECommerceNetCore.AdminUI.Controllers
                 Isbn = masterProduct.Isbn,
                 Upc = masterProduct.Upc,
                 Mpn = masterProduct.Mpn,
-                MinmumOrder = masterProduct.MinmumOrder,
+                MinmumOrder = masterProduct.MinimumOrder,
                 SellerCode = masterProduct.SellerCode,
                 SellerUrl = masterProduct.SellerUrl,
                 StockCode = masterProduct.StockCode,
@@ -69,44 +74,82 @@ namespace ECommerceNetCore.AdminUI.Controllers
 
             var addedProduct = _productSrv.AddProduct(product);
 
-            //masterProduct.ProductOptions.ForEach(option =>
-            //{
-            //    GnlProductOption productOption = new GnlProductOption()
-            //    {
-            //        ProductId = addedProduct.Data.Id,
-            //        OptionName = option.OptionName,
-            //        UnitTypeId = option.UnitTypeId,
-            //        UnitOfStock = option.UnitOfStock,
-            //        LengthTypeId = option.LengthTypeId,
-            //        Width = option.Width,
-            //        Height = option.Height,
-            //        Length = option.Length,
-            //        Weight = option.Weight,
-            //        IsAvailable = option.IsAvailable,
-            //        AvailableDate = option.AvailableDate,
-            //        StatusId = option.StatusId,
-            //        StockCode = option.StockCode
-            //    };
+            GnlProductCategory category = new GnlProductCategory()
+            {
+                ProductId = addedProduct.Data.Id,
+                SubCategoryId = masterProduct.SubCategoryId,
+            };
 
-            //    var addedOption = _productSrv.AddProductOption(productOption);
+            //var addedCategory = _productSrv.AddProductCategory(category);
 
-            //    GnlProductPrice productPrice = new GnlProductPrice()
-            //    {
-            //        OptionId = addedOption.Data.Id,
-            //        ProductId = addedProduct.Data.Id,
-            //        CurrencyId = option.CurrencyId,
-            //        Price = option.Price,
-            //        PurchasePrice = option.PurchasePrice,
-            //        DiscountPrice = option.DiscountPrice,
-            //        DiscountRatio = option.DiscountRatio,
-            //        DiscountExpireDate = option.DiscountExpireDate,
-            //        VatRatioId = option.VatRatioId,
-            //        IsSale = option.IsSale,
-            //        StatusId = option.StatusId
-            //    };
+            masterProduct.ProductOptions.ForEach(async option =>
+            {
+                DateTime parsedDatetime;
+                DateTime.TryParseExact(option.AvailableDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
 
-            //    _productSrv.AddProductPrice(productPrice);
-            //});
+                GnlProductOption productOption = new GnlProductOption()
+                {
+                    ProductId = addedProduct.Data.Id,
+                    OptionName = option.OptionName,
+                    UnitTypeId = option.UnitTypeId,
+                    UnitOfStock = option.UnitOfStock,
+                    LengthTypeId = option.LengthTypeId,
+                    Width = option.Width,
+                    Height = option.Height,
+                    Length = option.Length,
+                    Weight = option.Weight,
+                    IsAvailable = option.IsAvailable,
+                    AvailableDate = parsedDatetime,
+                    StatusId = option.StatusId,
+                    StockCode = option.StockCode
+                };
+
+                var addedOption = _productSrv.AddProductOption(productOption);
+
+                DateTime.TryParseExact(option.DiscountExpireDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
+                GnlProductPrice productPrice = new GnlProductPrice()
+                {
+                    OptionId = addedOption.Data.Id,
+                    ProductId = addedProduct.Data.Id,
+                    CurrencyId = option.CurrencyId,
+                    Price = option.Price,
+                    PurchasePrice = option.PurchasePrice,
+                    DiscountPrice = option.DiscountPrice,
+                    DiscountRatio = option.DiscountRatio,
+                    DiscountExpireDate = parsedDatetime,
+                    VatRatioId = option.VatRatioId,
+                    IsSale = option.IsSale,
+                    StatusId = option.StatusId
+                };
+
+                _productSrv.AddProductPrice(productPrice);
+
+                foreach (var image in option.ProductImages)
+                {
+                    if (image is null)
+                        continue;
+
+                    var base64String = image;
+                    var data = base64String.Split(',');
+                    var dataInfo = data[0];
+                    var fileName = dataInfo.Split(';')[0];
+
+                    byte[] bytes = Convert.FromBase64String(data[1]);
+
+                    var uploadedImage = await _fileHelper.ImageUpload(bytes, fileName);
+                    if (uploadedImage.Success)
+                    {
+                        GnlProductImage newImage = new GnlProductImage()
+                        {
+                            ProductId = addedProduct.Data.Id,
+                            OptionId = addedOption.Data.Id,
+                            ImageUrl = uploadedImage.Message
+                        };
+
+                        var addedImage = _productSrv.AddProductImage(newImage);
+                    }
+                }
+            });
 
             return Json(new SuccessResult(ProductConst.ProductAdded));
         }

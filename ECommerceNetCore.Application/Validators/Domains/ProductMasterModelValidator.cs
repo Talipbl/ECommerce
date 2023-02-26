@@ -1,8 +1,10 @@
 ﻿using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Domain.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +16,9 @@ namespace ECommerceNetCore.Application.Validators
         public ProductMasterModelValidator()
         {
             RuleFor(x => x.Name).Must(x => BeNotNullAndInRange(x, 10, 100)).WithMessage("Ürün adı 10 ile 100 karakter arasında olmalıdır.");
-            RuleFor(x => x.Description).Must(x => BeNotNullAndInRange(x, 100, 2000)).WithMessage("Ürün açıklaması 100 ile 2000 karakter arasında olmalıdır.");
+            RuleFor(x => x.Description).Must(x => BeNotNullAndInRange(x, 100, 20000)).WithMessage("Ürün açıklaması 100 ile 20000 karakter arasında olmalıdır.");
             RuleFor(x => x.BrandId).Must(x => x > 0).WithMessage("Ürün markası boş geçilemez.");
-            RuleFor(x => x.MinmumOrder).Must(x => x > 0).WithMessage("Minimum sipariş adedi 0'dan büyük olmalıdır.");
+            RuleFor(x => x.MinimumOrder).Must(x => x > 0).WithMessage("Minimum sipariş adedi 0'dan büyük olmalıdır.");
             RuleFor(x => x.CategoryId).Must(x => x > 0).WithMessage("Ana kategori boş geçilemez");
             RuleFor(x => x.SubCategoryId).Must(x => x > 0).WithMessage("Alt kategori boş geçilemez");
             RuleFor(x => x.Upc).Must(x => BeNullOrLessThan(x, 20)).WithMessage("UPC 20 karakterden fazla olamaz.");
@@ -34,12 +36,25 @@ namespace ECommerceNetCore.Application.Validators
                     foreach (var option in options)
                     {
                         index++;
-                        if (!BeNotNullAndInRange(option.OptionName,2, 50))
-                            context.AddFailure(index + " numaralı varyasyonun adı boş veya 15 karakterden fazla olamaz.");
+                        if (!BeNotNullAndInRange(option.OptionName, 2, 50))
+                            context.AddFailure(index + ". varyasyonun adı boş veya 15 karakterden fazla olamaz.");
                         if (!BeNullOrLessThan(option.StockCode, 15))
                             context.AddFailure(index + ". varyasyonun stok kodu 15 karakterden fazla olamaz.");
-                        if (option.Price! > 0.00M)
+                        if (option.Price == 0.00M)
                             context.AddFailure(index + ". varyasyonun fiyatı 0 olamaz.");
+
+                        if (option.IsSale)
+                        {
+                            if (!DateTimeNotNullAndGreaterThanToday(option.DiscountExpireDate))
+                                context.AddFailure(index + ". varyasyonun indirim bitiş tarihi bugünden küçük olamaz.");
+                        }
+
+                        if (!option.IsAvailable)
+                        {
+                            if (!DateTimeNotNullAndGreaterThanToday(option.AvailableDate))
+                                context.AddFailure(index + ". varyasyonun stoğa giriş tarihi bugünden küçük olamaz.");
+                        }
+
                     }
                 }
                 else context.AddFailure("En az 1 adet ürün seçeneği olmalıdır.");
@@ -63,6 +78,20 @@ namespace ECommerceNetCore.Application.Validators
             if (arg is not null)
                 return arg.Length >= min && arg.Length <= max;
             return false;
+        }
+        private bool DateTimeNotNullAndGreaterThanToday(string arg)
+        {
+            if (arg is null)
+                return false;
+
+            DateTime parsedDatetime;
+            if (!DateTime.TryParseExact(arg, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime))
+            return false;
+
+            if (parsedDatetime < DateTime.Now)
+                return false;
+
+            return true;
         }
     }
 }

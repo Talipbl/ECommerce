@@ -1,4 +1,4 @@
-﻿import { getFormJson } from '../modules/form.js'
+﻿import { getFormJson, newGuid } from '../modules/form.js';
 
 
 let subCategoryId = [];
@@ -51,14 +51,6 @@ function initialize() {
         defaultDate: date,
     });
 
-    //Galery
-    $(document).on('click', '[data-toggle="lightbox"]', function (event) {
-        event.preventDefault();
-        $(this).ekkoLightbox({
-            alwaysShowClose: true
-        });
-    });
-
     //File Upload
     $(function () {
         bsCustomFileInput.init();
@@ -92,6 +84,7 @@ function checkSubCategory(e) {
     }
 }
 function uploadImage(input) {
+
     const types = ["image/png", "image/jpeg", "image/webp"];
 
     var file = input.files[0];
@@ -121,17 +114,17 @@ function uploadImage(input) {
         img.classList.add('ml-5');
         img.classList.add('w-50');
 
-        let input = document.createElement('input');
-        input.name = 'ProductImages';
-        input.type = 'checkbox';
-        input.setAttribute('hidden', true);
-        input.value = reader.result;
+        let inp = document.createElement('input');
+        inp.name = 'ProductImages';
+        inp.type = 'checkbox';
+        inp.setAttribute('hidden', true);
+        inp.value = file.name + ';' + reader.result;
 
         a.appendChild(img);
         div.appendChild(a);
-        div.appendChild(input);
+        div.appendChild(inp);
 
-        document.querySelector('#option-images').appendChild(div);
+        input.parentNode.parentNode.parentNode.querySelector('#option-images').appendChild(div);
     };
     reader.onerror = function (error) {
         return swal.fire({ icon: 'error', position: 'center', title: "Yükleme başarısız oldu.", showConfirmButton: false, timer: 2000 });
@@ -196,8 +189,8 @@ async function addProduct() {
             return;
         }
         $('#collapseErrors').collapse('hide');
-        await swal.fire({ icon: 'success', position: 'center', title: json.Message, showConfirmButton: false, timer: 1500 });
-        location.reload();
+        await swal.fire({ icon: 'success', position: 'center', title: jsonResult.message, showConfirmButton: false, timer: 1500 });
+        location.href = "/";
     } catch (e) {
         return swal.fire({ icon: 'error', position: 'center', title: 'İşlem başarısız oldu.', showConfirmButton: false, timer: 1500 });
     }
@@ -210,6 +203,29 @@ async function addOption() {
     let div = document.createElement('div');
     div.innerHTML = htmlData;
     options.appendChild(div);
+
+    let datetimes = options.querySelectorAll('.datetimepicker-input');
+    datetimes.forEach(datetime => {
+        let guid = newGuid();
+        let setId = "#" + guid;
+        datetime.parentNode.setAttribute('id', guid);
+        datetime.setAttribute("data-target", setId);
+        datetime.parentNode.querySelector('.input-group-append').setAttribute('data-target', '#' + guid);
+
+        $(setId).datetimepicker({
+            format: 'DD/MM/YYYY HH:mm',
+            icons: { time: 'far fa-clock' },
+            minDate: new Date($.now()),
+            defaultDate: date,
+        });
+    });
+
+    let checks = options.querySelectorAll('.icheck-primary');
+    checks.forEach(check => {
+        let guid = newGuid();
+        check.querySelector('input').setAttribute('id', guid);
+        check.querySelector('label').setAttribute('for', guid);
+    });
 }
 async function addSubCategory() {
     subCategoryId.push(subSelect.value);
@@ -262,6 +278,16 @@ async function checkMainCategory(e) {
     subCategoryId = [];
 }
 
+$(document).on('change', '.custom-file-input', function (event) {
+    uploadImage(event.target);
+});
+$(document).on('click', '[data-toggle="lightbox"]', function (event) {
+    event.preventDefault();
+    $(this).ekkoLightbox({
+        alwaysShowClose: true
+    });
+});
+
 document.querySelector('#btn-complete').addEventListener('click', function () {
     addProduct();
 });
@@ -274,6 +300,3 @@ document.querySelector('#btn-add-category').addEventListener('click', function (
 document.querySelector('#btn-remove-category').addEventListener('click', function () {
     removeSubCategory();
 });
-document.querySelector('.custom-file-input').addEventListener('change', function (e) {
-    uploadImage(e.target);
-})

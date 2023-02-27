@@ -55,11 +55,17 @@ namespace ECommerceNetCore.AdminUI.Controllers
         }
 
         [HttpGet]
-        [Route("duzenle")]
+        [Route("duzenle/{pId}")]
         public IActionResult UpdateProduct(int pId)
         {
             ProductModifyModel model = new ProductModifyModel();
+            var product = _productSrv.GetProductMaster(pId);
+            if (product.Data is null)
+            {
+                return RedirectToAction("ListProduct");
+            }
 
+            model.Product = product.Data;
             model.Brands = _brnadSrv.GetBrands().Data;
             model.Manufacturers = _manufacturerSrv.GetManufacturers().Data;
             model.Categories = _categorySrv.GetCategories().Data;

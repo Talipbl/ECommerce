@@ -10,7 +10,5 @@ namespace ECommerceNetCore.Application.Interfaces
         IListResult<SysStatusType> GetSystemStatus();
         IListResult<SysUnitType> GetUnitTypes();
         IListResult<SysVatRatio> GetVatRatios();
-
-        //System verileri için repo kodu yazılacak.
     }
 }

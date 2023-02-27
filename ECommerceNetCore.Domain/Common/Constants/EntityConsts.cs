@@ -16,5 +16,6 @@ namespace ECommerceNetCore.Domain.Common
         public const string UpdatedSuccess = "Güncelleme işlemi başarıyla tamamlandı.";
         public const string GetError = "Veri Getirilemedi.";
         public const string GetSuccess = "Veri Getirildi.";
+        public const string DataNotFound = "Kayıt bulanamadı.";
     }
 }

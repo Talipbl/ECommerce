@@ -3,6 +3,7 @@ using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;
+using System.ComponentModel;
 
 namespace ECommerceNetCore.Application.Interfaces
 {
@@ -17,6 +18,7 @@ namespace ECommerceNetCore.Application.Interfaces
         IListResult<GnlProduct> GetAllProducts();
         IListResult<GnlProduct> GetProducts(int categoryId = (int)CategoryTypes.All, int brandId = (int)StatusTypes.All, int manufacturerId = (int)StatusTypes.All, int xmlId = (int)StatusTypes.All, int statusId = (int)StatusTypes.Active, bool onlyInStock = true, bool onlySale = false);
         IListResult<GnlProduct> GetProduct(string upc = "", string ean = "", string jan = "", string isbn = "", string mpn = "", int statusId = (int)StatusTypes.Active);
+        IDataResult<ProductMasterModelDto> GetProductMaster(int productId);
         IDataResult<GnlProduct> GetProduct(int productId);
         #endregion
 

@@ -34,8 +34,6 @@ public partial class GnlProductOption : BaseEntity
 
     public virtual ICollection<GnlProductPrice> GnlProductPrices { get; } = new List<GnlProductPrice>();
 
-    public virtual SysUnitType? LengthType { get; set; }
-
     public virtual GnlProduct Product { get; set; } = null!;
 
     public virtual SysStatusType Status { get; set; } = null!;

@@ -13,21 +13,20 @@ namespace ECommerceNetCore.Application.DataTransferObjects
         public string? StockCode { get; set; }
         public decimal? UnitOfStock { get; set; }
         public int UnitTypeId { get; set; }
-        public decimal Length { get; set; }
-        public decimal Height { get; set; }
-        public decimal Width { get; set; }
-        public decimal Weight { get; set; }
-        public int LengthTypeId { get; set; }
+        public decimal? Length { get; set; }
+        public decimal? Height { get; set; }
+        public decimal? Width { get; set; }
+        public decimal? Weight { get; set; }
         public int StatusId { get; set; }
         public bool IsAvailable { get; set; }
-        public string AvailableDate { get; set; }
+        public string? AvailableDate { get; set; }
         public decimal Price { get; set; }
-        public decimal PurchasePrice { get; set; }
-        public decimal DiscountPrice { get; set; }
-        public decimal DiscountRatio { get; set; }
-        public string DiscountExpireDate { get; set; }
-        public int CurrencyId { get; set; }
-        public int VatRatioId { get; set; }
+        public decimal? PurchasePrice { get; set; }
+        public decimal? DiscountPrice { get; set; }
+        public decimal? DiscountRatio { get; set; }
+        public string? DiscountExpireDate { get; set; }
+        public int? CurrencyId { get; set; }
+        public int? VatRatioId { get; set; }
         public bool IsSale { get; set; }
         public string[] ProductImages { get; set; }
     }

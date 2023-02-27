@@ -1,4 +1,5 @@
 ﻿using ECommerceNetCore.Application.Interfaces;
+using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Entities;
 using ECommerceNetCore.Persistance.Context;
 using System;
@@ -11,6 +12,10 @@ namespace ECommerceNetCore.Persistance.Repositories
 {
     public class EfBrandRepository : EfBaseEntityRepository<DefBrand, EcommerceNetCoreContext>, IBrandRepository
     {
-
+        public IListResult<DefBrand> GetBrands()
+        {
+            var result = this.GetAll().ToList();
+            return new ListResult<DefBrand>(result, result.Count);
+        }
     }
 }

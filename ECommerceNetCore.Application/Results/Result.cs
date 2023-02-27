@@ -8,6 +8,10 @@ namespace ECommerceNetCore.Application.Results
 {
     public class Result : IResult
     {
+        public Result(bool success, string message, string additional) : this(success, message)
+        {
+            Additional = additional;
+        }
         public Result(bool success, string message) : this(success)
         {
             Message = message;
@@ -22,5 +26,6 @@ namespace ECommerceNetCore.Application.Results
         }
         public bool Success { get; }
         public string Message { get; }
+        public string Additional { get; }
     }
 }

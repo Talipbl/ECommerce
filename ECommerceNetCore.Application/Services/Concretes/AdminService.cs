@@ -24,7 +24,7 @@ namespace ECommerceNetCore.Application.Services
         }
 
         [LogAspect]
-        [CacheAspect(Duration: 300)]
+        [CacheAspect(Duration = 300)]
         public IDataResult<DefAdmin> GetAdmin(int adminId)
         {
             throw new NotImplementedException();

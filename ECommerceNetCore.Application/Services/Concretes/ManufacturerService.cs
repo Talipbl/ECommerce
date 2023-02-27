@@ -6,6 +6,13 @@ namespace ECommerceNetCore.Application.Services
 {
     public class ManufacturerService : IManufacturerService
     {
+        IManufacturerRepository _manufacturerRepo;
+
+        public ManufacturerService(IManufacturerRepository manufacturerRepo)
+        {
+            _manufacturerRepo = manufacturerRepo;
+        }
+
         public IDataResult<DefAdmin> AddManufacturer(DefManufacturer manufacturer)
         {
             throw new NotImplementedException();
@@ -23,7 +30,7 @@ namespace ECommerceNetCore.Application.Services
 
         public IListResult<DefManufacturer> GetManufacturers()
         {
-            throw new NotImplementedException();
+            return _manufacturerRepo.GetManufacturers();
         }
 
         public IResult UpdateManufacturer(DefManufacturer manufacturer)

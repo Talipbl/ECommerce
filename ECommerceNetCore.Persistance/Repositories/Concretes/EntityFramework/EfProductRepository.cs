@@ -1,7 +1,9 @@
-﻿using ECommerceNetCore.Application.Interfaces;
+﻿using ECommerceNetCore.Application.DataTransferObjects;
+using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain.Entities;
 using ECommerceNetCore.Persistance.Context;
+using Microsoft.Data.SqlClient;
 
 namespace ECommerceNetCore.Persistance.Repositories
 {
@@ -10,6 +12,12 @@ namespace ECommerceNetCore.Persistance.Repositories
         public IDataResult<GnlProduct> GetProduct(string productName)
         {
             var result = this.Get(x => x.Name == productName);
+            return new SuccessDataResult<GnlProduct>(result);
+        }
+
+        public IDataResult<GnlProduct> GetProduct(int productId)
+        {
+            var result = this.Get(x => x.Id == productId);
             return new SuccessDataResult<GnlProduct>(result);
         }
     }

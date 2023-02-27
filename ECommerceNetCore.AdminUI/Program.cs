@@ -5,9 +5,11 @@ using ECommerceNetCore.Persistance.ServiceRegistrations;
 using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Persistance.Repositories;
 using ECommerceNetCore.AdminUI.Helpers;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
 // Add services to the container.
 builder.Services.AddSingleton<ISystemRepository, EfSystemRepository>();

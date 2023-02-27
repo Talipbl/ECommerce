@@ -6,6 +6,13 @@ namespace ECommerceNetCore.Application.Services
 {
     public class BrandService : IBrandService
     {
+        IBrandRepository _brandRepo;
+
+        public BrandService(IBrandRepository brandRepo)
+        {
+            _brandRepo = brandRepo;
+        }
+
         public IDataResult<DefBrand> AddBrand(DefBrand brand)
         {
             throw new NotImplementedException();
@@ -23,7 +30,7 @@ namespace ECommerceNetCore.Application.Services
 
         public IListResult<DefBrand> GetBrands()
         {
-            throw new NotImplementedException();
+            return _brandRepo.GetBrands();
         }
 
         public IResult UpdateBrand(DefBrand brand)

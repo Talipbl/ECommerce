@@ -16,9 +16,10 @@ namespace ECommerceNetCore.Application.Aspects
 {
     public class SecurityOperationAspect : MethodInterceptor
     {
+        public int Level { get; set; } = (int)UserLevels.VeryLow;
         int _level;
         IHttpContextAccessor _accessor;
-        public SecurityOperationAspect(int Level = (int)UserLevels.VeryLow)
+        public SecurityOperationAspect()
         {
             _level = Level;
             _accessor = ApplicationRegisterModule.ServiceProvider.GetService<IHttpContextAccessor>();

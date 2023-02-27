@@ -156,5 +156,14 @@ namespace ECommerceNetCore.Application.Services
             throw new NotImplementedException();
         }
         #endregion
+
+        #region Product Category
+        [LogAspect]
+        public IDataResult<GnlProductCategory> AddProductCategory(GnlProductCategory category)
+        {
+            var result = _categoryRepo.Add(category);
+            return new SuccessDataResult<GnlProductCategory>(result);
+        }
+        #endregion
     }
 }

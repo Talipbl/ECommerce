@@ -369,9 +369,6 @@ public partial class EcommerceNetCoreContext : DbContext
             entity.Property(e => e.IsAvailable)
                 .IsRequired()
                 .HasDefaultValueSql("((1))");
-            entity.HasOne(d => d.LengthType).WithMany(p => p.GnlProductOptionLengthTypes)
-                .HasForeignKey(d => d.LengthTypeId)
-                .HasConstraintName("Gnl_ProductOptions_Sys_UnitTypeId_Id_fk2");
 
             entity.HasOne(d => d.Product).WithMany(p => p.GnlProductOptions)
                 .HasForeignKey(d => d.ProductId)
@@ -627,6 +624,7 @@ public partial class EcommerceNetCoreContext : DbContext
 
             entity.Property(e => e.CurrencyCode).HasMaxLength(10);
             entity.Property(e => e.CurrencyName).HasMaxLength(25);
+            entity.Property(e => e.Icon).HasMaxLength(1);
         });
 
         modelBuilder.Entity<SysErrorLog>(entity =>

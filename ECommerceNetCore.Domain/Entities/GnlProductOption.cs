@@ -24,8 +24,6 @@ public partial class GnlProductOption : BaseEntity
 
     public decimal? Weight { get; set; }
 
-    public int? LengthTypeId { get; set; }
-
     public int StatusId { get; set; }
 
     public bool? IsAvailable { get; set; }

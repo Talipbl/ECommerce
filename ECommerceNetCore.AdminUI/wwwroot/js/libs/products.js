@@ -159,12 +159,14 @@ async function addProduct() {
         OptionForm.forEach(form => {
             let opt = getFormJson(form);
             let images = opt["ProductImages"];
-            let i = 0;
-            while (i < images.length) {
-                if (images[i] === true || images[i] === false) {
-                    delete images[i];
+            if (images != undefined) {
+                let i = 0;
+                while (i < images.length) {
+                    if (images[i] === true || images[i] === false) {
+                        delete images[i];
+                    }
+                    else i++;
                 }
-                else i++;
             }
             opt["IsSale"] = opt["IsSale"][0];
             opt["IsAvailable"] = opt["IsAvailable"][0];

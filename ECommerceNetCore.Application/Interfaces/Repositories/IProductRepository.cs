@@ -6,5 +6,6 @@ namespace ECommerceNetCore.Application.Interfaces
     public interface IProductRepository : IBaseEntityRepository<GnlProduct>
     {
         IDataResult<GnlProduct> GetProduct(string productName);
+        IDataResult<GnlProduct> GetProduct(int productId);
     }
 }

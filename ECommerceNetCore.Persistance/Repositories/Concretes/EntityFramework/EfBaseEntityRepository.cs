@@ -49,6 +49,13 @@ namespace ECommerceNetCore.Persistance.Repositories
                 return context.Set<TEntity>().FirstOrDefault(filter);
             }
         }
+        public T Get<T>(Expression<Func<T, bool>> filter) where T : class, IEntity, new()
+        {
+            using (TContext context = new TContext())
+            {
+                return context.Set<T>().FirstOrDefault(filter);
+            }
+        }
 
         public IEnumerable<TEntity> GetAll<TSorted>(Expression<Func<TEntity, bool>> filter = null, Expression<Func<TEntity, TSorted>> sortedBy = null, int sortOrder = (int)SortOrder.Ascending, params Expression<Func<TEntity, object>>[] includes)
         {
@@ -58,6 +65,16 @@ namespace ECommerceNetCore.Persistance.Repositories
                 query = includes.Aggregate(query, (current, child) => current.Include(child));
                 var result = filter != null ? query.Where(filter) : query;
                 result = sortedBy != null ? (sortOrder == (int)SortOrder.Ascending ? result.OrderBy(sortedBy) : result.OrderByDescending(sortedBy)) : result;
+                return result.ToList();
+            }
+        }
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes)
+        {
+            using (TContext context = new TContext())
+            {
+                IQueryable<TEntity> query = context.Set<TEntity>();
+                query = includes.Aggregate(query, (current, child) => current.Include(child));
+                var result = filter != null ? query.Where(filter) : query;
                 return result.ToList();
             }
         }

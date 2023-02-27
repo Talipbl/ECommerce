@@ -1,9 +1,14 @@
-﻿using ECommerceNetCore.Domain.Entities;
+﻿using ECommerceNetCore.Application.Results;
+using ECommerceNetCore.Domain.Entities;
 
 namespace ECommerceNetCore.Application.Interfaces
 {
     public interface ISystemService
     {
+        IListResult<SysCurrency> GetCurrencies();
+        IListResult<SysStatusType> GetSystemStatus();
+        IListResult<SysUnitType> GetUnitTypes();
+        IListResult<SysVatRatio> GetVatRatios();
         void LogError(SysErrorLog errorLog);
     }
 }

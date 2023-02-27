@@ -12,37 +12,33 @@ using ECommerceNetCore.Application.MethodInterceptors;
 using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Application.ServiceRegistrations;
 using ECommerceNetCore.Application.CrossCuttingConcerns;
+using Azure.Core.GeoJson;
 
 namespace ECommerceNetCore.Application.Aspects
 {
     public class CacheAspect : MethodInterceptor
     {
+        public int Duration { get; set; } = 300;
         ICacheManager _memCache;
         int _duration;
-        public CacheAspect(int Duration = 300)
+        public CacheAspect()
         {
             _duration = Duration;
             _memCache = ApplicationRegisterModule.ServiceProvider.GetService<ICacheManager>();
         }
-        protected override void OnBefore(IInvocation invocation)
+        public override void Intercept(IInvocation invocation)
         {
             var key = $"{invocation.TargetType.FullName}-{invocation.Method.Name}-{invocation.Method.Attributes}";
             object cacheValue;
 
             if (_memCache.GetCache(key, out cacheValue))
             {
-                invocation.ReturnValue = new SuccessDataResult<object>(cacheValue);
-                IsSuccess = false;
+                invocation.ReturnValue = cacheValue;
                 return;
             }
-        }
-        protected override void OnSuccess(IInvocation invocation)
-        {
-            var key = $"{invocation.TargetType.FullName}-{invocation.Method.Name}-{invocation.Method.Attributes}";
+            invocation.Proceed();
             var newObject = invocation.ReturnValue;
-
             _memCache.AddCache(newObject, key, _duration);
-            IsSuccess = true;
         }
     }
 }

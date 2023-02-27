@@ -1,4 +1,4 @@
-﻿@model List<DefCategory>
+﻿@model ProductModifyModel
 @{
     ViewData["Title"] = "Yeni Ürün Ekle";
 }
@@ -67,7 +67,10 @@
                                                 <label>Ürün Markası</label>
                                                 <select class="form-control select2" id="brand" name="BrandId" style="width: 100%;">
                                                     <option value="0" selected="selected">Seçiniz</option>
-                                                    <option value="1">Lenovo</option>
+                                                    @foreach (var brand in Model.Brands)
+                                                    {
+                                                        <option value="@brand.Id">@brand.BrandName</option>
+                                                    }
                                                 </select>
                                             </div>
                                         </div>
@@ -75,7 +78,10 @@
                                             <div class="form-group">
                                                 <label>Ürün Üreticisi</label>
                                                 <select class="form-control select2" id="manufacturer" name="ManufacturerId" style="width: 100%;">
-                                                    <option value="0" selected="selected">Seçiniz</option>
+                                                    @foreach (var manufacturer in Model.Manufacturers)
+                                                    {
+                                                        <option value="@manufacturer.Id">@manufacturer.ManufacturersName</option>
+                                                    }
                                                 </select>
                                             </div>
                                         </div>
@@ -188,8 +194,10 @@
                                                                 <div class="form-group">
                                                                     <label for="brand">Durumu</label>
                                                                     <select class="form-control" id="status" name="StatusId" style="width: 100%;">
-                                                                        <option value="1" selected>Aktif</option>
-                                                                        <option value="2">Pasif</option>
+                                                                        @foreach (var statu in Model.Status)
+                                                                        {
+                                                                            <option value="@statu.Id">@statu.StatusName</option>
+                                                                        }
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -209,9 +217,10 @@
                                                                         <div class="input-group">
                                                                             <div class="input-group-prepend">
                                                                                 <select class="form-control" id="currency" name="CurrencyId" style="width: 100%; border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
-                                                                                    <option value="1" selected>₺ TL</option>
-                                                                                    <option value="2">$ USD</option>
-                                                                                    <option value="3">€ EUR</option>
+                                                                                    @foreach (var currency in Model.Currencies)
+                                                                                    {
+                                                                                        <option value="@currency.Id">@currency.Icon</option>
+                                                                                    }
                                                                                 </select>
                                                                             </div>
                                                                             <input type="text" class="form-control" id="price" name="Price" placeholder="Fiyatı">
@@ -233,9 +242,10 @@
                                                                     <div class="form-group">
                                                                         <label>Vergi Oranı</label>
                                                                         <select class="form-control" id="currency" name="VatRatioId" style="width: 100%;">
-                                                                            <option value="1" selected>% 1</option>
-                                                                            <option value="2">% 8</option>
-                                                                            <option value="3">% 18</option>
+                                                                            @foreach (var vat in Model.VatRatios)
+                                                                            {
+                                                                                <option value="@vat.Id">% @vat.VatRatioValue</option>
+                                                                            }
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -292,7 +302,10 @@
                                                                     <div class="form-group">
                                                                         <label for="brand">Stok Birimi</label>
                                                                         <select class="form-control" id="unit-typpe" name="UnitTypeId" style="width: 100%;">
-                                                                            <option value="1" selected="selected">Adet</option>
+                                                                            @foreach (var unit in Model.UnitTypes)
+                                                                            {
+                                                                                <option value="@unit.Id">@unit.TypeName</option>
+                                                                            }
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -324,14 +337,6 @@
                                                             </div>
                                                             <hr />
                                                             <div class="col-md-12 col-sm-12 row">
-                                                                <div class="col-md-3 col-sm-6">
-                                                                    <div class="form-group">
-                                                                        <label for="brand">Uzunluk Birimi</label>
-                                                                        <select class="form-control" id="length-typpe" name="LengthTypeId" style="width: 100%;">
-                                                                            <option value="1" selected="selected">Santimetre</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
                                                                 <div class="col-md-3 col-sm-6">
                                                                     <div class="form-group">
                                                                         <label>Uzunluk</label>
@@ -408,7 +413,7 @@
                                     <label>Ana Kategori</label>
                                     <select class="form-control select2 col-12" id="main-category" name="CategoryId" style="width: 100%;">
                                         <option value="0" selected>Seçiniz</option>
-                                        @foreach (var category in Model)
+                                        @foreach (var category in Model.Categories)
                                         {
                                             <option value="@category.Id">@category.CategoryName</option>
                                         }

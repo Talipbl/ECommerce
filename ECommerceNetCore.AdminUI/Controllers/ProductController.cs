@@ -1,4 +1,5 @@
 ﻿using ECommerceNetCore.AdminUI.Helpers;
+using ECommerceNetCore.AdminUI.Models;
 using ECommerceNetCore.Application.Aspects;
 using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Helpers;
@@ -24,27 +25,57 @@ namespace ECommerceNetCore.AdminUI.Controllers
     {
         ICategoryService _categorySrv;
         IProductService _productSrv;
+        IBrandService _brnadSrv;
+        IManufacturerService _manufacturerSrv;
+        ISystemService _systemsrv;
         IFileHelper _fileHelper;
-        public ProductController(ICategoryService categorySrv, IProductService productSrv, IFileHelper fileHelper)
+        public ProductController(ICategoryService categorySrv, IProductService productSrv, IFileHelper fileHelper, IBrandService brnadSrv, IManufacturerService manufacturerSrv, ISystemService systemsrv)
         {
             _categorySrv = categorySrv;
             _productSrv = productSrv;
             _fileHelper = fileHelper;
+            _brnadSrv = brnadSrv;
+            _manufacturerSrv = manufacturerSrv;
+            _systemsrv = systemsrv;
         }
 
         [HttpGet]
         [Route("yeni-urun")]
         public IActionResult AddProduct()
         {
-            var categories = _categorySrv.GetCategories().Data;
-            return View(categories);
+            ProductModifyModel model = new ProductModifyModel();
+            model.Brands = _brnadSrv.GetBrands().Data;
+            model.Manufacturers = _manufacturerSrv.GetManufacturers().Data;
+            model.Categories = _categorySrv.GetCategories().Data;
+            model.Status = _systemsrv.GetSystemStatus().Data;
+            model.Currencies = _systemsrv.GetCurrencies().Data;
+            model.VatRatios = _systemsrv.GetVatRatios().Data;
+            model.UnitTypes = _systemsrv.GetUnitTypes().Data;
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("duzenle")]
+        public IActionResult UpdateProduct(int pId)
+        {
+            ProductModifyModel model = new ProductModifyModel();
+
+            model.Brands = _brnadSrv.GetBrands().Data;
+            model.Manufacturers = _manufacturerSrv.GetManufacturers().Data;
+            model.Categories = _categorySrv.GetCategories().Data;
+            model.Status = _systemsrv.GetSystemStatus().Data;
+            model.Currencies = _systemsrv.GetCurrencies().Data;
+            model.VatRatios = _systemsrv.GetVatRatios().Data;
+            model.UnitTypes = _systemsrv.GetUnitTypes().Data;
+            return View(model);
         }
 
         [HttpPost]
         [Route("add")]
-        public JsonResult AddProductAsync([FromBody] ProductMasterModelDto masterProduct)
+        public async Task<JsonResult> AddProductAsync([FromBody] ProductMasterModelDto masterProduct)
         {
-            ProductMasterModelValidator validator = new ProductMasterModelValidator();//Product ManufacturerId hatası var.
+            Result jsonResult = new Result(true, EntityConsts.AddedSuccess);
+            ProductMasterModelValidator validator = new ProductMasterModelValidator();
             var validationResult = validator.Validate(masterProduct);
 
             if (!validationResult.IsValid)
@@ -74,15 +105,20 @@ namespace ECommerceNetCore.AdminUI.Controllers
 
             var addedProduct = _productSrv.AddProduct(product);
 
+            if (!addedProduct.Success)
+            {
+                return Json(new ErrorResult(EntityConsts.AddedError));
+            }
+
             GnlProductCategory category = new GnlProductCategory()
             {
                 ProductId = addedProduct.Data.Id,
                 SubCategoryId = masterProduct.SubCategoryId,
             };
 
-            //var addedCategory = _productSrv.AddProductCategory(category);
+            var addedCategory = _productSrv.AddProductCategory(category);
 
-            masterProduct.ProductOptions.ForEach(async option =>
+            foreach (var option in masterProduct.ProductOptions)
             {
                 DateTime parsedDatetime;
                 DateTime.TryParseExact(option.AvailableDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
@@ -93,7 +129,6 @@ namespace ECommerceNetCore.AdminUI.Controllers
                     OptionName = option.OptionName,
                     UnitTypeId = option.UnitTypeId,
                     UnitOfStock = option.UnitOfStock,
-                    LengthTypeId = option.LengthTypeId,
                     Width = option.Width,
                     Height = option.Height,
                     Length = option.Length,
@@ -105,6 +140,12 @@ namespace ECommerceNetCore.AdminUI.Controllers
                 };
 
                 var addedOption = _productSrv.AddProductOption(productOption);
+
+                if (!addedOption.Success)
+                {
+                    jsonResult = new ErrorResult("", $"/urunler/duzenle/{addedProduct.Data.Id}");
+                    break;
+                }
 
                 DateTime.TryParseExact(option.DiscountExpireDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
                 GnlProductPrice productPrice = new GnlProductPrice()
@@ -137,21 +178,24 @@ namespace ECommerceNetCore.AdminUI.Controllers
                     byte[] bytes = Convert.FromBase64String(data[1]);
 
                     var uploadedImage = await _fileHelper.ImageUpload(bytes, fileName);
-                    if (uploadedImage.Success)
+                    if (!uploadedImage.Success)
                     {
-                        GnlProductImage newImage = new GnlProductImage()
-                        {
-                            ProductId = addedProduct.Data.Id,
-                            OptionId = addedOption.Data.Id,
-                            ImageUrl = uploadedImage.Message
-                        };
-
-                        var addedImage = _productSrv.AddProductImage(newImage);
+                        jsonResult = new SuccessResult(EntityConsts.AddedSuccess, $"/urunler/duzenle/{addedProduct.Data.Id}");
+                        break;
                     }
-                }
-            });
 
-            return Json(new SuccessResult(ProductConst.ProductAdded));
+                    GnlProductImage newImage = new GnlProductImage()
+                    {
+                        ProductId = addedProduct.Data.Id,
+                        OptionId = addedOption.Data.Id,
+                        ImageUrl = uploadedImage.Message
+                    };
+
+                    var addedImage = _productSrv.AddProductImage(newImage);
+                }
+            }
+
+            return Json(jsonResult);
         }
 
         [HttpGet]

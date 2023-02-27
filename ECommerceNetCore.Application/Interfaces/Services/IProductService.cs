@@ -47,5 +47,8 @@ namespace ECommerceNetCore.Application.Interfaces
         IListResult<GnlProductPrice> GetProductPrice(int priceId);
         #endregion
 
+        #region Product Category
+        IDataResult<GnlProductCategory> AddProductCategory(GnlProductCategory category);
+        #endregion
     }
 }

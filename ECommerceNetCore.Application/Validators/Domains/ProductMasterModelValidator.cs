@@ -1,4 +1,5 @@
-﻿using ECommerceNetCore.Application.DataTransferObjects;
+﻿using Castle.Core.Internal;
+using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Domain.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
@@ -36,7 +37,7 @@ namespace ECommerceNetCore.Application.Validators
                     foreach (var option in options)
                     {
                         index++;
-                        if (!BeNotNullAndInRange(option.OptionName, 2, 50))
+                        if (!BeNotNullAndInRange(option.OptionName, 2, 200))
                             context.AddFailure(index + ". varyasyonun adı boş veya 15 karakterden fazla olamaz.");
                         if (!BeNullOrLessThan(option.StockCode, 15))
                             context.AddFailure(index + ". varyasyonun stok kodu 15 karakterden fazla olamaz.");
@@ -53,6 +54,11 @@ namespace ECommerceNetCore.Application.Validators
                         {
                             if (!DateTimeNotNullAndGreaterThanToday(option.AvailableDate))
                                 context.AddFailure(index + ". varyasyonun stoğa giriş tarihi bugünden küçük olamaz.");
+                        }
+
+                        if (option.ProductImages.IsNullOrEmpty())
+                        {
+                            context.AddFailure(index + ". varyasyon için görsel eklemelisiniz.");
                         }
 
                     }

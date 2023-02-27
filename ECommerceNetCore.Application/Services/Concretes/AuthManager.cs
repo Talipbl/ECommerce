@@ -16,7 +16,7 @@ namespace ECommerceNetCore.Application.Services
         {
             _userService = userService;
         }
-        [SecurityOperationAspect(Level:(int)UserLevels.VeryLow)]
+        [SecurityOperationAspect(Level = (int)UserLevels.VeryLow)]
         public IDataResult<LoginDto> Login(LoginDto loginUser)
         {
             var result = _userService.GetUser(loginUser.UserName, loginUser.Mail);

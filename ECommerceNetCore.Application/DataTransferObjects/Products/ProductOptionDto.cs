@@ -8,6 +8,7 @@ namespace ECommerceNetCore.Application.DataTransferObjects
 {
     public class ProductOptionDto
     {
+        public int Id { get; set; }
         public string OptionName { get; set; }
         public string? StockCode { get; set; }
         public decimal? UnitOfStock { get; set; }

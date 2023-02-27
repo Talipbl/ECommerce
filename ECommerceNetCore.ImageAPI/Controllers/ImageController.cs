@@ -1,5 +1,6 @@
 ﻿using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.ImageAPI.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceNetCore.ImageAPI.Controllers

@@ -229,6 +229,70 @@ async function addOption() {
         check.querySelector('label').setAttribute('for', guid);
     });
 }
+async function updateProduct() {
+    try {
+        $('#collapseErrors').collapse('hide');
+
+        let answer = await swal.fire({ title: 'İşlemi tamamlamak istediğinize emin misiniz?', icon: 'question', confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', showCancelButton: true, confirmButtonText: 'Evet', cancelButtonText: 'Hayır' });
+        if (!answer.value) {
+            return;
+        }
+
+        swal.fire({
+            title: "İşleniyor...", text: "Lütfen bekleyiniz...", allowOutsideClick: false, allowEscapeKey: false, allowEnterKey: false, didOpen: () => {
+                swal.showLoading();
+            }
+        });
+
+        const productForm = document.querySelector('#product-form');
+        const CategoryForm = document.querySelector('#category-form');
+        const OptionForm = document.querySelectorAll('#option-form');
+
+        let product = getFormJson(productForm);
+        let category = getFormJson(CategoryForm);
+
+        delete product["files"];
+
+        let options = [];
+        OptionForm.forEach(form => {
+            let opt = getFormJson(form);
+            let images = opt["ProductImages"];
+            if (images != undefined) {
+                let i = 0;
+                while (i < images.length) {
+                    if (images[i] === true || images[i] === false) {
+                        delete images[i];
+                    }
+                    else i++;
+                }
+            }
+            opt["IsSale"] = opt["IsSale"][0];
+            opt["IsAvailable"] = opt["IsAvailable"][0];
+            options.push(opt);
+        });
+
+        Object.assign(product, category);
+        product["ProductOptions"] = options;
+
+        let result = await fetch("/products/update", { method: 'POST', body: jsonData, headers: { 'Content-Type': 'application/json' } });
+        let jsonResult = await result.json();
+        if (!jsonResult.success) {
+            let errors = "";
+            jsonResult.data.forEach(error => {
+                errors += '<li>' + error.errorMessage + '</li>';
+            });
+            document.querySelector('#errors').innerHTML = '<ul><h5 class="text-danger">Ürün bilgilerinde hata var. Lütfen kontrol edip tekrar deneyiniz.</h5>' + errors + '</ul>';
+            $('#collapseErrors').collapse('show');
+            swal.close();
+            return;
+        }
+        $('#collapseErrors').collapse('hide');
+        await swal.fire({ icon: 'success', position: 'center', title: jsonResult.message, showConfirmButton: false, timer: 1500 });
+        location.href = "/";
+    } catch (e) {
+        return swal.fire({ icon: 'error', position: 'center', title: 'İşlem başarısız oldu.', showConfirmButton: false, timer: 1500 });
+    }
+}
 async function addSubCategory() {
     subCategoryId.push(subSelect.value);
     let lastIndex = subCategoryId[subCategoryId.length - 1];
@@ -290,6 +354,9 @@ $(document).on('click', '[data-toggle="lightbox"]', function (event) {
     });
 });
 
+document.querySelector('#btn-update').addEventListener('click', function () {
+    updateProduct();
+});
 document.querySelector('#btn-complete').addEventListener('click', function () {
     addProduct();
 });

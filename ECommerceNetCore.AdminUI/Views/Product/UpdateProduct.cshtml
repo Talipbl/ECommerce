@@ -53,6 +53,7 @@
                     <div class="tab-content" id="custom-tabs-four-tabContent">
                         <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
                             <form id="product-form">
+                                <input type="hidden" class="form-control" id="id" name="Id" value="@Model.Product.Id">
                                 <div class="col-12 p-2">
                                     <div class="col-12 row">
                                         <div class="col-md-6 col-sm-12">
@@ -180,6 +181,7 @@
                                 <div class="col-12" id="options-section">
                                     @foreach (var option in Model.Product.ProductOptions)
                                     {
+                                        <input type="hidden" name="Id" value="@option.Id" />
                                         <div class="card card-warning card-outline">
                                             <form id="option-form">
                                                 <div class="card-body">
@@ -319,7 +321,7 @@
                                                                     <div class="col-md-3 col-sm-6 p-4">
                                                                         <div class="form-check-inline">
                                                                             <div class="icheck-primary">
-                                                                                <input type="checkbox" id="is-sale-@option.Id" name="IsSale" @(option.IsSale ? "checked" : "") >
+                                                                                <input type="checkbox" id="is-sale-@option.Id" name="IsSale" @(option.IsSale ? "checked" : "")>
                                                                                 <label for="is-sale">İndirimdeki Ürün</label>
                                                                             </div>
                                                                         </div>
@@ -428,6 +430,17 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 row" id="option-images">
+                                                                @if (option.ProductImages is not null)
+                                                                {
+                                                                    foreach (var image in option.ProductImages)
+                                                                    {
+                                                                        <div class="col-md-3 col-sm-6 mt-3">
+                                                                            <a data-toggle="lightbox" data-galery="galery">
+                                                                                <img src="https://localhost:7112/source + @image" class="img-fluid ml-50 w-50" />
+                                                                            </a>
+                                                                        </div>
+                                                                    }
+                                                                }
                                                             </div>
                                                         </div>
                                                     </div>
@@ -444,7 +457,7 @@
         </div>
         <div class="col-md-3 col-sm-12">
             <div class="mb-3">
-                <button type="button" id="btn-complete" class="btn bg-gradient-success btn-block">Kaydı Tamamla</button>
+                <button type="button" id="btn-update" class="btn bg-gradient-success btn-block">Kaydı Güncelle</button>
             </div>
             <div class="card card-info card-outline">
                 <div class="card-header p-0 border-bottom-0">

@@ -268,11 +268,17 @@ async function updateProduct() {
             }
             opt["IsSale"] = opt["IsSale"][0];
             opt["IsAvailable"] = opt["IsAvailable"][0];
+            opt["Price"] = opt["Price"].replace(',', '.');
+            opt["PurchasePrice"] = opt["PurchasePrice"].replace(',', '.');
+            opt["DiscountPrice"] = opt["DiscountPrice"].replace(',', '.');
+            opt["DiscountRatio"] = opt["DiscountRatio"].replace(',', '.');
             options.push(opt);
         });
 
         Object.assign(product, category);
         product["ProductOptions"] = options;
+
+        const jsonData = JSON.stringify(product);
 
         let result = await fetch("/products/update", { method: 'POST', body: jsonData, headers: { 'Content-Type': 'application/json' } });
         let jsonResult = await result.json();
@@ -354,12 +360,17 @@ $(document).on('click', '[data-toggle="lightbox"]', function (event) {
     });
 });
 
-document.querySelector('#btn-update').addEventListener('click', function () {
-    updateProduct();
-});
-document.querySelector('#btn-complete').addEventListener('click', function () {
-    addProduct();
-});
+if (document.querySelector('#btn-update')) {
+    document.querySelector('#btn-update').addEventListener('click', function () {
+        updateProduct();
+    });
+}
+if (document.querySelector('#btn-complete')) {
+    document.querySelector('#btn-complete').addEventListener('click', function () {
+        addProduct();
+    });
+}
+
 document.querySelector('#btn-add-option').addEventListener('click', function () {
     addOption();
 });

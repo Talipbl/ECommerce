@@ -51,6 +51,8 @@ namespace ECommerceNetCore.Application.Interfaces
 
         #region Product Category
         IDataResult<GnlProductCategory> AddProductCategory(GnlProductCategory category);
+        IResult UpdateProductCategory(GnlProductCategory category);
+        IDataResult<GnlProductCategory> GetProductCategory(int productId);
         #endregion
     }
 }

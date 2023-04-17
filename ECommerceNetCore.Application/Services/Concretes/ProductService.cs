@@ -242,6 +242,21 @@ namespace ECommerceNetCore.Application.Services
             var result = _categoryRepo.Add(category);
             return new SuccessDataResult<GnlProductCategory>(result);
         }
+        public IDataResult<GnlProductCategory> GetProductCategory(int productId)
+        {
+            var result = _categoryRepo.GetProductCategory(productId);
+            if (result is null)
+            {
+                new ErrorResult(EntityConsts.GetError);
+            }
+
+            return new SuccessDataResult<GnlProductCategory>(result);
+        }
+        public IResult UpdateProductCategory(GnlProductCategory category)
+        {
+            var result = _categoryRepo.Update(category);
+            return new Result(result);
+        }
         #endregion
     }
 }

@@ -159,13 +159,13 @@ namespace ECommerceNetCore.AdminUI.Controllers
                 {
                     OptionId = addedOption.Data.Id,
                     ProductId = addedProduct.Data.Id,
-                    CurrencyId = option.CurrencyId,
+                    CurrencyId = (int)option.CurrencyId,
                     Price = option.Price,
-                    PurchasePrice = option.PurchasePrice,
-                    DiscountPrice = option.DiscountPrice,
-                    DiscountRatio = option.DiscountRatio,
+                    PurchasePrice = (decimal)option.PurchasePrice,
+                    DiscountPrice = (decimal)option.DiscountPrice,
+                    DiscountRatio = (decimal)option.DiscountRatio,
                     DiscountExpireDate = parsedDatetime,
-                    VatRatioId = option.VatRatioId,
+                    VatRatioId = (int)option.VatRatioId,
                     IsSale = option.IsSale,
                     StatusId = option.StatusId
                 };
@@ -248,7 +248,7 @@ namespace ECommerceNetCore.AdminUI.Controllers
                 return Json(new ErrorResult(EntityConsts.AddedError));
             }
 
-            var category = _productSrv.GetProductCategory(masterProduct.Id);//Servisler yazılıp test edilecek.
+            var category = _productSrv.GetProductCategory(masterProduct.Id).Data;
             category.SubCategoryId = masterProduct.SubCategoryId;
             _productSrv.UpdateProductCategory(category);
 
@@ -307,13 +307,13 @@ namespace ECommerceNetCore.AdminUI.Controllers
                     {
                         OptionId = addedOption.Data.Id,
                         ProductId = masterProduct.Id,
-                        CurrencyId = add.CurrencyId,
+                        CurrencyId = (int)add.CurrencyId,
                         Price = add.Price,
-                        PurchasePrice = add.PurchasePrice,
-                        DiscountPrice = add.DiscountPrice,
-                        DiscountRatio = add.DiscountRatio,
+                        PurchasePrice = (decimal)add.PurchasePrice,
+                        DiscountPrice = (decimal)add.DiscountPrice,
+                        DiscountRatio = (decimal)add.DiscountRatio,
                         DiscountExpireDate = parsedDatetime,
-                        VatRatioId = add.VatRatioId,
+                        VatRatioId = (int)add.VatRatioId,
                         IsSale = add.IsSale,
                         StatusId = add.StatusId
                     };

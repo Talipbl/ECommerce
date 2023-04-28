@@ -54,6 +54,7 @@
                         <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
                             <form id="product-form">
                                 <input type="hidden" class="form-control" id="id" name="Id" value="@Model.Product.Id">
+                                <input type="hidden" class="form-control" id="status" name="StatusId" value="@Model.Product.StatusId">
                                 <div class="col-12 p-2">
                                     <div class="col-12 row">
                                         <div class="col-md-6 col-sm-12">
@@ -181,271 +182,281 @@
                                 <div class="col-12" id="options-section">
                                     @foreach (var option in Model.Product.ProductOptions)
                                     {
-                                        <input type="hidden" name="Id" value="@option.Id" />
-                                        <div class="card card-warning card-outline">
-                                            <form id="option-form">
-                                                <div class="card-body">
-                                                    <div class="col-12">
-                                                        <div class="col-md-12 col-sm-12 row">
+                                        <div>
+                                            <div class="card card-warning card-outline">
+                                                <form id="option-form">
+                                                    <input type="hidden" name="Id" value="@option.Id" />
+                                                    <div class="card-body">
+                                                        <div class="col-12">
                                                             <div class="col-md-12 col-sm-12 row">
-                                                                <div class="col-sm-12">
+                                                                <div class="col-md-12 col-sm-12 row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="form-group">
+                                                                            <label>Genel Bilgileri</label>
+                                                                            <hr />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4 col-sm-12">
+                                                                        <div class="form-group">
+                                                                            <label>Varyasyon Adı</label>
+                                                                            <input type="text" class="form-control" id="option-name" name="OptionName" value="@option.OptionName" placeholder="Ürün seçeneğinin adı">
+                                                                            <code>Maximum 200 karakter</code>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4 col-sm-12">
+                                                                        <div class="form-group">
+                                                                            <label>Stok Kodu</label>
+                                                                            <input type="text" class="form-control" id="stock-code" name="StockCode" value="@option.StockCode" placeholder="Stok kodu">
+                                                                            <code>Maximum 15 karakter<br />Türkçe ve özel karakter içermemeli!</code>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4 col-sm-12">
+                                                                        <div class="form-group">
+                                                                            <label for="status">Durumu</label>
+                                                                            <select class="form-control" id="status" name="StatusId" style="width: 100%;">
+                                                                                @foreach (var status in Model.Status)
+                                                                                {
+                                                                                    if (status.Id == option.StatusId)
+                                                                                    {
+                                                                                        <option selected value="@status.Id">@status.StatusName</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option value="@status.Id">@status.StatusName</option>
+                                                                                    }
+                                                                                }
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <hr />
+                                                                <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>Genel Bilgileri</label>
+                                                                        <label>Fiyat Bilgisi</label>
                                                                         <hr />
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4 col-sm-12">
-                                                                    <div class="form-group">
-                                                                        <label>Varyasyon Adı</label>
-                                                                        <input type="text" class="form-control" id="option-name" name="OptionName" value="@option.OptionName" placeholder="Ürün seçeneğinin adı">
-                                                                        <code>Maximum 200 karakter</code>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4 col-sm-12">
-                                                                    <div class="form-group">
-                                                                        <label>Stok Kodu</label>
-                                                                        <input type="text" class="form-control" id="stock-code" name="StockCode" value="@option.StockCode" placeholder="Stok kodu">
-                                                                        <code>Maximum 15 karakter<br />Türkçe ve özel karakter içermemeli!</code>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4 col-sm-12">
-                                                                    <div class="form-group">
-                                                                        <label for="status">Durumu</label>
-                                                                        <select class="form-control" id="status" name="StatusId" style="width: 100%;">
-                                                                            @foreach (var status in Model.Status)
-                                                                            {
-                                                                                if (status.Id == option.StatusId)
-                                                                                {
-                                                                                    <option selected value="@status.Id">@status.StatusName</option>
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <option value="@status.Id">@status.StatusName</option>
-                                                                                }
-                                                                            }
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <hr />
-                                                            <div class="col-12">
-                                                                <div class="form-group">
-                                                                    <label>Fiyat Bilgisi</label>
-                                                                    <hr />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="col-md-12 col-sm-12 row">
-                                                                    <div class="col-md-3 col-sm-12">
-                                                                        <div class="form-group">
-                                                                            <label>Fiyat</label>
-                                                                            <div class="input-group">
-                                                                                <div class="input-group-prepend">
-                                                                                    <select class="form-control" id="currency" name="CurrencyId" style="width: 100%; border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
-                                                                                        @foreach (var currency in Model.Currencies)
+                                                                <div class="col-md-12 col-sm-12">
+                                                                    <div class="col-md-12 col-sm-12 row">
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <div class="form-group">
+                                                                                <label>Fiyat</label>
+                                                                                <div class="input-group">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <select class="form-control" id="currency" name="CurrencyId" style="width: 100%; border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
+                                                                                            @foreach (var currency in Model.Currencies)
+                                                                                            {
+                                                                                                if (currency.Id == option.CurrencyId)
+                                                                                                {
+                                                                                                    <option selected value="@currency.Id">@currency.Icon</option>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <option value="@currency.Id">@currency.Icon</option>
+                                                                                                }
+                                                                                            }
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <input type="text" class="form-control" id="price" name="Price" value="@option.Price.ToString().Replace(',','.')" placeholder="Fiyatı">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-3 col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label>Maliyet</label>
+                                                                                <div class="input-group">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text"><i class="fas fa-money-bill"></i></span>
+                                                                                    </div>
+                                                                                    <input type="text" class="form-control" id="purchase-price" name="PurchasePrice" value="@option.PurchasePrice.ToString().Replace(',','.')" placeholder="Maliyeti">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2 col-sm-4">
+                                                                            <div class="form-group">
+                                                                                <label>Vergi Oranı</label>
+                                                                                <select class="form-control" id="vat-ratio" name="VatRatioId" style="width: 100%;">
+                                                                                    @foreach (var vat in Model.VatRatios)
+                                                                                    {
+                                                                                        if (vat.Id == option.VatRatioId)
                                                                                         {
-                                                                                            if (currency.Id == option.CurrencyId)
-                                                                                            {
-                                                                                                <option selected value="@currency.Id">@currency.Icon</option>
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <option value="@currency.Id">@currency.Icon</option>
-                                                                                            }
+                                                                                            <option selected value="@vat.Id">% @vat.VatRatioValue</option>
                                                                                         }
-                                                                                    </select>
-                                                                                </div>
-                                                                                <input type="text" class="form-control" id="price" name="Price" value="@option.Price" placeholder="Fiyatı">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-3 col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <label>Maliyet</label>
-                                                                            <div class="input-group">
-                                                                                <div class="input-group-prepend">
-                                                                                    <span class="input-group-text"><i class="fas fa-money-bill"></i></span>
-                                                                                </div>
-                                                                                <input type="text" class="form-control" id="purchase-price" name="PurchasePrice" value="@option.PurchasePrice" placeholder="Maliyeti">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-2 col-sm-4">
-                                                                        <div class="form-group">
-                                                                            <label>Vergi Oranı</label>
-                                                                            <select class="form-control" id="vat-ratio" name="VatRatioId" style="width: 100%;">
-                                                                                @foreach (var vat in Model.VatRatios)
-                                                                                {
-                                                                                    if (vat.Id == option.VatRatioId)
-                                                                                    {
-                                                                                        <option selected value="@vat.Id">% @vat.VatRatioValue</option>
+                                                                                        else
+                                                                                        {
+                                                                                            <option value="@vat.Id">% @vat.VatRatioValue</option>
+                                                                                        }
                                                                                     }
-                                                                                    else
-                                                                                    {
-                                                                                        <option value="@vat.Id">% @vat.VatRatioValue</option>
-                                                                                    }
-                                                                                }
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12 col-sm-12 row">
-                                                                    <div class="col-md-3 col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <label>İndirimli Fiyatı</label>
-                                                                            <input type="text" class="form-control" id="discount-price" name="DiscountPrice" value="@option.DiscountPrice">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-3 col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <label>İndirim Oranı</label>
-                                                                            <div class="input-group">
-                                                                                <div class="input-group-prepend">
-                                                                                    <span class="input-group-text">%</span>
-                                                                                </div>
-                                                                                <input type="text" class="form-control" id="discount-ratio" name="DiscountRatio" value="@option.DiscountRatio">
+                                                                                </select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-3 col-sm-12">
-                                                                        <div class="form-group">
-                                                                            <label>İndirim Bitiş Tarihi</label>
-                                                                            <div class="input-group date" id="discountdatetime-@option.Id" data-target-input="nearest">
-                                                                                <input readonly type="text" name="DiscountExpireDate" class="form-control datetimepicker-input" value="@option.DiscountExpireDate" data-target="#discountdatetime-@option.Id" />
-                                                                                <div class="input-group-append" data-target="#discountdatetime-@option.Id" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                    <div class="col-md-12 col-sm-12 row">
+                                                                        <div class="col-md-3 col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label>İndirimli Fiyatı</label>
+                                                                                <input type="text" class="form-control" id="discount-price" name="DiscountPrice" value="@option.DiscountPrice.ToString().Replace(',','.')">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-3 col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label>İndirim Oranı</label>
+                                                                                <div class="input-group">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text">%</span>
+                                                                                    </div>
+                                                                                    <input type="text" class="form-control" id="discount-ratio" name="DiscountRatio" value="@option.DiscountRatio.ToString().Replace(',','.')">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-md-3 col-sm-6 p-4">
-                                                                        <div class="form-check-inline">
-                                                                            <div class="icheck-primary">
-                                                                                <input type="checkbox" id="is-sale-@option.Id" name="IsSale" @(option.IsSale ? "checked" : "")>
-                                                                                <label for="is-sale">İndirimdeki Ürün</label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <hr />
-                                                            <div class="col-12">
-                                                                <div class="form-group">
-                                                                    <label>Ürün Bilgisi</label>
-                                                                    <hr />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="col-md-12 col-sm-12 row">
-                                                                    <div class="col-md-3 col-sm-12">
-                                                                        <div class="form-group">
-                                                                            <label for="brand">Stok Birimi</label>
-                                                                            <select class="form-control" id="unit-typpe" name="UnitTypeId" style="width: 100%;">
-                                                                                @foreach (var unit in Model.UnitTypes)
-                                                                                {
-                                                                                    if (unit.Id == option.UnitTypeId)
-                                                                                    {
-                                                                                        <option selected value="@unit.Id">@unit.TypeName</option>
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <option value="@unit.Id">@unit.TypeName</option>
-                                                                                    }
-                                                                                }
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-3 col-sm-12">
-                                                                        <div class="form-group">
-                                                                            <label>Stok Miktarı</label>
-                                                                            <input type="text" class="form-control" id="unit-stock" name="UnitOfStock" placeholder="Stok Miktarı">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-3 col-sm-12">
-                                                                        <div class="form-group">
-                                                                            <label>Stoğa Girme Tarihi</label>
-                                                                            <div class="input-group date" id="availabledatetime-@option.Id" data-target-input="nearest">
-                                                                                <input readonly type="text" name="AvailableDate" class="form-control datetimepicker-input" data-target="#availabledatetime-@option.Id" />
-                                                                                <div class="input-group-append" data-target="#availabledatetime-@option.Id" data-toggle="datetimepicker">
-                                                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <div class="form-group">
+                                                                                <label>İndirim Bitiş Tarihi</label>
+                                                                                <div class="input-group date discount" id="discountdatetime-@option.Id" data-target-input="nearest">
+                                                                                    <input readonly type="text" name="DiscountExpireDate" class="form-control datetimepicker-input" value="@option.DiscountExpireDate" data-target="#discountdatetime-@option.Id" />
+                                                                                    <div class="input-group-append" data-target="#discountdatetime-@option.Id" data-toggle="datetimepicker">
+                                                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-md-3 col-sm-6 p-4">
-                                                                        <div class="form-check-inline">
-                                                                            <div class="icheck-primary">
-                                                                                <input type="checkbox" id="is-available-@option.Id" name="IsAvailable" @(option.IsAvailable ? "checked" : "")>
-                                                                                <label for="is-available">Stokta Var</label>
+                                                                        <div class="col-md-3 col-sm-6 p-4">
+                                                                            <div class="form-check-inline">
+                                                                                <div class="icheck-primary">
+                                                                                    <input type="checkbox" id="is-sale-@option.Id" name="IsSale" @(option.IsSale ? "checked" : "")>
+                                                                                    <label for="is-sale-@option.Id">İndirimdeki Ürün</label>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <hr />
-                                                                <div class="col-md-12 col-sm-12 row">
-                                                                    <div class="col-md-3 col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <label>Uzunluk</label>
-                                                                            <input type="text" class="form-control" id="length" name="Length" value="@option.Length" placeholder="Uzunluk">
-                                                                        </div>
+                                                                <div class="col-12">
+                                                                    <div class="form-group">
+                                                                        <label>Ürün Bilgisi</label>
+                                                                        <hr />
                                                                     </div>
-                                                                    <div class="col-md-2 col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <label>Yükseklik</label>
-                                                                            <input type="text" class="form-control" id="height" name="Height" value="@option.Height" placeholder="Yükseklik">
+                                                                </div>
+                                                                <div class="col-md-12 col-sm-12">
+                                                                    <div class="col-md-12 col-sm-12 row">
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <div class="form-group">
+                                                                                <label for="brand">Stok Birimi</label>
+                                                                                <select class="form-control" id="unit-typpe" name="UnitTypeId" style="width: 100%;">
+                                                                                    @foreach (var unit in Model.UnitTypes)
+                                                                                    {
+                                                                                        if (unit.Id == option.UnitTypeId)
+                                                                                        {
+                                                                                            <option selected value="@unit.Id">@unit.TypeName</option>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <option value="@unit.Id">@unit.TypeName</option>
+                                                                                        }
+                                                                                    }
+                                                                                </select>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-md-2 col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <label>Genişlik</label>
-                                                                            <input type="text" class="form-control" id="width" name="Width" value="@option.Width" placeholder="Genişlik">
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <div class="form-group">
+                                                                                <label>Stok Miktarı</label>
+                                                                                <input type="text" class="form-control" id="unit-stock" name="UnitOfStock" placeholder="Stok Miktarı" value="@option.UnitOfStock.ToString().Replace(',','.')">
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-md-2 col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <label>Ağırlık</label>
-                                                                            <div class="input-group">
-                                                                                <input type="text" class="form-control" id="weight" name="Weight" value="@option.Weight" placeholder="Ağırlık">
-                                                                                <div class="input-group-append">
-                                                                                    <span class="input-group-text">gr</span>
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <div class="form-group">
+                                                                                <label>Stoğa Girme Tarihi</label>
+                                                                                <div class="input-group date available" id="availabledatetime-@option.Id" data-target-input="nearest">
+                                                                                    <input readonly type="text" name="AvailableDate" class="form-control datetimepicker-input" data-target="#availabledatetime-@option.Id" />
+                                                                                    <div class="input-group-append" data-target="#availabledatetime-@option.Id" data-toggle="datetimepicker">
+                                                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-3 col-sm-6 p-4">
+                                                                            <div class="form-check-inline">
+                                                                                <div class="icheck-primary">
+                                                                                    <input type="checkbox" id="is-available-@option.Id" name="IsAvailable" @(option.IsAvailable ? "checked" : "")>
+                                                                                    <label for="is-available-@option.Id">Stokta Var</label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <hr />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 col-sm-12">
-                                                            <div class="col-12">
-                                                                <div class="form-group">
-                                                                    <label>Görselleri</label>
-                                                                    <hr />
-                                                                </div>
-                                                            </div>
-                                                            <div class="input-group">
-                                                                <div class="custom-file">
-                                                                    <input type="file" class="custom-file-input" id="exampleInputFile">
-                                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 row" id="option-images">
-                                                                @if (option.ProductImages is not null)
-                                                                {
-                                                                    foreach (var image in option.ProductImages)
-                                                                    {
-                                                                        <div class="col-md-3 col-sm-6 mt-3">
-                                                                            <a data-toggle="lightbox" data-galery="galery">
-                                                                                <img src="https://localhost:7112/source + @image" class="img-fluid ml-50 w-50" />
-                                                                            </a>
+                                                                    <div class="col-md-12 col-sm-12 row">
+                                                                        <div class="col-md-3 col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label>Uzunluk</label>
+                                                                                <input type="text" class="form-control" id="length" name="Length" value="@option.Length.ToString().Replace(',','.')" placeholder="Uzunluk">
+                                                                            </div>
                                                                         </div>
+                                                                        <div class="col-md-2 col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label>Yükseklik</label>
+                                                                                <input type="text" class="form-control" id="height" name="Height" value="@option.Height.ToString().Replace(',','.')" placeholder="Yükseklik">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2 col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label>Genişlik</label>
+                                                                                <input type="text" class="form-control" id="width" name="Width" value="@option.Width.ToString().Replace(',','.')" placeholder="Genişlik">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2 col-sm-6">
+                                                                            <div class="form-group">
+                                                                                <label>Ağırlık</label>
+                                                                                <div class="input-group">
+                                                                                    <input type="text" class="form-control" id="weight" name="Weight" value="@option.Weight.ToString().Replace(',','.')" placeholder="Ağırlık">
+                                                                                    <div class="input-group-append">
+                                                                                        <span class="input-group-text">gr</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <hr />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 col-sm-12">
+                                                                <div class="col-12">
+                                                                    <div class="form-group">
+                                                                        <label>Görselleri</label>
+                                                                        <hr />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="input-group">
+                                                                    <div class="custom-file">
+                                                                        <input type="file" class="custom-file-input" id="exampleInputFile">
+                                                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 row" id="option-images">
+                                                                    @if (option.ProductImages is not null)
+                                                                    {
+                                                                        foreach (var image in option.ProductImages)
+                                                                        {
+                                                                            <div class="col-md-3 col-sm-6 mt-3">
+                                                                                <a data-toggle="lightbox" data-galery="galery">
+                                                                                    <img src="https://localhost:7112/source + @image" class="img-fluid ml-50 w-50" />
+                                                                                </a>
+                                                                            </div>
+                                                                        }
                                                                     }
-                                                                }
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </form>
+                                                    @if (!Model.Product.ProductOptions.FindIndex(x => x.Id == option.Id).Equals(0))
+                                                    {
+                                                        <div class="card-footer">
+                                                            <div class="col-12" style="display:flex; justify-content:end">
+                                                                <button type="button" id="btn-remove" onclick="remove(this)" class="btn btn-danger">Kaldır</button>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </form>
+                                            </div>
                                         </div>
                                     }
                                 </div>

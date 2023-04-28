@@ -10,7 +10,6 @@ namespace ECommerceNetCore.Application.Interfaces
     public interface IProductService
     {
         #region Product
-
         IDataResult<GnlProduct> AddProduct(GnlProduct product);
         IDataResult<ProductMasterModelDto> AddProduct(ProductMasterModelDto product);
         IResult UpdateProduct(GnlProduct product);
@@ -51,6 +50,8 @@ namespace ECommerceNetCore.Application.Interfaces
 
         #region Product Category
         IDataResult<GnlProductCategory> AddProductCategory(GnlProductCategory category);
+        IResult UpdateProductCategory(GnlProductCategory productCategory);
+        IDataResult<GnlProductCategory> GetProductCategory(int productId);
         #endregion
     }
 }

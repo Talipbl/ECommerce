@@ -5,6 +5,6 @@ namespace ECommerceNetCore.Application.Interfaces
 {
     public interface IProductOptionRepository : IBaseEntityRepository<GnlProductOption>
     {
-        IListResult<GnlProductOption> GetOptions(int productId);
+        IListResult<GnlProductOption> GetOptions(int productId, int statusId);
     }
 }

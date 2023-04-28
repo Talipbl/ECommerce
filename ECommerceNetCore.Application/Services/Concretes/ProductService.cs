@@ -55,7 +55,7 @@ namespace ECommerceNetCore.Application.Services
 
         public IDataResult<GnlProduct> GetProduct(int productId)
         {
-            throw new NotImplementedException();
+            return _productRepo.GetProduct(productId);
         }
         public IDataResult<ProductMasterModelDto> GetProductMaster(int productId)
         {
@@ -66,10 +66,10 @@ namespace ECommerceNetCore.Application.Services
             ProductMasterModelDto masterProduct = new ProductMasterModelDto();
 
             masterProduct.Id = productId;
-            masterProduct.Name= product.Name;
-            masterProduct.Description= product.Description;
+            masterProduct.Name = product.Name;
+            masterProduct.Description = product.Description;
             masterProduct.BrandId = product.BrandId;
-            masterProduct.ManufacturerId= product.ManufacturerId;
+            masterProduct.ManufacturerId = product.ManufacturerId;
             masterProduct.XmlId = product.XmlId;
             masterProduct.StatusId = product.StatusId;
             masterProduct.CategoryId = product.CategoryId;
@@ -77,16 +77,16 @@ namespace ECommerceNetCore.Application.Services
             masterProduct.UpdatedDate = product.UpdatedDate;
             masterProduct.MinimumOrder = product.MinmumOrder;
             masterProduct.StockCode = product.StockCode;
-            masterProduct.SellerCode= product.SellerCode;
-            masterProduct.SellerUrl= product.SellerUrl;
+            masterProduct.SellerCode = product.SellerCode;
+            masterProduct.SellerUrl = product.SellerUrl;
             masterProduct.Mpn = product.Mpn;
             masterProduct.Ean = product.Ean;
             masterProduct.Jan = product.Jan;
             masterProduct.Isbn = product.Isbn;
-            masterProduct.Upc= product.Upc;
+            masterProduct.Upc = product.Upc;
             masterProduct.ProductOptions = new List<ProductOptionDto>();
 
-            var options = _optionRepo.GetOptions(productId).Data;
+            var options = _optionRepo.GetOptions(productId, (int)StatusTypes.All).Data;
             var prices = _priceRepo.GetPricesByProductId(productId).Data;
             var images = _imageRepo.GetIamges(productId).Data;
 
@@ -120,7 +120,7 @@ namespace ECommerceNetCore.Application.Services
 
                 if (images.Count > 0)
                 {
-                    var image = images.Where(x=>x.OptionId == option.Id).ToList();
+                    var image = images.Where(x => x.OptionId == option.Id).ToList();
 
                     for (int i = 0; i < image.Count - 1; i++)
                     {
@@ -221,12 +221,14 @@ namespace ECommerceNetCore.Application.Services
 
         public IListResult<GnlProductOption> GetProductOptions(int productId, int statusId = 1)
         {
-            throw new NotImplementedException();
+            return _optionRepo.GetOptions(productId, statusId);
         }
 
+        [LogAspect]
         public IResult UpdateProduct(GnlProduct product)
         {
-            throw new NotImplementedException();
+            var result = _productRepo.Update(product);
+            return new Result(result, EntityConsts.UpdatedSuccess);
         }
 
         public IResult UpdateProductOption(GnlProductOption option)
@@ -242,6 +244,25 @@ namespace ECommerceNetCore.Application.Services
             var result = _categoryRepo.Add(category);
             return new SuccessDataResult<GnlProductCategory>(result);
         }
+
+        public IDataResult<GnlProductCategory> GetProductCategory(int productId)
+        {
+            var category = _categoryRepo.GetProductCategory(productId);
+            if (category is null)
+            {
+                return new DataResult<GnlProductCategory>(false, EntityConsts.DataNotFound);
+            }
+
+            return new DataResult<GnlProductCategory>(category, true);
+        }
+
+        public IResult UpdateProductCategory(GnlProductCategory productCategory)
+        {
+            var result = _categoryRepo.Update(productCategory);
+            return new Result(result);
+        }
+
+
         #endregion
     }
 }

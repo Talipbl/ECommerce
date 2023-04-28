@@ -207,9 +207,9 @@ namespace ECommerceNetCore.AdminUI.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<JsonResult> UpdateProductAsync([FromBody] ProductMasterModelDto masterProduct)
+        public async Task<JsonResult> UpdateProductAsync([FromBody] ProductMasterModelDto masterProduct)//Görsellerin güncelleme ve silme işlemleri yapılacak!
         {
-            Result jsonResult = new Result(true, EntityConsts.AddedSuccess);
+            Result jsonResult = new Result(true, EntityConsts.UpdatedSuccess);
             ProductMasterModelValidator validator = new ProductMasterModelValidator();
             var validationResult = validator.Validate(masterProduct);
 
@@ -239,7 +239,8 @@ namespace ECommerceNetCore.AdminUI.Controllers
             product.SellerUrl = masterProduct.SellerUrl;
             product.StockCode = masterProduct.StockCode;
             product.StatusId = masterProduct.StatusId;
-            product.CreatedDate = DateTime.Now;
+            product.CreatedDate = product.CreatedDate;
+            product.UpdatedDate = DateTime.Now;
 
             var updateProduct = _productSrv.UpdateProduct(product);
 
@@ -248,7 +249,7 @@ namespace ECommerceNetCore.AdminUI.Controllers
                 return Json(new ErrorResult(EntityConsts.AddedError));
             }
 
-            var category = _productSrv.GetProductCategory(masterProduct.Id);//Servisler yazılıp test edilecek.
+            var category = _productSrv.GetProductCategory(masterProduct.Id).Data;
             category.SubCategoryId = masterProduct.SubCategoryId;
             _productSrv.UpdateProductCategory(category);
 

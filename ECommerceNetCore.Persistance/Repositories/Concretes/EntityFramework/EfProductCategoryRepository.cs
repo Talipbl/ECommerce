@@ -6,6 +6,10 @@ namespace ECommerceNetCore.Persistance.Repositories
 {
     public class EfProductCategoryRepository : EfBaseEntityRepository<GnlProductCategory, EcommerceNetCoreContext>, IProductCategoryRepository
     {
-
+        public GnlProductCategory GetProductCategory(int productId)
+        {
+            var result = this.Get(x=>x.ProductId== productId);
+            return result;
+        }
     }
 }

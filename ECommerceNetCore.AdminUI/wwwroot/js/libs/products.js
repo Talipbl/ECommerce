@@ -268,6 +268,10 @@ async function updateProduct() {
             }
             opt["IsSale"] = opt["IsSale"][0];
             opt["IsAvailable"] = opt["IsAvailable"][0];
+            opt["Price"] = opt["Price"].replace(',', '.');
+            opt["PurchasePrice"] = opt["PurchasePrice"].replace(',', '.');
+            opt["DiscountPrice"] = opt["DiscountPrice"].replace(',', '.');
+            opt["DiscountRatio"] = opt["DiscountRatio"].replace(',', '.');
             options.push(opt);
         });
 

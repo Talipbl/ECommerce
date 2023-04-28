@@ -12,17 +12,17 @@ public partial class GnlProductPrice : BaseEntity
 
     public decimal Price { get; set; }
 
-    public decimal? PurchasePrice { get; set; }
+    public decimal PurchasePrice { get; set; }
 
-    public decimal? DiscountPrice { get; set; }
+    public decimal DiscountPrice { get; set; }
 
-    public decimal? DiscountRatio { get; set; }
+    public decimal DiscountRatio { get; set; }
 
     public DateTime? DiscountExpireDate { get; set; }
 
-    public int? CurrencyId { get; set; }
+    public int CurrencyId { get; set; }
 
-    public int? VatRatioId { get; set; }
+    public int VatRatioId { get; set; }
 
     public int StatusId { get; set; }
 

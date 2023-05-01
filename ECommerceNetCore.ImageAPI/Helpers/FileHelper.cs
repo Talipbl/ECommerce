@@ -1,4 +1,6 @@
-﻿namespace ECommerceNetCore.ImageAPI.Helpers
+﻿using System.ComponentModel;
+
+namespace ECommerceNetCore.ImageAPI.Helpers
 {
     public class FileHelper : IFileHelper
     {
@@ -31,6 +33,12 @@
             }
         }
 
+        public bool CheckFileExist(string fileName)
+        {
+            string[] files = Directory.GetFiles(CurrentDirectory, fileName, SearchOption.AllDirectories);
+            return files.Count() > 0 ? true : false;
+        }
+
         public string Upload(IFormFile file, string directory = "")
         {
             if (file != null)
@@ -47,8 +55,8 @@
                 }
 
                 CheckDirectoryExists(endPoint);
-                CreateFile(endPoint + imageName , file);
-                return (directory + imageName ).Replace("\\", "/");
+                CreateFile(endPoint + imageName, file);
+                return (directory + imageName).Replace("\\", "/");
             }
             return "Empty File";
         }

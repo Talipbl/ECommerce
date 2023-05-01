@@ -326,6 +326,19 @@ async function addSubCategory() {
     document.querySelector('#btn-add-category').setAttribute('disabled', true);
     document.querySelector('#btn-remove-category').removeAttribute('hidden');
 }
+async function deleteImage(fileName) {
+    let answer = await swal.fire({ title: 'Ürün görselini silmek istediğinize emin misiniz?', icon: 'question', confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', showCancelButton: true, confirmButtonText: 'Evet', cancelButtonText: 'Hayır' });
+    if (!answer.value) {
+        return;
+    }
+
+    let result = await fetch("/products/iamge/delete/" + fileName);
+    let jsonResult = await result.json();
+
+    if (jsonResult.Success) {
+        //Burada html öğesini sileceğiz.
+    }
+}
 async function checkMainCategory(e) {
 
     let parentId = e.target.value;

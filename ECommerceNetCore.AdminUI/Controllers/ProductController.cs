@@ -135,11 +135,11 @@ namespace ECommerceNetCore.AdminUI.Controllers
                     ProductId = addedProduct.Data.Id,
                     OptionName = option.OptionName,
                     UnitTypeId = option.UnitTypeId,
-                    UnitOfStock = option.UnitOfStock,
-                    Width = option.Width,
-                    Height = option.Height,
-                    Length = option.Length,
-                    Weight = option.Weight,
+                    UnitOfStock = (decimal)option.UnitOfStock,
+                    Width = (decimal)option.Width,
+                    Height = (decimal)option.Height,
+                    Length = (decimal)option.Length,
+                    Weight = (decimal)option.Weight,
                     IsAvailable = option.IsAvailable,
                     AvailableDate = parsedDatetime,
                     StatusId = option.StatusId,
@@ -159,13 +159,13 @@ namespace ECommerceNetCore.AdminUI.Controllers
                 {
                     OptionId = addedOption.Data.Id,
                     ProductId = addedProduct.Data.Id,
-                    CurrencyId = option.CurrencyId,
+                    CurrencyId = (int)option.CurrencyId,
                     Price = option.Price,
-                    PurchasePrice = option.PurchasePrice,
-                    DiscountPrice = option.DiscountPrice,
-                    DiscountRatio = option.DiscountRatio,
+                    PurchasePrice = (decimal)option.PurchasePrice,
+                    DiscountPrice = (decimal)option.DiscountPrice,
+                    DiscountRatio = (decimal)option.DiscountRatio,
                     DiscountExpireDate = parsedDatetime,
-                    VatRatioId = option.VatRatioId,
+                    VatRatioId = (int)option.VatRatioId,
                     IsSale = option.IsSale,
                     StatusId = option.StatusId
                 };
@@ -207,7 +207,7 @@ namespace ECommerceNetCore.AdminUI.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<JsonResult> UpdateProductAsync([FromBody] ProductMasterModelDto masterProduct)//Görsellerin güncelleme ve silme işlemleri yapılacak!
+        public async Task<JsonResult> UpdateProductAsync([FromBody] ProductMasterModelDto masterProduct)
         {
             Result jsonResult = new Result(true, EntityConsts.UpdatedSuccess);
             ProductMasterModelValidator validator = new ProductMasterModelValidator();
@@ -284,11 +284,11 @@ namespace ECommerceNetCore.AdminUI.Controllers
                         ProductId = masterProduct.Id,
                         OptionName = add.OptionName,
                         UnitTypeId = add.UnitTypeId,
-                        UnitOfStock = add.UnitOfStock,
-                        Width = add.Width,
-                        Height = add.Height,
-                        Length = add.Length,
-                        Weight = add.Weight,
+                        UnitOfStock = (decimal)add.UnitOfStock,
+                        Width = (decimal)add.Width,
+                        Height = (decimal)add.Height,
+                        Length = (decimal)add.Length,
+                        Weight = (decimal)add.Weight,
                         IsAvailable = add.IsAvailable,
                         AvailableDate = parsedDatetime,
                         StatusId = add.StatusId,
@@ -308,13 +308,13 @@ namespace ECommerceNetCore.AdminUI.Controllers
                     {
                         OptionId = addedOption.Data.Id,
                         ProductId = masterProduct.Id,
-                        CurrencyId = add.CurrencyId,
+                        CurrencyId = (int)add.CurrencyId,
                         Price = add.Price,
-                        PurchasePrice = add.PurchasePrice,
-                        DiscountPrice = add.DiscountPrice,
-                        DiscountRatio = add.DiscountRatio,
+                        PurchasePrice = (decimal)add.PurchasePrice,
+                        DiscountPrice = (decimal)add.DiscountPrice,
+                        DiscountRatio = (decimal)add.DiscountRatio,
                         DiscountExpireDate = parsedDatetime,
-                        VatRatioId = add.VatRatioId,
+                        VatRatioId = (int)add.VatRatioId,
                         IsSale = add.IsSale,
                         StatusId = add.StatusId
                     };
@@ -363,17 +363,53 @@ namespace ECommerceNetCore.AdminUI.Controllers
 
                     item.OptionName = setOption.OptionName;
                     item.UnitTypeId = setOption.UnitTypeId;
-                    item.UnitOfStock = setOption.UnitOfStock;
-                    item.Width = setOption.Width;
-                    item.Height = setOption.Height;
-                    item.Length = setOption.Length;
-                    item.Weight = setOption.Weight;
+                    item.UnitOfStock = (decimal)setOption.UnitOfStock;
+                    item.Width = (decimal)setOption.Width;
+                    item.Height = (decimal)setOption.Height;
+                    item.Length = (decimal)setOption.Length;
+                    item.Weight = (int)setOption.Weight;
                     item.IsAvailable = setOption.IsAvailable;
                     item.AvailableDate = parsedDatetime;
                     item.StatusId = setOption.StatusId;
                     item.StockCode = setOption.StockCode;
 
                     _productSrv.UpdateProductOption(item);
+                }
+            }
+
+            foreach (var option in masterProduct.ProductOptions)
+            {
+                foreach (var image in option.ProductImages)
+                {
+                    if (image is null)
+                        continue;
+
+                    var base64String = image;
+                    var data = base64String.Split(',');
+                    var dataInfo = data[0];
+                    var fileName = dataInfo.Split(';')[0];
+
+                    var ifExist = await _fileHelper.CheckFileExist(fileName);
+                    //continue if file exist.
+                    if (!ifExist.Success)
+                    {
+                        byte[] bytes = Convert.FromBase64String(data[1]);
+                        var uploadedImage = await _fileHelper.ImageUpload(bytes, fileName);
+                        if (!uploadedImage.Success)
+                        {
+                            jsonResult = new SuccessResult(EntityConsts.AddedSuccess, $"/urunler/duzenle/{product.Id}");
+                            break;
+                        }
+
+                        GnlProductImage newImage = new GnlProductImage()
+                        {
+                            ProductId = product.Id,
+                            OptionId = product.Id,
+                            ImageUrl = uploadedImage.Message
+                        };
+
+                        var addedImage = _productSrv.AddProductImage(newImage);
+                    }
                 }
             }
 
@@ -397,5 +433,11 @@ namespace ECommerceNetCore.AdminUI.Controllers
             return Json(partilaView);
         }
 
+        [HttpGet]
+        [Route("image/delete/{fileName}")]
+        public async Task<JsonResult> DeleteProductImage(string fileName)
+        {
+
+        }
     }
 }

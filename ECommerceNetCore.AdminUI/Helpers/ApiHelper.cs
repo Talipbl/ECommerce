@@ -1,4 +1,7 @@
 ﻿using ECommerceNetCore.AdminUI.Models;
+using ECommerceNetCore.Application.Aspects;
+using ECommerceNetCore.Domain.Common;
+using ECommerceNetCore.Domain.Entities;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
@@ -15,6 +18,7 @@ namespace ECommerceNetCore.AdminUI.Helpers
             return ApiClient;
         }
 
+        [LogAspect]
         public static async Task<JsonModel> PostMultipartFormApiResponse(string url, byte[] entity, string fileName)
         {
             HttpClient ApiClient = CreateApiClient();
@@ -35,6 +39,21 @@ namespace ECommerceNetCore.AdminUI.Helpers
             }
             var stringResult = await message.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<JsonModel>(stringResult);
+        }
+
+        [LogAspect]
+        public static async Task<JsonModel> GetApiResponse(string url)
+        {
+            using (var client = CreateApiClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    string stringResult = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<JsonModel>(stringResult);
+                }
+            }
+            return new JsonModel(false, ValidationConst.ConnecitonError);
         }
     }
 }

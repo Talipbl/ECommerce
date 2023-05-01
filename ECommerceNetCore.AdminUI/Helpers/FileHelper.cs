@@ -23,5 +23,12 @@ namespace ECommerceNetCore.AdminUI.Helpers
             var uploadUrl = $"{ImageApiUrl}upload";
             return await ApiHelper.PostMultipartFormApiResponse(uploadUrl, imageBytes, fileName);
         }
+
+        [LogAspect]
+        public async Task<JsonModel> CheckFileExist(string fileName)
+        {
+            var uploadUrl = $"{ImageApiUrl}check/{fileName}";
+            return await ApiHelper.GetApiResponse(uploadUrl);
+        }
     }
 }

@@ -32,5 +32,19 @@ namespace ECommerceNetCore.ImageAPI.Controllers
             }
 
         }
+
+        [HttpGet("check/{fileName}")]
+        public JsonResult CheckFile(string fileName)
+        {
+            try
+            {
+                return Json(new Result(_fileHelper.CheckFileExist(fileName)));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorResult(ex.Message));
+            }
+
+        }
     }
 }

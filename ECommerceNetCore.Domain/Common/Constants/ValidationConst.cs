@@ -9,5 +9,6 @@ namespace ECommerceNetCore.Domain.Common
     public class ValidationConst
     {
         public const string ValidationFailed = "Doğrulama başarısız. Lütfen kontrol ediniz.";
+        public const string ConnecitonError = "Bağlantı başarısız";
     }
 }

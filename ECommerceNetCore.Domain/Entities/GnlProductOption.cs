@@ -10,23 +10,23 @@ public partial class GnlProductOption : BaseEntity
 
     public string OptionName { get; set; } = null!;
 
-    public string? StockCode { get; set; }
+    public string StockCode { get; set; }
 
-    public decimal? UnitOfStock { get; set; }
+    public decimal UnitOfStock { get; set; }
 
     public int UnitTypeId { get; set; }
 
-    public decimal? Length { get; set; }
+    public decimal Length { get; set; }
 
-    public decimal? Height { get; set; }
+    public decimal Height { get; set; }
 
-    public decimal? Width { get; set; }
+    public decimal Width { get; set; }
 
-    public decimal? Weight { get; set; }
+    public decimal Weight { get; set; }
 
     public int StatusId { get; set; }
 
-    public bool? IsAvailable { get; set; }
+    public bool IsAvailable { get; set; }
 
     public DateTime? AvailableDate { get; set; }
 

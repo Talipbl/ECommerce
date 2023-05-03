@@ -48,17 +48,29 @@ namespace ECommerceNetCore.ImageAPI.Helpers
                 string imageExtension = Path.GetExtension(file.FileName);
                 string imageName = file.FileName;
 
-                var typeResult = CheckFileTypeValid(imageExtension);
-                if (!typeResult)
-                {
+                if (!CheckFileTypeValid(imageExtension))
                     return "Wrong File Type";
-                }
 
                 CheckDirectoryExists(endPoint);
+                if (CheckFileExist(imageName))
+                    imageName += new Random(111);
+
                 CreateFile(endPoint + imageName, file);
                 return (directory + imageName).Replace("\\", "/");
             }
             return "Empty File";
+        }
+
+        public bool RemoveFile(string fileName)
+        {
+            string[] files = Directory.GetFiles(CurrentDirectory, fileName, SearchOption.AllDirectories);
+            if (files.Count() > 0)
+            {
+                File.Delete(files[0]);
+                return true;
+            }
+
+            return false;
         }
     }
 }

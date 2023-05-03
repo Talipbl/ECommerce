@@ -233,7 +233,8 @@ namespace ECommerceNetCore.Application.Services
 
         public IResult UpdateProductOption(GnlProductOption option)
         {
-            throw new NotImplementedException();
+            var result = _optionRepo.Update(option);
+            return new Result(result);
         }
         #endregion
 

@@ -10,5 +10,6 @@ namespace ECommerceNetCore.Domain.Common
     {
         public const string ValidationFailed = "Doğrulama başarısız. Lütfen kontrol ediniz.";
         public const string ConnecitonError = "Bağlantı başarısız";
+        public const string FileIsEmpty = "Dosya boş";
     }
 }

@@ -31,9 +31,9 @@ namespace ECommerceNetCore.Application.MethodInterceptors
             }
             catch (Exception e)
             {
-                var logManager = ApplicationRegisterModule.ServiceProvider.GetService<ILogManager>();
-                logManager.LogError(invocation.Method.Name, e.Message);
-                invocation.ReturnValue = new ErrorResult(e.Message);
+                //var logManager = ApplicationRegisterModule.ServiceProvider.GetService<ILogManager>();
+                //logManager.LogError(invocation.Method.Name, $"{e.Message} -- {e.InnerException.Message} -- {e.StackTrace}");
+                //invocation.ReturnValue = new ErrorResult(e.Message);
                 IsSuccess = false;
                 OnException(invocation, e);
             }

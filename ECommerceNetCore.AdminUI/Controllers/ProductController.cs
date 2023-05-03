@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Newtonsoft.Json;
 using System.Globalization;
+using System.Net.WebSockets;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -437,7 +438,11 @@ namespace ECommerceNetCore.AdminUI.Controllers
         [Route("image/delete/{fileName}")]
         public async Task<JsonResult> DeleteProductImage(string fileName)
         {
+            if (string.IsNullOrEmpty(fileName))
+                return Json(new JsonModel(false, ValidationConst.FileIsEmpty));
 
+            var result = await _fileHelper.RemoveFile(fileName);
+            return Json(result);
         }
     }
 }

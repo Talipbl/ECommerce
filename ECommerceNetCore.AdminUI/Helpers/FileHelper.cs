@@ -27,8 +27,15 @@ namespace ECommerceNetCore.AdminUI.Helpers
         [LogAspect]
         public async Task<JsonModel> CheckFileExist(string fileName)
         {
-            var uploadUrl = $"{ImageApiUrl}check/{fileName}";
-            return await ApiHelper.GetApiResponse(uploadUrl);
+            var checkUrl = $"{ImageApiUrl}check/{fileName}";
+            return await ApiHelper.GetApiResponse(checkUrl);
+        }
+
+        [LogAspect]
+        public async Task<JsonModel> RemoveFile(string fileName)
+        {
+            var removeUrl = $"{ImageApiUrl}remove/{fileName}";
+            return await ApiHelper.GetApiResponse(removeUrl);
         }
     }
 }

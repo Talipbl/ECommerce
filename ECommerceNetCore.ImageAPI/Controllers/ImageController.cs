@@ -46,5 +46,19 @@ namespace ECommerceNetCore.ImageAPI.Controllers
             }
 
         }
+
+        [HttpGet("remove/{fileName}")]
+        public JsonResult RemoveFile(string fileName)
+        {
+            try
+            {
+                return Json(new Result(_fileHelper.RemoveFile(fileName)));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorResult(ex.Message));
+            }
+
+        }
     }
 }

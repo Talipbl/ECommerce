@@ -6,5 +6,6 @@
         bool CheckFileExist(string fileName);
         void CreateFile(string directory, IFormFile file);
         string Upload(IFormFile file, string directory = "");
+        bool RemoveFile(string fileName);
     }
 }

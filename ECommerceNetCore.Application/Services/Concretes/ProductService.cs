@@ -135,9 +135,14 @@ namespace ECommerceNetCore.Application.Services
             return new SuccessDataResult<ProductMasterModelDto>(masterProduct);
         }
 
-        public IListResult<GnlProduct> GetProducts(int categoryId = 0, int brandId = 0, int manufacturerId = 0, int xmlId = 0, int statusId = 1, bool onlyInStock = true, bool onlySale = false)
+        public IListResult<ProductsModelDto> GetProducts(int categoryId = 0, int brandId = 0, int manufacturerId = 0, int xmlId = 0, int statusId = 1, int start = 0, int take = 25)
         {
-            throw new NotImplementedException();
+            return _productRepo.GetProducts(categoryId, brandId, manufacturerId, xmlId, statusId, start, take);
+        }
+
+        public int GetProductsCount()
+        {
+            return _productRepo.GetCount();
         }
         #endregion
 

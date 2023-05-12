@@ -57,7 +57,7 @@ namespace ECommerceNetCore.Persistance.Repositories
             }
         }
 
-        public IEnumerable<TEntity> GetAll<TSorted>(Expression<Func<TEntity, bool>> filter = null, Expression<Func<TEntity, TSorted>> sortedBy = null, int sortOrder = (int)SortOrder.Ascending, params Expression<Func<TEntity, object>>[] includes)
+        public IEnumerable<TEntity> GetAll<TSorted>(Expression<Func<TEntity, bool>> filter = null, Expression<Func<TEntity, TSorted>> sortedBy = null, int sortOrder = (int)SortOrder.Ascending, int skip = 0, int take = 0, params Expression<Func<TEntity, object>>[] includes)
         {
             using (TContext context = new TContext())
             {
@@ -65,6 +65,7 @@ namespace ECommerceNetCore.Persistance.Repositories
                 query = includes.Aggregate(query, (current, child) => current.Include(child));
                 var result = filter != null ? query.Where(filter) : query;
                 result = sortedBy != null ? (sortOrder == (int)SortOrder.Ascending ? result.OrderBy(sortedBy) : result.OrderByDescending(sortedBy)) : result;
+                result = take != 0 ? result.Skip(skip).Take(take) : result;
                 return result.ToList();
             }
         }

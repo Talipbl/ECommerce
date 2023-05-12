@@ -42,6 +42,13 @@ namespace ECommerceNetCore.AdminUI.Controllers
         }
 
         [HttpGet]
+        [Route("")]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
         [Route("yeni-urun")]
         public IActionResult AddProduct()
         {
@@ -76,6 +83,31 @@ namespace ECommerceNetCore.AdminUI.Controllers
             model.VatRatios = _systemsrv.GetVatRatios().Data;
             model.UnitTypes = _systemsrv.GetUnitTypes().Data;
             return View(model);
+        }
+
+        [HttpGet]
+        [Route("list")]
+        public JsonResult GetProducts()
+        {
+            DataTableModel<ProductsModelDto> model = new DataTableModel<ProductsModelDto>();
+
+            //int categoryId = Convert.ToInt32(HttpContext.Request.Query["category"]);
+            //int brandId = Convert.ToInt32(HttpContext.Request.Query["brand"]);
+            //int manufacturerId = Convert.ToInt32(HttpContext.Request.Query["manufacturer"]);
+            //int xmlId = Convert.ToInt32(HttpContext.Request.Query["xml"]);
+            //int statusId = Convert.ToInt32(HttpContext.Request.Query["status"]);
+            int draw = Convert.ToInt32(HttpContext.Request.Query["draw"]);
+            int startRec = Convert.ToInt32(HttpContext.Request.Query["start"]);
+            int pageSize = Convert.ToInt32(HttpContext.Request.Query["length"]);
+
+            var result = _productSrv.GetProducts(/*categoryId, brandId, manufacturerId, xmlId, statusId*/0, 0, 0, 0, 1, startRec, pageSize);
+
+            model.data = result.Data;
+            model.recordsTotal = _productSrv.GetProductsCount();
+            model.recordsFiltered = result.Count;
+            model.draw = draw;
+
+            return Json(model);
         }
 
         [HttpPost]

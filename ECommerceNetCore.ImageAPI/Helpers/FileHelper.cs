@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ECommerceNetCore.Application.Results;
+using IResult = ECommerceNetCore.Application.Results.IResult;
 
 namespace ECommerceNetCore.ImageAPI.Helpers
 {
@@ -33,10 +34,12 @@ namespace ECommerceNetCore.ImageAPI.Helpers
             }
         }
 
-        public bool CheckFileExist(string fileName)
+        public IResult CheckFileExist(string fileName)
         {
             string[] files = Directory.GetFiles(CurrentDirectory, fileName, SearchOption.AllDirectories);
-            return files.Count() > 0 ? true : false;
+            if (files.Count() > 0)
+                return new SuccessResult(files[0]);
+            return new ErrorResult();
         }
 
         public string Upload(IFormFile file, string directory = "")
@@ -46,13 +49,13 @@ namespace ECommerceNetCore.ImageAPI.Helpers
                 string endPoint = CurrentDirectory + directory;
 
                 string imageExtension = Path.GetExtension(file.FileName);
-                string imageName = file.FileName;
+                string imageName = file.FileName.Replace(" ", "").Replace("/", "");//Özel ve Türkçe karakter kontrolü yaptırmalıyız. Bunun için bir yardımcı metot oluşturacağız.
 
                 if (!CheckFileTypeValid(imageExtension))
                     return "Wrong File Type";
 
                 CheckDirectoryExists(endPoint);
-                if (CheckFileExist(imageName))
+                if (CheckFileExist(imageName).Success)
                     imageName += new Random(111);
 
                 CreateFile(endPoint + imageName, file);

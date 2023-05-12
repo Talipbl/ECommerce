@@ -22,10 +22,10 @@ namespace ECommerceNetCore.Application.Interfaces
         #endregion
 
         #region ProductImage
-
+        IDataResult<GnlProductImage> GetProductImage(string filename);
         IDataResult<GnlProductImage> AddProductImage(GnlProductImage image);
         IResult UpdateProductImage(GnlProductImage image);
-        IResult DeleteProductImage(int id);
+        IResult DeleteProductImage(GnlProductImage image);
         #endregion
 
         #region Product Option

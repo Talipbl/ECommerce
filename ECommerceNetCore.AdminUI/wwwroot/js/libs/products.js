@@ -10,6 +10,7 @@ window.onload = function () {
     initialize();
 }
 window.remove = removeOption;
+window.deleteI = deleteImage;
 window.checkCategory = checkMainCategory;
 window.checkSubCategory = checkSubCategory;
 
@@ -120,9 +121,16 @@ function uploadImage(input) {
         inp.setAttribute('hidden', true);
         inp.value = file.name + ';' + reader.result;
 
+        let del = document.createElement('a');
+        del.href = 'javascript:;';
+        del.className = 'btn btn-warning btn-sm';
+        del.setAttribute('onclick', 'deleteI(this)');
+        del.innerHTML = 'delete';
+
         a.appendChild(img);
         div.appendChild(a);
         div.appendChild(inp);
+        div.appendChild(del);
 
         input.parentNode.parentNode.parentNode.querySelector('#option-images').appendChild(div);
     };
@@ -326,18 +334,23 @@ async function addSubCategory() {
     document.querySelector('#btn-add-category').setAttribute('disabled', true);
     document.querySelector('#btn-remove-category').removeAttribute('hidden');
 }
-async function deleteImage(fileName) {
+async function deleteImage(image) {
     let answer = await swal.fire({ title: 'Ürün görselini silmek istediğinize emin misiniz?', icon: 'question', confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', showCancelButton: true, confirmButtonText: 'Evet', cancelButtonText: 'Hayır' });
     if (!answer.value) {
         return;
     }
 
-    let result = await fetch("/products/iamge/delete/" + fileName);
+    let expl = image.getAttribute('data-exp');
+    if (expl != 'installed') {
+        image.parentNode.remove();
+        return;
+    }
+
+    let name = image.getAttribute('data-file');
+    let result = await fetch("/products/image/delete/" + name);
     let jsonResult = await result.json();
 
-    if (jsonResult.Success) {
-        //Burada html öğesini sileceğiz.
-    }
+    image.parentNode.remove();
 }
 async function checkMainCategory(e) {
 

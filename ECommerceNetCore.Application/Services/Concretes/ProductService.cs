@@ -88,7 +88,7 @@ namespace ECommerceNetCore.Application.Services
 
             var options = _optionRepo.GetOptions(productId, (int)StatusTypes.All).Data;
             var prices = _priceRepo.GetPricesByProductId(productId).Data;
-            var images = _imageRepo.GetIamges(productId).Data;
+            var images = _imageRepo.GetImages(productId).Data;
 
             foreach (var option in options)
             {
@@ -120,9 +120,10 @@ namespace ECommerceNetCore.Application.Services
 
                 if (images.Count > 0)
                 {
+                    model.ProductImages = new string[images.Count];
                     var image = images.Where(x => x.OptionId == option.Id).ToList();
 
-                    for (int i = 0; i < image.Count - 1; i++)
+                    for (int i = 0; i < image.Count; i++)
                     {
                         model.ProductImages[i] = image[i].ImageUrl;
                     }
@@ -141,6 +142,10 @@ namespace ECommerceNetCore.Application.Services
         #endregion
 
         #region Product Image
+        public IDataResult<GnlProductImage> GetProductImage(string filename)
+        {
+            return _imageRepo.GetImage(filename);
+        }
 
         [LogAspect]
         public IDataResult<GnlProductImage> AddProductImage(GnlProductImage image)
@@ -149,9 +154,9 @@ namespace ECommerceNetCore.Application.Services
             return new SuccessDataResult<GnlProductImage>(result);
         }
 
-        public IResult DeleteProductImage(int id)
+        public IResult DeleteProductImage(GnlProductImage image)
         {
-            throw new NotImplementedException();
+            return new Result(_imageRepo.Delete(image));
         }
 
         public IResult UpdateProductImage(GnlProductImage image)

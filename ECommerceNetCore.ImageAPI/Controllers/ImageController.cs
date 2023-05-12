@@ -38,7 +38,8 @@ namespace ECommerceNetCore.ImageAPI.Controllers
         {
             try
             {
-                return Json(new Result(_fileHelper.CheckFileExist(fileName)));
+                var result = _fileHelper.CheckFileExist(fileName);
+                return Json(new Result(result.Success, result.Message));
             }
             catch (Exception ex)
             {

@@ -7,9 +7,15 @@ namespace ECommerceNetCore.Persistance.Repositories
 {
     public class EfProductImageRepository : EfBaseEntityRepository<GnlProductImage, EcommerceNetCoreContext>, IProductImageRepository
     {
-        public IListResult<GnlProductImage> GetIamges(int optionId)
+        public IDataResult<GnlProductImage> GetImage(string filename)
         {
-            var result = this.GetAll(x => x.OptionId == optionId).ToList();
+            var result = this.Get(x => x.ImageUrl == filename);
+            return new SuccessDataResult<GnlProductImage>(result);
+        }
+
+        public IListResult<GnlProductImage> GetImages(int productId)
+        {
+            var result = this.GetAll(x => x.ProductId == productId).ToList();
             return new ListResult<GnlProductImage>(result, result.Count);
         }
     }

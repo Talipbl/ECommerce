@@ -405,7 +405,7 @@ namespace ECommerceNetCore.AdminUI.Controllers
                         GnlProductImage newImage = new GnlProductImage()
                         {
                             ProductId = product.Id,
-                            OptionId = product.Id,
+                            OptionId = option.Id,
                             ImageUrl = uploadedImage.Message
                         };
 
@@ -441,7 +441,18 @@ namespace ECommerceNetCore.AdminUI.Controllers
             if (string.IsNullOrEmpty(fileName))
                 return Json(new JsonModel(false, ValidationConst.FileIsEmpty));
 
+            var isExist = await _fileHelper.CheckFileExist(fileName);
+            if (!isExist.Success)
+                return Json(new JsonModel(false, ValidationConst.FileIsEmpty));
+
+            var pathParts = isExist.Message.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+            var filesName = $"/{pathParts[pathParts.Length - 2]}";
+            var imageName = $"/{pathParts.Last()}";
+            var image = _productSrv.GetProductImage(filesName + imageName);
             var result = await _fileHelper.RemoveFile(fileName);
+            if (result.Success)
+                _productSrv.DeleteProductImage(image.Data);
+
             return Json(result);
         }
     }

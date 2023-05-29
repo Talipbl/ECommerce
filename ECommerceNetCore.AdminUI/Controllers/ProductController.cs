@@ -49,7 +49,7 @@ namespace ECommerceNetCore.AdminUI.Controllers
         }
 
         [HttpGet]
-        [Route("yeni-urun")]
+        [Route("yeni")]
         public IActionResult AddProduct()
         {
             ProductModifyModel model = new ProductModifyModel();
@@ -91,6 +91,7 @@ namespace ECommerceNetCore.AdminUI.Controllers
         {
             DataTableModel<ProductsModelDto> model = new DataTableModel<ProductsModelDto>();
 
+            //TODO: Filtreleme işlemi yapılacak.
             //int categoryId = Convert.ToInt32(HttpContext.Request.Query["category"]);
             //int brandId = Convert.ToInt32(HttpContext.Request.Query["brand"]);
             //int manufacturerId = Convert.ToInt32(HttpContext.Request.Query["manufacturer"]);

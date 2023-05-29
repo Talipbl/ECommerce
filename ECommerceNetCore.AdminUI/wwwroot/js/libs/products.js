@@ -396,6 +396,7 @@ if (document.querySelector('#btn-complete')) {
         addProduct();
     });
 }
+
 document.querySelector('#btn-add-option').addEventListener('click', function () {
     addOption();
 });

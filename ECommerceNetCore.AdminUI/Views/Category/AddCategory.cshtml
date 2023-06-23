@@ -1,6 +1,6 @@
 ﻿@model List<DefCategory>
 @{
-    ViewData["Title"] = "Yeni Ürün Ekle";
+    ViewData["Title"] = "Kategori Yönetimi";
 }
 
 <div class="content-wrapper">
@@ -8,7 +8,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header d-flex p-0">
-                    <h3 class="card-title p-3">Ürün Ekleme</h3>
+                    <h3 class="card-title p-3">Kategori Yönetimi</h3>
                 </div>
                 <div class="card-body">
                     A wonderful serenity has taken possession of my entire soul,
@@ -40,13 +40,12 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md col-sm-12">
-                            <!-- Select multiple-->
                             <div class="form-group">
                                 <label>Ana Kategori</label>
                                 <select id="main-category" multiple class="form-control" size="10">
                                     @foreach (var item in Model)
                                     {
-                                        <option value="@item.Id">@item.CategoryName</option>
+                                        <option value="@item.Id" data-desc="@Html.Raw(item.Descriptipn)">@item.CategoryName</option>
                                     }
                                 </select>
                                 <div class="row mt-1">
@@ -54,13 +53,12 @@
                                         <button hidden type="button" class="btn btn-sm btn-block btn-success btn-flat add-main">Ekle</button>
                                     </div>
                                     <div class="col-6">
-                                        <button hidden type="button" class="btn btn-sm btn-block btn-primary btn-flat">Düzenle</button>
+                                        <button hidden type="button" class="btn btn-sm btn-block btn-primary btn-flat edit-main">Düzenle</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md col-sm-12">
-                            <!-- Select multiple-->
                             <div id="div-1-category" class="form-group">
                                 <label>1. Alt Kategori</label>
                                 <select disabled id="sub-1-category" multiple class="form-control" size="10">
@@ -70,13 +68,12 @@
                                         <button hidden type="button" class="btn btn-sm btn-block btn-success btn-flat sub-1-btn add-sub">Ekle</button>
                                     </div>
                                     <div class="col-6">
-                                        <button hidden type="button" class="btn btn-sm btn-block btn-primary btn-flat sub-1-btn">Düzenle</button>
+                                        <button hidden type="button" class="btn btn-sm btn-block btn-primary btn-flat sub-1-btn edit-sub">Düzenle</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md col-sm-12">
-                            <!-- Select multiple-->
                             <div id="div-2-category" class="form-group">
                                 <label>2. Alt Kategori</label>
                                 <select disabled id="sub-2-category" multiple class="form-control" size="10">
@@ -86,13 +83,12 @@
                                         <button hidden type="button" class="btn btn-sm btn-block btn-success btn-flat sub-2-btn add-sub">Ekle</button>
                                     </div>
                                     <div class="col-6">
-                                        <button hidden type="button" class="btn btn-sm btn-block btn-primary btn-flat sub-2-btn">Düzenle</button>
+                                        <button hidden type="button" class="btn btn-sm btn-block btn-primary btn-flat sub-2-btn edit-sub">Düzenle</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md col-sm-12">
-                            <!-- Select multiple-->
                             <div id="div-3-category" class="form-group">
                                 <label>3. Alt Kategori</label>
                                 <select disabled id="sub-3-category" multiple class="form-control" size="10">
@@ -102,13 +98,12 @@
                                         <button hidden type="button" class="btn btn-sm btn-block btn-success btn-flat sub-3-btn add-sub">Ekle</button>
                                     </div>
                                     <div class="col-6">
-                                        <button hidden type="button" class="btn btn-sm btn-block btn-primary btn-flat sub-3-btn">Düzenle</button>
+                                        <button hidden type="button" class="btn btn-sm btn-block btn-primary btn-flat sub-3-btn edit-sub">Düzenle</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md col-sm-12">
-                            <!-- Select multiple-->
                             <div id="div-4-category" class="form-group">
                                 <label>4. Alt Kategori</label>
                                 <select disabled id="sub-4-category" multiple class="form-control" size="10">
@@ -118,7 +113,7 @@
                                         <button hidden type="button" class="btn btn-sm btn-block btn-success btn-flat sub-4-btn add-sub">Ekle</button>
                                     </div>
                                     <div class="col-6">
-                                        <button hidden type="button" class="btn btn-sm btn-block btn-primary btn-flat sub-4-btn">Düzenle</button>
+                                        <button hidden type="button" class="btn btn-sm btn-block btn-primary btn-flat sub-4-btn edit-sub">Düzenle</button>
                                     </div>
                                 </div>
                             </div>
@@ -131,25 +126,53 @@
 </div>
 
 <div class="modal fade" id="add-sub-modal">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Small Modal</h4>
+                <h4 class="modal-title">Kategori Ekle</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <label>Ad</label>
-                <input type="text" class="form-control" id="categoryName" name="MinimumOrder" placeholder="Kategori Adı:">
-                <hr />
-                <label>Açıklama</label>
-                <input type="text" class="form-control" id="categoryDesc" name="MinimumOrder" placeholder="Kategori Açıklaması:">
+            <form id="category-form">
+                <div class="modal-body">
+                    <label>Ad</label>
+                    <input type="text" class="form-control" name="name" id="categoryName" placeholder="Kategori Adı:">
+                    <hr />
+                    <label>Açıklama</label>
+                    <textarea rows="3" type="text" class="form-control" name="desc" id="categoryDesc" placeholder="Kategori Açıklaması:"></textarea>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary" onclick="add()">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modify-sub-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kategori Düzenle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
-                <button type="button" class="btn btn-primary" onclick="addSub()">Kaydet</button>
-            </div>
+            <form id="update-form">
+                <div class="modal-body">
+                    <label>Ad</label>
+                    <input type="text" class="form-control" name="name" id="categoryName" placeholder="Kategori Adı:">
+                    <hr />
+                    <label>Açıklama</label>
+                    <textarea rows="3" type="text" class="form-control" name="desc" id="categoryDesc" placeholder="Kategori Açıklaması:"></textarea>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary" onclick="update()">Kaydet</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

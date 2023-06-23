@@ -23,7 +23,7 @@ namespace ECommerceNetCore.Application.Aspects
         }
         protected override void OnException(IInvocation invocation, Exception e)
         {
-            _errorMessage = $"{e.Message} -- {e.InnerException.Message} -- {e.StackTrace}";
+            _errorMessage = $"{e.Message} -- {e.InnerException ?? new Exception()} -- {e.StackTrace}";
             IsSuccess = false;
         }
         protected override void OnAfter(IInvocation invocation)

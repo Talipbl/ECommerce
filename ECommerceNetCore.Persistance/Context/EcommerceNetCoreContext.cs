@@ -74,9 +74,7 @@ public partial class EcommerceNetCoreContext : DbContext
 
     public virtual DbSet<SysVatRatio> SysVatRatios { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=talipbulundu.com\\MSSQLSERVER2014;Database=ECommerceNetCore;User Id=root;Password=34Q1wt&n5; Encrypt=false;");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Server=talipbulundu.com\\MSSQLSERVER2014;Database=ECommerceNetCore;User Id=root;Password=34Q1wt&n5; Encrypt=false;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -633,8 +631,8 @@ public partial class EcommerceNetCoreContext : DbContext
 
             entity.ToTable("Sys_ErrorLogs", "dbo");
 
-            entity.Property(e => e.ErrorMessage).HasMaxLength(1000);
-            entity.Property(e => e.MethodName).HasMaxLength(100);
+            entity.Property(e => e.ErrorMessage).HasMaxLength(2500);
+            entity.Property(e => e.MethodName).HasMaxLength(2500);
         });
 
         modelBuilder.Entity<SysMailType>(entity =>

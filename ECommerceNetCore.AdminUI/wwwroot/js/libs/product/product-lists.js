@@ -64,7 +64,7 @@ async function getList() {
                 "render": function (data, type, row) {
                     let render = '';
                     render += '<div class="input-group-prepend">';
-                    render += '<button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false">İşlemler</button>';
+                    render += '<button type="button" class="btn btn-sm btn-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false">İşlemler</button>';
                     render += '<ul class="dropdown-menu" style="">' +
                         '<li class="dropdown-item"><a href="/urunler/duzenle/' + row.Id + '" target="_blank" data-original-title="Düzenle" title="Düzenle"><i class="fa fa-edit"></i> Düzenle</a>&nbsp;</li>' +
                         '<li class="dropdown-item"><a href="javascript:;" data-original-title="Liste Dışı Bırak" title="Liste Dışı Bırak"><i class="fa fa-ban"></i> Liste Dışı Bırak</a>&nbsp;</li>' +

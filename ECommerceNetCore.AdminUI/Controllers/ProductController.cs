@@ -97,6 +97,7 @@ namespace ECommerceNetCore.AdminUI.Controllers
             //int manufacturerId = Convert.ToInt32(HttpContext.Request.Query["manufacturer"]);
             //int xmlId = Convert.ToInt32(HttpContext.Request.Query["xml"]);
             //int statusId = Convert.ToInt32(HttpContext.Request.Query["status"]);
+
             int draw = Convert.ToInt32(HttpContext.Request.Query["draw"]);
             int startRec = Convert.ToInt32(HttpContext.Request.Query["start"]);
             int pageSize = Convert.ToInt32(HttpContext.Request.Query["length"]);

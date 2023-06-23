@@ -1,5 +1,6 @@
 ﻿using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Results;
+using ECommerceNetCore.Domain;
 using ECommerceNetCore.Domain.Entities;
 
 namespace ECommerceNetCore.Application.Services
@@ -12,9 +13,9 @@ namespace ECommerceNetCore.Application.Services
             _categoryRepo = categoryRepo;
         }
         #region Category
-        public IDataResult<DefCategory> AddCategory(DefCategory category)
+        public DefCategory AddCategory(DefCategory category)
         {
-            throw new NotImplementedException();
+            return _categoryRepo.Add(category);
         }
 
         public IResult DeleteCategory(int categoryId)
@@ -29,19 +30,24 @@ namespace ECommerceNetCore.Application.Services
 
         public IDataResult<DefCategory> GetCategory(int categoryId)
         {
-            throw new NotImplementedException();
+            return _categoryRepo.GetCategory(categoryId);
         }
 
         public IResult UpdateCategory(DefCategory category)
         {
-            throw new NotImplementedException();
+            var result = _categoryRepo.Update(category);
+            return new Result(result);
+        }
+        public IListResult<DefCategory> GetCategories(int startRec, int pageSize)
+        {
+            return _categoryRepo.GetCategories();
         }
         #endregion
 
         #region Sub Category
-        public IDataResult<DefSubCategory> AddSubCategory(DefSubCategory subCategory)
+        public DefSubCategory AddSubCategory(DefSubCategory subCategory)
         {
-            throw new NotImplementedException();
+            return _categoryRepo.AddSubCategory(subCategory);
         }
 
         public IResult DeleteSubCategory(int subCategoryId)
@@ -56,12 +62,17 @@ namespace ECommerceNetCore.Application.Services
 
         public IDataResult<DefSubCategory> GetSubCategory(int subCategoryId)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<DefSubCategory>(_categoryRepo.GetSubCategory(subCategoryId));
         }
 
         public IResult UpdateSubCategory(DefSubCategory subCategory)
         {
-            throw new NotImplementedException();
+            var result = _categoryRepo.UpdateSubCategory(subCategory);
+            return new Result(result);
+        }
+        public IListResult<CategoryListModel> GetSubCategories(int startRec, int pageSize)
+        {
+            return _categoryRepo.GetSubCategories(startRec, pageSize);
         }
         #endregion
     }

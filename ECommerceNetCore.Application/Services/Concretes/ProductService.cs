@@ -142,7 +142,14 @@ namespace ECommerceNetCore.Application.Services
 
         public int GetProductsCount()
         {
-            return _productRepo.GetCount();
+            try
+            {
+                return _productRepo.GetCount<GnlProduct>();
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
         }
         #endregion
 

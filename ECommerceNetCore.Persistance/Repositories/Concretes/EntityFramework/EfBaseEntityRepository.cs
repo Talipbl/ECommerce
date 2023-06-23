@@ -29,6 +29,19 @@ namespace ECommerceNetCore.Persistance.Repositories
             }
         }
 
+        public T Add<T>(T entity)
+        {
+            using (TContext context = new TContext())
+            {
+                context.Entry(entity).State = EntityState.Added;
+                if (context.SaveChanges() > 0)
+                {
+                    return entity;
+                }
+                return entity;
+            }
+        }
+
         public bool Delete(TEntity entity)
         {
             using (TContext context = new TContext())
@@ -62,6 +75,18 @@ namespace ECommerceNetCore.Persistance.Repositories
             using (TContext context = new TContext())
             {
                 IQueryable<TEntity> query = context.Set<TEntity>();
+                query = includes.Aggregate(query, (current, child) => current.Include(child));
+                var result = filter != null ? query.Where(filter) : query;
+                result = sortedBy != null ? (sortOrder == (int)SortOrder.Ascending ? result.OrderBy(sortedBy) : result.OrderByDescending(sortedBy)) : result;
+                result = take != 0 ? result.Skip(skip).Take(take) : result;
+                return result.ToList();
+            }
+        }
+        public IEnumerable<T> GetAll<TSorted, T>(Expression<Func<T, bool>> filter = null, Expression<Func<T, TSorted>> sortedBy = null, int sortOrder = (int)SortOrder.Ascending, int skip = 0, int take = 0, params Expression<Func<T, object>>[] includes) where T : class, IEntity, new()
+        {
+            using (TContext context = new TContext())
+            {
+                IQueryable<T> query = context.Set<T>();
                 query = includes.Aggregate(query, (current, child) => current.Include(child));
                 var result = filter != null ? query.Where(filter) : query;
                 result = sortedBy != null ? (sortOrder == (int)SortOrder.Ascending ? result.OrderBy(sortedBy) : result.OrderByDescending(sortedBy)) : result;
@@ -103,8 +128,27 @@ namespace ECommerceNetCore.Persistance.Repositories
                 return context.Set<TEntity>().Count();
             }
         }
+        public int GetCount<T>() where T : class, IEntity, new()
+        {
+            using (TContext context = new TContext())
+            {
+                return context.Set<T>().Count();
+            }
+        }
 
         public bool Update(TEntity entity)
+        {
+            using (TContext context = new TContext())
+            {
+                context.Entry(entity).State = EntityState.Modified;
+                if (context.SaveChanges() > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+        public bool Update<T>(T entity)
         {
             using (TContext context = new TContext())
             {

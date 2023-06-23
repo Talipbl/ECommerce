@@ -16,8 +16,9 @@ namespace ECommerceNetCore.Application.MethodInterceptors
             var classAttributes = type.GetCustomAttributes<MethodInterceptor>(true).ToList();
             List<Type> types = new List<Type>();
             method.GetParameters().ToList().ForEach(x => types.Add(x.ParameterType));
+            var generic = method.GetGenericArguments().Count();
             var arrayTypes = types.ToArray();
-            var methodAttributes = type.GetMethod(method.Name, arrayTypes).GetCustomAttributes<MethodInterceptor>(true);
+            var methodAttributes = type.GetMethod(method.Name, generic, arrayTypes).GetCustomAttributes<MethodInterceptor>(true);
             classAttributes.AddRange(methodAttributes);
 
             return classAttributes.ToArray();

@@ -1,5 +1,4 @@
-﻿import { getFormJson, newGuid } from '../modules/form.js';
-
+﻿import { getFormJson, newGuid } from '../../modules/form.js';
 
 let subCategoryId = [];
 let subSelect = document.querySelector('#sub-category');
@@ -23,7 +22,7 @@ function initialize() {
     $('#main-category').select2({
         theme: 'bootstrap4'
     }).on('select2:select', function (e) {
-        checkCategory(e);
+        checkMainCategory(e);
     });
 
     $('select[name="SubCategoryId"]').select2({

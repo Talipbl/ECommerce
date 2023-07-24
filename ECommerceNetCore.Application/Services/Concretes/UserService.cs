@@ -6,6 +6,12 @@ namespace ECommerceNetCore.Application.Services
 {
     public class UserService : IUserService
     {
+        IUserRepository _userRepo;
+
+        public UserService(IUserRepository userRepo)
+        {
+            _userRepo = userRepo;
+        }
         #region User
         public IDataResult<GnlUser> AddUser(GnlUser user)
         {
@@ -24,7 +30,7 @@ namespace ECommerceNetCore.Application.Services
 
         public IListResult<GnlUser> GetAllUsers(int statudId = 1)
         {
-            throw new NotImplementedException();
+            return _userRepo.GetAllUsers(statudId);
         }
 
         public IDataResult<GnlUser> GetUser(string userName, string userMail)

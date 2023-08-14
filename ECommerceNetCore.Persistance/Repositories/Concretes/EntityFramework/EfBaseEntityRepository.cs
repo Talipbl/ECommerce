@@ -112,6 +112,7 @@ namespace ECommerceNetCore.Persistance.Repositories
                 return filter != null ? query.Where(filter).ToList() : query.ToList();
             }
         }
+
         public IEnumerable<T> GetAll<T>(Expression<Func<T, bool>> filter = null) where T : class, IEntity, new()
         {
             using (TContext context = new TContext())

@@ -28,9 +28,9 @@ namespace ECommerceNetCore.Application.Services
             throw new NotImplementedException();
         }
 
-        public IListResult<GnlUser> GetAllUsers(int statudId = 1)
+        public IListResult<GnlUser> GetAllUsers(int statudId = 1, int start = 0, int take = 25)
         {
-            return _userRepo.GetAllUsers(statudId);
+            return _userRepo.GetAllUsers(statudId, start, take);
         }
 
         public IDataResult<GnlUser> GetUser(string userName, string userMail)

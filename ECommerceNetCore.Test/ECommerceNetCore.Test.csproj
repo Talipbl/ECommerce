@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ECommerceNetCore.Application\ECommerceNetCore.Application.csproj" />
+    <ProjectReference Include="..\ECommerceNetCore.Service\ECommerceNetCore.Service.csproj" />
   </ItemGroup>
 
 </Project>

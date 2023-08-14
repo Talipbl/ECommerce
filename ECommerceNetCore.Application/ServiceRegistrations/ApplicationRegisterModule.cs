@@ -22,7 +22,7 @@ namespace ECommerceNetCore.Application.ServiceRegistrations
     //bkz: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0
     public static class ApplicationRegisterModule
     {
-        public static IServiceProvider ServiceProvider { get; private set; }
+        public static IServiceProvider? ServiceProvider { get; private set; }
         public static IServiceCollection AddApplicationService(this IServiceCollection services)
         {
             services.AddSingleton<ISystemService, SystemService>();

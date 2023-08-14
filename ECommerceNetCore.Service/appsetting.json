@@ -1,0 +1,7 @@
+{
+  "TrendyolConnect": {
+    "CrawlerUrl": "https://public.trendyol.com/discovery-web-searchgw-service/v2/api/infinite-scroll/sr?",
+    "ApiUrl": "https://api.trendyol.com/sapigw",
+    "SupplierId": "836049"
+  }
+}

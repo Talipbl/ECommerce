@@ -1,5 +1,5 @@
 ﻿using ECommerceNetCore.Application.Aspects;
-using ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient.Models;
+using ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient;
 using ECommerceNetCore.Service.Models;
 using System;
 using System.Collections.Generic;
@@ -13,11 +13,11 @@ using System.Web;
 namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
     [SecurityProtocolAspect(ProtocolType = SecurityProtocolType.Tls12)]
-    public class TrendyolApiClient
+    public class TrendyolProductClient
     {
         private TrendyolHttpClient Client { get; set; }
         private string SupplierId { get; set; } = "836049";
-        public TrendyolApiClient()
+        public TrendyolProductClient()
         {
             //TO-DO: Buradaki bilgiler veri tabanına kaydedilip oradan çekilecek.
             string auth = Convert.ToBase64String(Encoding.ASCII.GetBytes("mhnqkT7WsnoMmpca49NY:yYxBaDjJw1QaRykToWHt"));

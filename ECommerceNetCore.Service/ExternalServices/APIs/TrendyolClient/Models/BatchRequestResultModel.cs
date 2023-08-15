@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient.Models
+namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
     public class BatchRequestResultModel
     {

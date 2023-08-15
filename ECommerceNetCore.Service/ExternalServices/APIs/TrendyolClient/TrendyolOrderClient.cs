@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 using ECommerceNetCore.Service.Models;
 using Microsoft.AspNetCore.Http;
 using Azure.Core;
+using System.Security.Claims;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
     // bkz: https://developers.trendyol.com/docs/category/sipari%C5%9F-entegrasyonu
-    
+
     [SecurityProtocolAspect(ProtocolType = SecurityProtocolType.Tls12)]
     public class TrendyolOrderClient
     {

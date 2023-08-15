@@ -9,11 +9,12 @@ namespace ECommerceNetCore.Test
         [Fact]
         public void Get_Web_Search()
         {
-            TrendyolOrderClient crawlerClient = new TrendyolOrderClient();
+            
+            TrendyolClaimReturnClient crawlerClient = new TrendyolClaimReturnClient();
 
-            OrderQueryParametersModel order = new OrderQueryParametersModel() { Status = "Picking" };
+            //OrderQueryParametersModel order = new OrderQueryParametersModel() { Status = "Picking" };
 
-            var result = crawlerClient.GetOrders(order);
+            var result = crawlerClient.GetClaimsIssueReasons("bd1e6312 - 4aae - 4763 - 9280 - fb75da2679c3");
 
             result.Wait();
         }

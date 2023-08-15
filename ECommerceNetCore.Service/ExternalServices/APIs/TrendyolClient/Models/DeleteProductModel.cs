@@ -9,5 +9,9 @@ namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
     public class DeleteProductModel
     {
         public string Barcode { get; set; }
+        public DeleteProductModel(string barcode)
+        {
+            Barcode = barcode;
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using ECommerceNetCore.Service.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
@@ -28,6 +29,15 @@ namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
             };
 
             Client = new TrendyolHttpClient("https://api.trendyol.com/sapigw", SupplierId, authorization);
+        }
+        public async Task<HttpResponseModel<GetOrdersResponseModel>> GetOrders(OrderQueryParametersModel queries)
+        {
+            string queryString = JsonHelper.BuildQueryString(queries);
+            return await Task.Run(() => Client.GetAsync<GetOrdersResponseModel>($"/suppliers/{SupplierId}/orders?{queryString}"));
+        }
+        public async Task<HttpResponseModel<object>> UpdateTrackingNumber(string shipmentPackageId)
+        {
+            return await Task.Run(() => Client.PutAsync<object>(new TrackingNumberModel(shipmentPackageId),$"/suppliers/{SupplierId}/{shipmentPackageId}/update-tracking-number"));
         }
     }
 }

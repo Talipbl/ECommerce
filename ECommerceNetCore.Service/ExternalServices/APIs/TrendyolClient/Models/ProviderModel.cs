@@ -1,4 +1,4 @@
-﻿namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient.Models
+﻿namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
     public class ProviderModel
     {

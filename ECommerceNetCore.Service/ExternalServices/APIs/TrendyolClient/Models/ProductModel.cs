@@ -6,25 +6,8 @@ using System.Threading.Tasks;
 
 namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
-    public class Attribute
-    {
-        public int AttributeId { get; set; }
-        public int AttributeValueId { get; set; }
-        public string CustomAttributeValue { get; set; }
-    }
 
-    public class DeliveryOption
-    {
-        public int DeliveryDuration { get; set; }
-        public string FastDeliveryType { get; set; }
-    }
-
-    public class Image
-    {
-        public string Url { get; set; }
-    }
-
-    public class CreateProductModel
+    public class ProductModel
     {
         public string Barcode { get; set; }
         public string Title { get; set; }
@@ -43,10 +26,26 @@ namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
         public int ShipmentAddressId { get; set; }
         public int ReturningAddressId { get; set; }
         public int DeliveryDuration { get; set; }
-        public DeliveryOption DeliveryOption { get; set; }
+        public DeliveryOptionModel DeliveryOption { get; set; }
         public List<Image> Images { get; set; }
         public List<Attribute> Attributes { get; set; }
+
+        public class Attribute
+        {
+            public int AttributeId { get; set; }
+            public int AttributeValueId { get; set; }
+            public string CustomAttributeValue { get; set; }
+        }
+
+        public class DeliveryOptionModel
+        {
+            public int DeliveryDuration { get; set; }
+            public string FastDeliveryType { get; set; }
+        }
+
+        public class Image
+        {
+            public string Url { get; set; }
+        }
     }
-
-
 }

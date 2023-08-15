@@ -20,9 +20,9 @@ namespace ECommerceNetCore.Service.ExternalServices
         private string SupplierId { get; set; } = string.Empty;
         private ApiAuthorizationModel? Headers { get; set; }
 
-        public TrendyolHttpClient(string baseUri)
+        public TrendyolHttpClient(string baseUrl)
         {
-            EndPoint = new Uri(baseUri);
+            EndPoint = new Uri(baseUrl);
             Host = $"{EndPoint.Host}:{EndPoint.Port}";
         }
         public TrendyolHttpClient(string baseUri, string supplierId) : this(baseUri)
@@ -42,6 +42,7 @@ namespace ECommerceNetCore.Service.ExternalServices
                 {
                     ResponseMessage = await httpClient.GetAsync(requestUri)
                 };
+
                 var result = await response.ResponseMessage.Content.ReadAsStringAsync();
                 T value = JsonConvert.DeserializeObject<T>(result);
                 response.Entity = value;
@@ -54,10 +55,53 @@ namespace ECommerceNetCore.Service.ExternalServices
             using (var httpClient = CreateHttpClient())
             {
                 var httpContent = (HttpContent)CreateHttpContent(model);
+
                 HttpResponseModel<T> response = new HttpResponseModel<T>
                 {
                     ResponseMessage = await httpClient.PostAsync(requestUri, httpContent)
                 };
+
+                var result = await response.ResponseMessage.Content.ReadAsStringAsync();
+                T value = JsonConvert.DeserializeObject<T>(result);
+                response.Entity = value;
+                return response;
+            }
+        }
+
+        public async Task<HttpResponseModel<T>> PutAsync<T>(object model, string requestUri)
+        {
+            using (var httpClient = CreateHttpClient())
+            {
+                var httpContent = (HttpContent)CreateHttpContent(model);
+
+                HttpResponseModel<T> response = new HttpResponseModel<T>
+                {
+                    ResponseMessage = await httpClient.PutAsync(requestUri, httpContent)
+                };
+
+                var result = await response.ResponseMessage.Content.ReadAsStringAsync();
+                T value = JsonConvert.DeserializeObject<T>(result);
+                response.Entity = value;
+                return response;
+            }
+        }
+
+        public async Task<HttpResponseModel<T>> DeleteAsync<T>(object model, string requestUri)
+        {
+            using (var httpClient = CreateHttpClient())
+            {
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Delete,
+                    RequestUri = new Uri(requestUri),
+                    Content = (HttpContent)CreateHttpContent(model)
+                };
+
+                HttpResponseModel<T> response = new HttpResponseModel<T>
+                {
+                    ResponseMessage = await httpClient.SendAsync(request)
+                };
+
                 var result = await response.ResponseMessage.Content.ReadAsStringAsync();
                 T value = JsonConvert.DeserializeObject<T>(result);
                 response.Entity = value;

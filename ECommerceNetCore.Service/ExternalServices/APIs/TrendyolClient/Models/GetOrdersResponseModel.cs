@@ -76,7 +76,7 @@ namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 
         public class InvoiceAddress
         {
-            public int Id { get; set; }
+            public string Id { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string Company { get; set; }
@@ -112,9 +112,10 @@ namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
             public List<FastDeliveryOption> FastDeliveryOptions { get; set; }
             public string CurrencyCode { get; set; }
             public string ProductColor { get; set; }
-            public int Id { get; set; }
+            public string Id { get; set; }
+            
             public string Sku { get; set; }
-            public int VatBaseAmount { get; set; }
+            public float VatBaseAmount { get; set; }
             public string Barcode { get; set; }
             public string OrderLineItemStatusName { get; set; }
             public double Price { get; set; }
@@ -128,7 +129,7 @@ namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 
         public class ShipmentAddress
         {
-            public int Id { get; set; }
+            public string Id { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string Company { get; set; }

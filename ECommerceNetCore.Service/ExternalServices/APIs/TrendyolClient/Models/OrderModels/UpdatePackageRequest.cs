@@ -5,22 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient.Models.OrderModels
+namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
-
-
     public class UpdatePackageRequest
     {
-        public UpdatePackageRequest(UpdatePackageRequest request)
-        {
-            Lines = request.Lines;
-            Params = request.Params;
-            Status = request.Status;
-        }
-
         public List<Line> Lines { get; set; }
         public ParamsModel Params { get; set; }
         public string Status { get; set; }
+
         public class Line
         {
             public string LineId { get; set; }

@@ -1,12 +1,7 @@
-﻿namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient.Models.OrderModels
+﻿namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
     public class SplitShipmentPackageByQuantityRequest
     {
-        public SplitShipmentPackageByQuantityRequest(SplitShipmentPackageByQuantityRequest request)
-        {
-            QuantitySplit = request.QuantitySplit;
-        }
-
         public List<QuantitySplitModel> QuantitySplit { get; set; }
         public class QuantitySplitModel
         {

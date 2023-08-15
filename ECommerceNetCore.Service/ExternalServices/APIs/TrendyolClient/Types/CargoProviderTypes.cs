@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
-    public class DeleteProductModel
+    public enum CargoProviderTypes
     {
-        public string Barcode { get; set; }
-        public DeleteProductModel(string barcode)
-        {
-            Barcode = barcode;
-        }
+        YKMP,
+        ARASMP,
+        SURATMP,
+        HOROZMP,
+        MNGMP,
+        PTTMP,
+        CEVAMP,
+        TEXMP,
+        UPSMP,
+        SENDEOMP
     }
 }

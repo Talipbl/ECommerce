@@ -30,7 +30,7 @@ namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 
         public class RequestItem
         {
-            public ProductModel Product { get; set; }
+            public ProductRequestModel Product { get; set; }
         }
     }
 }

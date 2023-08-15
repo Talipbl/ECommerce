@@ -1,12 +1,7 @@
-﻿namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient.Models.OrderModels
+﻿namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
     public class SplitShipmentPackageMultiSplintRequest
     {
-        public SplitShipmentPackageMultiSplintRequest(SplitShipmentPackageMultiSplintRequest request)
-        {
-            SplitGroups = request.SplitGroups;
-        }
-
         public List<SplitGroup> SplitGroups { get; set; }
         public class SplitGroup
         {

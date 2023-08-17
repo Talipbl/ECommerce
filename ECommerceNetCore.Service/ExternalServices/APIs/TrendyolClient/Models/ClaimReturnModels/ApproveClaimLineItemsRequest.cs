@@ -1,4 +1,4 @@
-﻿namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient.Models.ClaimReturnModels
+﻿namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
     public class ApproveClaimLineItemsRequest
     {
@@ -7,6 +7,7 @@
 
         public class ParamsModel
         {
+
         }
     }
 }

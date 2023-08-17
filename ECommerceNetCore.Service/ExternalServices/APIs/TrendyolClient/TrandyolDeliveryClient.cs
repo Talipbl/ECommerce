@@ -2,15 +2,15 @@
 using System.Net;
 using System.Text;
 using ECommerceNetCore.Service.Models;
-using ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient.Models.DeliveryModels;
 
 namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
+    //bkz: https://developers.trendyol.com/docs/marketplace/ortak-etiket-entegrasyonu/ortak-etiket-entegrasyonu
+
     [SecurityProtocolAspect(ProtocolType = SecurityProtocolType.Tls12)]
     public class TrandyolDeliveryClient
     {
         private TrendyolHttpClient Client { get; set; }
-        private string sellerId = "";
         private string SupplierId { get; set; } = "836049";
         public TrandyolDeliveryClient()
         {
@@ -38,8 +38,9 @@ namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
         /// <returns></returns>
         public async Task<HttpResponseModel<object>> CreateCommonLabel(CreateCommonLabelRequestModel request, string cargoTrackingNumber)
         {
-            return await Task.Run(()=>Client.PostAsync<object>(request,$"/delivery-delivery-external-service/sellers/{sellerId}/common-label/{cargoTrackingNumber}"));
+            return await Task.Run(()=>Client.PostAsync<object>(request,$"/delivery-delivery-external-service/sellers/{SupplierId}/common-label/{cargoTrackingNumber}"));
         }
+
         /// <summary>
         /// Tarafınıza çoklu koliler için birden fazla etiket dönecektir. Tek koli olması durumunda tek ZPL dönecektir.
         /// stage https://stagesellerpublic.trendyol.com/delivery-delivery-external-service/sellers/{sellerId}/common-label/{cargoTrackingNumber}
@@ -49,7 +50,7 @@ namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
         /// <returns></returns>
         public async Task<HttpResponseModel<GetCommonLabelResponseModel>> GetCommonLabel(string cargoTrackingNumber)
         {
-            return await Task.Run(() => Client.GetAsync<GetCommonLabelResponseModel>($"/delivery-delivery-external-service/sellers/{sellerId}/common-label/{cargoTrackingNumber}"));
+            return await Task.Run(() => Client.GetAsync<GetCommonLabelResponseModel>($"/delivery-delivery-external-service/sellers/{SupplierId}/common-label/{cargoTrackingNumber}"));
         }
     }
 }

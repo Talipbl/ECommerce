@@ -6,17 +6,12 @@ using System.Threading.Tasks;
 
 namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
-    public enum CargoProviderTypes
+    public enum QuestionStatus
     {
-        YKMP,
-        ARASMP,
-        SURATMP,
-        HOROZMP,
-        MNGMP,
-        PTTMP,
-        CEVAMP,
-        TEXMP,
-        UPSMP,
-        SENDEOMP
+        WAITING_FOR_ANSWER,
+        WAITING_FOR_APPROVE,
+        ANSWERED,
+        REPORTED,
+        REJECTED
     }
 }

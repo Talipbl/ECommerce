@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
-    public enum OrderStatusTypes
+    public enum OrderStatus
     {
         Awaiting,
         Created,

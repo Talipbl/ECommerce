@@ -2,10 +2,11 @@
 using System.Net;
 using System.Text;
 using ECommerceNetCore.Service.Models;
-using ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient.Models.ClaimReturnModels;
 
 namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
+    //bkz: https://developers.trendyol.com/docs/category/i%CC%87ade-entegrasyonu
+
     [SecurityProtocolAspect(ProtocolType = SecurityProtocolType.Tls12)]
     public class TrendyolClaimReturnClient
     {
@@ -25,25 +26,70 @@ namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 
             Client = new TrendyolHttpClient("https://api.trendyol.com", SupplierId, authorization);
         }
-        public async Task<HttpResponseModel<GetClaimsResponseModel>> GetClaims()
+
+        /// <summary>
+        /// Trendyol sisteminde iadesi oluşan siparişleri bu metod yardımıyla çekebilirsiniz.
+        /// </summary>
+        /// <param name="queries"></param>
+        /// <returns></returns>
+        public async Task<HttpResponseModel<GetClaimsResponseModel>> GetClaims(ClaimsQueryParametersModel queries)
         {
-            return await Task.Run(() => Client.GetAsync<GetClaimsResponseModel>($"/sapigw/suppliers/{SupplierId}/claims?claimItemStatus="));
+            string queryString = JsonHelper.BuildQueryString(queries);
+            return await Task.Run(() => Client.GetAsync<GetClaimsResponseModel>($"/sapigw/suppliers/{SupplierId}/claims?{queryString}"));
         }
+
+        /// <summary>
+        /// Deponuza iade kodu alınmadan gelen sipariş paketlerin iade talep paketlerini oluşturmak için kullanabilirsiniz. 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<HttpResponseModel<CreateClaimResponseModel>> CreateClaim(CreateClaimRequestModel request)
         {
-            return await Task.Run(() => Client.PostAsync<CreateClaimResponseModel>(request,$"/sapigw/suppliers/{SupplierId}/claims/create"));
+            return await Task.Run(() => Client.PostAsync<CreateClaimResponseModel>(request, $"/sapigw/suppliers/{SupplierId}/claims/create"));
         }
-        public async Task<HttpResponseModel<object>> ApproveClaimLineItems(ApproveClaimLineItemsRequest request,string claimId)
+
+        /// <summary>
+        /// Trendyol Paneli üzerinden iade siparişleri onaylama işlemini yapar.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="claimId"></param>
+        /// <returns></returns>
+        public async Task<HttpResponseModel<string>> ApproveClaimLineItems(ApproveClaimLineItemsRequest request, string claimId)
         {
-            return await Task.Run(() => Client.PutAsync<object>(request, $"/sapigw/claims/{claimId}/items/approve"));
+            return await Task.Run(() => Client.PutAsync<string>(request, $"/sapigw/claims/{claimId}/items/approve"));
         }
-        public async Task<HttpResponseModel<object>> CreateClaimIssue(string claimId,string claimIssueReasonId,string claimItemIdList, string test)
+
+        /// <summary>
+        /// Trendyol Paneli üzerinden iade siparişlerine ret talebi oluşturma işlemini yaparç
+        /// </summary>
+        /// <param name="claimId"></param>
+        /// <param name="claimIssueReasonId"></param>
+        /// <param name="claimItemIdList"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        public async Task<HttpResponseModel<string>> CreateClaimIssue(string claimId, string claimIssueReasonId, string claimItemIdList, string description)
         {
-            return await Task.Run(() => Client.PostAsync<object>(null, $"/sapigw/claims/{claimId}/issue?claimIssueReasonId={claimIssueReasonId}&claimItemIdList={claimItemIdList}&description={test}"));
+            return await Task.Run(() => Client.PostAsync<string>(default, $"/sapigw/claims/{claimId}/issue?claimIssueReasonId={claimIssueReasonId}&claimItemIdList={claimItemIdList}&description={description}"));
         }
+
+        /// <summary>
+        /// <paramref name="CreateClaimIssue"/> servisine yapılacak olan isteklerde gönderilecek claimIssueReasonId değerine bu servisi kullanarak ulaşabilirsiniz.
+        /// </summary>
+        /// <param name="claimItemsId"></param>
+        /// <returns></returns>
         public async Task<HttpResponseModel<object>> GetClaimsIssueReasons(string claimItemsId)
         {
-            return await Task.Run(() => Client.GetAsync<object>($"/integration/oms/core/sellers/{SupplierId}/claims/items/{claimItemsId}/audit"));
+            return await Task.Run(() => Client.GetAsync<object>($"/sapigw/claim-issue-reasons"));
+        }
+
+        /// <summary>
+        /// Trendyol sisteminde iadesi oluşan siparişlerin süreç ve statü geçiş durumlarını tarih, işlem yapılan platform ve işlem yapan kişi bazında bu servis üzerinden kontrol eder.
+        /// </summary>
+        /// <param name="claimItemsId"></param>
+        /// <returns></returns>
+        public async Task<HttpResponseModel<GetClaimAuditsResponse>> GetClaimAudit(string claimItemsId)
+        {
+            return await Task.Run(() => Client.GetAsync<GetClaimAuditsResponse>($"/integration/oms/core/sellers/{SupplierId}/claims/items/{claimItemsId}/audit"));
         }
     }
 }

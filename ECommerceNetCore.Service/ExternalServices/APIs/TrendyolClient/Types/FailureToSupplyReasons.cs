@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
-    public enum FailureToSupplyReasonTypes
+    public enum FailureToSupplyReason
     {
         StockDepleted = 500,
         DefectiveProduct = 501,

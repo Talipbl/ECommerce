@@ -1,6 +1,6 @@
 ﻿namespace ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient
 {
-    public enum DeliveryTypes
+    public enum Delivery
     {
         TodayDelivery,
         SameDayShipping,

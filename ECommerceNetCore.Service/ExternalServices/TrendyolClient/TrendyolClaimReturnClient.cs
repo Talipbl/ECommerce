@@ -1,7 +1,6 @@
 ﻿using ECommerceNetCore.Application.Aspects;
 using System.Net;
 using System.Text;
-using ECommerceNetCore.Service.Models;
 
 namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
 {
@@ -32,7 +31,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="queries"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<GetClaimsResponseModel>> GetClaims(ClaimsQueryParametersModel queries)
+        public async Task<RootResponseModel<GetClaimsResponseModel>> GetClaims(ClaimsQueryParametersModel queries)
         {
             string queryString = JsonHelper.BuildQueryString(queries);
             return await Task.Run(() => Client.GetAsync<GetClaimsResponseModel>($"/sapigw/suppliers/{SupplierId}/claims?{queryString}"));
@@ -43,7 +42,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<CreateClaimResponseModel>> CreateClaim(CreateClaimRequestModel request)
+        public async Task<RootResponseModel<CreateClaimResponseModel>> CreateClaim(CreateClaimRequestModel request)
         {
             return await Task.Run(() => Client.PostAsync<CreateClaimResponseModel>(request, $"/sapigw/suppliers/{SupplierId}/claims/create"));
         }
@@ -54,7 +53,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="request"></param>
         /// <param name="claimId"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<string>> ApproveClaimLineItems(ApproveClaimLineItemsRequest request, string claimId)
+        public async Task<RootResponseModel<string>> ApproveClaimLineItems(ApproveClaimLineItemsRequest request, string claimId)
         {
             return await Task.Run(() => Client.PutAsync<string>(request, $"/sapigw/claims/{claimId}/items/approve"));
         }
@@ -67,7 +66,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="claimItemIdList"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<string>> CreateClaimIssue(string claimId, string claimIssueReasonId, string claimItemIdList, string description)
+        public async Task<RootResponseModel<string>> CreateClaimIssue(string claimId, string claimIssueReasonId, string claimItemIdList, string description)
         {
             return await Task.Run(() => Client.PostAsync<string>(default, $"/sapigw/claims/{claimId}/issue?claimIssueReasonId={claimIssueReasonId}&claimItemIdList={claimItemIdList}&description={description}"));
         }
@@ -77,7 +76,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="claimItemsId"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> GetClaimsIssueReasons(string claimItemsId)
+        public async Task<RootResponseModel<object>> GetClaimsIssueReasons(string claimItemsId)
         {
             return await Task.Run(() => Client.GetAsync<object>($"/sapigw/claim-issue-reasons"));
         }
@@ -87,7 +86,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="claimItemsId"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<GetClaimAuditsResponse>> GetClaimAudit(string claimItemsId)
+        public async Task<RootResponseModel<GetClaimAuditsResponse>> GetClaimAudit(string claimItemsId)
         {
             return await Task.Run(() => Client.GetAsync<GetClaimAuditsResponse>($"/integration/oms/core/sellers/{SupplierId}/claims/items/{claimItemsId}/audit"));
         }

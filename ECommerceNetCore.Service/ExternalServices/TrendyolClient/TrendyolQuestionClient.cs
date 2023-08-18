@@ -1,5 +1,4 @@
 ﻿using ECommerceNetCore.Application.Aspects;
-using ECommerceNetCore.Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +36,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="queries"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<GetQuestionsResponseModel>> GetQuestions(QuestionQueryParametersModel queries)
+        public async Task<RootResponseModel<GetQuestionsResponseModel>> GetQuestions(QuestionQueryParametersModel queries)
         {
             string queryString = JsonHelper.BuildQueryString(queries);
             return await Task.Run(() => Client.GetAsync<GetQuestionsResponseModel>($"/sapigw/suppliers/{SupplierId}/questions/filter?{queryString}"));
@@ -48,7 +47,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="questionId"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<GetQuestionResponseModel>> GetQuestion(string questionId)
+        public async Task<RootResponseModel<GetQuestionResponseModel>> GetQuestion(string questionId)
         {
             return await Task.Run(() => Client.GetAsync<GetQuestionResponseModel>($"/sapigw/suppliers/{SupplierId}/questions/{questionId}"));
         }
@@ -59,7 +58,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <remarks>Cevap mesajı minimum 10, maksimum 2000 karakter aralığında olmalıdır.</remarks>
         /// <param name="questionId"></param>
         /// <returns>HTTP Status Code</returns>
-        public async Task<HttpResponseModel<string>> AnswerQuestion(string questionId, string message)
+        public async Task<RootResponseModel<string>> AnswerQuestion(string questionId, string message)
         {
             return await Task.Run(() => Client.PostAsync<string>(new QuestionMessageModel(message), $"/sapigw/suppliers/{SupplierId}/questions/{questionId}/answers"));
         }

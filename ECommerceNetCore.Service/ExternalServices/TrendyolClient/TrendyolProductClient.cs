@@ -1,5 +1,4 @@
 ﻿using ECommerceNetCore.Application.Aspects;
-using ECommerceNetCore.Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,58 +15,55 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
     [SecurityProtocolAspect(ProtocolType = SecurityProtocolType.Tls12)]
     public class TrendyolProductClient
     {
+        string Url = "https://stageapi.trendyol.com"; //https://stageapi.trendyol.com //https://api.trendyol.com
+        string Prefix = "/stagesapigw"; // stagesapigw // sapigw
         private TrendyolHttpClient Client { get; set; }
-        private string SupplierId { get; set; } = "836049";
-        public TrendyolProductClient()
+        private string SupplierId { get; set; }
+        public TrendyolProductClient(ApiAuthorizationModel authorization)
         {
-            //TO-DO: Buradaki bilgiler veri tabanına kaydedilip oradan çekilecek.
-            string auth = Convert.ToBase64String(Encoding.ASCII.GetBytes("mhnqkT7WsnoMmpca49NY:yYxBaDjJw1QaRykToWHt"));
-
-            ApiAuthorizationModel authorization = new ApiAuthorizationModel()
-            {
-                ApiKey = "mhnqkT7WsnoMmpca49NY",
-                ApiSecretKey = "yYxBaDjJw1QaRykToWHt",
-                Authorization = $"Basic {auth}"
-            };
-
-            Client = new TrendyolHttpClient("https://api.trendyol.com", SupplierId, authorization);
+            SupplierId = authorization.SupplierId;
+            Client = new TrendyolHttpClient(Url, SupplierId, authorization);
         }
-        public async Task<HttpResponseModel<List<BrandModel>>> GetBrands()
+        public async Task<RootResponseModel<List<BrandModel>>> GetBrandsAsync()
         {
-            return await Task.Run(() => Client.GetAsync<List<BrandModel>>("/sapigw/brands"));
+            return await Task.Run(() => Client.GetAsync<List<BrandModel>>($"{Prefix}/brands"));
         }
-        public async Task<HttpResponseModel<List<CategoryModel>>> GetCategories()
+        public async Task<RootResponseModel<List<CategoryModel>>> GetCategoriesAsync()
         {
-            return await Task.Run(() => Client.GetAsync<List<CategoryModel>>("/sapigw/product-categories"));
+            return await Task.Run(() => Client.GetAsync<List<CategoryModel>>($"{Prefix}/product-categories"));
         }
-        public async Task<HttpResponseModel<AttributesModel>> GetCategoryAttributes(int categoryId)
+        public async Task<RootResponseModel<AttributesModel>> GetCategoryAttributesAsync(int categoryId)
         {
-            return await Task.Run(() => Client.GetAsync<AttributesModel>($"/sapigw/product-categories/{categoryId}/attributes"));
+            return await Task.Run(() => Client.GetAsync<AttributesModel>($"{Prefix}/product-categories/{categoryId}/attributes"));
         }
-        public async Task<HttpResponseModel<GetProductsResponseModel>> GetProducts(ProductQueryParametersModel queries)
+        public async Task<RootResponseModel<GetProductsResponseModel>> GetProductsAsync(ProductQueryParametersModel queries)
         {
             string queryString = JsonHelper.BuildQueryString(queries);
-            return await Task.Run(() => Client.GetAsync<GetProductsResponseModel>($"/sapigw/suppliers/{SupplierId}/v2/products?{queryString}"));
+            return await Task.Run(() => Client.GetAsync<GetProductsResponseModel>($"{Prefix}/suppliers/{SupplierId}/products?{queryString}"));
         }
-        public async Task<HttpResponseModel<ProductRequestModel>> CreateProducts(ProductRequestModel request)
+        public async Task<RootResponseModel<ServiceResponseModel>> CreateProductsAsync(ProductRequestModel request)
         {
-            return await Task.Run(() => Client.PostAsync<ProductRequestModel>(request, $"/sapigw/suppliers/{SupplierId}/v2/products"));
+            return await Task.Run(() => Client.PostAsync<ServiceResponseModel>(request, $"{Prefix}/suppliers/{SupplierId}/v2/products"));
         }
-        public async Task<HttpResponseModel<ProductRequestModel>> UpdateProducts(ProductRequestModel request)
+        public async Task<RootResponseModel<ProductRequestModel>> UpdateProductsAsync(ProductRequestModel request)
         {
-            return await Task.Run(() => Client.PutAsync<ProductRequestModel>(request, $"/sapigw/suppliers/{SupplierId}/v2/products"));
+            return await Task.Run(() => Client.PutAsync<ProductRequestModel>(request, $"{Prefix}/suppliers/{SupplierId}/v2/products"));
         }
-        public async Task<HttpResponseModel<ServiceResponseModel>> DeleteProducts(DeleteProductRequestModel request)
+        public async Task<RootResponseModel<ServiceResponseModel>> DeleteProductsAsync(DeleteProductRequestModel request)
         {
-            return await Task.Run(() => Client.DeleteAsync<ServiceResponseModel>(request, $"/sapigw/suppliers/{SupplierId}/v2/products"));
+            return await Task.Run(() => Client.DeleteAsync<ServiceResponseModel>(request, $"{Prefix}/suppliers/{SupplierId}/v2/products"));
         }
-        public async Task<HttpResponseModel<ServiceResponseModel>> UpdatePriceAndInventory(PriceAndInventoryUpdateRequest request)
+        public async Task<RootResponseModel<ServiceResponseModel>> UpdatePriceAndInventoryAsync(PriceAndInventoryUpdateRequest request)
         {
-            return await Task.Run(() => Client.PostAsync<ServiceResponseModel>(request, $"/sapigw/suppliers/{SupplierId}/products/price-and-inventory"));
+            return await Task.Run(() => Client.PostAsync<ServiceResponseModel>(request, $"{Prefix}/suppliers/{SupplierId}/products/price-and-inventory"));
         }
-        public async Task<HttpResponseModel<BatchRequestResultModel>> GetBatchRequest(int batchRequestId)
+        public async Task<RootResponseModel<BatchRequestResultModel>> GetBatchRequestAsync(int batchRequestId)
         {
-            return await Task.Run(() => Client.GetAsync<BatchRequestResultModel>($"/sapigw/suppliers/{SupplierId}/products/batch-requests/{batchRequestId}"));
+            return await Task.Run(() => Client.GetAsync<BatchRequestResultModel>($"{Prefix}/suppliers/{SupplierId}/products/batch-requests/{batchRequestId}"));
+        }
+        public async Task<RootResponseModel<GetSupplierAddressesResponseModel>> GetSupplierAddressesAsync()
+        {
+            return await Task.Run(() => Client.GetAsync<GetSupplierAddressesResponseModel>($"{Prefix}/suppliers/{SupplierId}/addresses"));
         }
     }
 }

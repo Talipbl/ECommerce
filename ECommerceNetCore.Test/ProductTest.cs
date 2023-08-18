@@ -1,6 +1,5 @@
 using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Validators;
-using ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient;
 
 namespace ECommerceNetCore.Test
 {

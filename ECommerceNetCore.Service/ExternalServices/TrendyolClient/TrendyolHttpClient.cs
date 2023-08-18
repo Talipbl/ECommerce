@@ -1,5 +1,4 @@
-﻿using ECommerceNetCore.Service.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ECommerceNetCore.Service.ExternalServices.TrendyolClient;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceNetCore.Service.ExternalServices
 {
@@ -34,60 +34,77 @@ namespace ECommerceNetCore.Service.ExternalServices
             Headers = requestHeaders;
         }
 
-        public async Task<HttpResponseModel<T>> GetAsync<T>(string requestUri)
+        public async Task<RootResponseModel<T>> GetAsync<T>(string requestUri)
         {
+            RootResponseModel<T> response = new RootResponseModel<T>();
             using (var httpClient = CreateHttpClient())
             {
-                HttpResponseModel<T> response = new HttpResponseModel<T>
-                {
-                    ResponseMessage = await httpClient.GetAsync(requestUri)
-                };
+                var httpResponse = await httpClient.GetAsync(requestUri);
+                var result = await httpResponse.Content.ReadAsStringAsync();
 
-                var result = await response.ResponseMessage.Content.ReadAsStringAsync();
-                T value = JsonConvert.DeserializeObject<T>(result);
-                response.Entity = value;
+                if (httpResponse.IsSuccessStatusCode == false)
+                {
+                    response.IsSuccess = false;
+                    response.ErrorValueReturn = result;
+                }
+                else
+                {
+                    response.OkResponse = JsonConvert.DeserializeObject<T>(result);
+                }
+
                 return response;
             }
         }
 
-        public async Task<HttpResponseModel<T>> PostAsync<T>(object model, string requestUri)
+        public async Task<RootResponseModel<T>> PostAsync<T>(object model, string requestUri)
         {
-            using (var httpClient = CreateHttpClient())
-            {
-                var httpContent = (HttpContent)CreateHttpContent(model);
-
-                HttpResponseModel<T> response = new HttpResponseModel<T>
-                {
-                    ResponseMessage = await httpClient.PostAsync(requestUri, httpContent)
-                };
-
-                var result = await response.ResponseMessage.Content.ReadAsStringAsync();
-                T value = JsonConvert.DeserializeObject<T>(result);
-                response.Entity = value;
-                return response;
-            }
-        }
-
-        public async Task<HttpResponseModel<T>> PutAsync<T>(object model, string requestUri)
-        {
+            RootResponseModel<T> response = new RootResponseModel<T>();
             using (var httpClient = CreateHttpClient())
             {
                 var httpContent = (HttpContent)CreateHttpContent(model);
+                var httpResponse = await httpClient.PostAsync(requestUri, httpContent);
+                var result = await httpResponse.Content.ReadAsStringAsync();
 
-                HttpResponseModel<T> response = new HttpResponseModel<T>
+                if (httpResponse.IsSuccessStatusCode == false)
                 {
-                    ResponseMessage = await httpClient.PutAsync(requestUri, httpContent)
-                };
+                    response.IsSuccess = false;
+                    response.ErrorValueReturn = result;
+                }
+                else
+                {
+                    response.OkResponse = JsonConvert.DeserializeObject<T>(result);
+                }
 
-                var result = await response.ResponseMessage.Content.ReadAsStringAsync();
-                T value = JsonConvert.DeserializeObject<T>(result);
-                response.Entity = value;
                 return response;
             }
         }
 
-        public async Task<HttpResponseModel<T>> DeleteAsync<T>(object model, string requestUri)
+        public async Task<RootResponseModel<T>> PutAsync<T>(object model, string requestUri)
         {
+            RootResponseModel<T> response = new RootResponseModel<T>();
+            using (var httpClient = CreateHttpClient())
+            {
+                var httpContent = (HttpContent)CreateHttpContent(model);
+                var httpResponse = await httpClient.PutAsync(requestUri, httpContent);
+                var result = await httpResponse.Content.ReadAsStringAsync();
+
+                if (httpResponse.IsSuccessStatusCode == false)
+                {
+                    response.IsSuccess = false;
+                    response.ErrorValueReturn = result;
+                }
+                else
+                {
+                    response.OkResponse = JsonConvert.DeserializeObject<T>(result);
+                }
+
+                return response;
+            }
+        }
+
+        public async Task<RootResponseModel<T>> DeleteAsync<T>(object model, string requestUri)
+        {
+            RootResponseModel<T> response = new RootResponseModel<T>();
             using (var httpClient = CreateHttpClient())
             {
                 var request = new HttpRequestMessage
@@ -97,14 +114,19 @@ namespace ECommerceNetCore.Service.ExternalServices
                     Content = (HttpContent)CreateHttpContent(model)
                 };
 
-                HttpResponseModel<T> response = new HttpResponseModel<T>
-                {
-                    ResponseMessage = await httpClient.SendAsync(request)
-                };
+                var httpResponse = await httpClient.SendAsync(request);
+                var result = await httpResponse.Content.ReadAsStringAsync();
 
-                var result = await response.ResponseMessage.Content.ReadAsStringAsync();
-                T value = JsonConvert.DeserializeObject<T>(result);
-                response.Entity = value;
+                if (httpResponse.IsSuccessStatusCode == false)
+                {
+                    response.IsSuccess = false;
+                    response.ErrorValueReturn = result;
+                }
+                else
+                {
+                    response.OkResponse = JsonConvert.DeserializeObject<T>(result);
+                }
+
                 return response;
             }
         }
@@ -125,9 +147,16 @@ namespace ECommerceNetCore.Service.ExternalServices
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return Client;
         }
-        private object CreateHttpContent(object model)
+        private StringContent CreateHttpContent(object model)
         {
-            var jsonFormat = JsonConvert.SerializeObject(model);
+            //JSON nesnesinde default yada null değerlerin işlenemesi için ayarlanıyor.
+            JsonSerializerSettings setting = new JsonSerializerSettings()
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                DefaultValueHandling = DefaultValueHandling.Ignore
+            };
+
+            var jsonFormat = JsonConvert.SerializeObject(model, setting);
             return new StringContent(jsonFormat, Encoding.UTF8, "application/json");
         }
     }

@@ -10,7 +10,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
     public class ProductQueryParametersModel
     {
         [JsonProperty("approved")]
-        public bool Approved { get; set; }
+        public QueryBooleanOption Approved { get; set; } = QueryBooleanOption.All;
 
         [JsonProperty("barcode")]
         public string Barcode { get; set; }
@@ -25,31 +25,28 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         public int Page { get; set; }
 
         [JsonProperty("dateQueryType")]
-        public string DateQueryType { get; set; }
+        public DateType DateQueryType { get; set; }
 
         [JsonProperty("size")]
         public int Size { get; set; }
-
-        [JsonProperty("supplierId")]
-        public long? SupplierId { get; set; }
 
         [JsonProperty("stockCode")]
         public string StockCode { get; set; }
 
         [JsonProperty("archived")]
-        public bool Archived { get; set; }
+        public QueryBooleanOption Archived { get; set; } = QueryBooleanOption.All;
 
         [JsonProperty("productMainId")]
         public string ProductMainId { get; set; }
 
         [JsonProperty("onSale")]
-        public bool OnSale { get; set; }
+        public QueryBooleanOption OnSale { get; set; } = QueryBooleanOption.All;
 
         [JsonProperty("rejected")]
-        public bool Rejected { get; set; }
+        public QueryBooleanOption Rejected { get; set; } = QueryBooleanOption.All;
 
         [JsonProperty("blacklisted")]
-        public bool Blacklisted { get; set; }
+        public QueryBooleanOption Blacklisted { get; set; } = QueryBooleanOption.All;
 
         [JsonProperty("brandIds")]
         public string[] BrandIds { get; set; }

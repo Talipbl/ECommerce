@@ -1,7 +1,6 @@
 ﻿using ECommerceNetCore.Application.Aspects;
 using System.Net;
 using System.Text;
-using ECommerceNetCore.Service.Models;
 
 namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
 {
@@ -36,7 +35,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="request"></param>
         /// <param name="cargoTrackingNumber"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> CreateCommonLabel(CreateCommonLabelRequestModel request, string cargoTrackingNumber)
+        public async Task<RootResponseModel<object>> CreateCommonLabel(CreateCommonLabelRequestModel request, string cargoTrackingNumber)
         {
             return await Task.Run(()=>Client.PostAsync<object>(request,$"/delivery-delivery-external-service/sellers/{SupplierId}/common-label/{cargoTrackingNumber}"));
         }
@@ -48,7 +47,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="cargoTrackingNumber"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<GetCommonLabelResponseModel>> GetCommonLabel(string cargoTrackingNumber)
+        public async Task<RootResponseModel<GetCommonLabelResponseModel>> GetCommonLabel(string cargoTrackingNumber)
         {
             return await Task.Run(() => Client.GetAsync<GetCommonLabelResponseModel>($"/delivery-delivery-external-service/sellers/{SupplierId}/common-label/{cargoTrackingNumber}"));
         }

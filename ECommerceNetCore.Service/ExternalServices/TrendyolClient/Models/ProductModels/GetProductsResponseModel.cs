@@ -15,7 +15,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         public int TotalPages { get; set; }
         public List<ContentModel> Content { get; set; }
 
-        public class Attribute
+        public class ResponseAttribute
         {
             public int AttributeId { get; set; }
             public string AttributeName { get; set; }
@@ -27,7 +27,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         {
             public bool Approved { get; set; }
             public bool Archived { get; set; }
-            public List<Attribute> Attributes { get; set; }
+            public List<ResponseAttribute> Attributes { get; set; }
             public string Barcode { get; set; }
             public string BatchRequestId { get; set; }
             public string Brand { get; set; }
@@ -38,7 +38,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
             public string Gender { get; set; }
             public bool HasActiveCampaign { get; set; }
             public string Id { get; set; }
-            public List<Image> Images { get; set; }
+            public List<ResponseImage> Images { get; set; }
             public object LastPriceChangeDate { get; set; }
             public object LastStockChangeDate { get; set; }
             public object LastUpdateDate { get; set; }
@@ -63,16 +63,16 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
             public List<object> RejectReasonDetails { get; set; }
             public bool Blacklisted { get; set; }
             public int? DeliveryDuration { get; set; }
-            public DeliveryOptions DeliveryOptions { get; set; }
+            public ResponseDeliveryOptions DeliveryOptions { get; set; }
         }
 
-        public class DeliveryOptions
+        public class ResponseDeliveryOptions
         {
             public int DeliveryDuration { get; set; }
             public object FastDeliveryType { get; set; }
         }
 
-        public class Image
+        public class ResponseImage
         {
             public string Url { get; set; }
         }

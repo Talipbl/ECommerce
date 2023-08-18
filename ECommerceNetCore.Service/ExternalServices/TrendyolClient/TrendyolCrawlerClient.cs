@@ -1,5 +1,4 @@
-﻿using ECommerceNetCore.Service.Models;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         {
             Client = new TrendyolHttpClient("https://public.trendyol.com/discovery-web-searchgw-service/v2/api/infinite-scroll/sr?");
         }
-        public async Task<HttpResponseModel<WebSearchResultModel>> GetWebSearchResult(string searchUri)
+        public async Task<RootResponseModel<WebSearchResultModel>> GetWebSearchResult(string searchUri)
         {
             return await Task.Run(() => Client.GetAsync<WebSearchResultModel>(searchUri));
         }

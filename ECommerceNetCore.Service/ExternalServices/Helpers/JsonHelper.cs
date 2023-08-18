@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using ECommerceNetCore.Service.ExternalServices.TrendyolClient;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +32,9 @@ namespace ECommerceNetCore.Service.ExternalServices
             {
                 object value = property.GetValue(obj);
 
-                if (value != null && !(value is int intValue && intValue == 0))
+                if (value != null && value != "" && value != default && 
+                    !(value is int intValue && intValue == 0) && 
+                    !(value is QueryBooleanOption option && option == QueryBooleanOption.All ))
                 {
                     string jsonPropertyName = GetJsonPropertyName(property);
                     string encodedValue = HttpUtility.UrlEncode(value.ToString());

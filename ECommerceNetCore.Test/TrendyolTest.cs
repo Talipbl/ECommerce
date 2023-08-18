@@ -1,22 +1,87 @@
 using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Validators;
-using ECommerceNetCore.Service.ExternalServices.APIs.TrendyolClient;
+using ECommerceNetCore.Service.ExternalServices.TrendyolClient;
+using static ECommerceNetCore.Service.ExternalServices.TrendyolClient.GetProductsResponseModel;
+using static ECommerceNetCore.Service.ExternalServices.TrendyolClient.ProductModel;
 
 namespace ECommerceNetCore.Test
 {
     public class TrendyolTest
     {
+        TrendyolClient client = new TrendyolClient();
+
         [Fact]
-        public void Get_Web_Search()
+        public async void Get_Products()
         {
-            
-            TrendyolClaimReturnClient crawlerClient = new TrendyolClaimReturnClient();
+            var result = await client.GetProductsAsync(1, 10);
+        }
 
-            //OrderQueryParametersModel order = new OrderQueryParametersModel() { Status = "Picking" };
+        [Fact]
+        public async void Get_Supplier_Addresses()
+        {
+            var result = await client.GetSupplierAddressAsync();
+        }
 
-            var result = crawlerClient.GetClaimsIssueReasons("bd1e6312 - 4aae - 4763 - 9280 - fb75da2679c3");
+        [Fact]
+        public async void Get_Category_Attributes()
+        {
+            var result = await client.GetCategoryAttributes(899);
+        }
 
-            result.Wait();
+        [Fact]
+        public async void Create_Product()
+        {
+            List<ProductModel> list = new List<ProductModel>();
+            ProductModel model = new ProductModel()
+            {
+                Barcode = "bard4236897984651",
+                Title = "testürünü2",
+                ProductMainId = "3542dsad42344BTK",
+                BrandId = 1791,
+                CategoryId = 411,
+                Quantity = 100,
+                StockCode = "STK-345",
+                DimensionalWeight = 2,
+                Description = "Ürün açýklama bilgisi",
+                CurrencyType = "TRY",
+                ListPrice = 2250.99,
+                SalePrice = 1120.99,
+                VatRate = 20,
+                CargoCompanyId = 10,
+                DeliveryOption = new RequestDeliveryOptionModel
+                {
+                    DeliveryDuration = 1,
+                    FastDeliveryType = "FAST_DELIVERY"
+                },
+                Images = new List<RequestImage>
+                {
+                    new RequestImage
+                    {
+                        Url = "https://www.sampleadress/path/folder/image_1.jpg"
+                    }
+                },
+                Attributes = new List<RequestAttribute>
+                {
+                    new RequestAttribute
+                    {
+                        AttributeId = 47,
+                        CustomAttributeValue = "Kýrmýzý"
+                    },
+                    new RequestAttribute
+                    {
+                        AttributeId = 14,
+                        AttributeValueId = 85
+                    },
+                    new RequestAttribute
+                    {
+                        AttributeId = 346,
+                        AttributeValueId = 4290
+                    }
+                }
+            };
+
+            list.Add(model);
+            await client.CreateProductsAsync(list);
         }
     }
 }

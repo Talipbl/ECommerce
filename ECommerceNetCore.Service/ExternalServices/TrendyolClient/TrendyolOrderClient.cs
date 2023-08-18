@@ -6,7 +6,6 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using ECommerceNetCore.Service.Models;
 using Microsoft.AspNetCore.Http;
 using Azure.Core;
 using System.Security.Claims;
@@ -41,7 +40,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="queries">Model içerisinde istenilen filtreler doldurulup gönderilir.</param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<GetOrdersResponseModel>> GetOrders(OrderQueryParametersModel queries)
+        public async Task<RootResponseModel<GetOrdersResponseModel>> GetOrders(OrderQueryParametersModel queries)
         {
             string queryString = JsonHelper.BuildQueryString(queries);
             return await Task.Run(() => Client.GetAsync<GetOrdersResponseModel>($"/sapigw/suppliers/{SupplierId}/orders?{queryString}"));
@@ -52,7 +51,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="shipmentPackageId"></param>
         /// <returns>HTTP Status Code</returns>
-        public async Task<HttpResponseModel<object>> UpdateTrackingNumber(string shipmentPackageId)
+        public async Task<RootResponseModel<object>> UpdateTrackingNumber(string shipmentPackageId)
         {
             return await Task.Run(() => Client.PutAsync<object>(new TrackingNumberModel(shipmentPackageId), $"/sapigw/suppliers/{SupplierId}/{shipmentPackageId}/update-tracking-number"));
         }
@@ -63,7 +62,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="request"></param>
         /// <param name="shipmentPackageId"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> UpdatePackage(UpdatePackageRequest request, string shipmentPackageId)
+        public async Task<RootResponseModel<object>> UpdatePackage(UpdatePackageRequest request, string shipmentPackageId)
         {
             return await Task.Run(() => Client.PutAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}"));
         }
@@ -74,7 +73,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="request"></param>
         /// <param name="shipmentPackageId"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> SetFailureToSupply(FailureToSupplyReuqest request, string shipmentPackageId)
+        public async Task<RootResponseModel<object>> SetFailureToSupply(FailureToSupplyReuqest request, string shipmentPackageId)
         {
             return await Task.Run(() => Client.PutAsync<object>(request, $"/integration/oms/core/sellers/{SupplierId}/shipment-packages/{shipmentPackageId}/items/unsupplied"));
         }
@@ -85,7 +84,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="request"></param>
         /// <remarks><u>YASAL ZORUNLULUK:</u> Bu servis ile gönderilen fatura bağlantılarının hukuki zorunluluk gereği 8 yıl boyunca erişilebilir durumda olması gereklidir.</remarks>
         /// <returns></returns>
-        public async Task<HttpResponseModel<string>> SendInvoiceLink(SendInvoiceLinkReuqest request)
+        public async Task<RootResponseModel<string>> SendInvoiceLink(SendInvoiceLinkReuqest request)
         {
             return await Task.Run(() => Client.PostAsync<string>(request, $"/sapigw/suppliers/{SupplierId}/supplier-invoice-links"));
         }
@@ -97,7 +96,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="shipmentPackageId"></param>
         ///<see href="https://developers.trendyol.com/docs/marketplace/siparis-entegrasyonu/siparis-paketlerini-bolme#post-splitmultipackagebyquantity"/>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> MultiSplitShipmentPackageByQuantity(List<SplitShipmentPackageQuantityRequest> request, string shipmentPackageId)
+        public async Task<RootResponseModel<object>> MultiSplitShipmentPackageByQuantity(List<SplitShipmentPackageQuantityRequest> request, string shipmentPackageId)
         {
             return await Task.Run(() => Client.PostAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/split-packages"));
         }
@@ -107,7 +106,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="shipmentPackageId"></param>
         ///<see href="https://developers.trendyol.com/docs/marketplace/siparis-entegrasyonu/siparis-paketlerini-bolme#post-splitmultipackagebyquantity"/>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> SplitShipmentPackage(string orderLineIds, string shipmentPackageId)
+        public async Task<RootResponseModel<object>> SplitShipmentPackage(string orderLineIds, string shipmentPackageId)
         {
             return await Task.Run(() => Client.PostAsync<object>(orderLineIds, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/split"));
         }
@@ -119,7 +118,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="shipmentPackageId"></param>
         ///<see href="https://developers.trendyol.com/docs/marketplace/siparis-entegrasyonu/siparis-paketlerini-bolme#post-splitmultipackagebyquantity"/>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> MultiSplitShipmentPackage(List<SplitShipmentPackageMultiSplintRequest> request, string shipmentPackageId)
+        public async Task<RootResponseModel<object>> MultiSplitShipmentPackage(List<SplitShipmentPackageMultiSplintRequest> request, string shipmentPackageId)
         {
             return await Task.Run(() => Client.PostAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/multi-split"));
         }
@@ -131,7 +130,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="shipmentPackageId"></param>
         ///<see href="https://developers.trendyol.com/docs/marketplace/siparis-entegrasyonu/siparis-paketlerini-bolme#post-splitmultipackagebyquantity"/>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> QuantitySplitShipmentPackage(SplitShipmentPackageByQuantityRequest request, string shipmentPackageId)
+        public async Task<RootResponseModel<object>> QuantitySplitShipmentPackage(SplitShipmentPackageByQuantityRequest request, string shipmentPackageId)
         {
             return await Task.Run(() => Client.PostAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/quantity-split"));
         }
@@ -142,7 +141,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="request"></param>
         /// <param name="shipmentPackageId"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> UpdateBoxInfo(UpdateBoxInfoRequest request, string shipmentPackageId)
+        public async Task<RootResponseModel<object>> UpdateBoxInfo(UpdateBoxInfoRequest request, string shipmentPackageId)
         {
             return await Task.Run(() => Client.PutAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/box-info"));
         }
@@ -152,7 +151,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="request"><paramref name="DigitalCode"/> alanı 6-120 karakter arasında olmalıdır.</param>
         /// <returns>HTTP Status Code</returns>
-        public async Task<HttpResponseModel<object>> ProcessAlternativeDelivery(ProcessAlternativeDeliveryRequest request, string shippmentId)
+        public async Task<RootResponseModel<object>> ProcessAlternativeDelivery(ProcessAlternativeDeliveryRequest request, string shippmentId)
         {
             return await Task.Run(() => Client.PutAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shippmentId}/alternative-delivery"));
         }
@@ -163,7 +162,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="request"></param>
         /// <param name="shippmentId"></param>
         /// <returns>HTTP Status Code</returns>
-        public async Task<HttpResponseModel<object>> ManuelDeliver(string cargoTrackingNumber)
+        public async Task<RootResponseModel<object>> ManuelDeliver(string cargoTrackingNumber)
         {
             return await Task.Run(() => Client.PutAsync<object>(default, $"/sapigw/suppliers/{SupplierId}/manual-deliver/{cargoTrackingNumber}"));
         }
@@ -173,7 +172,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="cargoTrackingNumber"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> ManuelReturn(string cargoTrackingNumber)
+        public async Task<RootResponseModel<object>> ManuelReturn(string cargoTrackingNumber)
         {
             return await Task.Run(() => Client.PutAsync<object>(default, $"/sapigw/suppliers/{SupplierId}/manual-return/{cargoTrackingNumber}"));
         }
@@ -183,7 +182,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// </summary>
         /// <param name="shipmentPackageId"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> DeliveredByService(string shipmentPackageId)
+        public async Task<RootResponseModel<object>> DeliveredByService(string shipmentPackageId)
         {
             return await Task.Run(() => Client.PutAsync<object>(default, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/delivered-by-service stage"));
         }
@@ -194,7 +193,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="cargoProvider"></param>
         /// <param name="shipmentPackageId"></param>
         /// <returns></returns>
-        public async Task<HttpResponseModel<object>> ChangeCargoProvider(CargoProvider cargoProvider, string shipmentPackageId)
+        public async Task<RootResponseModel<object>> ChangeCargoProvider(CargoProvider cargoProvider, string shipmentPackageId)
         {
             return await Task.Run(() => Client.PutAsync<object>(new ChangeCargoProviderRequest(cargoProvider.ToString()), $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/cargo-providers"));
         }
@@ -207,7 +206,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="packageId"></param>
         /// <remarks><b>Eğer sevkiyat adresi eklenmesi isteniyor ise satıcı paneli üzerinden ekleme yapılabilmektedir.</b></remarks>
         /// <returns></returns>
-        public async Task<HttpResponseModel<string>> UpdateWarehouse(int warehouseId, string shipmentPackageId, string packageId)
+        public async Task<RootResponseModel<string>> UpdateWarehouse(int warehouseId, string shipmentPackageId, string packageId)
         {
             return await Task.Run(() => Client.PutAsync<string>(new UpdateWarehouseRequest(warehouseId), $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/shipment-packages/{packageId}/warehouse"));
         }
@@ -218,7 +217,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         /// <param name="extendedDayCount"></param>
         /// <param name="shipmentPackageId"></param>
         /// <returns>HTTP Status Code</returns>
-        public async Task<HttpResponseModel<object>> AgreedDeliveryDateExtendible(int extendedDayCount, string shipmentPackageId)
+        public async Task<RootResponseModel<object>> AgreedDeliveryDateExtendible(int extendedDayCount, string shipmentPackageId)
         {
             return await Task.Run(() => Client.PutAsync<object>(new AgreedDeliveryDateExtendibleRequest(extendedDayCount), $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/extended-agreed-delivery-date"));
         }

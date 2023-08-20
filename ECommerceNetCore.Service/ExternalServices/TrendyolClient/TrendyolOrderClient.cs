@@ -1,13 +1,10 @@
-﻿using ECommerceNetCore.Application.Aspects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Azure.Core;
 using System.Security.Claims;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -15,7 +12,6 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
 {
     // bkz: https://developers.trendyol.com/docs/category/sipari%C5%9F-entegrasyonu
 
-    [SecurityProtocolAspect(ProtocolType = SecurityProtocolType.Tls12)]
     public class TrendyolOrderClient
     {
         private TrendyolHttpClient Client { get; set; }

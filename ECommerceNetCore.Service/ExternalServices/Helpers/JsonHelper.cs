@@ -1,5 +1,4 @@
 ﻿using ECommerceNetCore.Service.ExternalServices.TrendyolClient;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

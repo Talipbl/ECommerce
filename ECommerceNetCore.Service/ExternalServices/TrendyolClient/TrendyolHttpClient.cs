@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ECommerceNetCore.Service.ExternalServices.TrendyolClient;
 using System.Reflection;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceNetCore.Service.ExternalServices
 {

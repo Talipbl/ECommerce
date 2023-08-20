@@ -1,5 +1,4 @@
-﻿using ECommerceNetCore.Application.Aspects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -11,7 +10,6 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
 {
     // bkz: https://developers.trendyol.com/docs/category/soru-cevap-entegrasyonu
 
-    [SecurityProtocolAspect(ProtocolType = SecurityProtocolType.Tls12)]
     public class TrendyolQuestionClient
     {
         private TrendyolHttpClient Client { get; set; }

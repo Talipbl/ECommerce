@@ -1,12 +1,10 @@
-﻿using ECommerceNetCore.Application.Aspects;
-using System.Net;
+﻿using System.Net;
 using System.Text;
 
 namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
 {
     //bkz: https://developers.trendyol.com/docs/category/i%CC%87ade-entegrasyonu
 
-    [SecurityProtocolAspect(ProtocolType = SecurityProtocolType.Tls12)]
     public class TrendyolClaimReturnClient
     {
         private TrendyolHttpClient Client { get; set; }

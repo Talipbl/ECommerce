@@ -20,10 +20,31 @@ namespace ECommerceNetCore.Application.Results
         {
 
         }
-        public DataResult() : base(default)
-        {
 
-        }
         public T Data { get; }
+    }
+
+    public class DataResult<T, E> : Result, IDataResult<T, E>
+    {
+        public DataResult(T data, bool success, string message) : base(success, message)
+        {
+            Data = data;
+        }
+        public DataResult(T data, bool success) : base(success)
+        {
+            Data = data;
+        }
+        public DataResult(E additional, bool success, string message) : base(success, message)
+        {
+            Additional = additional;
+        }
+        public DataResult(T data, E additional, bool success) : base(success)
+        {
+            Data = data;
+            Additional = additional;
+        }
+
+        public T Data { get; }
+        public E Additional { get; }
     }
 }

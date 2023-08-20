@@ -1,5 +1,4 @@
-﻿using ECommerceNetCore.Application.Aspects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,7 +11,6 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
 {
     //bkz: https://developers.trendyol.com/docs/category/%C3%BCr%C3%BCn-entegrasyonu
 
-    [SecurityProtocolAspect(ProtocolType = SecurityProtocolType.Tls12)]
     public class TrendyolProductClient
     {
         string Url = "https://stageapi.trendyol.com"; //https://stageapi.trendyol.com //https://api.trendyol.com

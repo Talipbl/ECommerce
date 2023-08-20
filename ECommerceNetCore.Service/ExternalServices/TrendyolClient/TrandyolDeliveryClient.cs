@@ -1,12 +1,9 @@
-﻿using ECommerceNetCore.Application.Aspects;
-using System.Net;
+﻿using System.Net;
 using System.Text;
 
 namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
 {
     //bkz: https://developers.trendyol.com/docs/marketplace/ortak-etiket-entegrasyonu/ortak-etiket-entegrasyonu
-
-    [SecurityProtocolAspect(ProtocolType = SecurityProtocolType.Tls12)]
     public class TrandyolDeliveryClient
     {
         private TrendyolHttpClient Client { get; set; }

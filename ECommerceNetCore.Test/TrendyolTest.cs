@@ -87,7 +87,7 @@ namespace ECommerceNetCore.Test
         [Fact]
         public async void Update_Prodcut()
         {
-            var products = await client.GetProductsAsync(1, 1, QueryBooleanOption.True, QueryBooleanOption.False);
+            var products = await client.GetProductsAsync(1, 1, QueryBooleanOption.All, QueryBooleanOption.False);
             var prod = products.OkResponse.Content.FirstOrDefault();
 
             List<ProductModel> list = new List<ProductModel>();

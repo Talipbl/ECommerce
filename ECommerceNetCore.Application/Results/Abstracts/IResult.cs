@@ -10,6 +10,5 @@ namespace ECommerceNetCore.Application.Results
     {
         bool Success { get;}
         string Message { get;}
-        string Additional { get;}
     }
 }

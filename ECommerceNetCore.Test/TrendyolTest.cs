@@ -48,14 +48,14 @@ namespace ECommerceNetCore.Test
                 SalePrice = 1120.99,
                 VatRate = 20,
                 CargoCompanyId = 10,
-                DeliveryOption = new RequestDeliveryOptionModel
+                DeliveryOption = new DeliveryOptionModel
                 {
                     DeliveryDuration = 1,
                     FastDeliveryType = "FAST_DELIVERY"
                 },
-                Images = new List<RequestImage>
+                Images = new List<ImageModel>
                 {
-                    new RequestImage
+                    new ImageModel
                     {
                         Url = "https://www.sampleadress/path/folder/image_1.jpg"
                     }
@@ -82,6 +82,46 @@ namespace ECommerceNetCore.Test
 
             list.Add(model);
             await client.CreateProductsAsync(list);
+        }
+
+        [Fact]
+        public async void Update_Prodcut()
+        {
+            var products = await client.GetProductsAsync(1, 1, QueryBooleanOption.True, QueryBooleanOption.False);
+            var prod = products.OkResponse.Content.FirstOrDefault();
+
+            List<ProductModel> list = new List<ProductModel>();
+            List<RequestAttribute> attributes = new List<RequestAttribute>();
+
+            prod.Attributes.ForEach(a =>
+            {
+                RequestAttribute requestAttribute = new RequestAttribute()
+                {
+                    AttributeId = a.AttributeId,
+                    AttributeValueId = a.AttributeValueId ?? 0,
+                    CustomAttributeValue = a.AttributeValue
+                };
+
+                attributes.Add(requestAttribute);
+            });
+
+            ProductModel model = new ProductModel()
+            {
+                Barcode = prod.Barcode,
+                Title = prod.Title + "-tsctest01",
+                ProductMainId = prod.ProductMainId,
+                BrandId = prod.BrandId,
+                CategoryId = prod.PimCategoryId,
+                StockCode = prod.StockCode + "-tsctest",
+                Description = prod.Description,
+                DeliveryOption = prod.DeliveryOptions,
+                Images = prod.Images,
+                VatRate = prod.VatRate,
+                Attributes = attributes
+            };
+
+            list.Add(model);
+            var result = await client.UpdateProductsAsync(list);
         }
     }
 }

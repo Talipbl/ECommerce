@@ -18,7 +18,7 @@ namespace ECommerceNetCore.Service.ExternalServices
         private Uri EndPoint { get; set; }
         private string Host { get; set; }
         private string SupplierId { get; set; } = string.Empty;
-        private ApiAuthorizationModel? Headers { get; set; }
+        private ApiAuthenticationModel? Headers { get; set; }
 
         public TrendyolHttpClient(string baseUrl)
         {
@@ -29,7 +29,7 @@ namespace ECommerceNetCore.Service.ExternalServices
         {
             SupplierId = supplierId;
         }
-        public TrendyolHttpClient(string baseUri, string supplierId, ApiAuthorizationModel requestHeaders) : this(baseUri, supplierId)
+        public TrendyolHttpClient(string baseUri, string supplierId, ApiAuthenticationModel requestHeaders) : this(baseUri, supplierId)
         {
             Headers = requestHeaders;
         }

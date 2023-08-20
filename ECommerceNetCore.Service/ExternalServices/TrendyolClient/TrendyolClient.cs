@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ECommerceNetCore.Application.Results;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,20 +22,21 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         TrendyolProductClient _productClient;
         public TrendyolClient()
         {
-            string auth = Convert.ToBase64String(Encoding.ASCII.GetBytes("7vw1GSi8UV5MF5y2wh9Q:ziAoE6pBo1DS6yYaYYdW")); 
+            string auth = Convert.ToBase64String(Encoding.ASCII.GetBytes("7vw1GSi8UV5MF5y2wh9Q:ziAoE6pBo1DS6yYaYYdW"));
 
-            ApiAuthorizationModel authorization = new ApiAuthorizationModel()
+            ApiAuthenticationModel authorization = new ApiAuthenticationModel()
             {
-                SupplierId = "2738",
+                SellerId = "2738",
                 ApiKey = "7vw1GSi8UV5MF5y2wh9Q",
                 ApiSecretKey = "ziAoE6pBo1DS6yYaYYdW",
                 Authorization = $"Basic {auth}"
             };
 
+            //_productClient = new TrendyolProductClient(new ApiAuthenticationModel().CreateAuthentication(AuthenticationType.Basic, "7vw1GSi8UV5MF5y2wh9Q", "ziAoE6pBo1DS6yYaYYdW", "", "2738"));
             _productClient = new TrendyolProductClient(authorization);
         }
 
-        #region Products
+        #region Ürün Entegrasyonu
 
         /// <summary>
         /// Bu servis ile Trendyol mağazanızdaki ürünlerinizi listeleyebilirsiniz.
@@ -86,7 +88,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         }
 
         /// <summary>
-        /// GetProductsAsync servisine yapılacak isteklerde gönderilecek sipariş ve sevkiyat kargo firma bilgileri ve bu bilgilere ait ID değerleri bu servis kullanılarak alınacaktır.
+        /// CreateProductsAsync servisine yapılacak isteklerde gönderilecek sipariş ve sevkiyat kargo firma bilgileri ve bu bilgilere ait ID değerleri bu servis kullanılarak alınacaktır.
         /// </summary>
         /// <returns></returns>
         public async Task<RootResponseModel<GetSupplierAddressesResponseModel>> GetSupplierAddressAsync()
@@ -95,7 +97,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         }
 
         /// <summary>
-        /// GetProductsAsync servisine yapılacak isteklerde gönderilecek brandId bilgisi bu servis kullanılarak alınacaktır.
+        /// CreateProductsAsync servisine yapılacak isteklerde gönderilecek brandId bilgisi bu servis kullanılarak alınacaktır.
         /// </summary>
         /// <returns></returns>
         public async Task<List<BrandModel>> GetBrandsAsync()
@@ -108,7 +110,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         }
 
         /// <summary>
-        /// GetProductsAsync servisine yapılacak isteklerde gönderilecek categoryId bilgisi bu servis kullanılarak alınacaktır.
+        /// CreateProductsAsync servisine yapılacak isteklerde gönderilecek categoryId bilgisi bu servis kullanılarak alınacaktır.
         /// </summary>
         /// <returns></returns>
         public async Task<List<CategoryModel>> GetCategoriesAsync()
@@ -121,7 +123,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         }
 
         /// <summary>
-        /// GetProductsAsync servisine yapılacak isteklerde gönderilecek attributes bilgileri ve bu bilgilere ait detaylar bu servis kullanılarak alınacaktır.
+        /// CreateProductsAsync servisine yapılacak isteklerde gönderilecek attributes bilgileri ve bu bilgilere ait detaylar bu servis kullanılarak alınacaktır.
         /// </summary>
         /// <remarks>GetProductsAsync yapmak için en alt seviyedeki kategori ID bilgisi kullanılmalıdır. Seçtiğiniz kategorinin alt kategorileri var ise bu kategori bilgisi ile ürün aktarımı yapamazsınız.</remarks>
         /// <param name="categoryId"></param>
@@ -137,12 +139,101 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
             return result;
         }
 
-        public async Task<RootResponseModel<ServiceResponseModel>> CreateProductsAsync(List<ProductModel> products)
+        /// <summary>
+        /// CreateProductsAsync, UpdatePriceAndInventoryAsync methodları servise yapılan istekler kuyruğa atarak işlendiği için, servise yapılan her başarlı istek sonucunda bir adet batchRequestId bilgisi dönülmektedir. Bu method yardımıyla batchRequestId ile alınan işlemlerin sonucunun kontrolü yapılabilir. Servis dönüşündeki "status" alanı kontrol edilerek toplu işlemin tamamlanıp tamamlanmadığı kontrol edilebilir. Eğer toplu işlem sonucunda bir ya da birden fazla item için hata oluşmuş ise <b>FailureReasons</b> alanı kontrol edilerek sebebi bulunabilir.
+        /// </summary>
+        /// <param name="batchRequestId"></param>
+        /// <returns></returns>
+        public async Task<RootResponseModel<BatchRequestResultModel>> GetBatchRequestAsync(string batchRequestId)
         {
+            return await _productClient.GetBatchRequestAsync(batchRequestId);
+        }
+
+        /// <summary>
+        /// Ürünleriniz Trendyol sistemine yüklenirken bu metod kullanılmaktadır. Tekli ve çoklu ürün gönderimini desteklemektedir.
+        /// </summary>
+        /// <remarks>
+        /// + Bu method ile ürün aktarımı sağlanmadan önce Trendyol Marka Liste ve Kategori/Kategori Özellik bilgileri servisleri üzerinden ilgili detaylar alınmalıdır.<br />
+        /// + Her bir istek içerisinde gönderilebilecek maksimum item sayısı 1.000'dir.<br />
+        /// + <b>FastDeliveryType</b> alanında tanımlama yapabilmek için <b>DeliveryDuration</b> alanını 1 olarak girilmesi gerekmektedir.
+        /// </remarks>
+        /// <param name="products"></param>
+        /// <returns>İşlem başarılı ise geriye BatchRequestResultModel ile işlem sonucu döner. Başarısız ise ErrorResultModel döner.</returns>
+        public async Task<RootResponseModel<ServiceResponseModel, BatchRequestResultModel>> CreateProductsAsync(List<ProductModel> products)
+        {
+            RootResponseModel<ServiceResponseModel, BatchRequestResultModel> response = new RootResponseModel<ServiceResponseModel, BatchRequestResultModel>();
             ProductRequestModel model = new ProductRequestModel(products);
 
-            var result = await _productClient.CreateProductsAsync(model);
-            return result;
+            var productResult = await _productClient.CreateProductsAsync(model);
+
+            response.IsSuccess = productResult.IsSuccess;
+            if (response.IsSuccess)
+            {
+                var batchResult = await _productClient.GetBatchRequestAsync(productResult.OkResponse.BatchRequestId);
+                response.AdditionalData = batchResult.OkResponse;
+                response.OkResponse = productResult.OkResponse;
+
+                return response;
+            }
+
+            response.ErrorValueReturn = JsonConvert.DeserializeObject<ErrorResultModel>((string)productResult.ErrorValueReturn);
+            return response;
+        }
+
+        /// <summary>
+        /// Bu method ile Trendyol mağazanızda CreateProductsAsync servisiyle oluşturduğunuz ürünleri güncelleyebilirsiniz.
+        /// </summary>
+        /// <remarks>
+        /// + Bu servis üzerinden sadece ürün bilgileri güncellenmektedir. Stok ve fiyat değerlerini güncellemek için updatePriceAndInventory servisini kullanmanız gerekmektedir.<br />
+        /// + Yeni kategori ve kategori özellik değerleri eklenebileceği sebebiyle ürün güncellemelerinizden önce kullandığınız kategori ve kategori özellik değerlerinin güncel olup olmadığını getCategoryTree ve getCategoryAttributes servislerinden kontrol etmenizi öneririz.<br />
+        /// + Güncelleme isteğinden sonra "İçerik kontrol bekleniyor." statüsüne geçen ürünleriniz satışa açık durumda olabilir.Sipariş almak istemediğiniz durumlarda stok ve fiyat bilginizi sıfırlamanız gerekmektedir.<br />
+        /// + Her bir istek içerisinde gönderilebilecek maksimum item sayısı 1.000'dir.
+        /// </remarks>
+        /// <param name="products"></param>
+        /// <returns>İşlem başarılı ise geriye BatchRequestResultModel ile işlem sonucu döner. Başarısız ise ErrorResultModel döner.</returns>
+        public async Task<RootResponseModel<ServiceResponseModel, BatchRequestResultModel>> UpdateProductsAsync(List<ProductModel> products)
+        {
+            RootResponseModel<ServiceResponseModel, BatchRequestResultModel> response = new RootResponseModel<ServiceResponseModel, BatchRequestResultModel>();
+            ProductRequestModel model = new ProductRequestModel(products);
+
+            var productResult = await _productClient.UpdateProductsAsync(model);
+
+            response.IsSuccess = productResult.IsSuccess;
+            if (response.IsSuccess)
+            {
+                var batchResult = await _productClient.GetBatchRequestAsync(productResult.OkResponse.BatchRequestId);
+                response.AdditionalData = batchResult.OkResponse;
+                response.OkResponse = productResult.OkResponse;
+
+                return response;
+            }
+
+            response.ErrorValueReturn = JsonConvert.DeserializeObject<ErrorResultModel>((string)productResult.ErrorValueReturn);
+            return response;
+        }
+
+        /// <summary>
+        /// Trendyol'a aktarılan ve onaylanan ürünlerin fiyat ve stok bilgileri eş zamana yakın güncellenir. Stok ve fiyat bligilerini istek içerisinde ayrı ayrı gönderebilirsiniz.
+        /// </summary>
+        /// <param name="priceAndInventories"></param>
+        /// <returns></returns>
+        public async Task<RootResponseModel<ServiceResponseModel, BatchRequestResultModel>> UpdatePriceAndInventoryAsync(List<PriceAndInventoryModel> priceAndInventories)
+        {
+            RootResponseModel<ServiceResponseModel, BatchRequestResultModel> response = new RootResponseModel<ServiceResponseModel, BatchRequestResultModel>();
+            PriceAndInventoryUpdateRequest requestModel = new PriceAndInventoryUpdateRequest(priceAndInventories);
+            var priceResult = await _productClient.UpdatePriceAndInventoryAsync(requestModel);
+
+            response.IsSuccess = priceResult.IsSuccess;
+            if (response.IsSuccess)
+            {
+                var batchResult = await _productClient.GetBatchRequestAsync(priceResult.OkResponse.BatchRequestId);
+                response.AdditionalData = batchResult.OkResponse;
+                response.OkResponse = priceResult.OkResponse;
+
+                return response;
+            }
+
+            return response;
         }
 
         #endregion

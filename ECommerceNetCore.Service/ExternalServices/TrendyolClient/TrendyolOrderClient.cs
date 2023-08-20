@@ -25,7 +25,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
             //TO-DO: Buradaki bilgiler veri tabanına kaydedilip oradan çekilecek.
             string auth = Convert.ToBase64String(Encoding.ASCII.GetBytes("mhnqkT7WsnoMmpca49NY:yYxBaDjJw1QaRykToWHt"));
 
-            ApiAuthorizationModel authorization = new ApiAuthorizationModel()
+            ApiAuthenticationModel authorization = new ApiAuthenticationModel()
             {
                 ApiKey = "mhnqkT7WsnoMmpca49NY",
                 ApiSecretKey = "yYxBaDjJw1QaRykToWHt",

@@ -38,7 +38,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
             public string Gender { get; set; }
             public bool HasActiveCampaign { get; set; }
             public string Id { get; set; }
-            public List<ResponseImage> Images { get; set; }
+            public List<ImageModel> Images { get; set; }
             public object LastPriceChangeDate { get; set; }
             public object LastStockChangeDate { get; set; }
             public object LastUpdateDate { get; set; }
@@ -63,18 +63,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
             public List<object> RejectReasonDetails { get; set; }
             public bool Blacklisted { get; set; }
             public int? DeliveryDuration { get; set; }
-            public ResponseDeliveryOptions DeliveryOptions { get; set; }
-        }
-
-        public class ResponseDeliveryOptions
-        {
-            public int DeliveryDuration { get; set; }
-            public object FastDeliveryType { get; set; }
-        }
-
-        public class ResponseImage
-        {
-            public string Url { get; set; }
+            public DeliveryOptionModel DeliveryOptions { get; set; }
         }
     }
 }

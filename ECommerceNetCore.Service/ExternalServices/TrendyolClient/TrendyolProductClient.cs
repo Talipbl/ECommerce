@@ -19,9 +19,9 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         string Prefix = "/stagesapigw"; // stagesapigw // sapigw
         private TrendyolHttpClient Client { get; set; }
         private string SupplierId { get; set; }
-        public TrendyolProductClient(ApiAuthorizationModel authorization)
+        public TrendyolProductClient(ApiAuthenticationModel authorization)
         {
-            SupplierId = authorization.SupplierId;
+            SupplierId = authorization.SellerId;
             Client = new TrendyolHttpClient(Url, SupplierId, authorization);
         }
         public async Task<RootResponseModel<List<BrandModel>>> GetBrandsAsync()
@@ -45,9 +45,9 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         {
             return await Task.Run(() => Client.PostAsync<ServiceResponseModel>(request, $"{Prefix}/suppliers/{SupplierId}/v2/products"));
         }
-        public async Task<RootResponseModel<ProductRequestModel>> UpdateProductsAsync(ProductRequestModel request)
+        public async Task<RootResponseModel<ServiceResponseModel>> UpdateProductsAsync(ProductRequestModel request)
         {
-            return await Task.Run(() => Client.PutAsync<ProductRequestModel>(request, $"{Prefix}/suppliers/{SupplierId}/v2/products"));
+            return await Task.Run(() => Client.PutAsync<ServiceResponseModel>(request, $"{Prefix}/suppliers/{SupplierId}/v2/products"));
         }
         public async Task<RootResponseModel<ServiceResponseModel>> DeleteProductsAsync(DeleteProductRequestModel request)
         {
@@ -57,7 +57,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         {
             return await Task.Run(() => Client.PostAsync<ServiceResponseModel>(request, $"{Prefix}/suppliers/{SupplierId}/products/price-and-inventory"));
         }
-        public async Task<RootResponseModel<BatchRequestResultModel>> GetBatchRequestAsync(int batchRequestId)
+        public async Task<RootResponseModel<BatchRequestResultModel>> GetBatchRequestAsync(string batchRequestId)
         {
             return await Task.Run(() => Client.GetAsync<BatchRequestResultModel>($"{Prefix}/suppliers/{SupplierId}/products/batch-requests/{batchRequestId}"));
         }

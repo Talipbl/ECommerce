@@ -56,10 +56,10 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
         public int DeliveryDuration { get; set; }
 
         [JsonProperty("deliveryOption")]
-        public RequestDeliveryOptionModel DeliveryOption { get; set; }
+        public DeliveryOptionModel DeliveryOption { get; set; }
 
         [JsonProperty("images")]
-        public List<RequestImage> Images { get; set; }
+        public List<ImageModel> Images { get; set; }
 
         [JsonProperty("attributes")]
         public List<RequestAttribute> Attributes { get; set; }
@@ -74,21 +74,6 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
 
             [JsonProperty("customAttributeValue")]
             public string CustomAttributeValue { get; set; }
-        }
-
-        public class RequestDeliveryOptionModel
-        {
-            [JsonProperty("deliveryDuration")]
-            public int DeliveryDuration { get; set; }
-
-            [JsonProperty("fastDeliveryType")]
-            public string FastDeliveryType { get; set; }
-        }
-
-        public class RequestImage
-        {
-            [JsonProperty("url")]
-            public string Url { get; set; }
         }
     }
 }

@@ -23,7 +23,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ECommerceNetCore.Application\ECommerceNetCore.Application.csproj" />
-    <ProjectReference Include="..\ECommerceNetCore.Service\ECommerceNetCore.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Marketplace.Trendyol">
+      <HintPath>..\..\MarketplacePackage\Marketplace.Trendyol\bin\Debug\net6.0\Marketplace.Trendyol.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

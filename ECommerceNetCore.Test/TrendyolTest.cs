@@ -1,8 +1,5 @@
-using ECommerceNetCore.Application.DataTransferObjects;
-using ECommerceNetCore.Application.Validators;
-using ECommerceNetCore.Service.ExternalServices.TrendyolClient;
-using static ECommerceNetCore.Service.ExternalServices.TrendyolClient.GetProductsResponseModel;
-using static ECommerceNetCore.Service.ExternalServices.TrendyolClient.ProductModel;
+using Marketplace.Trendyol;
+using static Marketplace.Trendyol.ProductModel;
 
 namespace ECommerceNetCore.Test
 {

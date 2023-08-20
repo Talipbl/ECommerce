@@ -1,6 +1,6 @@
 ﻿using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Results;
-using ECommerceNetCore.Service.ExternalServices.TrendyolClient;
+using Marketplace.Trendyol;
 using Newtonsoft.Json;
 
 namespace ECommerceNetCore.Application.Services

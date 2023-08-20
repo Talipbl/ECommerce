@@ -1,5 +1,5 @@
 ﻿using ECommerceNetCore.Application.Results;
-using ECommerceNetCore.Service.ExternalServices.TrendyolClient;
+using Marketplace.Trendyol;
 
 namespace ECommerceNetCore.Application.Interfaces
 {

@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceNetCore.AdminUI", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceNetCore.Test", "ECommerceNetCore.Test\ECommerceNetCore.Test.csproj", "{41302BD4-363D-44B1-A2A8-DC175A508DD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceNetCore.ImageAPI", "ECommerceNetCore.ImageAPI\ECommerceNetCore.ImageAPI.csproj", "{E0CA7254-30DC-4D05-9E8F-1986B03547FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceNetCore.ImageAPI", "ECommerceNetCore.ImageAPI\ECommerceNetCore.ImageAPI.csproj", "{E0CA7254-30DC-4D05-9E8F-1986B03547FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

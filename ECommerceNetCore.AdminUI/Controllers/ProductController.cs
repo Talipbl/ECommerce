@@ -185,7 +185,7 @@ namespace ECommerceNetCore.AdminUI.Controllers
 
                 if (!addedOption.Success)
                 {
-                    jsonResult = new ErrorResult("", $"/urunler/duzenle/{addedProduct.Data.Id}");
+                    jsonResult = new ErrorResult($"/urunler/duzenle/{addedProduct.Data.Id}");
                     break;
                 }
 
@@ -222,7 +222,7 @@ namespace ECommerceNetCore.AdminUI.Controllers
                     var uploadedImage = await _fileHelper.ImageUpload(bytes, fileName);
                     if (!uploadedImage.Success)
                     {
-                        jsonResult = new SuccessResult(EntityConsts.AddedSuccess, $"/urunler/duzenle/{addedProduct.Data.Id}");
+                        jsonResult = new SuccessResult($"/urunler/duzenle/{addedProduct.Data.Id}");
                         break;
                     }
 
@@ -432,7 +432,7 @@ namespace ECommerceNetCore.AdminUI.Controllers
                         var uploadedImage = await _fileHelper.ImageUpload(bytes, fileName);
                         if (!uploadedImage.Success)
                         {
-                            jsonResult = new SuccessResult(EntityConsts.AddedSuccess, $"/urunler/duzenle/{product.Id}");
+                            jsonResult = new SuccessResult($"/urunler/duzenle/{product.Id}");
                             break;
                         }
 

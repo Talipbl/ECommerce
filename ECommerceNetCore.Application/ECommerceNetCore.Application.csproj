@@ -25,11 +25,17 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ECommerceNetCore.Domain\ECommerceNetCore.Domain.csproj" />
-    <ProjectReference Include="..\ECommerceNetCore.Service\ECommerceNetCore.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Marketplace.Trendyol">
+      <HintPath>..\..\MarketplacePackage\Marketplace.Trendyol\bin\Debug\net6.0\Marketplace.Trendyol.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

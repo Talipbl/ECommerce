@@ -21,10 +21,6 @@ namespace ECommerceNetCore.Application.Results
         {
 
         }
-        public ValidationDataResult()
-        {
-
-        }
 
         public List<string> Errors { get; set; }
     }

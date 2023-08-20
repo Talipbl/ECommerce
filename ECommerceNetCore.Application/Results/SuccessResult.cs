@@ -8,10 +8,6 @@ namespace ECommerceNetCore.Application.Results
 {
     public class SuccessResult : Result
     {
-        public SuccessResult(string message, string additional) : base(true, message, additional)
-        {
-
-        }
         public SuccessResult(string message) : base(true, message)
         {
 

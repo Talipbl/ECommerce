@@ -6,6 +6,7 @@ using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Persistance.Repositories;
 using ECommerceNetCore.AdminUI.Helpers;
 using System.Net;
+using Autofac.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ builder.Services.AddSingleton<IFileHelper, FileHelper>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddApplicationService();
+
+builder.Services.AddMvc().AddRazorRuntimeCompilation();
 
 //bkz: https://learn.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=aspnetcore-6.0
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());

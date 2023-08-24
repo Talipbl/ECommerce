@@ -34,7 +34,7 @@
 
   <ItemGroup>
     <Reference Include="Marketplace.Trendyol">
-      <HintPath>..\..\MarketplacePackage\Marketplace.Trendyol\bin\Debug\net6.0\Marketplace.Trendyol.dll</HintPath>
+      <HintPath>..\..\MarketplacePackages\Marketplace.Trendyol\bin\Debug\net6.0\Marketplace.Trendyol.dll</HintPath>
     </Reference>
   </ItemGroup>
 

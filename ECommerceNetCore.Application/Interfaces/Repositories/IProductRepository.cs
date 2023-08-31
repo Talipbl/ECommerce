@@ -1,5 +1,5 @@
 ﻿using ECommerceNetCore.Application.DataTransferObjects;
-using ECommerceNetCore.Application.Results;
+using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.Domain.Entities;
 
 namespace ECommerceNetCore.Application.Interfaces

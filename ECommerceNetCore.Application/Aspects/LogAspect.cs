@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ECommerceNetCore.Application.MethodInterceptors;
-using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Application.CrossCuttingConcerns;
 using ECommerceNetCore.Application.ServiceRegistrations;
 using Microsoft.Extensions.DependencyInjection;
 using ECommerceNetCore.Domain.Entities;
+using ECommerceNetCore.Application.Utilities;
 
 namespace ECommerceNetCore.Application.Aspects
 {

@@ -1,4 +1,4 @@
-﻿using ECommerceNetCore.Application.Results;
+﻿using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.ImageAPI.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

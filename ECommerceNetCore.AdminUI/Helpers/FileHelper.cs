@@ -1,8 +1,6 @@
 ﻿using ECommerceNetCore.AdminUI.Models;
 using ECommerceNetCore.Application.Aspects;
-using ECommerceNetCore.Application.Results;
 using Microsoft.AspNetCore.Mvc;
-using IResult = ECommerceNetCore.Application.Results.IResult;
 
 namespace ECommerceNetCore.AdminUI.Helpers
 {

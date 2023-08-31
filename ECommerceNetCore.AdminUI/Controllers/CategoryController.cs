@@ -2,7 +2,6 @@
 using ECommerceNetCore.AdminUI.Models;
 using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Domain;
 using ECommerceNetCore.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 ﻿using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Application.Results;
+using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.Domain.Entities;
 using ECommerceNetCore.Persistance.Context;
 using Microsoft.Data.SqlClient;

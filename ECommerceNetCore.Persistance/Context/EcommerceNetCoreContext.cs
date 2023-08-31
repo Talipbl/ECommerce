@@ -74,7 +74,9 @@ public partial class EcommerceNetCoreContext : DbContext
 
     public virtual DbSet<SysVatRatio> SysVatRatios { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Server=talipbulundu.com\\MSSQLSERVER2014;Database=ECommerceNetCore;User Id=root;Password=34Q1wt&n5; Encrypt=false;");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=talipbulundu.com\\MSSQLSERVER2014;Database=ECommerceNetCore;User Id=root;Password=34Q1wt&n5; Encrypt=false;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -94,9 +96,8 @@ public partial class EcommerceNetCoreContext : DbContext
             entity.Property(e => e.OtpsetupCode)
                 .HasMaxLength(250)
                 .HasColumnName("OTPSetupCode");
-            entity.Property(e => e.Password)
-                .HasMaxLength(60)
-                .IsUnicode(false);
+            entity.Property(e => e.PasswordHash).HasMaxLength(500);
+            entity.Property(e => e.PasswordSalt).HasMaxLength(500);
             entity.Property(e => e.RegisterDate).HasColumnType("datetime");
             entity.Property(e => e.SecurityLevel).HasDefaultValueSql("((1))");
             entity.Property(e => e.UserName).HasMaxLength(30);
@@ -269,7 +270,6 @@ public partial class EcommerceNetCoreContext : DbContext
             entity.ToTable("Gnl_Products", "dbo");
 
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.Description).HasMaxLength(2000);
             entity.Property(e => e.Ean)
                 .HasMaxLength(20)
                 .HasColumnName("EAN");
@@ -287,6 +287,7 @@ public partial class EcommerceNetCoreContext : DbContext
             entity.Property(e => e.SellerCode).HasMaxLength(20);
             entity.Property(e => e.SellerUrl).HasMaxLength(250);
             entity.Property(e => e.StatusId).HasDefaultValueSql("((1))");
+            entity.Property(e => e.StockCode).HasMaxLength(15);
             entity.Property(e => e.Upc)
                 .HasMaxLength(20)
                 .HasColumnName("UPC");
@@ -354,19 +355,18 @@ public partial class EcommerceNetCoreContext : DbContext
 
             entity.ToTable("Gnl_ProductOptions", "dbo");
 
+            entity.Property(e => e.AvailableDate).HasColumnType("datetime");
             entity.Property(e => e.Height).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.IsAvailable)
+                .IsRequired()
+                .HasDefaultValueSql("((1))");
             entity.Property(e => e.Length).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.OptionName).HasMaxLength(200);
             entity.Property(e => e.StatusId).HasDefaultValueSql("((1))");
             entity.Property(e => e.StockCode).HasMaxLength(15);
             entity.Property(e => e.UnitOfStock).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.Weight).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.Width).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.AvailableDate).HasColumnType("datetime");
-
-
-            entity.Property(e => e.IsAvailable)
-                .IsRequired()
-                .HasDefaultValueSql("((1))");
 
             entity.HasOne(d => d.Product).WithMany(p => p.GnlProductOptions)
                 .HasForeignKey(d => d.ProductId)
@@ -391,10 +391,10 @@ public partial class EcommerceNetCoreContext : DbContext
             entity.ToTable("Gnl_ProductPrices", "dbo");
 
             entity.Property(e => e.DiscountExpireDate).HasColumnType("datetime");
-            entity.Property(e => e.DiscountPrice).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.DiscountRatio).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.PurchasePrice).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.DiscountPrice).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.DiscountRatio).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.PurchasePrice).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.StatusId).HasDefaultValueSql("((1))");
 
             entity.HasOne(d => d.Currency).WithMany(p => p.GnlProductPrices)

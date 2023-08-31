@@ -1,7 +1,7 @@
 ﻿using ECommerceNetCore.Application.Aspects;
 using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Application.Results;
+using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;
 using System.Globalization;

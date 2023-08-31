@@ -1,6 +1,6 @@
 ﻿using ECommerceNetCore.Application.Aspects;
 using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Application.Results;
+using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;
 using System;
@@ -13,6 +13,13 @@ namespace ECommerceNetCore.Application.Services
 {
     public class AdminService : IAdminService
     {
+        IAdminRepository _adminRepo;
+
+        public AdminService(IAdminRepository adminRepo)
+        {
+            _adminRepo = adminRepo;
+        }
+
         public IDataResult<DefAdmin> AddAdmin(DefAdmin admin)
         {
             throw new NotImplementedException();
@@ -28,6 +35,11 @@ namespace ECommerceNetCore.Application.Services
         public IDataResult<DefAdmin> GetAdmin(int adminId)
         {
             throw new NotImplementedException();
+        }
+        public IDataResult<DefAdmin> GetAdmin(string nameOrMail)
+        {
+            var result = _adminRepo.GetAdmin(nameOrMail);
+            return new DataResult<DefAdmin>(result, true);
         }
 
         public IListResult<DefAdmin> GetAdmins(int statusId = 1)

@@ -1,4 +1,4 @@
-﻿using ECommerceNetCore.Application.Results;
+﻿using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;
 using System;
@@ -17,5 +17,6 @@ namespace ECommerceNetCore.Application.Interfaces
         IResult DeleteAdmin(int adminId);
         IListResult<DefAdmin> GetAdmins(int statusId = (int)StatusTypes.Active);
         IDataResult<DefAdmin> GetAdmin(int adminId);
+        IDataResult<DefAdmin> GetAdmin(string nameOrMail);
     }
 }

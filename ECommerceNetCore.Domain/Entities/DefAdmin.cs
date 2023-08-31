@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace ECommerceNetCore.Domain.Entities;
 
-public partial class DefAdmin : BaseEntity
+public partial class DefAdmin :IEntity
 {
+    public int Id { get; set; }
 
     public string FirstName { get; set; } = null!;
 
@@ -16,8 +17,6 @@ public partial class DefAdmin : BaseEntity
 
     public DateTime? LastLoginDate { get; set; }
 
-    public string Password { get; set; } = null!;
-
     public string MailAdress { get; set; } = null!;
 
     public string? OtpsetupCode { get; set; }
@@ -27,4 +26,8 @@ public partial class DefAdmin : BaseEntity
     public bool? IsActive { get; set; }
 
     public int SecurityLevel { get; set; }
+
+    public byte[]? PasswordSalt { get; set; }
+
+    public byte[]? PasswordHash { get; set; }
 }

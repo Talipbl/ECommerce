@@ -1,7 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using ECommerceNetCore.Application.CrossCuttingConcerns;
 using ECommerceNetCore.Application.MethodInterceptors;
-using ECommerceNetCore.Application.Results;
+using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.Domain.Common;
 using FluentValidation;
 using FluentValidation.Results;

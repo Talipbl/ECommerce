@@ -14,14 +14,16 @@
 
   <ItemGroup>
     <Folder Include="CrossCuttingConcerns\Caching\Redis\" />
-    <Folder Include="DataTransferObjects\Trendyol\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Utilities\Cryptography\DesCrypto\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.5.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.1" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
@@ -36,6 +38,10 @@
     <Reference Include="Marketplace.Trendyol">
       <HintPath>..\..\MarketplacePackages\Marketplace.Trendyol\bin\Debug\net6.0\Marketplace.Trendyol.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\talip\source\repos\ECommerceNetCore\ECommerceNetCore.Application\DataTransferObjects\Trendyol\.editorconfig" />
   </ItemGroup>
 
 </Project>

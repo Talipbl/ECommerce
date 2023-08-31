@@ -10,6 +10,7 @@
     <PackageReference Include="Autofac" Version="6.5.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.1" />
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
       <PrivateAssets>all</PrivateAssets>
@@ -28,6 +29,25 @@
 
   <ItemGroup>
     <Folder Include="Configurations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Model1.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

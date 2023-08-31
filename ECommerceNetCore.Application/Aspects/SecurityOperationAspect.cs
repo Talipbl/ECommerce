@@ -1,8 +1,8 @@
 ﻿using Castle.DynamicProxy;
 using ECommerceNetCore.Application.CrossCuttingConcerns;
 using ECommerceNetCore.Application.MethodInterceptors;
-using ECommerceNetCore.Application.Results;
 using ECommerceNetCore.Application.ServiceRegistrations;
+using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.Domain.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +27,8 @@ namespace ECommerceNetCore.Application.Aspects
 
         protected override void OnBefore(IInvocation invocation)
         {
-            var userLevel = _accessor.HttpContext.Session.GetInt32("UserLevel");
+            var crypto = _accessor.HttpContext.Session.GetString("level");
+            var userLevel =Convert.ToInt32(AesCrypto.Decrypt(crypto, "Develop"));
             if (userLevel < _level)
             {
                 invocation.ReturnValue = new ErrorResult("Bu işlemi yapmak için yetkiniz yok. Lütfen yetkili kişiye başvurun.");

@@ -1,6 +1,6 @@
 ﻿using ECommerceNetCore.Application.Aspects;
 using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Application.Results;
+using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.Domain.Entities;
 
 namespace ECommerceNetCore.Application.Services

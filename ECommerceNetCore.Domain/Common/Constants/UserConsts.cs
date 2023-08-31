@@ -12,7 +12,7 @@ namespace ECommerceNetCore.Domain.Common
         public const string UserAlreadyExist = "Kullanıcı zaten var.";
         public const string LoginSuccesful = "Giriş başarılı.";
         public const string LoginFailed = "Giriş başarısız.";
-        public const string PasswordIncorrect = "Parolar hatalı.";
+        public const string PasswordIncorrect = "Parola hatalı.";
         public const string UserDoesNotSave = "Kullanıcı kaydedilemedi.";
         public const string UserSuccessfullyCreated = "Kullanıcı başarıyla oluşturuldu.";
     }

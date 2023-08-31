@@ -9,6 +9,6 @@ namespace ECommerceNetCore.Application.Interfaces
 {
     public interface IAdminRepository : IBaseEntityRepository<DefAdmin>
     {
-
+        DefAdmin GetAdmin(string nameOrMail);
     }
 }

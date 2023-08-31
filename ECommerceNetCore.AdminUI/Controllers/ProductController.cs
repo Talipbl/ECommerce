@@ -4,7 +4,7 @@ using ECommerceNetCore.Application.Aspects;
 using ECommerceNetCore.Application.DataTransferObjects;
 using ECommerceNetCore.Application.Helpers;
 using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Application.Results;
+using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.Application.Validators;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;

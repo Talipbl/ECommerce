@@ -1,0 +1,104 @@
+﻿@model TrendyolWebSearchResultDto
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item @(Model.PageIndex is 1 ? "disabled" : "")"><a class="page-link" page="@(Model.PageIndex - 1)" href="javascript:;">Önceki</a></li>
+        @if (Model.PageIndex > 2)
+        {
+            <li class="page-item"><a class="page-link" page="@(Model.PageIndex - 2)" href="javascript:;">@(Model.PageIndex - 2)</a></li>
+        }
+        @if (Model.PageIndex > 1)
+        {
+            <li class="page-item"><a class="page-link" page="@(Model.PageIndex -1)" href="javascript:;">@(Model.PageIndex - 1)</a></li>
+        }
+        <li class="page-item active"><a class="page-link" href="javascript:;">@Model.PageIndex</a></li>
+        <li class="page-item @(Model.Products.Count is 0 ? "disabled" : "")"><a class="page-link" page="@(Model.PageIndex + 1)" href="javascript:;">@(Model.PageIndex + 1)</a></li>
+        <li class="page-item @(Model.Products.Count is 0 ? "disabled" : "")"><a class="page-link" page="@(Model.PageIndex + 2)" href="javascript:;">@(Model.PageIndex + 2)</a></li>
+        <li class="page-item @(Model.Products.Count is 0 ? "disabled" : "")" @(Model.Products.Count is 0 ? "disabled" : "")><a class="page-link" page="@(Model.PageIndex + 1)" href="javascript:;">Sonraki</a></li>
+    </ul>
+</nav>
+<hr />
+
+@if (Model.Products.Count is 0)
+{
+    <div class="text-center">Gösterilecek daha fazla öğe yok...</div>
+    <hr />
+}
+
+@foreach (var product in Model.Products)
+{
+    <div class="card bg-light mb-3 p-3">
+        <div class="row">
+            <input type="checkbox" aria-label="Checkbox for following text input" id="@product.Id">
+            <div class="col-md-2 col-sm-2 ml-3">
+                <a href="@("https://cdn.dsmcdn.com"+product.Images.First())" data-toggle="lightbox" data-galery="galery">
+                    <img class="card-img center" src="@("https://cdn.dsmcdn.com"+product.Images.First())" alt="@product.ImageAlt" style="width:50%">
+                </a>
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <h6>@product.CategoryHierarchy</h6>
+                    <h5>@product.Brand.Name</h5>
+                    <a href="@("https://www.trendyol.com/"+product.Url)" target="_blank"><h4>@product.Name</h4></a>
+                    <div class="row">
+                        @for (int i = 0; i < product.Images.Count; i++)
+                        {
+                            if (i > 6)
+                                break;
+
+                            <div class="col-md-1">
+                                <a href="@("https://cdn.dsmcdn.com"+product.Images[i])" data-toggle="lightbox" data-galery="galery">
+                                    <img class="card-img" src="@("https://cdn.dsmcdn.com"+product.Images[i])" alt="prod1">
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="center text-center">
+                    <h4>@product.Price.SellingPrice.ToString("C2")</h4>
+                    @if (product.RatingScore != null)
+                    {
+                        <h5><i class="fa fa-comment"></i> @product.RatingScore.TotalCount</h5>
+                        <h5><i class="fa fa-star"></i> @product.RatingScore.AverageRating.ToString("F2")</h5>
+                    }
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="center">
+                    <div class="mt-1">
+                        <a href="javascript:;" product-id="@product.Id" class="btn btn-warning btn-block trendyol">Trendyol</a>
+                    </div>
+                    <div class="mt-1">
+                        <a href="javascript:;" product-id="@product.Id" class="btn btn-primary btn-block hepsiburada">Hepsiburada</a>
+                    </div>
+                    <div class="mt-1">
+                        <a href="javascript:;" product-id="@product.Id" class="btn btn-info btn-block n11">n11</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item @(Model.PageIndex is 1 ? "disabled" : "")"><a class="page-link" page="@(Model.PageIndex - 1)" href="javascript:;">Önceki</a></li>
+        @if (Model.PageIndex > 2)
+        {
+            <li class="page-item"><a class="page-link" page="@(Model.PageIndex - 2)" href="javascript:;">@(Model.PageIndex - 2)</a></li>
+        }
+        @if (Model.PageIndex > 1)
+        {
+            <li class="page-item"><a class="page-link" page="@(Model.PageIndex -1)" href="javascript:;">@(Model.PageIndex - 1)</a></li>
+        }
+        <li class="page-item active"><a class="page-link" href="javascript:;">@Model.PageIndex</a></li>
+        <li class="page-item @(Model.Products.Count is 0 ? "disabled" : "")"><a class="page-link" page="@(Model.PageIndex + 1)" href="javascript:;">@(Model.PageIndex + 1)</a></li>
+        <li class="page-item @(Model.Products.Count is 0 ? "disabled" : "")"><a class="page-link" page="@(Model.PageIndex + 2)" href="javascript:;">@(Model.PageIndex + 2)</a></li>
+        <li class="page-item @(Model.Products.Count is 0 ? "disabled" : "")"><a class="page-link" page="@(Model.PageIndex + 1)" href="javascript:;">Sonraki</a></li>
+    </ul>
+</nav>
+
+
+

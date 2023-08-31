@@ -76,6 +76,7 @@ namespace ECommerceNetCore.Persistance.ServiceRegistrations
             builder.RegisterType<ProductService>().As<IProductService>().SingleInstance();
             builder.RegisterType<SystemService>().As<ISystemService>().SingleInstance();
             builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
+            builder.RegisterType<TrendyolService>().As<ITrendyolService>().SingleInstance();
         }
     }
 }

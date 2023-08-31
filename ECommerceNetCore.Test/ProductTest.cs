@@ -1,4 +1,5 @@
 using ECommerceNetCore.Application.DataTransferObjects;
+using ECommerceNetCore.Application.Helpers;
 using ECommerceNetCore.Application.Validators;
 
 namespace ECommerceNetCore.Test
@@ -9,8 +10,11 @@ namespace ECommerceNetCore.Test
         [Fact]
         public void Test1()
         {
-            ProductMasterModelDto model = new ProductMasterModelDto();
-            var result = validator.Validate(model);
+            byte[] passwordHash, passwordSalt;
+
+            HashigHelper.CreatePasswordHash("admin1234", out passwordHash, out passwordSalt);
+            var hash = "0x" + BitConverter.ToString(passwordHash).Replace("-", "");
+            var salt = "0x" + BitConverter.ToString(passwordSalt).Replace("-", "");
         }
     }
 }

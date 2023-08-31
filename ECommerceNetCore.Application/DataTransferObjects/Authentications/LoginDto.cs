@@ -14,6 +14,6 @@ namespace ECommerceNetCore.Application.DataTransferObjects
         public string Password { get; set; }
         public string FullName { get; set; }
         public string Mail { get; set; }
-        public List<Claim> Claims { get; set; }
+        public int SecurityLevel { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using ECommerceNetCore.Application.Results;
-using IResult = ECommerceNetCore.Application.Results.IResult;
+﻿using ECommerceNetCore.Application.Utilities;
+using IResult = ECommerceNetCore.Application.Utilities.IResult;
 
 namespace ECommerceNetCore.ImageAPI.Helpers
 {

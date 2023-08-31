@@ -4,6 +4,7 @@
 
 @section Header{
     <link rel="stylesheet" href="~/plugins/ekko-lightbox/ekko-lightbox.css">
+    <link rel="stylesheet" href="~/plugins/toastr/toastr.min.css">
 }
 
 <div class="content-wrapper">
@@ -14,196 +15,35 @@
                     <h3 class="card-title p-3">Ürün Bulucu</h3>
                 </div>
                 <div class="card-body">
-                    A wonderful serenity has taken possession of my entire soul,
-                    like these sweet mornings of spring which I enjoy with my whole heart.
-                    I am alone, and feel the charm of existence in this spot,
-                    which was created for the bliss of souls like mine. I am so happy,
-                    my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
-                    that I neglect my talents. I should be incapable of drawing a single stroke
-                    at the present moment; and yet I feel that I never was a greater artist than now.
+                    <label>
+                        A wonderful serenity has taken possession of my entire soul,
+                        like these sweet mornings of spring which I enjoy with my whole heart.
+                        I am alone, and feel the charm of existence in this spot,
+                        which was created for the bliss of souls like mine. I am so happy,
+                        my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
+                        that I neglect my talents. I should be incapable of drawing a single stroke
+                        at the present moment; and yet I feel that I never was a greater artist than now.
+                    </label>
+                    <div class="col-12 row mt-3">
+                        <div class="col-md-11">
+                            <input type="text" class="form-control" id="search-url" placeholder="Aranacak Trendyol linki...">
+                        </div>
+                        <div class="col-md-1">
+                            <button onclick="search(1);" class="btn btn-block btn-primary">Ara</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-12">
             <div class="card">
                 <div class="card-header d-flex p-3">
-                    <a href="#" class="btn btn-warning mr-3">Trendyol</a>
+                    <a href="javascript:;" onclick="bulkAddTy();" class="btn btn-warning mr-3">Trendyol</a>
                     <a href="#" class="btn btn-primary mr-3">Hepsiburada</a>
                     <a href="#" class="btn btn-info mr-3">n11</a>
                 </div>
-                <div class="card-body">
-                    <div class="card bg-light mb-3 p-3">
-                        <div class="row">
-                            <input type="checkbox" aria-label="Checkbox for following text input" id="pr-1">
-                            <div class="col-md-2 col-sm-2 ml-3">
-                                <a href="~/dist/img/prod-1.jpg" data-toggle="lightbox" data-galery="galery">
-                                    <img class="card-img center" src="~/dist/img/prod-1.jpg" alt="prod1">
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card-body">
-                                    <h5>Pierre Cardin</h5>
-                                    <h4>Bolmo Kışlık Kaymayan Erkek Ayakkabı Bot 31PIER243</h4>
-                                    <p class="card-text">
-                                        ERKEK TREKKING BOT BAĞCIKLI NKT07 Ürün Özellikleri:
-                                        Marka: Letoon Kategori: Trekking Bot Kışlık bot Termo- Kauçuk, Kaymaz, Yumuşak Taban Su ve....
-                                    </p>
-                                    <div class="row">
-                                        <div class="col-md-1">
-                                            <a href="~/dist/img/photo1.png" data-toggle="lightbox" data-galery="galery">
-                                                <img class="card-img" src="~/dist/img/photo1.png" alt="prod1">
-                                            </a>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <a href="~/dist/img/photo2.png" data-toggle="lightbox" data-galery="galery">
-                                                <img class="card-img" src="~/dist/img/photo2.png" alt="prod1">
-                                            </a>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <a href="~/dist/img/photo3.jpg" data-toggle="lightbox" data-galery="galery">
-                                                <img class="card-img" src="~/dist/img/photo3.jpg" alt="prod1">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="center text-center">
-                                    <h3>799.85 ₺</h3>
-                                    <h5><i class="fa fa-comment"></i>11789</h5>
-                                    <h5><i class="fa fa-star"></i>4,1</h5>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="center">
-                                    <div class="mt-1">
-                                        <a href="#" class="btn btn-warning btn-block">Trendyol</a>
-                                    </div>
-                                    <div class="mt-1">
-                                        <a href="#" class="btn btn-primary btn-block">Hepsiburada</a>
-                                    </div>
-                                    <div class="mt-1">
-                                        <a href="#" class="btn btn-info btn-block">n11</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card bg-light mb-3 p-3">
-                        <div class="row">
-                            <input type="checkbox" aria-label="Checkbox for following text input" id="pr-2">
-                            <div class="col-md-2 col-sm-2 ml-3">
-                                <a href="~/dist/img/photo2.png" data-toggle="lightbox" data-galery="galery">
-                                    <img class="card-img center" src="~/dist/img/photo2.png" alt="prod2">
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card-body">
-                                    <h5>LETAO</h5>
-                                    <h4>Erkek Siyah Watertight Su Geçirmez Trekking Kürklü Fermuarlı Bot 4225_117083</h4>
-                                    <p class="card-text">
-                                        Letao Erkek Siyah Watertight Su Geçirmez Trekking
-                                        Kürklü Fermuarlı Bot Renk : Siyah Menşei : Türkiye Kalıp Bilgisi : Tam Kalıp....
-                                    </p>
-                                    <div class="row">
-                                        <div class="col-md-1">
-                                            <a href="~/dist/img/photo1.png" data-toggle="lightbox" data-galery="galery">
-                                                <img class="card-img" src="~/dist/img/photo1.png" alt="prod1">
-                                            </a>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <a href="~/dist/img/photo2.png" data-toggle="lightbox" data-galery="galery">
-                                                <img class="card-img" src="~/dist/img/photo2.png" alt="prod1">
-                                            </a>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <a href="~/dist/img/photo3.jpg" data-toggle="lightbox" data-galery="galery">
-                                                <img class="card-img" src="~/dist/img/photo3.jpg" alt="prod1">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="center text-center">
-                                    <h3>799.85 ₺</h3>
-                                    <h5><i class="fa fa-comment"></i>11789</h5>
-                                    <h5><i class="fa fa-star"></i>4,1</h5>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="center">
-                                    <div class="mt-1">
-                                        <a href="#" class="btn btn-warning btn-block">Trendyol</a>
-                                    </div>
-                                    <div class="mt-1">
-                                        <a href="#" class="btn btn-primary btn-block">Hepsiburada</a>
-                                    </div>
-                                    <div class="mt-1">
-                                        <a href="#" class="btn btn-info btn-block">n11</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card bg-light mb-3 p-3">
-                        <div class="row">
-                            <input type="checkbox" aria-label="Checkbox for following text input" id="pr-3">
-                            <div class="col-md-2 col-sm-2 ml-3">
-                                <a href="~/dist/img/photo4.jpg" data-toggle="lightbox" data-galery="galery">
-                                    <img class="card-img center" src="~/dist/img/photo4.jpg" alt="prod5">
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card-body">
-                                    <h5>YABUMAN</h5>
-                                    <h4>Unisex Siyah Kışlık Uzun Dayanıklı Kauçuk Taban Bot Outdoor Postal Oly-203 PTK-20</h4>
-                                    <p class="card-text">
-                                        Kışlık Bot Kalıbıdır Termo - Kauçuk, Kaymaz, Yumuşak ve Ortopedik
-                                        Taban Su Ve Soğuğa Dayanıklı 1. Sınıf Malzeme Ortopedik İç Taba....
-                                    </p>
-                                    <div class="row">
-                                        <div class="col-md-1">
-                                            <a href="~/dist/img/photo1.png" data-toggle="lightbox" data-galery="galery">
-                                                <img class="card-img" src="~/dist/img/photo1.png" alt="prod1">
-                                            </a>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <a href="~/dist/img/photo2.png" data-toggle="lightbox" data-galery="galery">
-                                                <img class="card-img" src="~/dist/img/photo2.png" alt="prod1">
-                                            </a>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <a href="~/dist/img/photo3.jpg" data-toggle="lightbox" data-galery="galery">
-                                                <img class="card-img" src="~/dist/img/photo3.jpg" alt="prod1">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="center text-center">
-                                    <h3>799.85 ₺</h3>
-                                    <h5><i class="fa fa-comment"></i>11789</h5>
-                                    <h5><i class="fa fa-star"></i>4,1</h5>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="center">
-                                    <div class="mt-1">
-                                        <a href="#" class="btn btn-warning btn-block">Trendyol</a>
-                                    </div>
-                                    <div class="mt-1">
-                                        <a href="#" class="btn btn-primary btn-block">Hepsiburada</a>
-                                    </div>
-                                    <div class="mt-1">
-                                        <a href="#" class="btn btn-info btn-block">n11</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-body" id="products">
+                    <div class="text-center">Arama yaparak başlayınız...</div>
                 </div>
             </div>
         </div>
@@ -212,12 +52,6 @@
 
 @section Script{
     <script src="~/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
-    <script>
-        $(document).on('click', '[data-toggle="lightbox"]', function (event) {
-            event.preventDefault();
-            $(this).ekkoLightbox({
-                alwaysShowClose: true
-            });
-        });
-    </script>
+    <script src="~/js/libs/trendyol/trendyol-crawler.js" type="module"></script>
+    <script src="~/plugins/toastr/toastr.min.js"></script>
 }

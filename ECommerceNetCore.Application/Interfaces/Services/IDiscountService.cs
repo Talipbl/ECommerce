@@ -1,7 +1,7 @@
-﻿using ECommerceNetCore.Application.Results;
+﻿using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;
-    
+
 namespace ECommerceNetCore.Application.Interfaces
 {
     public interface IDiscountService

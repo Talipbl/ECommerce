@@ -1,4 +1,4 @@
-﻿using ECommerceNetCore.Application.Results;
+﻿using ECommerceNetCore.Application.Utilities;
 using ECommerceNetCore.Domain;
 using ECommerceNetCore.Domain.Common;
 using ECommerceNetCore.Domain.Entities;

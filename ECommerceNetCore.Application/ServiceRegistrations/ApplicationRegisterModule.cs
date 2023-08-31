@@ -16,6 +16,7 @@ using ECommerceNetCore.Application.CrossCuttingConcerns;
 using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Services;
 using Autofac;
+using ECommerceNetCore.Application.Mappers;
 
 namespace ECommerceNetCore.Application.ServiceRegistrations
 {
@@ -29,6 +30,8 @@ namespace ECommerceNetCore.Application.ServiceRegistrations
             services.AddSingleton<ICacheManager, CacheManager>();
             services.AddSingleton<ILogManager, DbLogManager>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddAutoMapper(typeof(TrendyolMappingProfile));
 
             ServiceProvider = services.BuildServiceProvider();
             return services;

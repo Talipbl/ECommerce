@@ -3,11 +3,10 @@ using Autofac;
 using ECommerceNetCore.Application.ServiceRegistrations;
 using ECommerceNetCore.Persistance.ServiceRegistrations;
 using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Persistance.Repositories;
 using ECommerceNetCore.AdminUI.Helpers;
 using System.Net;
 using Autofac.Core;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using ECommerceNetCore.Persistance.Repositories.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,16 +20,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddApplicationService();
 
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-{
-    options.LoginPath = "/Auth/Login";
-    options.LogoutPath = "/Auth/Logout";
-    options.AccessDeniedPath= "/Auth/Login";
-    options.ExpireTimeSpan = TimeSpan.FromDays(7);
-
-    options.Cookie = new CookieBuilder();
-});
 
 //bkz: https://learn.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=aspnetcore-6.0
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());

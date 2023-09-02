@@ -8,13 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Persistance.Repositories
+namespace ECommerceNetCore.Persistance.Repositories.EntityFrameworkCore
 {
     public class EfBrandRepository : EfBaseEntityRepository<DefBrand, EcommerceNetCoreContext>, IBrandRepository
     {
         public IListResult<DefBrand> GetBrands()
         {
-            var result = this.GetAll().ToList();
+            var result = GetAll().ToList();
             return new ListResult<DefBrand>(result, result.Count);
         }
     }

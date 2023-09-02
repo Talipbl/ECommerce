@@ -9,12 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ECommerceNetCore.Application.MethodInterceptors;
 using ECommerceNetCore.Application.CrossCuttingConcerns;
-using ECommerceNetCore.Persistance.Repositories;
 using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Application.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using ECommerceNetCore.Persistance.Repositories.EntityFrameworkCore;
 
 namespace ECommerceNetCore.Persistance.ServiceRegistrations
 {
@@ -76,7 +76,6 @@ namespace ECommerceNetCore.Persistance.ServiceRegistrations
             builder.RegisterType<ProductService>().As<IProductService>().SingleInstance();
             builder.RegisterType<SystemService>().As<ISystemService>().SingleInstance();
             builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
-            builder.RegisterType<TrendyolService>().As<ITrendyolService>().SingleInstance();
         }
     }
 }

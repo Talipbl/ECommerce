@@ -3,7 +3,7 @@ using Autofac;
 using ECommerceNetCore.Application.ServiceRegistrations;
 using ECommerceNetCore.Persistance.ServiceRegistrations;
 using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Persistance.Repositories;
+using ECommerceNetCore.Persistance.Repositories.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

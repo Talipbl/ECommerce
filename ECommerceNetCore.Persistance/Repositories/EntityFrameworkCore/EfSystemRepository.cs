@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
-namespace ECommerceNetCore.Persistance.Repositories
+namespace ECommerceNetCore.Persistance.Repositories.EntityFrameworkCore
 {
     public class EfSystemRepository : EfBaseEntityRepository<SysStatusType, EcommerceNetCoreContext>, ISystemRepository
     {
@@ -29,25 +29,25 @@ namespace ECommerceNetCore.Persistance.Repositories
 
         public IListResult<SysCurrency> GetCurriences()
         {
-            var result = this.GetAll<SysCurrency>().ToList();
+            var result = GetAll<SysCurrency>().ToList();
             return new ListResult<SysCurrency>(result, result.Count);
         }
 
         public IListResult<SysStatusType> GetSystemStatus()
         {
-            var result = this.GetAll<SysStatusType>().ToList();
+            var result = GetAll<SysStatusType>().ToList();
             return new ListResult<SysStatusType>(result, result.Count);
         }
 
         public IListResult<SysUnitType> GetUnitTypes()
         {
-            var result = this.GetAll<SysUnitType>().ToList();
+            var result = GetAll<SysUnitType>().ToList();
             return new ListResult<SysUnitType>(result, result.Count);
         }
 
         public IListResult<SysVatRatio> GetVatRatios()
         {
-            var result = this.GetAll<SysVatRatio>().ToList();
+            var result = GetAll<SysVatRatio>().ToList();
             return new ListResult<SysVatRatio>(result, result.Count);
         }
     }

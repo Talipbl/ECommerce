@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using ECommerceNetCore.Application.Interfaces;
 using ECommerceNetCore.Domain.Entities;
 
-namespace ECommerceNetCore.Persistance.Repositories
+namespace ECommerceNetCore.Persistance.Repositories.EntityFrameworkCore
 {
     public class EfBaseEntityRepository<TEntity, TContext> : IBaseEntityRepository<TEntity>
         where TEntity : class, IEntity, new()
@@ -77,7 +77,7 @@ namespace ECommerceNetCore.Persistance.Repositories
                 IQueryable<TEntity> query = context.Set<TEntity>();
                 query = includes.Aggregate(query, (current, child) => current.Include(child));
                 var result = filter != null ? query.Where(filter) : query;
-                result = sortedBy != null ? (sortOrder == (int)SortOrder.Ascending ? result.OrderBy(sortedBy) : result.OrderByDescending(sortedBy)) : result;
+                result = sortedBy != null ? sortOrder == (int)SortOrder.Ascending ? result.OrderBy(sortedBy) : result.OrderByDescending(sortedBy) : result;
                 result = take != 0 ? result.Skip(skip).Take(take) : result;
                 return result.ToList();
             }
@@ -89,7 +89,7 @@ namespace ECommerceNetCore.Persistance.Repositories
                 IQueryable<T> query = context.Set<T>();
                 query = includes.Aggregate(query, (current, child) => current.Include(child));
                 var result = filter != null ? query.Where(filter) : query;
-                result = sortedBy != null ? (sortOrder == (int)SortOrder.Ascending ? result.OrderBy(sortedBy) : result.OrderByDescending(sortedBy)) : result;
+                result = sortedBy != null ? sortOrder == (int)SortOrder.Ascending ? result.OrderBy(sortedBy) : result.OrderByDescending(sortedBy) : result;
                 result = take != 0 ? result.Skip(skip).Take(take) : result;
                 return result.ToList();
             }

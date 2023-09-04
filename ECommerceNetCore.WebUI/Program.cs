@@ -1,9 +1,9 @@
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
-using ECommerceNetCore.Application.ServiceRegistrations;
-using ECommerceNetCore.Persistance.ServiceRegistrations;
-using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Persistance.Repositories.EntityFrameworkCore;
+using ECommerce.Application.ServiceRegistrations;
+using ECommerce.Persistance.ServiceRegistrations;
+using ECommerce.Persistance.Repositories.EntityFrameworkCore;
+using ECommerce.Application.Interfaces.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

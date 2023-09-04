@@ -1,7 +1,9 @@
-﻿using System.Net;
+﻿using ECommerce.Service.ExternalServices.TrendyolClient.Models.DeliveryModels;
+using ECommerce.Service.Models;
+using System.Net;
 using System.Text;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+namespace ECommerce.Service.ExternalServices.TrendyolClient
 {
     //bkz: https://developers.trendyol.com/docs/marketplace/ortak-etiket-entegrasyonu/ortak-etiket-entegrasyonu
     public class TrandyolDeliveryClient

@@ -1,9 +1,9 @@
-﻿using ECommerceNetCore.Application.Utilities;
-using ECommerceNetCore.ImageAPI.Helpers;
+﻿using ECommerce.Application.Utilities;
+using ECommerce.ImageAPI.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ECommerceNetCore.ImageAPI.Controllers
+namespace ECommerce.ImageAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]

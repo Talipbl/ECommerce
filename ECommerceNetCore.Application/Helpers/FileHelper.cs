@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace ECommerceNetCore.Application.Helpers
+namespace ECommerce.Application.Helpers
 {
     public static class FileHelper
     {

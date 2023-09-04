@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+namespace ECommerce.Service.ExternalServices.TrendyolClient.Models.ProductModels
 {
     public class DeliveryOptionModel
     {

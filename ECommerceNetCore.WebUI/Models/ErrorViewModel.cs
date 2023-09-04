@@ -1,4 +1,4 @@
-namespace ECommerceNetCore.WebUI.Models
+namespace ECommerce.WebUI.Models
 {
     public class ErrorViewModel
     {

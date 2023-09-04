@@ -1,4 +1,4 @@
-using ECommerceNetCore.ImageAPI.Helpers;
+using ECommerce.ImageAPI.Helpers;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);

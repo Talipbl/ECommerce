@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Application.Helpers
+namespace ECommerce.Application.Helpers
 {
     public static class HashigHelper
     {

@@ -1,7 +1,7 @@
-﻿using ECommerceNetCore.Application.DataTransferObjects;
-using ECommerceNetCore.Domain.Entities;
+﻿using ECommerce.Application.DataTransferObjects.Products;
+using ECommerce.Domain.Entities;
 
-namespace ECommerceNetCore.AdminUI.Models
+namespace ECommerce.AdminUI.Models
 {
     public class ProductModifyModel
     {

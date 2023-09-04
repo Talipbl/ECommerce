@@ -1,4 +1,4 @@
-﻿namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+﻿namespace ECommerce.Service.ExternalServices.TrendyolClient.Models.DeliveryModels
 {
     public class GetCommonLabelResponseModel
     {

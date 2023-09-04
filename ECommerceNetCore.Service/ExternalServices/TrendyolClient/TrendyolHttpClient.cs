@@ -6,10 +6,10 @@ using System.Net.Http.Headers;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using ECommerceNetCore.Service.ExternalServices.TrendyolClient;
 using System.Reflection;
+using ECommerce.Service.Models;
 
-namespace ECommerceNetCore.Service.ExternalServices
+namespace ECommerce.Service.ExternalServices.TrendyolClient
 {
     public class TrendyolHttpClient
     {
@@ -110,7 +110,7 @@ namespace ECommerceNetCore.Service.ExternalServices
                 {
                     Method = HttpMethod.Delete,
                     RequestUri = new Uri(requestUri),
-                    Content = (HttpContent)CreateHttpContent(model)
+                    Content = CreateHttpContent(model)
                 };
 
                 var httpResponse = await httpClient.SendAsync(request);

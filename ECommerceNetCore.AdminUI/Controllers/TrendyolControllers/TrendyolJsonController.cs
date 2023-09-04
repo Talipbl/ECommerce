@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using ECommerceNetCore.AdminUI.Helpers;
-using ECommerceNetCore.AdminUI.Models.Trendyol;
-using ECommerceNetCore.Application.DataTransferObjects;
-using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Application.Utilities;
+using ECommerce.AdminUI.Helpers;
+using ECommerce.AdminUI.Models.Trendyol;
+using ECommerce.Application.DataTransferObjects.Trendyol;
+using ECommerce.Application.Interfaces.Services;
+using ECommerce.Application.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography.Xml;
 
-namespace ECommerceNetCore.AdminUI.Controllers.TrendyolControllers
+namespace ECommerce.AdminUI.Controllers.TrendyolControllers
 {
     [Route("trendyol/crawler")]
     public class TrendyolJsonController : Controller

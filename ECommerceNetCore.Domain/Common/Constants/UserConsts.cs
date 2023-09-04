@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Domain.Common
+namespace ECommerce.Domain.Common.Constants
 {
     public static class UserConsts
     {

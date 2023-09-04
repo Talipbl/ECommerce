@@ -1,10 +1,10 @@
-﻿using ECommerceNetCore.Application.DataTransferObjects;
-using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Domain.Common;
-using ECommerceNetCore.Domain.Entities;
+﻿using ECommerce.Application.DataTransferObjects;
+using ECommerce.Application.Interfaces.Services;
+using ECommerce.Domain.Common.Enumarations;
+using ECommerce.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ECommerceNetCore.AdminUI.Controllers
+namespace ECommerce.AdminUI.Controllers
 {
     [Route("uyeler")]
     [Route("users")]

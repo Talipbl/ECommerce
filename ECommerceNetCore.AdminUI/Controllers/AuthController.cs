@@ -1,14 +1,14 @@
-﻿using ECommerceNetCore.Application;
-using ECommerceNetCore.Application.DataTransferObjects;
-using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Application.Utilities;
+﻿using ECommerce.Application.DataTransferObjects.Authentications;
+using ECommerce.Application.Extensions;
+using ECommerce.Application.Interfaces.Services;
+using ECommerce.Application.Utilities.Cryptography.AesCrypto;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity.SqlServer;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace ECommerceNetCore.AdminUI.Controllers
+namespace ECommerce.AdminUI.Controllers
 {
     public class AuthController : Controller
     {

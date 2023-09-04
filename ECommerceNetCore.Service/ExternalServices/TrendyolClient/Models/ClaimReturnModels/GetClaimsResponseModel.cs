@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient 
+namespace ECommerce.Service.ExternalServices.TrendyolClient.Models.ClaimReturnModels
 {
     public class GetClaimsResponseModel
     {
@@ -95,6 +95,6 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
             }
 
         }
-        
+
     }
 }

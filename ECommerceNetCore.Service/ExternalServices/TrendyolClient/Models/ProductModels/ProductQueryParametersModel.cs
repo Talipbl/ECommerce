@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using ECommerce.Service.ExternalServices.TrendyolClient.Types;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+namespace ECommerce.Service.ExternalServices.TrendyolClient.Models.ProductModels
 {
     public class ProductQueryParametersModel
     {

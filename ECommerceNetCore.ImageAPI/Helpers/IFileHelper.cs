@@ -1,6 +1,6 @@
-﻿using IResult = ECommerceNetCore.Application.Utilities.IResult;
+﻿using IResult = ECommerce.Application.Utilities.Results.Abstracts.IResult;
 
-namespace ECommerceNetCore.ImageAPI.Helpers
+namespace ECommerce.ImageAPI.Helpers
 {
     public interface IFileHelper
     {

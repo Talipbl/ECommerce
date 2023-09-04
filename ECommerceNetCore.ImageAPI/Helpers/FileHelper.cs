@@ -1,7 +1,7 @@
-﻿using ECommerceNetCore.Application.Utilities;
-using IResult = ECommerceNetCore.Application.Utilities.IResult;
+﻿using ECommerce.Application.Utilities;
+using IResult = ECommerce.Application.Utilities.Results.Abstracts.IResult;
 
-namespace ECommerceNetCore.ImageAPI.Helpers
+namespace ECommerce.ImageAPI.Helpers
 {
     public class FileHelper : IFileHelper
     {

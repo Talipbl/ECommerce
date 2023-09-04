@@ -1,4 +1,4 @@
-﻿namespace ECommerceNetCore.AdminUI.Models
+﻿namespace ECommerce.AdminUI.Models
 {
     public class JsonModel
     {

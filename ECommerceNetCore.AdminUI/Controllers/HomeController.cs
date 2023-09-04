@@ -1,9 +1,9 @@
-﻿using ECommerceNetCore.AdminUI.Models;
+﻿using ECommerce.AdminUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace ECommerceNetCore.AdminUI.Controllers
+namespace ECommerce.AdminUI.Controllers
 {
     [Authorize]
     public class HomeController : Controller

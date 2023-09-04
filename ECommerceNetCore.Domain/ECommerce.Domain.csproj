@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Constants\Admin\" />
+    <Folder Include="Common\Constants\Brand\" />
+    <Folder Include="Common\Constants\Carrier\" />
+    <Folder Include="Common\Constants\Category\" />
+    <Folder Include="Common\Constants\DiscountCoupon\" />
+    <Folder Include="Common\Constants\Manufacturer\" />
+    <Folder Include="Common\Constants\Product\" />
+    <Folder Include="Common\Constants\Trendyol\" />
+    <Folder Include="Common\Constants\Xml\" />
+    <Folder Include="Common\Constants\User\" />
+    <Folder Include="Common\Constants\System\" />
+    <Folder Include="Common\Constants\Order\" />
+    <Folder Include="Common\Enumarations\Admin\" />
+    <Folder Include="Common\Enumarations\Brand\" />
+    <Folder Include="Common\Enumarations\Carrier\" />
+    <Folder Include="Common\Enumarations\Category\" />
+    <Folder Include="Common\Enumarations\DiscountCoupon\" />
+    <Folder Include="Common\Enumarations\Manufacturer\" />
+    <Folder Include="Common\Enumarations\Order\" />
+    <Folder Include="Common\Enumarations\Product\" />
+    <Folder Include="Common\Enumarations\System\" />
+    <Folder Include="Common\Enumarations\Trendyol\" />
+    <Folder Include="Common\Enumarations\User\" />
+    <Folder Include="Common\Enumarations\Xml\" />
+    <Folder Include="Entities\Admin\Configurations\" />
+    <Folder Include="Entities\Brand\Configurations\" />
+    <Folder Include="Entities\Carrier\Configurations\" />
+    <Folder Include="Entities\Category\Configurations\" />
+    <Folder Include="Entities\DiscountCoupon\Configurations\" />
+    <Folder Include="Entities\Manufacturer\Configurations\" />
+    <Folder Include="Entities\Order\Configurations\" />
+    <Folder Include="Entities\Product\Configurations\" />
+    <Folder Include="Entities\System\Configurations\" />
+    <Folder Include="Entities\User\Configurations\" />
+    <Folder Include="Entities\Xml\Configurations\" />
+    <Folder Include="Repositories\Trendyol\" />
+  </ItemGroup>
+
+</Project>

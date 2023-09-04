@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using ECommerce.Service.ExternalServices.TrendyolClient.Models;
+using ECommerce.Service.Models;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+namespace ECommerce.Service.ExternalServices.TrendyolClient
 {
     public class TrendyolCrawlerClient
     {

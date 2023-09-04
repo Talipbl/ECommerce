@@ -1,8 +1,8 @@
-﻿using ECommerceNetCore.AdminUI.Models;
-using ECommerceNetCore.Application.Aspects;
+﻿using ECommerce.AdminUI.Models;
+using ECommerce.Application.Aspects;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ECommerceNetCore.AdminUI.Helpers
+namespace ECommerce.AdminUI.Helpers
 {
     public class FileHelper : IFileHelper
     {

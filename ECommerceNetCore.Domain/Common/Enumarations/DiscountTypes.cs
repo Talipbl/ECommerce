@@ -1,4 +1,4 @@
-﻿namespace ECommerceNetCore.Domain.Common
+﻿namespace ECommerce.Domain.Common.Enumarations
 {
     public enum DiscountTypes
     {

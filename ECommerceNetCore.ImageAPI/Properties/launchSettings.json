@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "ECommerceNetCore.ImageAPI": {
+    "ECommerce.ImageAPI": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

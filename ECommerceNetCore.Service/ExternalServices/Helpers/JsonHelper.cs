@@ -1,4 +1,4 @@
-﻿using ECommerceNetCore.Service.ExternalServices.TrendyolClient;
+﻿using ECommerce.Service.ExternalServices.TrendyolClient.Types;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace ECommerceNetCore.Service.ExternalServices
+namespace ECommerce.Service.ExternalServices.Helpers
 {
     public static class JsonHelper
     {
@@ -31,9 +31,9 @@ namespace ECommerceNetCore.Service.ExternalServices
             {
                 object value = property.GetValue(obj);
 
-                if (value != null && value != "" && value != default && 
-                    !(value is int intValue && intValue == 0) && 
-                    !(value is QueryBooleanOption option && option == QueryBooleanOption.All ))
+                if (value != null && value != "" && value != default &&
+                    !(value is int intValue && intValue == 0) &&
+                    !(value is QueryBooleanOption option && option == QueryBooleanOption.All))
                 {
                     string jsonPropertyName = GetJsonPropertyName(property);
                     string encodedValue = HttpUtility.UrlEncode(value.ToString());

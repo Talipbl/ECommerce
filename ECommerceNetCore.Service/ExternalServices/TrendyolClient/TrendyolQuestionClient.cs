@@ -5,8 +5,11 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using ECommerce.Service.ExternalServices.TrendyolClient.Models.QuestionModels;
+using ECommerce.Service.Models;
+using ECommerce.Service.ExternalServices.Helpers;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+namespace ECommerce.Service.ExternalServices.TrendyolClient
 {
     // bkz: https://developers.trendyol.com/docs/category/soru-cevap-entegrasyonu
 

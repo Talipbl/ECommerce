@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 
-namespace ECommerceNetCore.Application.DataTransferObjects
+namespace ECommerce.Trendyol
 {
-        public class TrendyolImageDto
-        {
-            public string Url { get; set; }
-        }
+    public class TrendyolImageDto
+    {
+        public string Url { get; set; }
+    }
 }

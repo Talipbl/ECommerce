@@ -1,4 +1,4 @@
-﻿using ECommerceNetCore.Service.ExternalServices.TrendyolClient;
+﻿using ECommerce.Service.ExternalServices.TrendyolClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Service.ExternalServices
+namespace ECommerce.Service.ExternalServices.Helpers
 {
     public class StringHelper
     {

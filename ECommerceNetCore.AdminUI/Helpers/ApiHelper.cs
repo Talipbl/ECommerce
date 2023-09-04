@@ -1,12 +1,12 @@
-﻿using ECommerceNetCore.AdminUI.Models;
-using ECommerceNetCore.Application.Aspects;
-using ECommerceNetCore.Domain.Common;
-using ECommerceNetCore.Domain.Entities;
+﻿using ECommerce.AdminUI.Models;
+using ECommerce.Application.Aspects;
+using ECommerce.Domain.Common.Constants;
+using ECommerce.Domain.Entities;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
 
-namespace ECommerceNetCore.AdminUI.Helpers
+namespace ECommerce.AdminUI.Helpers
 {
     public class ApiHelper
     {

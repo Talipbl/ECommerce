@@ -7,8 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using static System.Net.Mime.MediaTypeNames;
+using ECommerce.Service.ExternalServices.TrendyolClient.Models.OrderModels;
+using ECommerce.Service.Models;
+using ECommerce.Service.ExternalServices.TrendyolClient.Types;
+using ECommerce.Service.ExternalServices.Helpers;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+namespace ECommerce.Service.ExternalServices.TrendyolClient
 {
     // bkz: https://developers.trendyol.com/docs/category/sipari%C5%9F-entegrasyonu
 

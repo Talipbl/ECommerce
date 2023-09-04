@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ECommerceNetCore.AdminUI.Helpers
+namespace ECommerce.AdminUI.Helpers
 {
     public static class RenderHelper
     {

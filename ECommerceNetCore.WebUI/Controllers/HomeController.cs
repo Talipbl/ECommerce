@@ -1,9 +1,10 @@
-﻿using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.WebUI.Models;
+﻿using ECommerce.Application.Interfaces.Repositories;
+using ECommerce.Application.Interfaces.Services;
+using ECommerce.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace ECommerceNetCore.WebUI.Controllers
+namespace ECommerce.WebUI.Controllers
 {
     public class HomeController : Controller
     {

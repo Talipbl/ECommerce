@@ -1,4 +1,4 @@
-﻿namespace ECommerceNetCore.Application.DataTransferObjects
+﻿namespace ECommerce.Trendyol
 {
     public class TrendyolRequestAttributeDto
     {

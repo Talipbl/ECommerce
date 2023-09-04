@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Application.DataTransferObjects
+namespace ECommerce.Application.DataTransferObjects.Authentications
 {
     public class LoginDto
     {

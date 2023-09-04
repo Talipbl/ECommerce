@@ -1,4 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using ECommerce.Service.ExternalServices.TrendyolClient.Models;
+using ECommerce.Service.ExternalServices.TrendyolClient.Models.ProductModels;
+using ECommerce.Service.ExternalServices.TrendyolClient.Types;
+using ECommerce.Service.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -6,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+namespace ECommerce.Service.ExternalServices.TrendyolClient
 {
     public class TrendyolClient
     {

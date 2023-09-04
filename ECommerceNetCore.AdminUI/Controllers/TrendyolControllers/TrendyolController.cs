@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ECommerceNetCore.AdminUI.Controllers.TrendyolControllers
+namespace ECommerce.AdminUI.Controllers.TrendyolControllers
 {
     [Route("trendyol")]
     public class TrendyolController : Controller

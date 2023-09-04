@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Service
+namespace ECommerce.Service.Models
 {
     public class ApiAuthenticationModel
     {

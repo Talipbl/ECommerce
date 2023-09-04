@@ -1,4 +1,4 @@
-﻿namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+﻿namespace ECommerce.Service.ExternalServices.TrendyolClient.Types
 {
     public enum DateType
     {

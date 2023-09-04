@@ -1,4 +1,8 @@
-﻿using System;
+﻿using ECommerce.Service.ExternalServices.Helpers;
+using ECommerce.Service.ExternalServices.TrendyolClient.Models;
+using ECommerce.Service.ExternalServices.TrendyolClient.Models.ProductModels;
+using ECommerce.Service.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+namespace ECommerce.Service.ExternalServices.TrendyolClient
 {
     //bkz: https://developers.trendyol.com/docs/category/%C3%BCr%C3%BCn-entegrasyonu
 

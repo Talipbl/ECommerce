@@ -1,6 +1,6 @@
-﻿using ECommerceNetCore.AdminUI.Models;
+﻿using ECommerce.AdminUI.Models;
 
-namespace ECommerceNetCore.AdminUI.Helpers
+namespace ECommerce.AdminUI.Helpers
 {
     public interface IFileHelper
     {

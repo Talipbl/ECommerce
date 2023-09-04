@@ -1,7 +1,10 @@
-﻿using System.Net;
+﻿using ECommerce.Service.ExternalServices.Helpers;
+using ECommerce.Service.ExternalServices.TrendyolClient.Models.ClaimReturnModels;
+using ECommerce.Service.Models;
+using System.Net;
 using System.Text;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+namespace ECommerce.Service.ExternalServices.TrendyolClient
 {
     //bkz: https://developers.trendyol.com/docs/category/i%CC%87ade-entegrasyonu
 

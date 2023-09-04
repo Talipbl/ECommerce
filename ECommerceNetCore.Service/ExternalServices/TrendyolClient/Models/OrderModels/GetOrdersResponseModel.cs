@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+namespace ECommerce.Service.ExternalServices.TrendyolClient.Models.OrderModels
 {
     public class GetOrdersResponseModel
     {
@@ -113,7 +113,7 @@ namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
             public string CurrencyCode { get; set; }
             public string ProductColor { get; set; }
             public string Id { get; set; }
-            
+
             public string Sku { get; set; }
             public float VatBaseAmount { get; set; }
             public string Barcode { get; set; }

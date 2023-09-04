@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Application.DataTransferObjects
+namespace ECommerce.Trendyol
 {
     public class TrendyolWebSearchResultDto
     {
@@ -125,7 +125,7 @@ namespace ECommerceNetCore.Application.DataTransferObjects
                 public string? Name { get; set; }
             }
         }
-        
+
         public class Widget
         {
             public ConfigurationModel Configuration { get; set; }

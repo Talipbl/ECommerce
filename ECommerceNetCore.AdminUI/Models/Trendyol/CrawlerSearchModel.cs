@@ -1,4 +1,4 @@
-﻿namespace ECommerceNetCore.AdminUI.Models.Trendyol
+﻿namespace ECommerce.AdminUI.Models.Trendyol
 {
     public class CrawlerSearchModel
     {

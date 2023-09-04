@@ -1,13 +1,13 @@
-﻿using ECommerceNetCore.AdminUI.Helpers;
-using ECommerceNetCore.AdminUI.Models;
-using ECommerceNetCore.Application.DataTransferObjects;
-using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Domain;
-using ECommerceNetCore.Domain.Entities;
+﻿using ECommerce.AdminUI.Helpers;
+using ECommerce.AdminUI.Models;
+using ECommerce.Application.DataTransferObjects;
+using ECommerce.Application.Interfaces.Services;
+using ECommerce.Domain.DataTransferObjects;
+using ECommerce.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography.X509Certificates;
 
-namespace ECommerceNetCore.AdminUI.Controllers
+namespace ECommerce.AdminUI.Controllers
 {
     [Route("category")]
     [Route("kategori")]

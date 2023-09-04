@@ -1,13 +1,15 @@
-﻿using ECommerceNetCore.AdminUI.Helpers;
-using ECommerceNetCore.AdminUI.Models;
-using ECommerceNetCore.Application.Aspects;
-using ECommerceNetCore.Application.DataTransferObjects;
-using ECommerceNetCore.Application.Helpers;
-using ECommerceNetCore.Application.Interfaces;
-using ECommerceNetCore.Application.Utilities;
-using ECommerceNetCore.Application.Validators;
-using ECommerceNetCore.Domain.Common;
-using ECommerceNetCore.Domain.Entities;
+﻿using ECommerce.AdminUI.Helpers;
+using ECommerce.AdminUI.Models;
+using ECommerce.Application.Aspects;
+using ECommerce.Application.DataTransferObjects;
+using ECommerce.Application.DataTransferObjects.Products;
+using ECommerce.Application.Helpers;
+using ECommerce.Application.Interfaces.Services;
+using ECommerce.Application.Utilities.Results;
+using ECommerce.Application.Validators.Domains;
+using ECommerce.Domain.Common.Constants;
+using ECommerce.Domain.Common.Enumarations;
+using ECommerce.Domain.Entities;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
@@ -19,7 +21,7 @@ using System.Net.WebSockets;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace ECommerceNetCore.AdminUI.Controllers
+namespace ECommerce.AdminUI.Controllers
 {
     [Route("products")]
     [Route("urunler")]

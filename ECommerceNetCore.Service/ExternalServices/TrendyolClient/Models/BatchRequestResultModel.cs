@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ECommerce.Service.ExternalServices.TrendyolClient.Models.ProductModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceNetCore.Service.ExternalServices.TrendyolClient
+namespace ECommerce.Service.ExternalServices.TrendyolClient.Models
 {
     public class BatchRequestResultModel
     {

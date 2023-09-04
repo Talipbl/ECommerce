@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Domain.Common.Constants
+namespace ECommerce.Core.Application
 {
-    public class AspectConst
+    public class ValidationConst
     {
         public const string WrongValidationType = "Wrong Validation Type";
     }

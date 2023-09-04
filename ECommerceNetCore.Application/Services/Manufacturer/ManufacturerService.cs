@@ -1,42 +1,38 @@
-﻿using ECommerce.Application.Interfaces.Repositories.Manufacturer;
-using ECommerce.Application.Interfaces.Services.Manufacturer;
-using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Application;
 
-namespace ECommerce.Manufacturer
+namespace ECommerce.Manufacturer;
+
+public class ManufacturerService : IManufacturerService
 {
-    public class ManufacturerService : IManufacturerService
+    IManufacturerRepository _manufacturerRepo;
+
+    public ManufacturerService(IManufacturerRepository manufacturerRepo)
     {
-        IManufacturerRepository _manufacturerRepo;
+        _manufacturerRepo = manufacturerRepo;
+    }
 
-        public ManufacturerService(IManufacturerRepository manufacturerRepo)
-        {
-            _manufacturerRepo = manufacturerRepo;
-        }
+    public IDataResult<DefManufacturer> AddManufacturer(DefManufacturer manufacturer)
+    {
+        throw new NotImplementedException();
+    }
 
-        public IDataResult<DefAdmin> AddManufacturer(DefManufacturer manufacturer)
-        {
-            throw new NotImplementedException();
-        }
+    public IResult DeleteManufacturer(int manufacturerId)
+    {
+        throw new NotImplementedException();
+    }
 
-        public IResult DeleteManufacturer(int manufacturerId)
-        {
-            throw new NotImplementedException();
-        }
+    public IDataResult<DefManufacturer> GetManufacturer(int manufacturerId)
+    {
+        throw new NotImplementedException();
+    }
 
-        public IDataResult<DefManufacturer> GetManufacturer(int manufacturerId)
-        {
-            throw new NotImplementedException();
-        }
+    public IListResult<DefManufacturer> GetManufacturers()
+    {
+        return _manufacturerRepo.GetManufacturers();
+    }
 
-        public IListResult<DefManufacturer> GetManufacturers()
-        {
-            return _manufacturerRepo.GetManufacturers();
-        }
-
-        public IResult UpdateManufacturer(DefManufacturer manufacturer)
-        {
-            throw new NotImplementedException();
-        }
+    public IResult UpdateManufacturer(DefManufacturer manufacturer)
+    {
+        throw new NotImplementedException();
     }
 }

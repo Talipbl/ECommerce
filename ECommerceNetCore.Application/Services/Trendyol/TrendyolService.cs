@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using ECommerce.Application.DataTransferObjects.Trendyol;
-using ECommerce.Application.Interfaces.Services.Trendyol;
-using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Common.Constants;
+using ECommerce.Core.Application;
 using Marketplace.Trendyol;
-using Newtonsoft.Json;
 
 namespace ECommerce.Trendyol
 {

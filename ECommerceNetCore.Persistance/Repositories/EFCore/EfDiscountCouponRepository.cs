@@ -1,10 +1,9 @@
 ﻿using ECommerce.Core.Persistance;
-using ECommerce.Persistance.Context;
+using ECommerce.Persistance;
 
-namespace ECommerce.DiscountCoupon
+namespace ECommerce.DiscountCoupon;
+
+public class EfDiscountCouponRepository : EfBaseEntityRepository<DefDiscountCoupon, ECommerceContext>, IDiscountCouponRepository
 {
-    public class EfDiscountCouponRepository : EfBaseEntityRepository<DefDiscountCoupon, ECommerceContext>, IDiscountCouponRepository
-    {
 
-    }
 }

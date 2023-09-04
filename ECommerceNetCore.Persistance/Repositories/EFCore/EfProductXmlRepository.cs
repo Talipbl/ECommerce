@@ -1,5 +1,5 @@
 ﻿using ECommerce.Core.Persistance;
-using ECommerce.Persistance.Context;
+using ECommerce.Persistance;
 
 namespace ECommerce.Product
 {

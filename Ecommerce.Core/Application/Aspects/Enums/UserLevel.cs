@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Core.Application
 {
-    public enum UserLevels
+    public enum UserLevel
     {
         VeryHigh = 5,
         High = 4,

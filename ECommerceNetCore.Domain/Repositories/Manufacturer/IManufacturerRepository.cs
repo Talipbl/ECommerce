@@ -4,6 +4,6 @@ namespace ECommerce.Manufacturer
 {
     public interface IManufacturerRepository : IBaseEntityRepository<DefManufacturer>
     {
-        IListResult<DefManufacturer> GetManufacturers();
+        ICollection<DefManufacturer> GetManufacturers();
     }
 }

@@ -9,7 +9,7 @@ namespace ECommerce.Core.Application
         ILogManager _logManager;
         public LogAspect()
         {
-            _logManager = CoreRegisterModule.ServiceProvider.GetService<ILogManager>();
+            _logManager = CoreServiceRegistration.ServiceProvider.GetService<ILogManager>();
         }
         protected override void OnException(IInvocation invocation, Exception e)
         {

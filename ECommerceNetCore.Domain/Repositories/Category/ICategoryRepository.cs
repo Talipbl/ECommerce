@@ -1,17 +1,15 @@
-﻿using ECommerce.Core.Application;
-using ECommerce.Core.Persistance;
-using ECommerce.Domain.Common.Enumarations;
+﻿using ECommerce.Core.Persistance;
 
 namespace ECommerce.Category
 {
     public interface ICategoryRepository : IBaseEntityRepository<DefCategory>
     {
-        IListResult<DefCategory> GetCategories(int startRec, int pageSize);
+        ICollection<DefCategory> GetCategories(int startRec, int pageSize);
         DefSubCategory GetSubCategory(int categoryId);
-        IListResult<DefSubCategory> GetSubCategories(int parentId, bool isParent = false);
-        IDataResult<DefCategory> GetCategory(int categoryId);
-        IListResult<DefCategory> GetCategories(int id = (int)StatusTypes.All);
-        IListResult<DefCategory> GetSubCategories(int startRec, int pageSize);
+        ICollection<DefSubCategory> GetSubCategories(int parentId, bool isParent = false);
+        DefCategory GetCategory(int categoryId);
+        ICollection<DefCategory> GetCategories(int id = 0);
+        ICollection<DefSubCategory> GetSubCategories(int startRec, int pageSize);
         DefSubCategory AddSubCategory(DefSubCategory category);
         bool UpdateSubCategory(DefSubCategory category);
     }

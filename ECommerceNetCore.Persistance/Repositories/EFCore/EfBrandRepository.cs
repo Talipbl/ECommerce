@@ -1,19 +1,18 @@
 ﻿using ECommerce.Core.Persistance;
-using ECommerce.Persistance.Context;
+using ECommerce.Persistance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Brand
+namespace ECommerce.Brand;
+
+public class EfBrandRepository : EfBaseEntityRepository<DefBrand, ECommerceContext>, IBrandRepository
 {
-    public class EfBrandRepository : EfBaseEntityRepository<DefBrand, ECommerceContext>, IBrandRepository
+    public ICollection<DefBrand> GetBrands()
     {
-        public IListResult<DefBrand> GetBrands()
-        {
-            var result = GetAll().ToList();
-            return new ListResult<DefBrand>(result, result.Count);
-        }
+        var result = GetAll().ToList();
+        return result;
     }
 }

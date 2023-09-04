@@ -1,12 +1,9 @@
 ﻿using ECommerce.Core.Persistance;
-using ECommerce.Application.Interfaces.Repositories;
-using ECommerce.Domain.Entities;
-using ECommerce.Persistance.Context;
+using ECommerce.Persistance;
 
-namespace ECommerce.Carrier
+namespace ECommerce.Carrier;
+
+public class EfCarrierRepository : EfBaseEntityRepository<DefCarrier, ECommerceContext>, ICarrierRepository
 {
-    public class EfCarrierRepository : EfBaseEntityRepository<DefCarrier, ECommerceContext>, ICarrierRepository
-    {
 
-    }
 }

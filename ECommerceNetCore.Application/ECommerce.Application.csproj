@@ -13,14 +13,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.5.0" />
+    <PackageReference Include="Autofac" Version="7.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.1" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="7.1.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
@@ -48,7 +49,6 @@
     <Folder Include="DataTransferObjects\System\Mapping\" />
     <Folder Include="DataTransferObjects\User\Mapping\" />
     <Folder Include="DataTransferObjects\Xml\Mapping\" />
-    <Folder Include="Helpers\Admin\" />
     <Folder Include="Helpers\Brand\" />
     <Folder Include="Helpers\Carrier\" />
     <Folder Include="Helpers\Category\" />
@@ -98,7 +98,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ecommerce.Core\Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\ECommerce.Core\ECommerce.Core.csproj" />
+    <ProjectReference Include="..\ECommerceNetCore.Domain\ECommerce.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using ECommerce.Core.Application.CrossCuttingConcerns.Caching;
 
 namespace ECommerce.Core.Application
 {
@@ -9,7 +8,7 @@ namespace ECommerce.Core.Application
         IMemoryCache _memoryCache;
         public CacheManager()
         {
-            _memoryCache = CoreRegisterModule.ServiceProvider.GetService<IMemoryCache>();
+            _memoryCache = CoreServiceRegistration.ServiceProvider.GetService<IMemoryCache>();
         }
         public bool AddCache(object value, string cacheKey, int duration = 300)
         {

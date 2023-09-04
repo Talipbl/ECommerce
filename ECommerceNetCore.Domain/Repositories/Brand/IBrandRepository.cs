@@ -5,6 +5,6 @@ namespace ECommerce.Brand
 {
     public interface IBrandRepository : IBaseEntityRepository<DefBrand>
     {
-        IListResult<DefBrand> GetBrands();
+        ICollection<DefBrand> GetBrands();
     }
 }

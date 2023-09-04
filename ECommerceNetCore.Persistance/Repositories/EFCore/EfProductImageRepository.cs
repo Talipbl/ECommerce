@@ -1,20 +1,19 @@
 ﻿using ECommerce.Core.Persistance;
-using ECommerce.Persistance.Context;
+using ECommerce.Persistance;
 
-namespace ECommerce.Product
+namespace ECommerce.Product;
+
+public class EfProductImageRepository : EfBaseEntityRepository<GnlProductImage, ECommerceContext>, IProductImageRepository
 {
-    public class EfProductImageRepository : EfBaseEntityRepository<GnlProductImage, ECommerceContext>, IProductImageRepository
+    public GnlProductImage GetImage(string filename)
     {
-        public IDataResult<GnlProductImage> GetImage(string filename)
-        {
-            var result = Get(x => x.ImageUrl == filename);
-            return new SuccessDataResult<GnlProductImage>(result);
-        }
+        var result = Get(x => x.ImageUrl == filename);
+        return result;
+    }
 
-        public IListResult<GnlProductImage> GetImages(int productId)
-        {
-            var result = GetAll(x => x.ProductId == productId).ToList();
-            return new ListResult<GnlProductImage>(result, result.Count);
-        }
+    public ICollection<GnlProductImage> GetImages(int productId)
+    {
+        var result = GetAll(x => x.ProductId == productId).ToList();
+        return result;
     }
 }

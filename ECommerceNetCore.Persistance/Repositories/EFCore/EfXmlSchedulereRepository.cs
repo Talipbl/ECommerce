@@ -1,10 +1,9 @@
 ﻿using ECommerce.Core.Persistance;
-using ECommerce.Persistance.Context;
+using ECommerce.Persistance;
 
-namespace ECommerce.Xml
+namespace ECommerce.Xml;
+
+public class EfXmlSchedulereRepository : EfBaseEntityRepository<GnlXmlScheduler, ECommerceContext>, IXmlSchedulereRepository
 {
-    public class EfXmlSchedulereRepository : EfBaseEntityRepository<GnlXmlScheduler, ECommerceContext>, IXmlSchedulereRepository
-    {
 
-    }
 }

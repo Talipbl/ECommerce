@@ -4,7 +4,7 @@ namespace ECommerce.Product
 {
     public interface IProductPriceRepository : IBaseEntityRepository<GnlProductPrice>
     {
-        IListResult<GnlProductPrice> GetPrices(int optionId);
-        IListResult<GnlProductPrice> GetPricesByProductId(int productId);
+        ICollection<GnlProductPrice> GetPrices(int optionId);
+        ICollection<GnlProductPrice> GetPricesByProductId(int productId);
     }
 }

@@ -1,4 +1,4 @@
-﻿using ECommerce.Application.Utilities;
+﻿using ECommerce.Core.Application;
 using ECommerce.ImageAPI.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

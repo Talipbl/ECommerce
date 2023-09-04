@@ -1,5 +1,4 @@
-﻿using ECommerce.Application.Interfaces.Repositories;
-using ECommerce.Application.Interfaces.Services;
+﻿using ECommerce.Application.Interfaces.Services.Admin;
 using ECommerce.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -11,7 +10,7 @@ namespace ECommerce.WebUI.Controllers
         private readonly ILogger<HomeController> _logger;
         IAdminService _adminService;
 
-        public HomeController(ILogger<HomeController> logger, IAdminService adminService, ISystemRepository systemRepository)
+        public HomeController(ILogger<HomeController> logger, IAdminService adminService)
         {
             _logger = logger;
             _adminService = adminService;

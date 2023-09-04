@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Claims;
-using static System.Net.Mime.MediaTypeNames;
+﻿using ECommerce.Service.ExternalServices.Helpers;
 using ECommerce.Service.ExternalServices.TrendyolClient.Models.OrderModels;
-using ECommerce.Service.Models;
 using ECommerce.Service.ExternalServices.TrendyolClient.Types;
-using ECommerce.Service.ExternalServices.Helpers;
+using ECommerce.Service.Models;
+using System.Text;
 
 namespace ECommerce.Service.ExternalServices.TrendyolClient
 {

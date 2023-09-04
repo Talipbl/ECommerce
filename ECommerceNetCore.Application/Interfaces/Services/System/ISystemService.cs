@@ -1,14 +1,12 @@
-﻿using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Application;
 
-namespace ECommerce.Application.Interfaces.Services.System
+namespace ECommerce.Systems;
+
+public interface ISystemService
 {
-    public interface ISystemService
-    {
-        IListResult<SysCurrency> GetCurrencies();
-        IListResult<SysStatusType> GetSystemStatus();
-        IListResult<SysUnitType> GetUnitTypes();
-        IListResult<SysVatRatio> GetVatRatios();
-        void LogError(SysErrorLog errorLog);
-    }
+    IListResult<SysCurrency> GetCurrencies();
+    IListResult<SysStatusType> GetSystemStatus();
+    IListResult<SysUnitType> GetUnitTypes();
+    IListResult<SysVatRatio> GetVatRatios();
+    void LogError(SysErrorLog errorLog);
 }

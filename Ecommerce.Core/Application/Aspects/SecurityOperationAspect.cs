@@ -11,13 +11,13 @@ namespace ECommerce.Core.Application
 {
     public class SecurityOperationAspect : MethodInterceptor
     {
-        public int Level { get; set; } = (int)UserLevels.VeryLow;
+        public int Level { get; set; } = (int)UserLevel.VeryLow;
         int _level;
         IHttpContextAccessor _accessor;
         public SecurityOperationAspect()
         {
             _level = Level;
-            _accessor = CoreRegisterModule.ServiceProvider.GetService<IHttpContextAccessor>();
+            _accessor = CoreServiceRegistration.ServiceProvider.GetService<IHttpContextAccessor>();
         }
 
         protected override void OnBefore(IInvocation invocation)

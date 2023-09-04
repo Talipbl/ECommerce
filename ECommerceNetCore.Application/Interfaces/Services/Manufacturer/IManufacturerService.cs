@@ -1,11 +1,10 @@
-﻿using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Application;
 
-namespace ECommerce.Application.Interfaces.Services.Manufacturer
+namespace ECommerce.Manufacturer
 {
     public interface IManufacturerService
     {
-        IDataResult<DefAdmin> AddManufacturer(DefManufacturer manufacturer);
+        IDataResult<DefManufacturer> AddManufacturer(DefManufacturer manufacturer);
         IResult UpdateManufacturer(DefManufacturer manufacturer);
         IResult DeleteManufacturer(int manufacturerId);
         IListResult<DefManufacturer> GetManufacturers();

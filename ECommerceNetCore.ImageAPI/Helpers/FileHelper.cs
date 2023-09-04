@@ -1,5 +1,5 @@
-﻿using ECommerce.Application.Utilities;
-using IResult = ECommerce.Application.Utilities.Results.Abstracts.IResult;
+﻿using ECommerce.Core.Application;
+using IResult = ECommerce.Core.Application.IResult;
 
 namespace ECommerce.ImageAPI.Helpers
 {

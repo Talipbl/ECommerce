@@ -1,8 +1,4 @@
-﻿using ECommerce.Application.Aspects;
-using ECommerce.Application.Interfaces.Repositories.System;
-using ECommerce.Application.Interfaces.Services.System;
-using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Application;
 
 namespace ECommerce.Systems
 {

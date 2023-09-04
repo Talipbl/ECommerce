@@ -13,7 +13,7 @@ namespace ECommerce.Core.Application
         {
             if (!typeof(IValidator).IsAssignableFrom(validatorType))
             {
-                throw new Exception(AspectConst.WrongValidationType);
+                throw new Exception(ValidationConst.WrongValidationType);
             }
             _validatorType = validatorType;
         }

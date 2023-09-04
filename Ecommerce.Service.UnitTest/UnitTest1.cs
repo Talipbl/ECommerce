@@ -1,4 +1,4 @@
-namespace Ecommerce.Service.UnitTest
+namespace ECommerce.Service.UnitTest
 {
     [TestClass]
     public class UnitTest1

@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ECommerce.Application\ECommerce.Application.csproj" />
-    <ProjectReference Include="..\ECommerce.Persistance\ECommerce.Persistance.csproj" />
+    <ProjectReference Include="..\ECommerceNetCore.Application\ECommerce.Application.csproj" />
   </ItemGroup>
 
 </Project>

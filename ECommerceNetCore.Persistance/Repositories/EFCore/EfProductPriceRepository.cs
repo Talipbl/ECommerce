@@ -1,19 +1,18 @@
 ﻿using ECommerce.Core.Persistance;
-using ECommerce.Persistance.Context;
+using ECommerce.Persistance;
 
-namespace ECommerce.Product
+namespace ECommerce.Product;
+
+public class EfProductPriceRepository : EfBaseEntityRepository<GnlProductPrice, ECommerceContext>, IProductPriceRepository
 {
-    public class EfProductPriceRepository : EfBaseEntityRepository<GnlProductPrice, ECommerceContext>, IProductPriceRepository
+    public ICollection<GnlProductPrice> GetPrices(int optionId)
     {
-        public IListResult<GnlProductPrice> GetPrices(int optionId)
-        {
-            var result = GetAll(x => x.OptionId == optionId && x.StatusId == (int)StatusTypes.Active).ToList();
-            return new ListResult<GnlProductPrice>(result, result.Count);
-        }
-        public IListResult<GnlProductPrice> GetPricesByProductId(int productId)
-        {
-            var result = GetAll(x => x.ProductId == productId && x.StatusId == (int)StatusTypes.Active).ToList();
-            return new ListResult<GnlProductPrice>(result, result.Count);
-        }
+        var result = GetAll(x => x.OptionId == optionId && x.StatusId == 1).ToList();
+        return result;
+    }
+    public ICollection<GnlProductPrice> GetPricesByProductId(int productId)
+    {
+        var result = GetAll(x => x.ProductId == productId && x.StatusId == 1).ToList();
+        return result;
     }
 }

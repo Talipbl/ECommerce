@@ -1,14 +1,13 @@
 ﻿using ECommerce.Core.Persistance;
-using ECommerce.Persistance.Context;
+using ECommerce.Persistance;
 
-namespace ECommerce.Admin
+namespace ECommerce.Admin;
+
+public class EfAdminRepository : EfBaseEntityRepository<DefAdmin, ECommerceContext>, IAdminRepository
 {
-    public class EfAdminRepository : EfBaseEntityRepository<DefAdmin, ECommerceContext>, IAdminRepository
+    public DefAdmin GetAdmin(string nameOrMail)
     {
-        public DefAdmin GetAdmin(string nameOrMail)
-        {
-            var result = Get(x => x.MailAdress == nameOrMail || x.UserName == nameOrMail);
-            return result;
-        }
+        var result = Get(x => x.MailAdress == nameOrMail || x.UserName == nameOrMail);
+        return result;
     }
 }

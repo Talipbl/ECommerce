@@ -28,7 +28,7 @@ namespace ECommerce.Core.Application
             }
             catch (Exception e)
             {
-                var logManager = CoreRegisterModule.ServiceProvider.GetService<ILogManager>();
+                var logManager = CoreServiceRegistration.ServiceProvider.GetService<ILogManager>();
                 logManager.LogError(invocation.Method.Name, $"{e.Message} -- {e.InnerException.Message} -- {e.StackTrace}");
                 invocation.ReturnValue = new ErrorResult(e.Message);
                 IsSuccess = false;

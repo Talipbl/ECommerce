@@ -1,8 +1,6 @@
-﻿using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Common.Enumarations;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Application;
 
-namespace ECommerce.Application.Interfaces.Services.DiscountCoupon
+namespace ECommerce.DiscountCoupon
 {
     public interface IDiscountService
     {

@@ -1,14 +1,13 @@
 ﻿using ECommerce.Core.Persistance;
-using ECommerce.Persistance.Context;
+using ECommerce.Persistance;
 
-namespace ECommerce.Manufacturer
+namespace ECommerce.Manufacturer;
+
+public class EfManufacturerRepository : EfBaseEntityRepository<DefManufacturer, ECommerceContext>, IManufacturerRepository
 {
-    public class EfManufacturerRepository : EfBaseEntityRepository<DefManufacturer, ECommerceContext>, IManufacturerRepository
+    public ICollection<DefManufacturer> GetManufacturers()
     {
-        public IListResult<DefManufacturer> GetManufacturers()
-        {
-            var result = GetAll().ToList();
-            return new ListResult<DefManufacturer>(result, result.Count);
-        }
+        var result = GetAll().ToList();
+        return result;
     }
 }

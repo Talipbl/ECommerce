@@ -1,14 +1,12 @@
-﻿using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Application;
 
-namespace ECommerce.Application.Interfaces.Services.Brand
+namespace ECommerce.Brand;
+
+public interface IBrandService
 {
-    public interface IBrandService
-    {
-        IDataResult<DefBrand> AddBrand(DefBrand brand);
-        IResult UpdateBrand(DefBrand brand);
-        IResult DeleteBrand(int brandId);
-        IListResult<DefBrand> GetBrands();
-        IDataResult<DefBrand> GetBrand(int brandId);
-    }
+    IDataResult<DefBrand> AddBrand(DefBrand brand);
+    IResult UpdateBrand(DefBrand brand);
+    IResult DeleteBrand(int brandId);
+    IListResult<DefBrand> GetBrands();
+    IDataResult<DefBrand> GetBrand(int brandId);
 }

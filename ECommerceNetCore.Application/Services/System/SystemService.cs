@@ -4,7 +4,7 @@ using ECommerce.Application.Interfaces.Services.System;
 using ECommerce.Application.Utilities.Results.Abstracts;
 using ECommerce.Domain.Entities;
 
-namespace ECommerce.System
+namespace ECommerce.Systems
 {
     public class SystemService : ISystemService
     {

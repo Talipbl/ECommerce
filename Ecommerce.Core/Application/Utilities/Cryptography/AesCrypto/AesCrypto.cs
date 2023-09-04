@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Core.Application.Utilities.Cryptography.AesCrypto
+namespace ECommerce.Core.Application
 {
     public class AesCrypto
     {

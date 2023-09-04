@@ -97,4 +97,8 @@
     <Folder Include="Validators\Xml\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ecommerce.Core\Ecommerce.Core.csproj" />
+  </ItemGroup>
+
 </Project>

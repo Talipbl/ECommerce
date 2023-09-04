@@ -1,4 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ECommerce.Admin;
+using ECommerce.Brand;
+using ECommerce.Carrier;
+using ECommerce.Category;
+using ECommerce.DiscountCoupon;
+using ECommerce.Manufacturer;
+using ECommerce.Order;
+using ECommerce.Product;
+using ECommerce.Systems;
+using ECommerce.User;
+using ECommerce.Xml;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Persistance.Context;
 

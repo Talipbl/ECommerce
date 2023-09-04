@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Core.Application.Interceptors
+namespace ECommerce.Core.Application
 {
     public class AspectInterceptorSelector : IInterceptorSelector
     {

@@ -1,28 +1,18 @@
-using Autofac.Extensions.DependencyInjection;
 using Autofac;
-using ECommerce.Application.ServiceRegistrations;
-using ECommerce.Persistance.ServiceRegistrations;
-using ECommerce.AdminUI.Helpers;
-using System.Net;
-using Autofac.Core;
-using ECommerce.Persistance.Repositories.EntityFrameworkCore;
-using ECommerce.Application.Interfaces.Repositories;
+using Autofac.Extensions.DependencyInjection;
+using ECommerce.Application;
+using ECommerce.Persistance;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-// Add services to the container.
-builder.Services.AddSingleton<ISystemRepository, EfSystemRepository>();
-builder.Services.AddSingleton<IFileHelper, FileHelper>();
-
 builder.Services.AddControllersWithViews();
-builder.Services.AddApplicationService();
+builder.Services.AddApplicationServices();
 
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
 
 //bkz: https://learn.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=aspnetcore-6.0
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacCoreModule()));
 builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacPersistanceModule()));
 
 var app = builder.Build();

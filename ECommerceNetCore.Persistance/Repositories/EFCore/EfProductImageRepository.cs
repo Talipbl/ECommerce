@@ -1,10 +1,7 @@
-﻿using ECommerce.Application.Interfaces.Repositories;
-using ECommerce.Application.Utilities;
-using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Persistance;
 using ECommerce.Persistance.Context;
 
-namespace ECommerce.Persistance.Repositories.EFCore
+namespace ECommerce.Product
 {
     public class EfProductImageRepository : EfBaseEntityRepository<GnlProductImage, ECommerceContext>, IProductImageRepository
     {

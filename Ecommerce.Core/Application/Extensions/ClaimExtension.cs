@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
-namespace Ecommerce.Core.Application.Extensions
+namespace ECommerce.Core.Application
 {
     public static class ClaimExtension
     {

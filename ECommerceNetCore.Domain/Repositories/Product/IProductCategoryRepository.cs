@@ -1,6 +1,7 @@
-﻿using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Persistance;
+using ECommerce.Category;
 
-namespace ECommerce.Application.Interfaces.Repositories.Product
+namespace ECommerce.Product
 {
     public interface IProductCategoryRepository : IBaseEntityRepository<GnlProductCategory>
     {

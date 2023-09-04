@@ -1,13 +1,9 @@
-﻿using ECommerce.Application.Interfaces.Repositories;
-using ECommerce.Application.Utilities;
-using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Persistance;
 using ECommerce.Persistance.Context;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
-namespace ECommerce.Persistance.Repositories.EFCore
+namespace ECommerce.Systems
 {
     public class EfSystemRepository : EfBaseEntityRepository<SysStatusType, ECommerceContext>, ISystemRepository
     {

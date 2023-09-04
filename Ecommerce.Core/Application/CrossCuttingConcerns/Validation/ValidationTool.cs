@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Core.Application.CrossCuttingConcerns.Validation
+namespace ECommerce.Core.Application
 {
     public static class ValidationTool
     {

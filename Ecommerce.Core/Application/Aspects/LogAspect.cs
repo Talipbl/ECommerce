@@ -1,17 +1,7 @@
 ﻿using Castle.DynamicProxy;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ECommerce.Application.ServiceRegistrations;
 using Microsoft.Extensions.DependencyInjection;
-using ECommerce.Domain.Entities;
-using ECommerce.Application.Utilities;
-using Ecommerce.Core.Application.CrossCuttingConcerns.Logging;
-using Ecommerce.Core.Application.Interceptors;
 
-namespace Ecommerce.Core.Application.Aspects
+namespace ECommerce.Core.Application
 {
     public class LogAspect : MethodInterceptor
     {
@@ -19,7 +9,7 @@ namespace Ecommerce.Core.Application.Aspects
         ILogManager _logManager;
         public LogAspect()
         {
-            _logManager = ApplicationRegisterModule.ServiceProvider.GetService<ILogManager>();
+            _logManager = CoreRegisterModule.ServiceProvider.GetService<ILogManager>();
         }
         protected override void OnException(IInvocation invocation, Exception e)
         {

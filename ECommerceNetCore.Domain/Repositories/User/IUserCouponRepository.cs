@@ -1,6 +1,6 @@
-﻿using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Persistance;
 
-namespace ECommerce.Application.Interfaces.Repositories.User
+namespace ECommerce.User
 {
     public interface IUserCouponRepository : IBaseEntityRepository<GnlUserCoupon>
     {

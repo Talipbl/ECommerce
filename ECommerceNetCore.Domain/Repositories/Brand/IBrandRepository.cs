@@ -1,7 +1,7 @@
-﻿using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Application;
+using ECommerce.Core.Persistance;
 
-namespace ECommerce.Application.Interfaces.Repositories.Brand
+namespace ECommerce.Brand
 {
     public interface IBrandRepository : IBaseEntityRepository<DefBrand>
     {

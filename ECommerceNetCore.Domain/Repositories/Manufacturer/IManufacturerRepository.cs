@@ -1,7 +1,6 @@
-﻿using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Persistance;
 
-namespace ECommerce.Application.Interfaces.Repositories.Manufacturer
+namespace ECommerce.Manufacturer
 {
     public interface IManufacturerRepository : IBaseEntityRepository<DefManufacturer>
     {

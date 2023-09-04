@@ -1,4 +1,4 @@
-﻿namespace Ecommerce.Core.Application.Utilities.Cryptography.HmacCrypto
+﻿namespace ECommerce.Core.Application
 {
     public enum HmacAlgorithmVersion
     {

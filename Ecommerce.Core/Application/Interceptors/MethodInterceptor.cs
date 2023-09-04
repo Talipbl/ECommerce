@@ -5,12 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using ECommerce.Application.ServiceRegistrations;
 using Microsoft.Extensions.DependencyInjection;
-using ECommerce.Application.Utilities;
-using Ecommerce.Core.Application.CrossCuttingConcerns.Logging;
 
-namespace Ecommerce.Core.Application.Interceptors
+namespace ECommerce.Core.Application
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public abstract class MethodInterceptor : Attribute, IInterceptor
@@ -31,7 +28,7 @@ namespace Ecommerce.Core.Application.Interceptors
             }
             catch (Exception e)
             {
-                var logManager = ApplicationRegisterModule.ServiceProvider.GetService<ILogManager>();
+                var logManager = CoreRegisterModule.ServiceProvider.GetService<ILogManager>();
                 logManager.LogError(invocation.Method.Name, $"{e.Message} -- {e.InnerException.Message} -- {e.StackTrace}");
                 invocation.ReturnValue = new ErrorResult(e.Message);
                 IsSuccess = false;

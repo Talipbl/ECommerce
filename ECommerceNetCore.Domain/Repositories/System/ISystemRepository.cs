@@ -1,7 +1,5 @@
-﻿using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
-
-namespace ECommerce.Application.Interfaces.Repositories.System
+﻿
+namespace ECommerce.Systems
 {
     public interface ISystemRepository
     {

@@ -1,7 +1,6 @@
-﻿using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Persistance;
 
-namespace ECommerce.Application.Interfaces.Repositories.Product
+namespace ECommerce.Product
 {
     public interface IProductOptionRepository : IBaseEntityRepository<GnlProductOption>
     {

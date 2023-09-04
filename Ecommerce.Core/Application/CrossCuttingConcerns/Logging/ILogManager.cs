@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Core.Application.CrossCuttingConcerns.Logging
+namespace ECommerce.Core.Application
 {
     public interface ILogManager
     {

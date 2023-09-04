@@ -1,9 +1,8 @@
-﻿using ECommerce.Application.DataTransferObjects;
-using ECommerce.Application.Utilities.Results.Abstracts;
+﻿using ECommerce.Core.Application;
+using ECommerce.Core.Persistance;
 using ECommerce.Domain.Common.Enumarations;
-using ECommerce.Domain.Entities;
 
-namespace ECommerce.Application.Interfaces.Repositories.Category
+namespace ECommerce.Category
 {
     public interface ICategoryRepository : IBaseEntityRepository<DefCategory>
     {
@@ -12,7 +11,7 @@ namespace ECommerce.Application.Interfaces.Repositories.Category
         IListResult<DefSubCategory> GetSubCategories(int parentId, bool isParent = false);
         IDataResult<DefCategory> GetCategory(int categoryId);
         IListResult<DefCategory> GetCategories(int id = (int)StatusTypes.All);
-        IListResult<CategoryListModel> GetSubCategories(int startRec, int pageSize);
+        IListResult<DefCategory> GetSubCategories(int startRec, int pageSize);
         DefSubCategory AddSubCategory(DefSubCategory category);
         bool UpdateSubCategory(DefSubCategory category);
     }

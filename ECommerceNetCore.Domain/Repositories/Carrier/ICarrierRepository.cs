@@ -1,6 +1,6 @@
-﻿using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Persistance;
 
-namespace ECommerce.Application.Interfaces.Repositories.Carrier
+namespace ECommerce.Carrier
 {
     public interface ICarrierRepository : IBaseEntityRepository<DefCarrier>
     {

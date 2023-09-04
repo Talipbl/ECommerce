@@ -1,22 +1,15 @@
-﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ECommerce.Application.ServiceRegistrations;
-using Ecommerce.Core.Application.CrossCuttingConcerns.Caching;
+using ECommerce.Core.Application.CrossCuttingConcerns.Caching;
 
-namespace Ecommerce.Core.Application.CrossCuttingConcerns.Caching.InMemory
+namespace ECommerce.Core.Application
 {
     public class CacheManager : ICacheManager
     {
         IMemoryCache _memoryCache;
         public CacheManager()
         {
-            _memoryCache = ApplicationRegisterModule.ServiceProvider.GetService<IMemoryCache>();
+            _memoryCache = CoreRegisterModule.ServiceProvider.GetService<IMemoryCache>();
         }
         public bool AddCache(object value, string cacheKey, int duration = 300)
         {

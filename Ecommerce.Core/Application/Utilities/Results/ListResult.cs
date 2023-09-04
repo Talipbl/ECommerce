@@ -1,11 +1,10 @@
-﻿using Ecommerce.Core.Application.Utilities.Results.Abstracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Core.Application.Utilities.Results
+namespace ECommerce.Core.Application
 {
     public class ListResult<T> : DataResult<List<T>>, IListResult<T>
     {

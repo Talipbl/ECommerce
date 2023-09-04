@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Core.Application.Utilities.Results.Abstracts
+namespace ECommerce.Core.Application
 {
     public interface IListResult<T> : IDataResult<List<T>>
     {

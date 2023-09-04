@@ -1,9 +1,6 @@
-﻿using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Common.Enumarations;
-using ECommerce.Domain.Entities;
-using Microsoft.Data.SqlClient.DataClassification;
+﻿using ECommerce.Core.Persistance;
 
-namespace ECommerce.Application.Interfaces.Repositories.User
+namespace ECommerce.User
 {
     public interface IUserRepository : IBaseEntityRepository<GnlUser>
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Core.Domain
+namespace ECommerce.Core.Domain
 {
     public class AggregateRoot<TId> : IEntity
     {

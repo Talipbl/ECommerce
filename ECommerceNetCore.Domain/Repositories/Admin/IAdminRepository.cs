@@ -1,11 +1,6 @@
-﻿using ECommerce.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ECommerce.Core.Persistance;
 
-namespace ECommerce.Application.Interfaces.Repositories.Admin
+namespace ECommerce.Admin
 {
     public interface IAdminRepository : IBaseEntityRepository<DefAdmin>
     {

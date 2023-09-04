@@ -1,6 +1,6 @@
-﻿using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Persistance;
 
-namespace ECommerce.Application.Interfaces.Repositories.DiscountCoupon
+namespace ECommerce.DiscountCoupon
 {
     public interface IDiscountCouponRepository : IBaseEntityRepository<DefDiscountCoupon>
     {

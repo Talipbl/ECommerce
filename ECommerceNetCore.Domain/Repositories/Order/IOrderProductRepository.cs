@@ -1,6 +1,6 @@
-﻿using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Persistance;
 
-namespace ECommerce.Application.Interfaces.Repositories.Order
+namespace ECommerce.Order
 {
     public interface IOrderProductRepository : IBaseEntityRepository<GnlOrderProduct>
     {

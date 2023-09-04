@@ -1,7 +1,9 @@
-﻿using Ecommerce.Core.Domain;
+﻿using ECommerce.Core.Domain;
+using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
 using System.Linq.Expressions;
 
-namespace Ecommerce.Core.Persistance.Repositories
+namespace ECommerce.Core.Persistance
 {
     public class EfBaseEntityRepository<TEntity, TContext> : IBaseEntityRepository<TEntity>
         where TEntity : class, IEntity, new()

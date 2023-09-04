@@ -6,7 +6,7 @@ using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Core.Application.Utilities.Cryptography.HmacCrypto
+namespace ECommerce.Core.Application
 {
     public class HmacCrypto
     {

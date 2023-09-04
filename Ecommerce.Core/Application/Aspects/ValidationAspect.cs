@@ -1,17 +1,8 @@
 ﻿using Castle.DynamicProxy;
-using Ecommerce.Core.Application.CrossCuttingConcerns.Validation;
-using Ecommerce.Core.Application.Interceptors;
-using ECommerce.Application.Utilities;
-using ECommerce.Domain.Common.Constants;
 using FluentValidation;
 using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Ecommerce.Core.Application.Aspects
+namespace ECommerce.Core.Application
 {
     public class ValidationAspect : MethodInterceptor
     {

@@ -1,6 +1,6 @@
-﻿using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Persistance;
 
-namespace ECommerce.Application.Interfaces.Repositories.Product
+namespace ECommerce.Product
 {
     public interface IProductXmlRepository : IBaseEntityRepository<GnlProductXml>
     {

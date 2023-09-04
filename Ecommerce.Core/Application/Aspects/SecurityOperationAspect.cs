@@ -1,9 +1,4 @@
 ﻿using Castle.DynamicProxy;
-using Ecommerce.Core.Application.Interceptors;
-using ECommerce.Application.CrossCuttingConcerns;
-using ECommerce.Application.ServiceRegistrations;
-using ECommerce.Application.Utilities.Cryptography.AesCrypto;
-using ECommerce.Domain.Common.Enumarations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -12,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Core.Application.Aspects
+namespace ECommerce.Core.Application
 {
     public class SecurityOperationAspect : MethodInterceptor
     {
@@ -22,7 +17,7 @@ namespace Ecommerce.Core.Application.Aspects
         public SecurityOperationAspect()
         {
             _level = Level;
-            _accessor = ApplicationRegisterModule.ServiceProvider.GetService<IHttpContextAccessor>();
+            _accessor = CoreRegisterModule.ServiceProvider.GetService<IHttpContextAccessor>();
         }
 
         protected override void OnBefore(IInvocation invocation)

@@ -1,11 +1,8 @@
-﻿using ECommerce.Application.Interfaces.Repositories;
-using ECommerce.Application.Utilities;
-using ECommerce.Application.Utilities.Results.Abstracts;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Core.Persistance;
 using ECommerce.Persistance.Context;
 using Microsoft.Data.SqlClient;
 
-namespace ECommerce.Persistance.Repositories.EFCore
+namespace ECommerce.User
 {
     public class EfUserRepository : EfBaseEntityRepository<GnlUser, ECommerceContext>, IUserRepository
     {

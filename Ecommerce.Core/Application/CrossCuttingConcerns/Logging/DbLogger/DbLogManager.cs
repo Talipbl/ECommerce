@@ -1,29 +1,26 @@
-﻿using Ecommerce.Core.Application.CrossCuttingConcerns.Logging;
-using ECommerce.Application.Interfaces.Services;
-using ECommerce.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Core.Application.CrossCuttingConcerns.Logging.DbLogger
+namespace ECommerce.Core.Application
 {
-    public class DbLogManager : ILogManager
+    public class DbLogManager : ILogManager // Burası değitirilecek
     {
-        ISystemService _systemSrv;
-        public DbLogManager(ISystemService systemSrv)
-        {
-            _systemSrv = systemSrv;
-        }
+        //ISystemService _systemSrv;
+        //public DbLogManager(ISystemService systemSrv)
+        //{
+        //    _systemSrv = systemSrv;
+        //}
         public void LogError(string methodName, string message)
         {
-            SysErrorLog errorLog = new SysErrorLog();
-            errorLog.MethodName = methodName;
-            errorLog.ErrorMessage = message;
-            errorLog.CreatedDate = DateTime.Now;
+            //SysErrorLog errorLog = new SysErrorLog();
+            //errorLog.MethodName = methodName;
+            //errorLog.ErrorMessage = message;
+            //errorLog.CreatedDate = DateTime.Now;
 
-            _systemSrv.LogError(errorLog);
+            //_systemSrv.LogError(errorLog);
         }
     }
 }

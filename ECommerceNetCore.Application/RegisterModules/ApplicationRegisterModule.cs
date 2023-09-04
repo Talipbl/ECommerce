@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Ecommerce.Application;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommerce.Application
@@ -9,10 +10,6 @@ namespace ECommerce.Application
         public static IServiceProvider? ServiceProvider { get; private set; }
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            services.AddAutoMapper(typeof(TrendyolMappingProfile));
-
             ServiceProvider = services.BuildServiceProvider();
             return services;
         }

@@ -1,7 +1,7 @@
-﻿using Ecommerce.Core.Application.CrossCuttingConcerns.Caching;
-using Ecommerce.Core.Application.Interceptors;
+﻿using Castle.DynamicProxy;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Ecommerce.Core.Application.Aspects
+namespace ECommerce.Core.Application
 {
     public class CacheAspect : MethodInterceptor
     {

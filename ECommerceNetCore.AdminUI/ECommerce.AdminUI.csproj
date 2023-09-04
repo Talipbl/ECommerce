@@ -12,7 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.21" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerceNetCore.Application\ECommerce.Application.csproj" />
+    <ProjectReference Include="..\ECommerceNetCore.Persistance\ECommerce.Persistance.csproj" />
   </ItemGroup>
 
 </Project>

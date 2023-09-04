@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolCrawlerProductDetailMapping : Profile
+    public class TrendyolCrawlerMappingProfile : Profile
     {
-        public TrendyolCrawlerProductDetailMapping()
+        public TrendyolCrawlerMappingProfile()
         {
             CreateMap<CrawlerProductDetailModel.ResultModel, TrendyolCrawlerProductDetailDto>();
             CreateMap<CrawlerProductDetailModel.AllVariant, TrendyolCrawlerProductDetailDto.AllVariant>();

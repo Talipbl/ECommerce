@@ -16,17 +16,17 @@ public class AdminAuthService : IAuthService
         var result = _adminService.GetAdmin(loginUser.UserName);
         if (!result.Success)
         {
-            return new ErrorDataResult<LoginDto>(loginUser, UserConsts.UserNotFound);
+            return new ErrorDataResult<LoginDto>(loginUser, AdminConsts.UserNotFound);
         }
 
         var isAuth = HashigHelper.VerifyPasswordHash(loginUser.Password, result.Data.PasswordHash, result.Data.PasswordSalt);
         if (isAuth)
         {
-            return new SuccessDataResult<LoginDto>(loginUser, UserConsts.LoginSuccesful);
+            return new SuccessDataResult<LoginDto>(loginUser, AdminConsts.LoginSuccesful);
         }
 
         loginUser.SecurityLevel = result.Data.SecurityLevel;
-        return new ErrorDataResult<LoginDto>(loginUser, UserConsts.PasswordIncorrect);
+        return new ErrorDataResult<LoginDto>(loginUser, AdminConsts.PasswordIncorrect);
     }
 
     public IDataResult<RegisterDto> Register(RegisterDto registerUser)
@@ -36,7 +36,7 @@ public class AdminAuthService : IAuthService
         var result = _adminService.GetAdmin(registerUser.UserName);
         if (result.Success)
         {
-            return new ErrorDataResult<RegisterDto>(registerUser, UserConsts.UserAlreadyExist);
+            return new ErrorDataResult<RegisterDto>(registerUser, AdminConsts.UserAlreadyExist);
         }
 
         HashigHelper.CreatePasswordHash(registerUser.Password, out passwordHash, out passwordSalt);
@@ -44,10 +44,10 @@ public class AdminAuthService : IAuthService
         var newAdmin = CreateAdmin(registerUser, passwordHash, passwordSalt);
         if (!newAdmin.Success)
         {
-            return new ErrorDataResult<RegisterDto>(registerUser, UserConsts.UserDoesNotSave);
+            return new ErrorDataResult<RegisterDto>(registerUser, AdminConsts.UserDoesNotSave);
         }
 
-        return new SuccessDataResult<RegisterDto>(registerUser, UserConsts.UserSuccessfullyCreated);
+        return new SuccessDataResult<RegisterDto>(registerUser, AdminConsts.UserSuccessfullyCreated);
     }
 
     private IDataResult<DefAdmin> CreateAdmin(RegisterDto registerUser, byte[] passwordHash, byte[] passwordSalt)

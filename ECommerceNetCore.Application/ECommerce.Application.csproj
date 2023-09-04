@@ -36,19 +36,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataTransferObjects\Admin\Mapping\" />
-    <Folder Include="DataTransferObjects\Authentications\Mapping\" />
-    <Folder Include="DataTransferObjects\Brand\Mapping\" />
-    <Folder Include="DataTransferObjects\Carrier\Mapping\" />
-    <Folder Include="DataTransferObjects\Category\Mapping\" />
-    <Folder Include="DataTransferObjects\DiscountCoupon\Mapping\" />
-    <Folder Include="DataTransferObjects\Manufacturer\Mapping\" />
-    <Folder Include="DataTransferObjects\Order\Mapping\" />
-    <Folder Include="DataTransferObjects\Products\Mapping\" />
-    <Folder Include="DataTransferObjects\Product\Mapping\" />
-    <Folder Include="DataTransferObjects\System\Mapping\" />
-    <Folder Include="DataTransferObjects\User\Mapping\" />
-    <Folder Include="DataTransferObjects\Xml\Mapping\" />
+    <Folder Include="DataTransferObjects\Admin\Profiles\" />
+    <Folder Include="DataTransferObjects\Brand\Profiles\" />
+    <Folder Include="DataTransferObjects\Carrier\Profiles\" />
+    <Folder Include="DataTransferObjects\Category\Profiles\" />
+    <Folder Include="DataTransferObjects\DiscountCoupon\Profiles\" />
+    <Folder Include="DataTransferObjects\Manufacturer\Profiles\" />
+    <Folder Include="DataTransferObjects\Order\Profiles\" />
+    <Folder Include="DataTransferObjects\Products\Profiles\" />
+    <Folder Include="DataTransferObjects\Product\Profiles\" />
+    <Folder Include="DataTransferObjects\System\Profiles\" />
+    <Folder Include="DataTransferObjects\User\Profiles\" />
+    <Folder Include="DataTransferObjects\Xml\Profiles\" />
     <Folder Include="Helpers\Brand\" />
     <Folder Include="Helpers\Carrier\" />
     <Folder Include="Helpers\Category\" />

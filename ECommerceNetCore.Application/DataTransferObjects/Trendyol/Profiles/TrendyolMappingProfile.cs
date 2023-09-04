@@ -3,9 +3,9 @@ using Marketplace.Trendyol;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolMapping : Profile
+    public class TrendyolMappingProfile : Profile
     {
-        public TrendyolMapping()
+        public TrendyolMappingProfile()
         {
             CreateMap<ProductModel, TrendyolProductDto>();
             CreateMap<TrendyolProductDto, ProductModel>();

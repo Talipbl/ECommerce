@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Domain.Common.Constants.Product
+namespace ECommerce.Product
 {
     public class ProductConst
     {

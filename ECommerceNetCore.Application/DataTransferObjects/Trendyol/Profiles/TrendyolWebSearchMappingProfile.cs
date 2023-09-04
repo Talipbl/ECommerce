@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolWebSearchResultMapping : Profile
+    public class TrendyolWebSearchMappingProfile : Profile
     {
-        public TrendyolWebSearchResultMapping()
+        public TrendyolWebSearchMappingProfile()
         {
             CreateMap<WebSearchResultModel.ResultModel, TrendyolWebSearchResultDto>();
 

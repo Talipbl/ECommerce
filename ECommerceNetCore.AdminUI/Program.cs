@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddCoreServices();
+builder.Services.AddMappingProfiles();
 
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
 

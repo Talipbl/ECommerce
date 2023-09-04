@@ -10,20 +10,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Core.Application
-{
-    //bkz: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0
-    public static class CoreServiceRegistration
-    {
-        public static IServiceProvider? ServiceProvider { get; private set; }
-        public static IServiceCollection AddCoreServices(this IServiceCollection services)
-        {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<IMemoryCache, MemoryCache>();
-            services.AddSingleton<ILogManager, DbLogManager>();
+namespace ECommerce.Core.Application;
 
-            ServiceProvider = services.BuildServiceProvider();
-            return services;
-        }
+//bkz: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0
+public static class CoreServiceRegistration
+{
+    public static IServiceProvider? ServiceProvider { get; private set; }
+    public static IServiceCollection AddCoreServices(this IServiceCollection services)
+    {
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddSingleton<IMemoryCache, MemoryCache>();
+        services.AddSingleton<ILogManager, DbLogManager>();
+
+        ServiceProvider = services.BuildServiceProvider();
+        return services;
     }
 }

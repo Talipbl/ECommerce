@@ -11,14 +11,5 @@ namespace ECommerce.Trendyol
         public long Timestamp { get; set; }
         public string Exception { get; set; }
         public List<ErrorModelDto> Errors { get; set; }
-
-
-        public class ErrorModelDto
-        {
-            public string Key { get; set; }
-            public string Message { get; set; }
-            public string ErrorCode { get; set; }
-            public List<string> Args { get; set; }
-        }
     }
 }

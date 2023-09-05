@@ -1,7 +1,5 @@
 ﻿using ECommerce.AdminUI.Models;
-using ECommerce.Application.Aspects;
-using ECommerce.Domain.Common.Constants;
-using ECommerce.Domain.Entities;
+using ECommerce.Core.Application;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;

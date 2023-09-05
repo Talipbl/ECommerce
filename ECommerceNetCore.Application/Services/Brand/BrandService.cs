@@ -28,7 +28,8 @@ public class BrandService : IBrandService
 
     public IListResult<DefBrand> GetBrands()
     {
-        return _brandRepo.GetBrands();
+        //return _brandRepo.GetBrands();
+        return null;
     }
 
     public IResult UpdateBrand(DefBrand brand)

@@ -1,4 +1,4 @@
-﻿namespace ECommerce.Application.DataTransferObjects.Category
+﻿namespace ECommerce.Category
 {
     public class CategoryListModel
     {

@@ -1,6 +1,4 @@
-﻿using ECommerce.Application.DataTransferObjects.Category;
-using ECommerce.Core.Application;
-using ECommerce.Domain.Common.Enumarations;
+﻿using ECommerce.Core.Application;
 
 namespace ECommerce.Category;
 

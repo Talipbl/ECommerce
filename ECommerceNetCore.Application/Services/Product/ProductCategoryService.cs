@@ -1,19 +1,28 @@
-﻿using ECommerce.Core.Application;
+﻿using ECommerce.Category;
+using ECommerce.Core.Application;
+using ECommerce.Systems;
 
 namespace ECommerce.Product;
 
 public class ProductCategoryService : IProductCategoryService
 {
+    IProductCategoryRepository ProductCategoryRepo { get; }
+
+    public ProductCategoryService(IProductCategoryRepository categoryRepo)
+    {
+        ProductCategoryRepo = categoryRepo;
+    }
+
     [LogAspect]
     public IDataResult<GnlProductCategory> AddProductCategory(GnlProductCategory category)
     {
-        var result = _categoryRepo.Add(category);
+        var result = ProductCategoryRepo.Add(category);
         return new SuccessDataResult<GnlProductCategory>(result);
     }
 
     public IDataResult<GnlProductCategory> GetProductCategory(int productId)
     {
-        var category = _categoryRepo.GetProductCategory(productId);
+        var category = ProductCategoryRepo.GetProductCategory(productId);
         if (category is null)
         {
             return new DataResult<GnlProductCategory>(false, EntityConsts.DataNotFound);
@@ -24,7 +33,7 @@ public class ProductCategoryService : IProductCategoryService
 
     public IResult UpdateProductCategory(GnlProductCategory productCategory)
     {
-        var result = _categoryRepo.Update(productCategory);
+        var result = ProductCategoryRepo.Update(productCategory);
         return new Result(result);
     }
 }

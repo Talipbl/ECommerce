@@ -1,13 +1,21 @@
 ﻿using ECommerce.Core.Application;
+using ECommerce.Systems;
 
 namespace ECommerce.Product;
 
 public class ProductOptionService : IProductOptionService
 {
+    IProductOptionRepository ProductOptionRepo { get; }
+
+    public ProductOptionService(IProductOptionRepository productOptionRepo)
+    {
+        ProductOptionRepo = productOptionRepo;
+    }
+
     [LogAspect]
     public IDataResult<GnlProductOption> AddProductOption(GnlProductOption option)
     {
-        var result = _optionRepo.Add(option);
+        var result = ProductOptionRepo.Add(option);
         return new SuccessDataResult<GnlProductOption>(result);
     }
 
@@ -28,19 +36,20 @@ public class ProductOptionService : IProductOptionService
 
     public IListResult<GnlProductOption> GetProductOptions(int productId, int statusId = 1)
     {
-        return _optionRepo.GetOptions(productId, statusId);
+        var result = ProductOptionRepo.GetOptions(productId, statusId);
+        return null;
     }
 
     [LogAspect]
     public IResult UpdateProduct(GnlProduct product)
     {
-        var result = _productRepo.Update(product);
+        var result = ProductOptionRepo.Update(product);
         return new Result(result, EntityConsts.UpdatedSuccess);
     }
 
     public IResult UpdateProductOption(GnlProductOption option)
     {
-        var result = _optionRepo.Update(option);
+        var result = ProductOptionRepo.Update(option);
         return new Result(result);
     }
 }

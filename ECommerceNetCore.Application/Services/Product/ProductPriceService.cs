@@ -4,10 +4,17 @@ namespace ECommerce.Product;
 
 public class ProductPriceService : IProductPriceService
 {
+    IProductPriceRepository ProductPriceRepo { get; }
+
+    public ProductPriceService(IProductPriceRepository productPriceRepo)
+    {
+        ProductPriceRepo = productPriceRepo;
+    }
+
     [LogAspect]
     public IDataResult<GnlProductPrice> AddProductPrice(GnlProductPrice price)
     {
-        var result = _priceRepo.Add(price);
+        var result = ProductPriceRepo.Add(price);
         return new SuccessDataResult<GnlProductPrice>(result);
     }
 

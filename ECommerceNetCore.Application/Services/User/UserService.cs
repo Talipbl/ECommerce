@@ -28,7 +28,8 @@ public class UserService : IUserService
 
     public IListResult<GnlUser> GetAllUsers(int statudId = 1, int start = 0, int take = 25)
     {
-        return _userRepo.GetAllUsers(statudId, start, take);
+        var result = _userRepo.GetAllUsers(statudId, start, take);
+        return null;
     }
 
     public IDataResult<GnlUser> GetUser(string userName, string userMail)

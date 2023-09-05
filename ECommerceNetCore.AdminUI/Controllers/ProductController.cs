@@ -1,15 +1,11 @@
 ﻿using ECommerce.AdminUI.Helpers;
 using ECommerce.AdminUI.Models;
-using ECommerce.Application.Aspects;
 using ECommerce.Application.DataTransferObjects;
-using ECommerce.Application.DataTransferObjects.Products;
-using ECommerce.Application.Helpers;
-using ECommerce.Application.Interfaces.Services;
-using ECommerce.Application.Utilities.Results;
-using ECommerce.Application.Validators.Domains;
-using ECommerce.Domain.Common.Constants;
-using ECommerce.Domain.Common.Enumarations;
-using ECommerce.Domain.Entities;
+using ECommerce.Brand;
+using ECommerce.Category;
+using ECommerce.Manufacturer;
+using ECommerce.Product;
+using ECommerce.Systems;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
@@ -55,13 +51,13 @@ namespace ECommerce.AdminUI.Controllers
         public IActionResult AddProduct()
         {
             ProductModifyModel model = new ProductModifyModel();
-            model.Brands = _brnadSrv.GetBrands().Data;
-            model.Manufacturers = _manufacturerSrv.GetManufacturers().Data;
-            model.Categories = _categorySrv.GetCategories().Data;
-            model.Status = _systemsrv.GetSystemStatus().Data;
-            model.Currencies = _systemsrv.GetCurrencies().Data;
-            model.VatRatios = _systemsrv.GetVatRatios().Data;
-            model.UnitTypes = _systemsrv.GetUnitTypes().Data;
+            //model.Brands = _brnadSrv.GetBrands().Data;
+            //model.Manufacturers = _manufacturerSrv.GetManufacturers().Data;
+            //model.Categories = _categorySrv.GetCategories().Data;
+            //model.Status = _systemsrv.GetSystemStatus().Data;
+            //model.Currencies = _systemsrv.GetCurrencies().Data;
+            //model.VatRatios = _systemsrv.GetVatRatios().Data;
+            //model.UnitTypes = _systemsrv.GetUnitTypes().Data;
             return View(model);
         }
 
@@ -77,13 +73,13 @@ namespace ECommerce.AdminUI.Controllers
             }
 
             model.Product = product.Data;
-            model.Brands = _brnadSrv.GetBrands().Data;
-            model.Manufacturers = _manufacturerSrv.GetManufacturers().Data;
-            model.Categories = _categorySrv.GetCategories().Data;
-            model.Status = _systemsrv.GetSystemStatus().Data;
-            model.Currencies = _systemsrv.GetCurrencies().Data;
-            model.VatRatios = _systemsrv.GetVatRatios().Data;
-            model.UnitTypes = _systemsrv.GetUnitTypes().Data;
+            //model.Brands = _brnadSrv.GetBrands().Data;
+            //model.Manufacturers = _manufacturerSrv.GetManufacturers().Data;
+            //model.Categories = _categorySrv.GetCategories().Data;
+            //model.Status = _systemsrv.GetSystemStatus().Data;
+            //model.Currencies = _systemsrv.GetCurrencies().Data;
+            //model.VatRatios = _systemsrv.GetVatRatios().Data;
+            //model.UnitTypes = _systemsrv.GetUnitTypes().Data;
             return View(model);
         }
 
@@ -118,339 +114,339 @@ namespace ECommerce.AdminUI.Controllers
         [Route("add")]
         public async Task<JsonResult> AddProductAsync([FromBody] ProductMasterModelDto masterProduct)
         {
-            Result jsonResult = new Result(true, EntityConsts.AddedSuccess);
-            ProductMasterModelValidator validator = new ProductMasterModelValidator();
-            var validationResult = validator.Validate(masterProduct);
+            //Result jsonResult = new Result(true, EntityConsts.AddedSuccess);
+            //ProductMasterModelValidator validator = new ProductMasterModelValidator();
+            //var validationResult = validator.Validate(masterProduct);
 
-            if (!validationResult.IsValid)
-            {
-                return Json(new ErrorDataResult<List<ValidationFailure>>(validationResult.Errors, ValidationConst.ValidationFailed));
-            }
+            //if (!validationResult.IsValid)
+            //{
+            //    return Json(new ErrorDataResult<List<ValidationFailure>>(validationResult.Errors, ValidationConst.ValidationFailed));
+            //}
 
-            GnlProduct product = new GnlProduct()
-            {
-                Name = masterProduct.Name,
-                Description = masterProduct.Description,
-                BrandId = masterProduct.BrandId,
-                ManufacturerId = masterProduct.ManufacturerId,
-                CategoryId = masterProduct.CategoryId,
-                Ean = masterProduct.Ean,
-                Jan = masterProduct.Ean,
-                Isbn = masterProduct.Isbn,
-                Upc = masterProduct.Upc,
-                Mpn = masterProduct.Mpn,
-                MinmumOrder = masterProduct.MinimumOrder,
-                SellerCode = masterProduct.SellerCode,
-                SellerUrl = masterProduct.SellerUrl,
-                StockCode = masterProduct.StockCode,
-                StatusId = masterProduct.StatusId,
-                CreatedDate = DateTime.Now
-            };
+            //GnlProduct product = new GnlProduct()
+            //{
+            //    Name = masterProduct.Name,
+            //    Description = masterProduct.Description,
+            //    BrandId = masterProduct.BrandId,
+            //    ManufacturerId = masterProduct.ManufacturerId,
+            //    CategoryId = masterProduct.CategoryId,
+            //    Ean = masterProduct.Ean,
+            //    Jan = masterProduct.Ean,
+            //    Isbn = masterProduct.Isbn,
+            //    Upc = masterProduct.Upc,
+            //    Mpn = masterProduct.Mpn,
+            //    MinmumOrder = masterProduct.MinimumOrder,
+            //    SellerCode = masterProduct.SellerCode,
+            //    SellerUrl = masterProduct.SellerUrl,
+            //    StockCode = masterProduct.StockCode,
+            //    StatusId = masterProduct.StatusId,
+            //    CreatedDate = DateTime.Now
+            //};
 
-            var addedProduct = _productSrv.AddProduct(product);
+            //var addedProduct = _productSrv.AddProduct(product);
 
-            if (!addedProduct.Success)
-            {
-                return Json(new ErrorResult(EntityConsts.AddedError));
-            }
+            //if (!addedProduct.Success)
+            //{
+            //    return Json(new ErrorResult(EntityConsts.AddedError));
+            //}
 
-            GnlProductCategory category = new GnlProductCategory()
-            {
-                ProductId = addedProduct.Data.Id,
-                SubCategoryId = masterProduct.SubCategoryId,
-            };
+            //GnlProductCategory category = new GnlProductCategory()
+            //{
+            //    ProductId = addedProduct.Data.Id,
+            //    SubCategoryId = masterProduct.SubCategoryId,
+            //};
 
-            var addedCategory = _productSrv.AddProductCategory(category);
+            //var addedCategory = _productSrv.AddProductCategory(category);
 
-            foreach (var option in masterProduct.ProductOptions)
-            {
-                DateTime parsedDatetime;
-                DateTime.TryParseExact(option.AvailableDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
+            //foreach (var option in masterProduct.ProductOptions)
+            //{
+            //    DateTime parsedDatetime;
+            //    DateTime.TryParseExact(option.AvailableDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
 
-                GnlProductOption productOption = new GnlProductOption()
-                {
-                    ProductId = addedProduct.Data.Id,
-                    OptionName = option.OptionName,
-                    UnitTypeId = option.UnitTypeId,
-                    UnitOfStock = (decimal)option.UnitOfStock,
-                    Width = (decimal)option.Width,
-                    Height = (decimal)option.Height,
-                    Length = (decimal)option.Length,
-                    Weight = (decimal)option.Weight,
-                    IsAvailable = option.IsAvailable,
-                    AvailableDate = parsedDatetime,
-                    StatusId = option.StatusId,
-                    StockCode = option.StockCode
-                };
+            //    GnlProductOption productOption = new GnlProductOption()
+            //    {
+            //        ProductId = addedProduct.Data.Id,
+            //        OptionName = option.OptionName,
+            //        UnitTypeId = option.UnitTypeId,
+            //        UnitOfStock = (decimal)option.UnitOfStock,
+            //        Width = (decimal)option.Width,
+            //        Height = (decimal)option.Height,
+            //        Length = (decimal)option.Length,
+            //        Weight = (decimal)option.Weight,
+            //        IsAvailable = option.IsAvailable,
+            //        AvailableDate = parsedDatetime,
+            //        StatusId = option.StatusId,
+            //        StockCode = option.StockCode
+            //    };
 
-                var addedOption = _productSrv.AddProductOption(productOption);
+            //    var addedOption = _productSrv.AddProductOption(productOption);
 
-                if (!addedOption.Success)
-                {
-                    jsonResult = new ErrorResult($"/urunler/duzenle/{addedProduct.Data.Id}");
-                    break;
-                }
+            //    if (!addedOption.Success)
+            //    {
+            //        jsonResult = new ErrorResult($"/urunler/duzenle/{addedProduct.Data.Id}");
+            //        break;
+            //    }
 
-                DateTime.TryParseExact(option.DiscountExpireDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
-                GnlProductPrice productPrice = new GnlProductPrice()
-                {
-                    OptionId = addedOption.Data.Id,
-                    ProductId = addedProduct.Data.Id,
-                    CurrencyId = (int)option.CurrencyId,
-                    Price = option.Price,
-                    PurchasePrice = (decimal)option.PurchasePrice,
-                    DiscountPrice = (decimal)option.DiscountPrice,
-                    DiscountRatio = (decimal)option.DiscountRatio,
-                    DiscountExpireDate = parsedDatetime,
-                    VatRatioId = (int)option.VatRatioId,
-                    IsSale = option.IsSale,
-                    StatusId = option.StatusId
-                };
+            //    DateTime.TryParseExact(option.DiscountExpireDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
+            //    GnlProductPrice productPrice = new GnlProductPrice()
+            //    {
+            //        OptionId = addedOption.Data.Id,
+            //        ProductId = addedProduct.Data.Id,
+            //        CurrencyId = (int)option.CurrencyId,
+            //        Price = option.Price,
+            //        PurchasePrice = (decimal)option.PurchasePrice,
+            //        DiscountPrice = (decimal)option.DiscountPrice,
+            //        DiscountRatio = (decimal)option.DiscountRatio,
+            //        DiscountExpireDate = parsedDatetime,
+            //        VatRatioId = (int)option.VatRatioId,
+            //        IsSale = option.IsSale,
+            //        StatusId = option.StatusId
+            //    };
 
-                _productSrv.AddProductPrice(productPrice);
+            //    _productSrv.AddProductPrice(productPrice);
 
-                foreach (var image in option.ProductImages)
-                {
-                    if (image is null)
-                        continue;
+            //    foreach (var image in option.ProductImages)
+            //    {
+            //        if (image is null)
+            //            continue;
 
-                    var base64String = image;
-                    var data = base64String.Split(',');
-                    var dataInfo = data[0];
-                    var fileName = dataInfo.Split(';')[0];
+            //        var base64String = image;
+            //        var data = base64String.Split(',');
+            //        var dataInfo = data[0];
+            //        var fileName = dataInfo.Split(';')[0];
 
-                    byte[] bytes = Convert.FromBase64String(data[1]);
+            //        byte[] bytes = Convert.FromBase64String(data[1]);
 
-                    var uploadedImage = await _fileHelper.ImageUpload(bytes, fileName);
-                    if (!uploadedImage.Success)
-                    {
-                        jsonResult = new SuccessResult($"/urunler/duzenle/{addedProduct.Data.Id}");
-                        break;
-                    }
+            //        var uploadedImage = await _fileHelper.ImageUpload(bytes, fileName);
+            //        if (!uploadedImage.Success)
+            //        {
+            //            jsonResult = new SuccessResult($"/urunler/duzenle/{addedProduct.Data.Id}");
+            //            break;
+            //        }
 
-                    GnlProductImage newImage = new GnlProductImage()
-                    {
-                        ProductId = addedProduct.Data.Id,
-                        OptionId = addedOption.Data.Id,
-                        ImageUrl = uploadedImage.Message
-                    };
+            //        GnlProductImage newImage = new GnlProductImage()
+            //        {
+            //            ProductId = addedProduct.Data.Id,
+            //            OptionId = addedOption.Data.Id,
+            //            ImageUrl = uploadedImage.Message
+            //        };
 
-                    var addedImage = _productSrv.AddProductImage(newImage);
-                }
-            }
+            //        var addedImage = _productSrv.AddProductImage(newImage);
+            //    }
+            //}
 
-            return Json(jsonResult);
+            return Json(default);
         }
 
         [HttpPost]
         [Route("update")]
-        public async Task<JsonResult> UpdateProductAsync([FromBody] ProductMasterModelDto masterProduct)
+        public JsonResult UpdateProductAsync([FromBody] ProductMasterModelDto masterProduct)
         {
-            Result jsonResult = new Result(true, EntityConsts.UpdatedSuccess);
-            ProductMasterModelValidator validator = new ProductMasterModelValidator();
-            var validationResult = validator.Validate(masterProduct);
+            //Result jsonResult = new Result(true, EntityConsts.UpdatedSuccess);
+            //ProductMasterModelValidator validator = new ProductMasterModelValidator();
+            //var validationResult = validator.Validate(masterProduct);
 
-            if (!validationResult.IsValid)
-            {
-                return Json(new ErrorDataResult<List<ValidationFailure>>(validationResult.Errors, ValidationConst.ValidationFailed));
-            }
+            //if (!validationResult.IsValid)
+            //{
+            //    return Json(new ErrorDataResult<List<ValidationFailure>>(validationResult.Errors, ValidationConst.ValidationFailed));
+            //}
 
-            var product = _productSrv.GetProduct(masterProduct.Id).Data;
-            if (product is null)
-            {
-                return Json(new ErrorResult(EntityConsts.UpdatedError));
-            }
+            //var product = _productSrv.GetProduct(masterProduct.Id).Data;
+            //if (product is null)
+            //{
+            //    return Json(new ErrorResult(EntityConsts.UpdatedError));
+            //}
 
-            product.Name = masterProduct.Name;
-            product.Description = masterProduct.Description;
-            product.BrandId = masterProduct.BrandId;
-            product.ManufacturerId = masterProduct.ManufacturerId;
-            product.CategoryId = masterProduct.CategoryId;
-            product.Ean = masterProduct.Ean;
-            product.Jan = masterProduct.Ean;
-            product.Isbn = masterProduct.Isbn;
-            product.Upc = masterProduct.Upc;
-            product.Mpn = masterProduct.Mpn;
-            product.MinmumOrder = masterProduct.MinimumOrder;
-            product.SellerCode = masterProduct.SellerCode;
-            product.SellerUrl = masterProduct.SellerUrl;
-            product.StockCode = masterProduct.StockCode;
-            product.StatusId = masterProduct.StatusId;
-            product.CreatedDate = product.CreatedDate;
-            product.UpdatedDate = DateTime.Now;
+            //product.Name = masterProduct.Name;
+            //product.Description = masterProduct.Description;
+            //product.BrandId = masterProduct.BrandId;
+            //product.ManufacturerId = masterProduct.ManufacturerId;
+            //product.CategoryId = masterProduct.CategoryId;
+            //product.Ean = masterProduct.Ean;
+            //product.Jan = masterProduct.Ean;
+            //product.Isbn = masterProduct.Isbn;
+            //product.Upc = masterProduct.Upc;
+            //product.Mpn = masterProduct.Mpn;
+            //product.MinmumOrder = masterProduct.MinimumOrder;
+            //product.SellerCode = masterProduct.SellerCode;
+            //product.SellerUrl = masterProduct.SellerUrl;
+            //product.StockCode = masterProduct.StockCode;
+            //product.StatusId = masterProduct.StatusId;
+            //product.CreatedDate = product.CreatedDate;
+            //product.UpdatedDate = DateTime.Now;
 
-            var updateProduct = _productSrv.UpdateProduct(product);
+            //var updateProduct = _productSrv.UpdateProduct(product);
 
-            if (!updateProduct.Success)
-            {
-                return Json(new ErrorResult(EntityConsts.AddedError));
-            }
+            //if (!updateProduct.Success)
+            //{
+            //    return Json(new ErrorResult(EntityConsts.AddedError));
+            //}
 
-            var category = _productSrv.GetProductCategory(masterProduct.Id).Data;
-            category.SubCategoryId = masterProduct.SubCategoryId;
-            _productSrv.UpdateProductCategory(category);
+            //var category = _productSrv.GetProductCategory(masterProduct.Id).Data;
+            //category.SubCategoryId = masterProduct.SubCategoryId;
+            //_productSrv.UpdateProductCategory(category);
 
-            var productOptions = _productSrv.GetProductOptions(masterProduct.Id, (int)StatusTypes.All).Data;
-            if (productOptions.Count < 1)
-            {
-                return Json(new ErrorResult(EntityConsts.UpdatedError));
-            }
+            //var productOptions = _productSrv.GetProductOptions(masterProduct.Id, (int)StatusTypes.All).Data;
+            //if (productOptions.Count < 1)
+            //{
+            //    return Json(new ErrorResult(EntityConsts.UpdatedError));
+            //}
 
-            var deleted = productOptions.Where(x => !masterProduct.ProductOptions.Select(a => a.Id).Contains(x.Id)).ToList();
-            var added = masterProduct.ProductOptions.Where(x => !productOptions.Select(a => a.Id).Contains(x.Id)).ToList();
-            var noned = productOptions.Where(x => masterProduct.ProductOptions.Select(a => a.Id).Contains(x.Id)).ToList();
+            //var deleted = productOptions.Where(x => !masterProduct.ProductOptions.Select(a => a.Id).Contains(x.Id)).ToList();
+            //var added = masterProduct.ProductOptions.Where(x => !productOptions.Select(a => a.Id).Contains(x.Id)).ToList();
+            //var noned = productOptions.Where(x => masterProduct.ProductOptions.Select(a => a.Id).Contains(x.Id)).ToList();
 
-            //Delete
-            if (deleted.Count > 0)
-            {
-                foreach (var delete in deleted)
-                {
-                    _productSrv.DeleteProductOption(delete.Id);
-                }
-            }
-            //Add
-            if (added.Count > 0)
-            {
-                foreach (var add in added)
-                {
-                    DateTime parsedDatetime;
-                    DateTime.TryParseExact(add.AvailableDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
+            ////Delete
+            //if (deleted.Count > 0)
+            //{
+            //    foreach (var delete in deleted)
+            //    {
+            //        _productSrv.DeleteProductOption(delete.Id);
+            //    }
+            //}
+            ////Add
+            //if (added.Count > 0)
+            //{
+            //    foreach (var add in added)
+            //    {
+            //        DateTime parsedDatetime;
+            //        DateTime.TryParseExact(add.AvailableDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
 
-                    GnlProductOption option = new GnlProductOption()
-                    {
-                        ProductId = masterProduct.Id,
-                        OptionName = add.OptionName,
-                        UnitTypeId = add.UnitTypeId,
-                        UnitOfStock = (decimal)add.UnitOfStock,
-                        Width = (decimal)add.Width,
-                        Height = (decimal)add.Height,
-                        Length = (decimal)add.Length,
-                        Weight = (decimal)add.Weight,
-                        IsAvailable = add.IsAvailable,
-                        AvailableDate = parsedDatetime,
-                        StatusId = add.StatusId,
-                        StockCode = add.StockCode
-                    };
+            //        GnlProductOption option = new GnlProductOption()
+            //        {
+            //            ProductId = masterProduct.Id,
+            //            OptionName = add.OptionName,
+            //            UnitTypeId = add.UnitTypeId,
+            //            UnitOfStock = (decimal)add.UnitOfStock,
+            //            Width = (decimal)add.Width,
+            //            Height = (decimal)add.Height,
+            //            Length = (decimal)add.Length,
+            //            Weight = (decimal)add.Weight,
+            //            IsAvailable = add.IsAvailable,
+            //            AvailableDate = parsedDatetime,
+            //            StatusId = add.StatusId,
+            //            StockCode = add.StockCode
+            //        };
 
-                    var addedOption = _productSrv.AddProductOption(option);
+            //        var addedOption = _productSrv.AddProductOption(option);
 
-                    if (!addedOption.Success)
-                    {
-                        jsonResult = new ErrorResult(EntityConsts.UpdatedError);
-                        continue;
-                    }
+            //        if (!addedOption.Success)
+            //        {
+            //            jsonResult = new ErrorResult(EntityConsts.UpdatedError);
+            //            continue;
+            //        }
 
-                    DateTime.TryParseExact(add.DiscountExpireDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
-                    GnlProductPrice productPrice = new GnlProductPrice()
-                    {
-                        OptionId = addedOption.Data.Id,
-                        ProductId = masterProduct.Id,
-                        CurrencyId = (int)add.CurrencyId,
-                        Price = add.Price,
-                        PurchasePrice = (decimal)add.PurchasePrice,
-                        DiscountPrice = (decimal)add.DiscountPrice,
-                        DiscountRatio = (decimal)add.DiscountRatio,
-                        DiscountExpireDate = parsedDatetime,
-                        VatRatioId = (int)add.VatRatioId,
-                        IsSale = add.IsSale,
-                        StatusId = add.StatusId
-                    };
+            //        DateTime.TryParseExact(add.DiscountExpireDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
+            //        GnlProductPrice productPrice = new GnlProductPrice()
+            //        {
+            //            OptionId = addedOption.Data.Id,
+            //            ProductId = masterProduct.Id,
+            //            CurrencyId = (int)add.CurrencyId,
+            //            Price = add.Price,
+            //            PurchasePrice = (decimal)add.PurchasePrice,
+            //            DiscountPrice = (decimal)add.DiscountPrice,
+            //            DiscountRatio = (decimal)add.DiscountRatio,
+            //            DiscountExpireDate = parsedDatetime,
+            //            VatRatioId = (int)add.VatRatioId,
+            //            IsSale = add.IsSale,
+            //            StatusId = add.StatusId
+            //        };
 
-                    _productSrv.AddProductPrice(productPrice);
+            //        _productSrv.AddProductPrice(productPrice);
 
-                    foreach (var image in add.ProductImages)
-                    {
-                        if (image is null)
-                            continue;
+            //        foreach (var image in add.ProductImages)
+            //        {
+            //            if (image is null)
+            //                continue;
 
-                        var base64String = image;
-                        var data = base64String.Split(',');
-                        var dataInfo = data[0];
-                        var fileName = dataInfo.Split(';')[0];
+            //            var base64String = image;
+            //            var data = base64String.Split(',');
+            //            var dataInfo = data[0];
+            //            var fileName = dataInfo.Split(';')[0];
 
-                        byte[] bytes = Convert.FromBase64String(data[1]);
+            //            byte[] bytes = Convert.FromBase64String(data[1]);
 
-                        var uploadedImage = await _fileHelper.ImageUpload(bytes, fileName);
-                        if (!uploadedImage.Success)
-                        {
-                            jsonResult = new ErrorResult(EntityConsts.UpdatedError);
-                            continue;
-                        }
+            //            var uploadedImage = await _fileHelper.ImageUpload(bytes, fileName);
+            //            if (!uploadedImage.Success)
+            //            {
+            //                jsonResult = new ErrorResult(EntityConsts.UpdatedError);
+            //                continue;
+            //            }
 
-                        GnlProductImage newImage = new GnlProductImage()
-                        {
-                            ProductId = masterProduct.Id,
-                            OptionId = addedOption.Data.Id,
-                            ImageUrl = uploadedImage.Message
-                        };
+            //            GnlProductImage newImage = new GnlProductImage()
+            //            {
+            //                ProductId = masterProduct.Id,
+            //                OptionId = addedOption.Data.Id,
+            //                ImageUrl = uploadedImage.Message
+            //            };
 
-                        var addedImage = _productSrv.AddProductImage(newImage);
-                    }
-                }
-            }
-            //Update
-            if (noned.Count > 0)
-            {
-                foreach (var item in noned)
-                {
-                    var setOption = masterProduct.ProductOptions.Where(x => x.Id == item.Id).FirstOrDefault();
+            //            var addedImage = _productSrv.AddProductImage(newImage);
+            //        }
+            //    }
+            //}
+            ////Update
+            //if (noned.Count > 0)
+            //{
+            //    foreach (var item in noned)
+            //    {
+            //        var setOption = masterProduct.ProductOptions.Where(x => x.Id == item.Id).FirstOrDefault();
 
-                    DateTime parsedDatetime;
-                    DateTime.TryParseExact(setOption.AvailableDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
+            //        DateTime parsedDatetime;
+            //        DateTime.TryParseExact(setOption.AvailableDate, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out parsedDatetime);
 
-                    item.OptionName = setOption.OptionName;
-                    item.UnitTypeId = setOption.UnitTypeId;
-                    item.UnitOfStock = (decimal)setOption.UnitOfStock;
-                    item.Width = (decimal)setOption.Width;
-                    item.Height = (decimal)setOption.Height;
-                    item.Length = (decimal)setOption.Length;
-                    item.Weight = (int)setOption.Weight;
-                    item.IsAvailable = setOption.IsAvailable;
-                    item.AvailableDate = parsedDatetime;
-                    item.StatusId = setOption.StatusId;
-                    item.StockCode = setOption.StockCode;
+            //        item.OptionName = setOption.OptionName;
+            //        item.UnitTypeId = setOption.UnitTypeId;
+            //        item.UnitOfStock = (decimal)setOption.UnitOfStock;
+            //        item.Width = (decimal)setOption.Width;
+            //        item.Height = (decimal)setOption.Height;
+            //        item.Length = (decimal)setOption.Length;
+            //        item.Weight = (int)setOption.Weight;
+            //        item.IsAvailable = setOption.IsAvailable;
+            //        item.AvailableDate = parsedDatetime;
+            //        item.StatusId = setOption.StatusId;
+            //        item.StockCode = setOption.StockCode;
 
-                    _productSrv.UpdateProductOption(item);
-                }
-            }
+            //        _productSrv.UpdateProductOption(item);
+            //    }
+            //}
 
-            foreach (var option in masterProduct.ProductOptions)
-            {
-                foreach (var image in option.ProductImages)
-                {
-                    if (image is null)
-                        continue;
+            //foreach (var option in masterProduct.ProductOptions)
+            //{
+            //    foreach (var image in option.ProductImages)
+            //    {
+            //        if (image is null)
+            //            continue;
 
-                    var base64String = image;
-                    var data = base64String.Split(',');
-                    var dataInfo = data[0];
-                    var fileName = dataInfo.Split(';')[0];
+            //        var base64String = image;
+            //        var data = base64String.Split(',');
+            //        var dataInfo = data[0];
+            //        var fileName = dataInfo.Split(';')[0];
 
-                    var ifExist = await _fileHelper.CheckFileExist(fileName);
-                    //continue if file exist.
-                    if (!ifExist.Success)
-                    {
-                        byte[] bytes = Convert.FromBase64String(data[1]);
-                        var uploadedImage = await _fileHelper.ImageUpload(bytes, fileName);
-                        if (!uploadedImage.Success)
-                        {
-                            jsonResult = new SuccessResult($"/urunler/duzenle/{product.Id}");
-                            break;
-                        }
+            //        var ifExist = await _fileHelper.CheckFileExist(fileName);
+            //        //continue if file exist.
+            //        if (!ifExist.Success)
+            //        {
+            //            byte[] bytes = Convert.FromBase64String(data[1]);
+            //            var uploadedImage = await _fileHelper.ImageUpload(bytes, fileName);
+            //            if (!uploadedImage.Success)
+            //            {
+            //                jsonResult = new SuccessResult($"/urunler/duzenle/{product.Id}");
+            //                break;
+            //            }
 
-                        GnlProductImage newImage = new GnlProductImage()
-                        {
-                            ProductId = product.Id,
-                            OptionId = option.Id,
-                            ImageUrl = uploadedImage.Message
-                        };
+            //            GnlProductImage newImage = new GnlProductImage()
+            //            {
+            //                ProductId = product.Id,
+            //                OptionId = option.Id,
+            //                ImageUrl = uploadedImage.Message
+            //            };
 
-                        var addedImage = _productSrv.AddProductImage(newImage);
-                    }
-                }
-            }
+            //            var addedImage = _productSrv.AddProductImage(newImage);
+            //        }
+            //    }
+            //}
 
-            return Json(jsonResult);
+            return Json(default);
         }
 
         [HttpGet]
@@ -463,33 +459,33 @@ namespace ECommerce.AdminUI.Controllers
 
         [HttpGet]
         [Route("subcategory/partial")]
-        public async Task<JsonResult> GetSubCategoryPartial(int parentId)
+        public JsonResult GetSubCategoryPartial(int parentId)
         {
-            var subCategories = _categorySrv.GetSubCategories(parentId);
-            var partilaView = await this.RenderViewAsync("Partials/SubCategoryPartial", subCategories.Data, true);
-            return Json(partilaView);
+            //var subCategories = _categorySrv.GetSubCategories(parentId);
+            //var partilaView = await this.RenderViewAsync("Partials/SubCategoryPartial", subCategories.Data, true);
+            return Json(default);
         }
 
         [HttpGet]
         [Route("image/delete/{fileName}")]
-        public async Task<JsonResult> DeleteProductImage(string fileName)
+        public JsonResult DeleteProductImage(string fileName)
         {
-            if (string.IsNullOrEmpty(fileName))
-                return Json(new JsonModel(false, ValidationConst.FileIsEmpty));
+            //if (string.IsNullOrEmpty(fileName))
+            //    return Json(new JsonModel(false, ValidationConst.FileIsEmpty));
 
-            var isExist = await _fileHelper.CheckFileExist(fileName);
-            if (!isExist.Success)
-                return Json(new JsonModel(false, ValidationConst.FileIsEmpty));
+            //var isExist = await _fileHelper.CheckFileExist(fileName);
+            //if (!isExist.Success)
+            //    return Json(new JsonModel(false, ValidationConst.FileIsEmpty));
 
-            var pathParts = isExist.Message.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
-            var filesName = $"/{pathParts[pathParts.Length - 2]}";
-            var imageName = $"/{pathParts.Last()}";
-            var image = _productSrv.GetProductImage(filesName + imageName);
-            var result = await _fileHelper.RemoveFile(fileName);
-            if (result.Success)
-                _productSrv.DeleteProductImage(image.Data);
+            //var pathParts = isExist.Message.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+            //var filesName = $"/{pathParts[pathParts.Length - 2]}";
+            //var imageName = $"/{pathParts.Last()}";
+            //var image = _productSrv.GetProductImage(filesName + imageName);
+            //var result = await _fileHelper.RemoveFile(fileName);
+            //if (result.Success)
+            //    _productSrv.DeleteProductImage(image.Data);
 
-            return Json(result);
+            return Json(default);
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿using ECommerce.Application.DataTransferObjects.Authentications;
-using ECommerce.Application.Extensions;
-using ECommerce.Application.Interfaces.Services;
-using ECommerce.Application.Utilities.Cryptography.AesCrypto;
+﻿using ECommerce.Admin;
+using ECommerce.Core.Application;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity.SqlServer;

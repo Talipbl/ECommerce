@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using ECommerce.AdminUI.Helpers;
 using ECommerce.AdminUI.Models.Trendyol;
-using ECommerce.Application.DataTransferObjects.Trendyol;
-using ECommerce.Application.Interfaces.Services;
-using ECommerce.Application.Utilities;
+using ECommerce.Core.Application;
+using ECommerce.Trendyol;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography.Xml;
 
@@ -47,8 +46,8 @@ namespace ECommerce.AdminUI.Controllers.TrendyolControllers
             var createResult = await _trendyolService.CreateCopyProduct(ids);
             if (createResult.Success)
                 return Json(new SuccessResult("Ürünler başarıyla gönderildi."));
-
-            return Json(new ErrorDataResult<List<TrendyolErrorResultDto.ErrorModelDto>>(createResult.Additional.Errors));
+            
+            return Json(new ErrorDataResult<List<ErrorModelDto>>(createResult.Additional.Errors));
         }
     }
 }

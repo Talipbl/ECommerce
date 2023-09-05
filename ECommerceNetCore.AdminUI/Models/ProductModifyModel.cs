@@ -1,5 +1,8 @@
-﻿using ECommerce.Application.DataTransferObjects.Products;
-using ECommerce.Domain.Entities;
+﻿using ECommerce.Brand;
+using ECommerce.Category;
+using ECommerce.Manufacturer;
+using ECommerce.Product;
+using ECommerce.Systems;
 
 namespace ECommerce.AdminUI.Models
 {

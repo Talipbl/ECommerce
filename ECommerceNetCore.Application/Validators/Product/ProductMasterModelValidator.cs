@@ -1,6 +1,4 @@
-﻿using Castle.Core.Internal;
-using ECommerce.Application.DataTransferObjects.Products;
-using FluentValidation;
+﻿using FluentValidation;
 using System.Globalization;
 
 namespace ECommerce.Product
@@ -49,7 +47,7 @@ namespace ECommerce.Product
                                 context.AddFailure(index + ". varyasyonun stoğa giriş tarihi bugünden küçük olamaz.");
                         }
 
-                        if (option.ProductImages.IsNullOrEmpty())
+                        if (option.ProductImages.Count() < 1)
                         {
                             context.AddFailure(index + ". varyasyon için görsel eklemelisiniz.");
                         }

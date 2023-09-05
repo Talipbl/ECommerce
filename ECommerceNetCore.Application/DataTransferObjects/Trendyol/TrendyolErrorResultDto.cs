@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Trendyol
+namespace ECommerce.Trendyol;
+
+public class TrendyolErrorResultDto
 {
-    public class TrendyolErrorResultDto
-    {
-        public long Timestamp { get; set; }
-        public string Exception { get; set; }
-        public List<ErrorModelDto> Errors { get; set; }
-    }
+    public long Timestamp { get; set; }
+    public string Exception { get; set; }
+    public List<ErrorModelDto> Errors { get; set; }
 }

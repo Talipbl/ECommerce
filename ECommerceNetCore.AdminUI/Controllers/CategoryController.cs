@@ -1,9 +1,7 @@
 ﻿using ECommerce.AdminUI.Helpers;
 using ECommerce.AdminUI.Models;
 using ECommerce.Application.DataTransferObjects;
-using ECommerce.Application.Interfaces.Services;
-using ECommerce.Domain.DataTransferObjects;
-using ECommerce.Domain.Entities;
+using ECommerce.Category;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography.X509Certificates;
 
@@ -61,22 +59,22 @@ namespace ECommerce.AdminUI.Controllers
             int startRec = Convert.ToInt32(HttpContext.Request.Query["start"]);
             int pageSize = Convert.ToInt32(HttpContext.Request.Query["length"]);
 
-            var result = _categorySrv.GetSubCategories(startRec, pageSize);
+            //var result = _categorySrv.GetSubCategories(startRec, pageSize);
 
-            model.data = result.Data;
-            model.recordsTotal = result.Count;
-            model.recordsFiltered = result.Count;
-            model.draw = draw;
+            //model.data = result.Data;
+            //model.recordsTotal = result.Count;
+            //model.recordsFiltered = result.Count;
+            //model.draw = draw;
 
-            return Json(model);
+            return Json(default);
         }
 
         [HttpGet]
         [Route("subcategories")]
         public JsonResult GetSubCategories(int parentId, bool isParent = false)
         {
-            var result = _categorySrv.GetSubCategories(parentId, isParent).Data;
-            return Json(result);
+            //var result = _categorySrv.GetSubCategories(parentId, isParent).Data;
+            return Json(default);
         }
 
         [HttpGet]
@@ -99,8 +97,8 @@ namespace ECommerce.AdminUI.Controllers
                 IsParent = model.IsParent
             };
 
-            var result = _categorySrv.AddSubCategory(category);
-            return Json(result);
+            //var result = _categorySrv.AddSubCategory(category);
+            return Json(default);
         }
 
         [HttpPost]
@@ -121,13 +119,13 @@ namespace ECommerce.AdminUI.Controllers
         [Route("subcategory/update")]
         public JsonResult UpdateSubCategory([FromBody] CategoryModifyModel model)
         {
-            var category = _categorySrv.GetSubCategory(model.Id);
+            //var category = _categorySrv.GetSubCategory(model.Id);
 
-            category.Data.CategoryName = model.CategoryName;
-            category.Data.Description = model.Description;
+            //category.Data.CategoryName = model.CategoryName;
+            //category.Data.Description = model.Description;
 
-            var result = _categorySrv.UpdateSubCategory(category.Data);
-            return Json(result);
+            //var result = _categorySrv.UpdateSubCategory(category.Data);
+            return Json(default);
         }
 
         [HttpPost]

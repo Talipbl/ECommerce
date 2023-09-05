@@ -1,18 +1,21 @@
 ﻿using ECommerce.Core.Application;
+using System.Net.WebSockets;
 
 namespace ECommerce.Category;
 
 public class CategoryService : ICategoryService
 {
-    ICategoryRepository _categoryRepo;
+    //TO-DO: AutoMapper entegrasyonu yapılacak.
+    ICategoryRepository CategoryRepo { get; }
+
     public CategoryService(ICategoryRepository categoryRepo)
     {
-        _categoryRepo = categoryRepo;
+        CategoryRepo = categoryRepo;
     }
     #region Category
     public DefCategory AddCategory(DefCategory category)
     {
-        return _categoryRepo.Add(category);
+        return CategoryRepo.Add(category);
     }
 
     public IResult DeleteCategory(int categoryId)
@@ -22,22 +25,26 @@ public class CategoryService : ICategoryService
 
     public IListResult<DefCategory> GetCategories()
     {
-        return _categoryRepo.GetCategories();
+        var result = CategoryRepo.GetCategories().ToList();
+        return null;
     }
 
     public IDataResult<DefCategory> GetCategory(int categoryId)
     {
-        return _categoryRepo.GetCategory(categoryId);
+        var result = CategoryRepo.GetCategory(categoryId);
+
+        return null;
     }
 
     public IResult UpdateCategory(DefCategory category)
     {
-        var result = _categoryRepo.Update(category);
+        var result = CategoryRepo.Update(category);
         return new Result(result);
     }
     public IListResult<DefCategory> GetCategories(int startRec, int pageSize)
     {
-        return _categoryRepo.GetCategories();
+        var result = CategoryRepo.GetCategories();
+        return null;
     }
     #endregion
 }

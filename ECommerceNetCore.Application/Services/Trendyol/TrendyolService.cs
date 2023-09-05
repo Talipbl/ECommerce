@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ECommerce.Core.Application;
+using ECommerce.Domain.Common.Constants;
 using Marketplace.Trendyol;
 
 namespace ECommerce.Trendyol
@@ -13,7 +14,7 @@ namespace ECommerce.Trendyol
 
         public TrendyolService(IMapper mapper)
         {
-            _trendyolClient = new TrendyolClient(new ApiAuthenticationModel().CreateAuthentication(AuthenticationType.Basic, "mhnqkT7WsnoMmpca49NY", "yYxBaDjJw1QaRykToWHt", "", "836049"));
+            _trendyolClient = new TrendyolClient(new ApiAuthenticationModel().CreateAuthentication(AuthenticationType.Basic, "atBqHAZm2Eg1ZttXGpMZ", "LSEzaIx17XkuFiYyXyRu", "YXRCcUhBWm0yRWcxWnR0WEdwTVo6TFNFemFJeDE3WGt1RmlZeVh5UnU=", "836049"));
             _crawlerClient = new TrendyolCrawlerClient();
             _mapper = mapper;
         }
@@ -120,7 +121,7 @@ namespace ECommerce.Trendyol
                 List<TrendyolImageDto> listImg = new List<TrendyolImageDto>();
                 detailData.Images.ForEach(img =>
                 {
-                    listImg.Add(new TrendyolImageDto() { Url = TrendyolConst.ImagePrefix + img });
+                    listImg.Add(new TrendyolImageDto() { Url = TrendyolConst.ImagePrefix + img }); //TO-DO: Buradaki sabit marketplace içersine veya bu projede uygun bir yere taşınacak.
                 });
 
                 string description = detailData.Name;
@@ -134,7 +135,7 @@ namespace ECommerce.Trendyol
                 var customValues = detailData.CustomValues;
 
                 var vatValues = customValues.Where(x => x.Key.Equals("vatRate")).FirstOrDefault();
-                vatRate = vatValues is not null ? Convert.ToInt32(vatValues.Value) : 20; //Varsayılan KDV %20
+                vatRate = vatValues is not null ? Convert.ToInt32(vatValues.Value) is 0 ? 20: Convert.ToInt32(vatValues.Value) : 20; //Varsayılan KDV %20
 
                 double dimensional = 0.0;
                 var dimensionalValue = customValues.Where(x => x.Key.Equals("dimensionalWeight")).FirstOrDefault();
@@ -154,7 +155,7 @@ namespace ECommerce.Trendyol
                     SalePrice = detailData.Price.SellingPrice.Value,
                     VatRate = vatRate,
                     DimensionalWeight = dimensional,
-                    CargoCompanyId = (int)CargoCompany.MNGMP,
+                    CargoCompanyId = 10,//(int)CargoCompany.MNGMP,
                     ShipmentAddressId = 6754332,// TODO: Satıcı adres bilgileri servisten çekilecek.
                     ReturningAddressId = 6754333,
                     Attributes = listAttr,

@@ -1,4 +1,4 @@
-﻿using ECommerce.Application.Interfaces.Services.Admin;
+﻿using ECommerce.Admin;
 using ECommerce.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

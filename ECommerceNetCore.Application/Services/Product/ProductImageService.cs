@@ -4,21 +4,29 @@ namespace ECommerce.Product;
 
 public class ProductImageService : IProductImageService
 {
+    IProductImageRepository ProductImageRepo { get; }
+
+    public ProductImageService(IProductImageRepository productImageRepo)
+    {
+        ProductImageRepo = productImageRepo;
+    }
+
     public IDataResult<GnlProductImage> GetProductImage(string filename)
     {
-        return _imageRepo.GetImage(filename);
+        var result = ProductImageRepo.GetImage(filename);
+        return null;
     }
 
     [LogAspect]
     public IDataResult<GnlProductImage> AddProductImage(GnlProductImage image)
     {
-        var result = _imageRepo.Add(image);
+        var result = ProductImageRepo.Add(image);
         return new SuccessDataResult<GnlProductImage>(result);
     }
 
     public IResult DeleteProductImage(GnlProductImage image)
     {
-        return new Result(_imageRepo.Delete(image));
+        return new Result(ProductImageRepo.Delete(image));
     }
 
     public IResult UpdateProductImage(GnlProductImage image)

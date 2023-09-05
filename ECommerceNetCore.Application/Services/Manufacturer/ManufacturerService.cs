@@ -28,7 +28,8 @@ public class ManufacturerService : IManufacturerService
 
     public IListResult<DefManufacturer> GetManufacturers()
     {
-        return _manufacturerRepo.GetManufacturers();
+        var result = _manufacturerRepo.GetManufacturers();
+        return null;
     }
 
     public IResult UpdateManufacturer(DefManufacturer manufacturer)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Application.DataTransferObjects.Products
+namespace ECommerce.Product
 {
     public class ProductImageDto
     {

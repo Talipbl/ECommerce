@@ -1,7 +1,6 @@
 ﻿using ECommerce.Application.DataTransferObjects;
-using ECommerce.Application.Interfaces.Services;
-using ECommerce.Domain.Common.Enumarations;
-using ECommerce.Domain.Entities;
+using ECommerce.Systems;
+using ECommerce.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.AdminUI.Controllers

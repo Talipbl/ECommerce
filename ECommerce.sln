@@ -25,15 +25,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.AdminUI", "EComme
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.ImageAPI", "ECommerceNetCore.ImageAPI\ECommerce.ImageAPI.csproj", "{E0CA7254-30DC-4D05-9E8F-1986B03547FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Core", "Ecommerce.Core\Ecommerce.Core.csproj", "{C337AAAA-75D2-4C70-B051-734F9A6DDAF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Core", "Ecommerce.Core\ECommerce.Core.csproj", "{C337AAAA-75D2-4C70-B051-734F9A6DDAF7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{EAEA5B59-093D-4E22-AB11-51B07BD0C57D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.Persistance.UnitTest", "Ecommerce.Persistance.UnitTest\Ecommerce.Persistance.UnitTest.csproj", "{E91EE5A6-5ED5-4670-882D-7329CC20FC88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Persistance.UnitTest", "Ecommerce.Persistance.UnitTest\Ecommerce.Persistance.UnitTest.csproj", "{E91EE5A6-5ED5-4670-882D-7329CC20FC88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.Application.UnitTest", "Ecommerce.Application.UnitTest\Ecommerce.Application.UnitTest.csproj", "{79E6549F-B9AD-4E67-B548-F308A44EFFAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Application.UnitTest", "Ecommerce.Application.UnitTest\Ecommerce.Application.UnitTest.csproj", "{79E6549F-B9AD-4E67-B548-F308A44EFFAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.Service.UnitTest", "Ecommerce.Service.UnitTest\Ecommerce.Service.UnitTest.csproj", "{DCBFF721-F9B7-470C-A559-31075BD673A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Service.UnitTest", "Ecommerce.Service.UnitTest\Ecommerce.Service.UnitTest.csproj", "{DCBFF721-F9B7-470C-A559-31075BD673A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

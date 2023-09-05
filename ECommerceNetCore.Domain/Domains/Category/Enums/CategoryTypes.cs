@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Domain.Common.Enumarations
+namespace ECommerce.Category;
+
+public enum CategoryTypes
 {
-    public enum CategoryTypes
-    {
-        All = 0,
-    }
+    All = 0,
 }

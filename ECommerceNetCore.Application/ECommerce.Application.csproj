@@ -26,12 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Marketplace.Trendyol">
-      <HintPath>..\..\MarketplacePackages\Marketplace.Trendyol\bin\Debug\net6.0\Marketplace.Trendyol.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <EditorConfigFiles Remove="C:\Users\talip\source\repos\ECommerce\ECommerce.Application\DataTransferObjects\Trendyol\.editorconfig" />
   </ItemGroup>
 
@@ -43,7 +37,7 @@
     <Folder Include="DataTransferObjects\DiscountCoupon\Profiles\" />
     <Folder Include="DataTransferObjects\Manufacturer\Profiles\" />
     <Folder Include="DataTransferObjects\Order\Profiles\" />
-    <Folder Include="DataTransferObjects\Products\Profiles\" />
+    <Folder Include="DataTransferObjects\Product\Profiles\" />
     <Folder Include="DataTransferObjects\Product\Profiles\" />
     <Folder Include="DataTransferObjects\System\Profiles\" />
     <Folder Include="DataTransferObjects\User\Profiles\" />
@@ -97,8 +91,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ECommerce.Core\ECommerce.Core.csproj" />
+    <ProjectReference Include="..\Ecommerce.Core\ECommerce.Core.csproj" />
     <ProjectReference Include="..\ECommerceNetCore.Domain\ECommerce.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Marketplace.Trendyol">
+      <HintPath>..\..\MarketplacePackages\Marketplace.Trendyol\bin\Debug\net6.0\Marketplace.Trendyol.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

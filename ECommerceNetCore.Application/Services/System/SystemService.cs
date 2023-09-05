@@ -4,6 +4,7 @@ namespace ECommerce.Systems
 {
     public class SystemService : ISystemService
     {
+        //TO-DO: Burası düznelenecek
         ISystemRepository _systemRepository;
         public SystemService(ISystemRepository systemRepository)
         {
@@ -13,25 +14,29 @@ namespace ECommerce.Systems
         [CacheAspect(Duration = 99999)]
         public IListResult<SysCurrency> GetCurrencies()
         {
-            return _systemRepository.GetCurriences();
+            var reult = _systemRepository.GetCurriences();
+            return null;
         }
 
         [CacheAspect(Duration = 99999)]
         public IListResult<SysStatusType> GetSystemStatus()
         {
-            return _systemRepository.GetSystemStatus();
+            var result = _systemRepository.GetSystemStatus(); 
+            return null;
         }
 
         [CacheAspect(Duration = 99999)]
         public IListResult<SysUnitType> GetUnitTypes()
         {
-            return _systemRepository.GetUnitTypes();
+            var result = _systemRepository.GetUnitTypes();
+            return null;
         }
 
         [CacheAspect(Duration = 99999)]
         public IListResult<SysVatRatio> GetVatRatios()
         {
-            return _systemRepository.GetVatRatios();
+            var result = _systemRepository.GetVatRatios();
+            return null;
         }
 
         public void LogError(SysErrorLog errorLog)

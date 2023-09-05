@@ -19,18 +19,6 @@
     <Compile Remove="Constants\Trendyol\**" />
     <Compile Remove="Constants\User\**" />
     <Compile Remove="Constants\Xml\**" />
-    <Compile Remove="Enumarations\Admin\**" />
-    <Compile Remove="Enumarations\Brand\**" />
-    <Compile Remove="Enumarations\Carrier\**" />
-    <Compile Remove="Enumarations\Category\**" />
-    <Compile Remove="Enumarations\DiscountCoupon\**" />
-    <Compile Remove="Enumarations\Manufacturer\**" />
-    <Compile Remove="Enumarations\Order\**" />
-    <Compile Remove="Enumarations\Product\**" />
-    <Compile Remove="Enumarations\System\**" />
-    <Compile Remove="Enumarations\Trendyol\**" />
-    <Compile Remove="Enumarations\User\**" />
-    <Compile Remove="Enumarations\Xml\**" />
     <Compile Remove="Repositories\Trendyol\**" />
     <EmbeddedResource Remove="Constants\Admin\**" />
     <EmbeddedResource Remove="Constants\Brand\**" />
@@ -44,18 +32,6 @@
     <EmbeddedResource Remove="Constants\Trendyol\**" />
     <EmbeddedResource Remove="Constants\User\**" />
     <EmbeddedResource Remove="Constants\Xml\**" />
-    <EmbeddedResource Remove="Enumarations\Admin\**" />
-    <EmbeddedResource Remove="Enumarations\Brand\**" />
-    <EmbeddedResource Remove="Enumarations\Carrier\**" />
-    <EmbeddedResource Remove="Enumarations\Category\**" />
-    <EmbeddedResource Remove="Enumarations\DiscountCoupon\**" />
-    <EmbeddedResource Remove="Enumarations\Manufacturer\**" />
-    <EmbeddedResource Remove="Enumarations\Order\**" />
-    <EmbeddedResource Remove="Enumarations\Product\**" />
-    <EmbeddedResource Remove="Enumarations\System\**" />
-    <EmbeddedResource Remove="Enumarations\Trendyol\**" />
-    <EmbeddedResource Remove="Enumarations\User\**" />
-    <EmbeddedResource Remove="Enumarations\Xml\**" />
     <EmbeddedResource Remove="Repositories\Trendyol\**" />
     <None Remove="Constants\Admin\**" />
     <None Remove="Constants\Brand\**" />
@@ -69,18 +45,6 @@
     <None Remove="Constants\Trendyol\**" />
     <None Remove="Constants\User\**" />
     <None Remove="Constants\Xml\**" />
-    <None Remove="Enumarations\Admin\**" />
-    <None Remove="Enumarations\Brand\**" />
-    <None Remove="Enumarations\Carrier\**" />
-    <None Remove="Enumarations\Category\**" />
-    <None Remove="Enumarations\DiscountCoupon\**" />
-    <None Remove="Enumarations\Manufacturer\**" />
-    <None Remove="Enumarations\Order\**" />
-    <None Remove="Enumarations\Product\**" />
-    <None Remove="Enumarations\System\**" />
-    <None Remove="Enumarations\Trendyol\**" />
-    <None Remove="Enumarations\User\**" />
-    <None Remove="Enumarations\Xml\**" />
     <None Remove="Repositories\Trendyol\**" />
   </ItemGroup>
 
@@ -93,13 +57,13 @@
     <Folder Include="Domains\Manufacturer\Configurations\" />
     <Folder Include="Domains\Order\Configurations\" />
     <Folder Include="Domains\Product\Configurations\" />
-    <Folder Include="Domains\System\Configurations\" />
+    <Folder Include="Domains\Systems\Configurations\" />
     <Folder Include="Domains\User\Configurations\" />
     <Folder Include="Domains\Xml\Configurations\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ECommerce.Core\ECommerce.Core.csproj" />
+    <ProjectReference Include="..\Ecommerce.Core\ECommerce.Core.csproj" />
   </ItemGroup>
 
 </Project>

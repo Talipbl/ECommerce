@@ -1,4 +1,5 @@
 ﻿using ECommerce.Core.Application;
+using ECommerce.Systems;
 
 namespace ECommerce.Product;
 
@@ -48,11 +49,14 @@ public class ProductService : IProductService
 
     public IDataResult<GnlProduct> GetProduct(int productId)
     {
-        return _productRepo.GetProduct(productId);
+        var result = _productRepo.GetProduct(productId);
+
+        //AutoMapper ile model eşleştirmeleri yapılacak.
+        return new DataResult<GnlProduct>(false, string.Empty);
     }
     public IDataResult<ProductMasterModelDto> GetProductMaster(int productId)
     {
-        var product = _productRepo.GetProduct(productId).Data;
+        var product = _productRepo.GetProduct(productId);
         if (product is null)
             return new ErrorDataResult<ProductMasterModelDto>(default, EntityConsts.DataNotFound);
 
@@ -79,9 +83,9 @@ public class ProductService : IProductService
         masterProduct.Upc = product.Upc;
         masterProduct.ProductOptions = new List<ProductOptionDto>();
 
-        var options = _optionRepo.GetOptions(productId, (int)StatusTypes.All).Data;
-        var prices = _priceRepo.GetPricesByProductId(productId).Data;
-        var images = _imageRepo.GetImages(productId).Data;
+        var options = _optionRepo.GetOptions(productId, (int)StatusTypes.All).ToList();
+        var prices = _priceRepo.GetPricesByProductId(productId).ToList();
+        var images = _imageRepo.GetImages(productId).ToList();
 
         foreach (var option in options)
         {
@@ -111,12 +115,12 @@ public class ProductService : IProductService
                 Weight = option.Weight
             };
 
-            if (images.Count > 0)
+            if (images.Count() > 0)
             {
-                model.ProductImages = new string[images.Count];
+                model.ProductImages = new string[images.Count()];
                 var image = images.Where(x => x.OptionId == option.Id).ToList();
 
-                for (int i = 0; i < image.Count; i++)
+                for (int i = 0; i < image.Count(); i++)
                 {
                     model.ProductImages[i] = image[i].ImageUrl;
                 }
@@ -130,7 +134,10 @@ public class ProductService : IProductService
 
     public IListResult<ProductsModelDto> GetProducts(int categoryId = 0, int brandId = 0, int manufacturerId = 0, int xmlId = 0, int statusId = 1, int start = 0, int take = 25)
     {
-        return _productRepo.GetProducts(categoryId, brandId, manufacturerId, xmlId, statusId, start, take);
+        var result = _productRepo.GetProducts(categoryId, brandId, manufacturerId, xmlId, statusId, start, take).ToList();
+
+        //AutoMapper ile model eşleştirmeleri yapılacak.
+        return new ListResult<ProductsModelDto>(new List<ProductsModelDto>(), result.Count);
     }
 
     public int GetProductsCount()
@@ -145,4 +152,8 @@ public class ProductService : IProductService
         }
     }
 
+    public IResult UpdateProduct(GnlProduct product)
+    {
+        throw new NotImplementedException();
+    }
 }

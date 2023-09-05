@@ -1,5 +1,5 @@
 ﻿using ECommerce.AdminUI.Models;
-using ECommerce.Application.Aspects;
+using ECommerce.Core.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.AdminUI.Helpers

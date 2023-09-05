@@ -1,4 +1,6 @@
-﻿using ECommerce.Core.Persistance;
+﻿using ECommerce.Core.Application;
+using ECommerce.Core.Persistance;
+using ECommerce.Systems;
 
 namespace ECommerce.Category
 {
@@ -8,8 +10,7 @@ namespace ECommerce.Category
         DefSubCategory GetSubCategory(int categoryId);
         ICollection<DefSubCategory> GetSubCategories(int parentId, bool isParent = false);
         DefCategory GetCategory(int categoryId);
-        ICollection<DefCategory> GetCategories(int id = 0);
-        ICollection<DefSubCategory> GetSubCategories(int startRec, int pageSize);
+        ICollection<DefCategory> GetCategories(int id = (int)StatusTypes.All);
         DefSubCategory AddSubCategory(DefSubCategory category);
         bool UpdateSubCategory(DefSubCategory category);
     }

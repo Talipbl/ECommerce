@@ -2,6 +2,8 @@
 using ECommerce.Core.Application;
 using ECommerce.Domain.Common.Constants;
 using Marketplaces.Trendyol;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace ECommerce.Trendyol
 {
@@ -98,25 +100,33 @@ namespace ECommerce.Trendyol
 
                 var detailData = detail.Data;
 
-                //TODO: Attribute doğrulaması yapılacak.
+                var categoryAttr = await _trendyolClient.GetCategoryAttributes(detailData.OriginalCategory.Id);
+
                 List<TrendyolRequestAttributeDto> listAttr = new List<TrendyolRequestAttributeDto>();
-                detailData.Attributes.ForEach(attr =>
+                foreach (var attr in detailData.Attributes)
                 {
                     if (attr.Key.Id is not 348)
                     {
+                        var attributes = categoryAttr.OkResponse.CategoryAttributes;
+                        if (!attributes.Select(x => x.Attribute.Id).Contains(attr.Key.Id))
+                            continue;
+
                         listAttr.Add(new TrendyolRequestAttributeDto()
                         {
                             AttributeId = attr.Key.Id,
                             AttributeValueId = attr.Value.Id
                         });
                     }
-                });
+                }
 
-                listAttr.Add(new TrendyolRequestAttributeDto()
+                if(detailData.Color is not null)
                 {
-                    AttributeId = 47,//Renk parametresi
-                    CustomAttributeValue = detailData.Color
-                });
+                    listAttr.Add(new TrendyolRequestAttributeDto()
+                    {
+                        AttributeId = 47,//Renk parametresi
+                        CustomAttributeValue = detailData.Color
+                    });
+                }
 
                 List<TrendyolImageDto> listImg = new List<TrendyolImageDto>();
                 detailData.Images.ForEach(img =>

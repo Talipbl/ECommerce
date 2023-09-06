@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ECommerce.Core.Application;
 using ECommerce.Domain.Common.Constants;
-using Marketplaces.Trendyol;
+using Trendyol.Client;
 using Newtonsoft.Json;
 using System.Linq;
 

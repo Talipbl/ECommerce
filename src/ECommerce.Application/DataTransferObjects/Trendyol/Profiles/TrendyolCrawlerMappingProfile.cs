@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Marketplaces.Trendyol;
+using Trendyol.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;

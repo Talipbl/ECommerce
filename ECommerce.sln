@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.ImageAPI", "src\E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Core", "src\Ecommerce.Core\ECommerce.Core.csproj", "{C337AAAA-75D2-4C70-B051-734F9A6DDAF7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "marketplaces", "marketplaces", "{873C0010-87A9-4E82-BC5B-11CB58D462E3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A727E92E-6A21-4CC8-BA73-422023DC91A0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Application.UnitTest", "tests\Ecommerce.Application.UnitTest\Ecommerce.Application.UnitTest.csproj", "{7D5D11E7-9528-433A-BE09-324D9F25BECC}"
@@ -29,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Persistance.UnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Service.UnitTest", "tests\Ecommerce.Service.UnitTest\Ecommerce.Service.UnitTest.csproj", "{493A64E6-BC82-47EF-9867-9DF39B00E027}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplaces.Hepsiburada", "marketplaces\Marketplaces.Hepsiburada\Marketplaces.Hepsiburada.csproj", "{1A48B2ED-EBC8-425C-92B8-5A374B1331FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hepsiburada.Client", "clients\Hepsiburada.Client\Hepsiburada.Client.csproj", "{1A48B2ED-EBC8-425C-92B8-5A374B1331FB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplaces.Trendyol", "marketplaces\Marketplaces.Trendyol\Marketplaces.Trendyol.csproj", "{EA0779B5-F70B-4550-94AE-D9D5A73EED84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trendyol.Client", "clients\Trendyol.Client\Trendyol.Client.csproj", "{EA0779B5-F70B-4550-94AE-D9D5A73EED84}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clients", "clients", "{DCE111AA-DF87-4747-94F2-E4394256419E}"
 EndProject
@@ -104,8 +102,8 @@ Global
 		{7D5D11E7-9528-433A-BE09-324D9F25BECC} = {A727E92E-6A21-4CC8-BA73-422023DC91A0}
 		{EBE07AF8-3205-48EF-961E-11580FA6D8E3} = {A727E92E-6A21-4CC8-BA73-422023DC91A0}
 		{493A64E6-BC82-47EF-9867-9DF39B00E027} = {A727E92E-6A21-4CC8-BA73-422023DC91A0}
-		{1A48B2ED-EBC8-425C-92B8-5A374B1331FB} = {873C0010-87A9-4E82-BC5B-11CB58D462E3}
-		{EA0779B5-F70B-4550-94AE-D9D5A73EED84} = {873C0010-87A9-4E82-BC5B-11CB58D462E3}
+		{1A48B2ED-EBC8-425C-92B8-5A374B1331FB} = {DCE111AA-DF87-4747-94F2-E4394256419E}
+		{EA0779B5-F70B-4550-94AE-D9D5A73EED84} = {DCE111AA-DF87-4747-94F2-E4394256419E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF119655-6677-41FC-A0A5-3950863F3543}

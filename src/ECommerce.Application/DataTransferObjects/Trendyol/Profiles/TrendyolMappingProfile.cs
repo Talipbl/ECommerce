@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Marketplaces.Trendyol;
+using Trendyol.Client;
 
 namespace ECommerce.Trendyol
 {

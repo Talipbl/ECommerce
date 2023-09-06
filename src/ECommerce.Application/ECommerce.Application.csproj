@@ -1,0 +1,99 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Utilities\**" />
+    <EmbeddedResource Remove="Utilities\**" />
+    <None Remove="Utilities\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="7.1.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="7.1.0" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\talip\source\repos\ECommerce\ECommerce.Application\DataTransferObjects\Trendyol\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataTransferObjects\Admin\Profiles\" />
+    <Folder Include="DataTransferObjects\Brand\Profiles\" />
+    <Folder Include="DataTransferObjects\Carrier\Profiles\" />
+    <Folder Include="DataTransferObjects\Category\Profiles\" />
+    <Folder Include="DataTransferObjects\DiscountCoupon\Profiles\" />
+    <Folder Include="DataTransferObjects\Manufacturer\Profiles\" />
+    <Folder Include="DataTransferObjects\Order\Profiles\" />
+    <Folder Include="DataTransferObjects\Product\Profiles\" />
+    <Folder Include="DataTransferObjects\Product\Profiles\" />
+    <Folder Include="DataTransferObjects\System\Profiles\" />
+    <Folder Include="DataTransferObjects\User\Profiles\" />
+    <Folder Include="DataTransferObjects\Xml\Profiles\" />
+    <Folder Include="Helpers\Brand\" />
+    <Folder Include="Helpers\Carrier\" />
+    <Folder Include="Helpers\Category\" />
+    <Folder Include="Helpers\DiscountCoupon\" />
+    <Folder Include="Helpers\Manufacturer\" />
+    <Folder Include="Helpers\Order\" />
+    <Folder Include="Helpers\Product\" />
+    <Folder Include="Helpers\System\" />
+    <Folder Include="Helpers\Trendyol\" />
+    <Folder Include="Helpers\User\" />
+    <Folder Include="Helpers\Xml\" />
+    <Folder Include="Interfaces\Managers\Admin\" />
+    <Folder Include="Interfaces\Managers\Brand\" />
+    <Folder Include="Interfaces\Managers\Carrier\" />
+    <Folder Include="Interfaces\Managers\Category\" />
+    <Folder Include="Interfaces\Managers\DiscountCoupon\" />
+    <Folder Include="Interfaces\Managers\Manufacturer\" />
+    <Folder Include="Interfaces\Managers\Order\" />
+    <Folder Include="Interfaces\Managers\Product\" />
+    <Folder Include="Interfaces\Managers\System\" />
+    <Folder Include="Interfaces\Managers\Trendyol\" />
+    <Folder Include="Interfaces\Managers\User\" />
+    <Folder Include="Interfaces\Managers\Xml\" />
+    <Folder Include="Managers\Admin\" />
+    <Folder Include="Managers\Brand\" />
+    <Folder Include="Managers\Carrier\" />
+    <Folder Include="Managers\Category\" />
+    <Folder Include="Managers\DiscountCoupon\" />
+    <Folder Include="Managers\Manufacturer\" />
+    <Folder Include="Managers\Order\" />
+    <Folder Include="Managers\Product\" />
+    <Folder Include="Managers\System\" />
+    <Folder Include="Managers\Trendyol\" />
+    <Folder Include="Managers\User\" />
+    <Folder Include="Managers\Xml\" />
+    <Folder Include="Validators\Admin\" />
+    <Folder Include="Validators\Brand\" />
+    <Folder Include="Validators\Carrier\" />
+    <Folder Include="Validators\Category\" />
+    <Folder Include="Validators\DiscountCoupon\" />
+    <Folder Include="Validators\Manufacturer\" />
+    <Folder Include="Validators\Order\" />
+    <Folder Include="Validators\System\" />
+    <Folder Include="Validators\Trendyol\" />
+    <Folder Include="Validators\User\" />
+    <Folder Include="Validators\Xml\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\marketplaces\Marketplaces.Trendyol\Marketplaces.Trendyol.csproj" />
+    <ProjectReference Include="..\Ecommerce.Core\ECommerce.Core.csproj" />
+    <ProjectReference Include="..\ECommerce.Domain\ECommerce.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

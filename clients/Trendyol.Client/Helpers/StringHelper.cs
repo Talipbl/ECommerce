@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Trendyol.Client
 {
-    public class StringHelper
+    public static class StringHelper
     {
-        public string GetEnumDescription(Enum enums)
+        public static string GetEnumDescription(Enum enums)
         {
             var reason = enums;
             string description = string.Empty;

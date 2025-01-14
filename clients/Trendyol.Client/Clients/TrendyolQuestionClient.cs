@@ -1,32 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Trendyol.Client
+﻿namespace Trendyol.Client
 {
     // bkz: https://developers.trendyol.com/docs/category/soru-cevap-entegrasyonu
 
     public class TrendyolQuestionClient
     {
+
         private BaseHttpClient Client { get; set; }
-        private string SupplierId { get; set; } = "836049";
-        public TrendyolQuestionClient()
+
+        readonly string URL = "https://api.trendyol.com";
+        readonly string PREFIX = "/sapigw";
+        readonly string _supplierId;
+        public TrendyolQuestionClient(ApiAuthentication authentication)
         {
-            //TO-DO: Buradaki bilgiler veri tabanına kaydedilip oradan çekilecek.
-            string auth = Convert.ToBase64String(Encoding.ASCII.GetBytes("mhnqkT7WsnoMmpca49NY:yYxBaDjJw1QaRykToWHt"));
-
-            ApiAuthenticationModel authorization = new ApiAuthenticationModel()
-            {
-                ApiKey = "mhnqkT7WsnoMmpca49NY",
-                ApiSecretKey = "yYxBaDjJw1QaRykToWHt",
-                Authorization = $"Basic {auth}"
-            };
-
-            Client = new BaseHttpClient("https://api.trendyol.com", SupplierId, authorization);
+            _supplierId = authentication.SellerId;
+            Client = new BaseHttpClient(URL, _supplierId, authentication);
         }
 
         /// <summary>
@@ -37,7 +24,7 @@ namespace Trendyol.Client
         public async Task<RootResponseModel<GetQuestionsResponseModel>> GetQuestions(QuestionQueryParametersModel queries)
         {
             string queryString = JsonHelper.BuildQueryString(queries);
-            return await Task.Run(() => Client.GetAsync<GetQuestionsResponseModel>($"/sapigw/suppliers/{SupplierId}/questions/filter?{queryString}"));
+            return await Client.GetAsync<GetQuestionsResponseModel>($"{PREFIX}/suppliers/{_supplierId}/questions/filter?{queryString}");
         }
 
         /// <summary>
@@ -47,7 +34,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<GetQuestionResponseModel>> GetQuestion(string questionId)
         {
-            return await Task.Run(() => Client.GetAsync<GetQuestionResponseModel>($"/sapigw/suppliers/{SupplierId}/questions/{questionId}"));
+            return await Client.GetAsync<GetQuestionResponseModel>($"{PREFIX}/suppliers/{_supplierId}/questions/{questionId}");
         }
 
         /// <summary>
@@ -58,7 +45,7 @@ namespace Trendyol.Client
         /// <returns>HTTP Status Code</returns>
         public async Task<RootResponseModel<string>> AnswerQuestion(string questionId, string message)
         {
-            return await Task.Run(() => Client.PostAsync<string>(new QuestionMessageModel(message), $"/sapigw/suppliers/{SupplierId}/questions/{questionId}/answers"));
+            return await Client.PostAsync<string>(new QuestionMessageModel(message), $"{PREFIX}/suppliers/{_supplierId}/questions/{questionId}/answers");
         }
     }
 }

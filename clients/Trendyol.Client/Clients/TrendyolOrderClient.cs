@@ -1,34 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Claims;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace Trendyol.Client
+﻿namespace Trendyol.Client
 {
     // bkz: https://developers.trendyol.com/docs/category/sipari%C5%9F-entegrasyonu
 
     public class TrendyolOrderClient
     {
         private BaseHttpClient Client { get; set; }
-        private string SupplierId { get; set; } = "836049";
-        public TrendyolOrderClient()
+
+        readonly string URL = "https://api.trendyol.com";
+        readonly string PREFIX = "/sapigw";
+        readonly string _supplierId;
+        public TrendyolOrderClient(ApiAuthentication authentication)
         {
-            //TO-DO: Buradaki bilgiler veri tabanına kaydedilip oradan çekilecek.
-            string auth = Convert.ToBase64String(Encoding.ASCII.GetBytes("mhnqkT7WsnoMmpca49NY:yYxBaDjJw1QaRykToWHt"));
-
-            ApiAuthenticationModel authorization = new ApiAuthenticationModel()
-            {
-                ApiKey = "mhnqkT7WsnoMmpca49NY",
-                ApiSecretKey = "yYxBaDjJw1QaRykToWHt",
-                Authorization = $"Basic {auth}"
-            };
-
-            Client = new BaseHttpClient("https://api.trendyol.com", SupplierId, authorization);
+            _supplierId = authentication.SellerId;
+            Client = new BaseHttpClient(URL, _supplierId, authentication);
         }
 
         /// <summary>
@@ -39,7 +23,7 @@ namespace Trendyol.Client
         public async Task<RootResponseModel<GetOrdersResponseModel>> GetOrders(OrderQueryParametersModel queries)
         {
             string queryString = JsonHelper.BuildQueryString(queries);
-            return await Task.Run(() => Client.GetAsync<GetOrdersResponseModel>($"/sapigw/suppliers/{SupplierId}/orders?{queryString}"));
+            return await Client.GetAsync<GetOrdersResponseModel>($"{PREFIX}/suppliers/{_supplierId}/orders?{queryString}");
         }
 
         /// <summary>
@@ -49,7 +33,7 @@ namespace Trendyol.Client
         /// <returns>HTTP Status Code</returns>
         public async Task<RootResponseModel<object>> UpdateTrackingNumber(string shipmentPackageId)
         {
-            return await Task.Run(() => Client.PutAsync<object>(new TrackingNumberModel(shipmentPackageId), $"/sapigw/suppliers/{SupplierId}/{shipmentPackageId}/update-tracking-number"));
+            return await Client.PutAsync<object>(new TrackingNumberModel(shipmentPackageId), $"{PREFIX}/suppliers/{_supplierId}/{shipmentPackageId}/update-tracking-number");
         }
 
         /// <summary>
@@ -60,7 +44,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> UpdatePackage(UpdatePackageRequest request, string shipmentPackageId)
         {
-            return await Task.Run(() => Client.PutAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}"));
+            return await Client.PutAsync<object>(request, $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shipmentPackageId}");
         }
 
         /// <summary>
@@ -71,7 +55,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> SetFailureToSupply(FailureToSupplyReuqest request, string shipmentPackageId)
         {
-            return await Task.Run(() => Client.PutAsync<object>(request, $"/integration/oms/core/sellers/{SupplierId}/shipment-packages/{shipmentPackageId}/items/unsupplied"));
+            return await Client.PutAsync<object>(request, $"/integration/oms/core/sellers/{_supplierId}/shipment-packages/{shipmentPackageId}/items/unsupplied");
         }
 
         /// <summary>
@@ -82,7 +66,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<string>> SendInvoiceLink(SendInvoiceLinkReuqest request)
         {
-            return await Task.Run(() => Client.PostAsync<string>(request, $"/sapigw/suppliers/{SupplierId}/supplier-invoice-links"));
+            return await Client.PostAsync<string>(request, $"{PREFIX}/suppliers/{_supplierId}/supplier-invoice-links");
         }
 
         /// <summary>
@@ -94,7 +78,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> MultiSplitShipmentPackageByQuantity(List<SplitShipmentPackageQuantityRequest> request, string shipmentPackageId)
         {
-            return await Task.Run(() => Client.PostAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/split-packages"));
+            return await Client.PostAsync<object>(request, $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shipmentPackageId}/split-packages");
         }
 
         /// <summary></summary>
@@ -104,7 +88,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> SplitShipmentPackage(string orderLineIds, string shipmentPackageId)
         {
-            return await Task.Run(() => Client.PostAsync<object>(orderLineIds, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/split"));
+            return await Client.PostAsync<object>(orderLineIds, $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shipmentPackageId}/split");
         }
 
         /// <summary>
@@ -116,7 +100,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> MultiSplitShipmentPackage(List<SplitShipmentPackageMultiSplintRequest> request, string shipmentPackageId)
         {
-            return await Task.Run(() => Client.PostAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/multi-split"));
+            return await Client.PostAsync<object>(request, $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shipmentPackageId}/multi-split");
         }
 
         /// <summary>
@@ -128,7 +112,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> QuantitySplitShipmentPackage(SplitShipmentPackageByQuantityRequest request, string shipmentPackageId)
         {
-            return await Task.Run(() => Client.PostAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/quantity-split"));
+            return await Client.PostAsync<object>(request, $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shipmentPackageId}/quantity-split");
         }
 
         /// <summary>
@@ -139,7 +123,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> UpdateBoxInfo(UpdateBoxInfoRequest request, string shipmentPackageId)
         {
-            return await Task.Run(() => Client.PutAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/box-info"));
+            return await Client.PutAsync<object>(request, $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shipmentPackageId}/box-info");
         }
 
         /// <summary>
@@ -149,7 +133,7 @@ namespace Trendyol.Client
         /// <returns>HTTP Status Code</returns>
         public async Task<RootResponseModel<object>> ProcessAlternativeDelivery(ProcessAlternativeDeliveryRequest request, string shippmentId)
         {
-            return await Task.Run(() => Client.PutAsync<object>(request, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shippmentId}/alternative-delivery"));
+            return await Client.PutAsync<object>(request, $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shippmentId}/alternative-delivery");
         }
 
         /// <summary>
@@ -160,7 +144,7 @@ namespace Trendyol.Client
         /// <returns>HTTP Status Code</returns>
         public async Task<RootResponseModel<object>> ManuelDeliver(string cargoTrackingNumber)
         {
-            return await Task.Run(() => Client.PutAsync<object>(default, $"/sapigw/suppliers/{SupplierId}/manual-deliver/{cargoTrackingNumber}"));
+            return await Client.PutAsync<object>(default, $"{PREFIX}/suppliers/{_supplierId}/manual-deliver/{cargoTrackingNumber}");
         }
 
         /// <summary>
@@ -170,7 +154,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> ManuelReturn(string cargoTrackingNumber)
         {
-            return await Task.Run(() => Client.PutAsync<object>(default, $"/sapigw/suppliers/{SupplierId}/manual-return/{cargoTrackingNumber}"));
+            return await Client.PutAsync<object>(default, $"{PREFIX}/suppliers/{_supplierId}/manual-return/{cargoTrackingNumber}");
         }
 
         /// <summary>
@@ -180,7 +164,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> DeliveredByService(string shipmentPackageId)
         {
-            return await Task.Run(() => Client.PutAsync<object>(default, $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/delivered-by-service stage"));
+            return await Client.PutAsync<object>(default, $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shipmentPackageId}/delivered-by-service stage");
         }
 
         /// <summary>
@@ -191,7 +175,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> ChangeCargoProvider(CargoProvider cargoProvider, string shipmentPackageId)
         {
-            return await Task.Run(() => Client.PutAsync<object>(new ChangeCargoProviderRequest(cargoProvider.ToString()), $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/cargo-providers"));
+            return await Client.PutAsync<object>(new ChangeCargoProviderRequest(cargoProvider.ToString()), $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shipmentPackageId}/cargo-providers");
         }
 
         /// <summary>
@@ -204,7 +188,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<string>> UpdateWarehouse(int warehouseId, string shipmentPackageId, string packageId)
         {
-            return await Task.Run(() => Client.PutAsync<string>(new UpdateWarehouseRequest(warehouseId), $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/shipment-packages/{packageId}/warehouse"));
+            return await Client.PutAsync<string>(new UpdateWarehouseRequest(warehouseId), $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shipmentPackageId}/shipment-packages/{packageId}/warehouse");
         }
 
         /// <summary>
@@ -215,7 +199,7 @@ namespace Trendyol.Client
         /// <returns>HTTP Status Code</returns>
         public async Task<RootResponseModel<object>> AgreedDeliveryDateExtendible(int extendedDayCount, string shipmentPackageId)
         {
-            return await Task.Run(() => Client.PutAsync<object>(new AgreedDeliveryDateExtendibleRequest(extendedDayCount), $"/sapigw/suppliers/{SupplierId}/shipment-packages/{shipmentPackageId}/extended-agreed-delivery-date"));
+            return await Client.PutAsync<object>(new AgreedDeliveryDateExtendibleRequest(extendedDayCount), $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shipmentPackageId}/extended-agreed-delivery-date");
         }
     }
 }

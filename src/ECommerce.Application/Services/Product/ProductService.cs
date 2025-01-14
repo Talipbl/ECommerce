@@ -6,11 +6,11 @@ namespace ECommerce.Product;
 [LogAspect]
 public class ProductService : IProductService
 {
-    IProductRepository _productRepo;
-    IProductImageRepository _imageRepo;
-    IProductPriceRepository _priceRepo;
-    IProductOptionRepository _optionRepo;
-    IProductCategoryRepository _categoryRepo;
+    readonly IProductRepository _productRepo;
+    readonly IProductImageRepository _imageRepo;
+    readonly IProductPriceRepository _priceRepo;
+    readonly IProductOptionRepository _optionRepo;
+    readonly IProductCategoryRepository _categoryRepo;
 
     public ProductService(IProductRepository productRepo, IProductCategoryRepository proCategoryRepo, IProductOptionRepository productOptionRepo, IProductImageRepository imageRepo, IProductPriceRepository priceRepo)
     {
@@ -51,10 +51,10 @@ public class ProductService : IProductService
     {
         var result = _productRepo.GetProduct(productId);
 
-        //AutoMapper ile model eşleştirmeleri yapılacak.
+        //TO-DO: AutoMapper ile model eşleştirmeleri yapılacak.
         return new DataResult<GnlProduct>(false, string.Empty);
     }
-    public IDataResult<ProductMasterModelDto> GetProductMaster(int productId)
+    public IDataResult<ProductMasterModelDto> GetProductDetail(int productId)
     {
         var product = _productRepo.GetProduct(productId);
         if (product is null)

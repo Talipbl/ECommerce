@@ -16,7 +16,7 @@ namespace Trendyol.Client
         private Uri EndPoint { get; set; }
         private string Host { get; set; }
         private string SupplierId { get; set; } = string.Empty;
-        private ApiAuthenticationModel? Headers { get; set; }
+        private ApiAuthentication? Headers { get; set; }
 
         public BaseHttpClient(string baseUrl)
         {
@@ -27,7 +27,7 @@ namespace Trendyol.Client
         {
             SupplierId = supplierId;
         }
-        public BaseHttpClient(string baseUri, string supplierId, ApiAuthenticationModel requestHeaders) : this(baseUri, supplierId)
+        public BaseHttpClient(string baseUri, string supplierId, ApiAuthentication requestHeaders) : this(baseUri, supplierId)
         {
             Headers = requestHeaders;
         }
@@ -143,6 +143,7 @@ namespace Trendyol.Client
             }
 
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            Client.Timeout = TimeSpan.FromSeconds(30);
             return Client;
         }
         private StringContent CreateHttpContent(object model)

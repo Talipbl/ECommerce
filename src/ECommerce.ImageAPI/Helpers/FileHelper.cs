@@ -49,7 +49,8 @@ namespace ECommerce.ImageAPI.Helpers
                 string endPoint = CurrentDirectory + directory;
 
                 string imageExtension = Path.GetExtension(file.FileName);
-                string imageName = file.FileName.Replace(" ", "").Replace("/", "");//Özel ve Türkçe karakter kontrolü yaptırmalıyız. Bunun için bir yardımcı metot oluşturacağız.
+                string imageName = file.FileName.Replace(" ", "").Replace("/", "");
+                //TO-DO: Özel ve Türkçe karakter kontrolü yaptırmalıyız. Bunun için bir yardımcı metot oluşturacağız.
 
                 if (!CheckFileTypeValid(imageExtension))
                     return "Wrong File Type";

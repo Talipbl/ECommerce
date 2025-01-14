@@ -65,7 +65,7 @@ namespace ECommerce.AdminUI.Controllers
         public IActionResult UpdateProduct(int pId)
         {
             ProductModifyModel model = new ProductModifyModel();
-            var product = _productSrv.GetProductMaster(pId);
+            var product = _productSrv.GetProductDetail(pId);
             if (product.Data is null)
             {
                 return RedirectToAction("ListProduct");

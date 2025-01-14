@@ -7,26 +7,19 @@ using System.Linq;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolService : ITrendyolService
+    public class TrendyolService(IMapper mapper) : ITrendyolService
     {
-        TrendyolClient _trendyolClient;
-        TrendyolCrawlerClient _crawlerClient;
+        TrendyolClient _trendyolClient = new(ApiAuthentication.CreateAuthentication("atBqHAZm2Eg1ZttXGpMZ", "LSEzaIx17XkuFiYyXyRu", "836049"));
+        TrendyolDiscoveryClient _discoveryClient = new();
 
-        IMapper _mapper;
-
-        public TrendyolService(IMapper mapper)
-        {
-            _trendyolClient = new TrendyolClient(new ApiAuthenticationModel().CreateAuthentication(AuthenticationType.Basic, "atBqHAZm2Eg1ZttXGpMZ", "LSEzaIx17XkuFiYyXyRu", "YXRCcUhBWm0yRWcxWnR0WEdwTVo6TFNFemFJeDE3WGt1RmlZeVh5UnU=", "836049"));
-            _crawlerClient = new TrendyolCrawlerClient();
-            _mapper = mapper;
-        }
+        IMapper _mapper = mapper;
 
         public async Task<IDataResult<TrendyolWebSearchResultDto>> SearchCrawlerProducts(string url, int page = 1)
         {
             try
             {
                 string search = url.Split("https://www.trendyol.com/").Last();
-                var result = await _crawlerClient.GetWebSearchResult(search, page);
+                var result = await _discoveryClient.GetWebSearchResult(search, page);
                 if (!result.IsSuccess)
                     return new DataResult<TrendyolWebSearchResultDto>(false, TrendyolConst.ServiceConnectionError);
 
@@ -46,7 +39,7 @@ namespace ECommerce.Trendyol
         {
             try
             {
-                var result = await _crawlerClient.GetProductDetail(productId);
+                var result = await _discoveryClient.GetProductDetail(productId);
                 if (!result.IsSuccess)
                     return new DataResult<TrendyolCrawlerProductDetailDto>(false, TrendyolConst.ServiceConnectionError);
 

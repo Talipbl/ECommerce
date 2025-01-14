@@ -7,20 +7,13 @@ namespace Trendyol.Client
     public class TrandyolDeliveryClient
     {
         private BaseHttpClient Client { get; set; }
-        private string SupplierId { get; set; } = "836049";
-        public TrandyolDeliveryClient()
+
+        readonly string URL = "https://sellerpublic-sdc.trendyol.com";
+        private readonly string _supplierId;
+        public TrandyolDeliveryClient(ApiAuthentication authentication)
         {
-            //TO-DO: Buradaki bilgiler veri tabanına kaydedilip oradan çekilecek.
-            string auth = Convert.ToBase64String(Encoding.ASCII.GetBytes("mhnqkT7WsnoMmpca49NY:yYxBaDjJw1QaRykToWHt"));
-
-            ApiAuthenticationModel authorization = new ApiAuthenticationModel()
-            {
-                ApiKey = "mhnqkT7WsnoMmpca49NY",
-                ApiSecretKey = "yYxBaDjJw1QaRykToWHt",
-                Authorization = $"Basic {auth}"
-            };
-
-            Client = new BaseHttpClient("https://sellerpublic-sdc.trendyol.com", SupplierId, authorization);
+            _supplierId = authentication.SellerId;
+            Client = new BaseHttpClient(URL, _supplierId, authentication);
         }
 
         /// <summary>
@@ -34,7 +27,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> CreateCommonLabel(CreateCommonLabelRequestModel request, string cargoTrackingNumber)
         {
-            return await Task.Run(() => Client.PostAsync<object>(request, $"/delivery-delivery-external-service/sellers/{SupplierId}/common-label/{cargoTrackingNumber}"));
+            return await Client.PostAsync<object>(request, $"/delivery-delivery-external-service/sellers/{_supplierId}/common-label/{cargoTrackingNumber}");
         }
 
         /// <summary>
@@ -46,7 +39,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<GetCommonLabelResponseModel>> GetCommonLabel(string cargoTrackingNumber)
         {
-            return await Task.Run(() => Client.GetAsync<GetCommonLabelResponseModel>($"/delivery-delivery-external-service/sellers/{SupplierId}/common-label/{cargoTrackingNumber}"));
+            return await Client.GetAsync<GetCommonLabelResponseModel>($"/delivery-delivery-external-service/sellers/{_supplierId}/common-label/{cargoTrackingNumber}");
         }
     }
 }

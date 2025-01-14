@@ -1,25 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Trendyol.Client
 {
     public class TrendyolClient
     {
-        // Test Ortamı
-        // 7vw1GSi8UV5MF5y2wh9Q:ziAoE6pBo1DS6yYaYYdW
-        // 2738
-
-        // Canlı Ortamı
-        // mhnqkT7WsnoMmpca49NY:yYxBaDjJw1QaRykToWHt
-        // 836049
-
-        TrendyolProductClient _productClient;
-        public TrendyolClient(ApiAuthenticationModel authentication)
+        readonly TrendyolProductClient _productClient;
+        public TrendyolClient(ApiAuthentication authentication)
         {
             _productClient = new TrendyolProductClient(authentication);
         }

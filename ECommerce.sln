@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trendyol.Client", "clients\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clients", "clients", "{DCE111AA-DF87-4747-94F2-E4394256419E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N11.Client", "clients\N11.Client\N11.Client.csproj", "{32C63AA2-FDB5-42A6-82D4-EFB7E9726096}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{EA0779B5-F70B-4550-94AE-D9D5A73EED84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA0779B5-F70B-4550-94AE-D9D5A73EED84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA0779B5-F70B-4550-94AE-D9D5A73EED84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32C63AA2-FDB5-42A6-82D4-EFB7E9726096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32C63AA2-FDB5-42A6-82D4-EFB7E9726096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32C63AA2-FDB5-42A6-82D4-EFB7E9726096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32C63AA2-FDB5-42A6-82D4-EFB7E9726096}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +110,7 @@ Global
 		{493A64E6-BC82-47EF-9867-9DF39B00E027} = {A727E92E-6A21-4CC8-BA73-422023DC91A0}
 		{1A48B2ED-EBC8-425C-92B8-5A374B1331FB} = {DCE111AA-DF87-4747-94F2-E4394256419E}
 		{EA0779B5-F70B-4550-94AE-D9D5A73EED84} = {DCE111AA-DF87-4747-94F2-E4394256419E}
+		{32C63AA2-FDB5-42A6-82D4-EFB7E9726096} = {DCE111AA-DF87-4747-94F2-E4394256419E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF119655-6677-41FC-A0A5-3950863F3543}

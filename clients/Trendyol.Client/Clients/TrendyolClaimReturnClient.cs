@@ -8,20 +8,14 @@ namespace Trendyol.Client
     public class TrendyolClaimReturnClient
     {
         private BaseHttpClient Client { get; set; }
-        private string SupplierId { get; set; } = "836049";
-        public TrendyolClaimReturnClient()
+
+        readonly string URL = "https://api.trendyol.com";
+        readonly string PREFIX = "/sapigw";
+        private readonly string _supplierId;
+        public TrendyolClaimReturnClient(ApiAuthentication authentication)
         {
-            //TO-DO: Buradaki bilgiler veri tabanına kaydedilip oradan çekilecek.
-            string auth = Convert.ToBase64String(Encoding.ASCII.GetBytes("mhnqkT7WsnoMmpca49NY:yYxBaDjJw1QaRykToWHt"));
-
-            ApiAuthenticationModel authorization = new ApiAuthenticationModel()
-            {
-                ApiKey = "mhnqkT7WsnoMmpca49NY",
-                ApiSecretKey = "yYxBaDjJw1QaRykToWHt",
-                Authorization = $"Basic {auth}"
-            };
-
-            Client = new BaseHttpClient("https://api.trendyol.com", SupplierId, authorization);
+            _supplierId = authentication.SellerId;
+            Client = new BaseHttpClient(URL, _supplierId, authentication);
         }
 
         /// <summary>
@@ -32,7 +26,7 @@ namespace Trendyol.Client
         public async Task<RootResponseModel<GetClaimsResponseModel>> GetClaims(ClaimsQueryParametersModel queries)
         {
             string queryString = JsonHelper.BuildQueryString(queries);
-            return await Task.Run(() => Client.GetAsync<GetClaimsResponseModel>($"/sapigw/suppliers/{SupplierId}/claims?{queryString}"));
+            return await Client.GetAsync<GetClaimsResponseModel>($"{PREFIX}/suppliers/{_supplierId}/claims?{queryString}");
         }
 
         /// <summary>
@@ -42,7 +36,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<CreateClaimResponseModel>> CreateClaim(CreateClaimRequestModel request)
         {
-            return await Task.Run(() => Client.PostAsync<CreateClaimResponseModel>(request, $"/sapigw/suppliers/{SupplierId}/claims/create"));
+            return await Client.PostAsync<CreateClaimResponseModel>(request, $"{PREFIX}/suppliers/{_supplierId}/claims/create");
         }
 
         /// <summary>
@@ -53,7 +47,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<string>> ApproveClaimLineItems(ApproveClaimLineItemsRequest request, string claimId)
         {
-            return await Task.Run(() => Client.PutAsync<string>(request, $"/sapigw/claims/{claimId}/items/approve"));
+            return await Client.PutAsync<string>(request, $"{PREFIX}/claims/{claimId}/items/approve");
         }
 
         /// <summary>
@@ -66,7 +60,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<string>> CreateClaimIssue(string claimId, string claimIssueReasonId, string claimItemIdList, string description)
         {
-            return await Task.Run(() => Client.PostAsync<string>(default, $"/sapigw/claims/{claimId}/issue?claimIssueReasonId={claimIssueReasonId}&claimItemIdList={claimItemIdList}&description={description}"));
+            return await Client.PostAsync<string>(default, $"{PREFIX}/claims/{claimId}/issue?claimIssueReasonId={claimIssueReasonId}&claimItemIdList={claimItemIdList}&description={description}");
         }
 
         /// <summary>
@@ -76,7 +70,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<object>> GetClaimsIssueReasons(string claimItemsId)
         {
-            return await Task.Run(() => Client.GetAsync<object>($"/sapigw/claim-issue-reasons"));
+            return await Client.GetAsync<object>($"{PREFIX}/claim-issue-reasons");
         }
 
         /// <summary>
@@ -86,7 +80,7 @@ namespace Trendyol.Client
         /// <returns></returns>
         public async Task<RootResponseModel<GetClaimAuditsResponse>> GetClaimAudit(string claimItemsId)
         {
-            return await Task.Run(() => Client.GetAsync<GetClaimAuditsResponse>($"/integration/oms/core/sellers/{SupplierId}/claims/items/{claimItemsId}/audit"));
+            return await Client.GetAsync<GetClaimAuditsResponse>($"/integration/oms/core/sellers/{_supplierId}/claims/items/{claimItemsId}/audit");
         }
     }
 }

@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Clients\" />
     <Folder Include="Consts\Enums\" />
     <Folder Include="Models\" />
   </ItemGroup>

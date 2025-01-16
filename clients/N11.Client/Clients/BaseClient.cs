@@ -19,6 +19,7 @@ namespace N11.Client
             var binding = new BasicHttpBinding
             {
                 SendTimeout = TimeSpan.FromSeconds(30),
+                ReceiveTimeout = TimeSpan.FromSeconds(30),
                 MaxReceivedMessageSize = 65536,
                 Security = new BasicHttpSecurity
                 {

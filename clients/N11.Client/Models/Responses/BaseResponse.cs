@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-
-namespace N11.Client
+﻿namespace N11.Client
 {
-    public class BaseResponse
+    public class BaseResponse<TResponse ,TApiResponse>
     {
-        public ResultInfo Result { get; set; }
-
-        public class ResultInfo
-        {
-            public bool Status { get; set; }
-            public string ErrorCode { get; set; }
-            public string ErrorMessage { get; set; }
-        }
+        public BaseClientResponse<TResponse> ClientResponse { get; set; }
+        public TApiResponse ApiResponse { get; set; }
     }
 }

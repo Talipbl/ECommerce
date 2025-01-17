@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Consts\Enums\" />
-    <Folder Include="Extensions\" />
     <Folder Include="Models\Requests\" />
   </ItemGroup>
 

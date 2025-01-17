@@ -24,7 +24,7 @@ namespace N11.Client
             _serviceExecutor = new ServiceExecutor();
         }
 
-        public async Task<GetProductByProductIdResponse> GetProductById(long productId)
+        public async Task<BaseClientResponse<Product>> GetProductById(long productId)
         {
             var request = new GetProductByProductIdRequest()
             {
@@ -32,14 +32,17 @@ namespace N11.Client
                 productId = productId
             };
 
-            var response = await _serviceExecutor.ExecuteAsync(async () =>
+            var response = await _serviceExecutor.ExecuteAsync<Product, GetProductByProductIdResponse>(async () =>
             {
-                return await _client.GetProductByProductIdAsync(request);
+                var result = await _client.GetProductByProductIdAsync(request);
+                return result.GetProductByProductIdResponse;
             });
-            return response.GetProductByProductIdResponse;
+
+            response.ClientResponse.Data = response.ApiResponse.product;
+            return response.ClientResponse;
         }
 
-        public async Task<GetProductBySellerCodeResponse> GetProductBySellerCode(string sellerCode)
+        public async Task<BaseClientResponse<Product>> GetProductBySellerCode(string sellerCode)
         {
             var request = new GetProductBySellerCodeRequest()
             {
@@ -47,25 +50,31 @@ namespace N11.Client
                 sellerCode = sellerCode
             };
 
-            var response = await _serviceExecutor.ExecuteAsync(async () =>
+            var response = await _serviceExecutor.ExecuteAsync<Product, GetProductBySellerCodeResponse>(async () =>
             {
-                return await _client.GetProductBySellerCodeAsync(request);
+                var result = await _client.GetProductBySellerCodeAsync(request);
+                return result.GetProductBySellerCodeResponse;
             });
-            return response.GetProductBySellerCodeResponse;
+
+            response.ClientResponse.Data = response.ApiResponse.product;
+            return response.ClientResponse;
         }
 
-        public async Task<GetProductListResponse> GetProducts()
+        public async Task<BaseClientResponse<ProductBasic[]>> GetProducts()
         {
             var request = new GetProductListRequest()
             {
                 auth = _auth
             };
 
-            var response = await _serviceExecutor.ExecuteAsync(async () =>
+            var response = await _serviceExecutor.ExecuteAsync<ProductBasic[], GetProductListResponse>(async () =>
             {
-                return await _client.GetProductListAsync(request);
+                var result = await _client.GetProductListAsync(request);
+                return result.GetProductListResponse;
             });
-            return response.GetProductListResponse;
+
+            response.ClientResponse.Data = response.ApiResponse.products;
+            return response.ClientResponse;
         }
     }
 }

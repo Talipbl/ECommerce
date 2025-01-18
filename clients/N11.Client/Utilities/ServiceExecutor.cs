@@ -20,7 +20,7 @@ namespace N11.Client.Utilities
 
                 var @dynamic = result as dynamic;
 
-                var clientResponse = new BaseClientResponse<TResponse>()
+                ClientResponse<TResponse> clientResponse = new()
                 {
                     Status = @dynamic.result.status == "success",
                     ErrorCode = @dynamic.result.errorCode,
@@ -31,7 +31,7 @@ namespace N11.Client.Utilities
                 var paging = resultObj.GetPropertyOrDefault("pagingData");
                 if (paging != null)
                 {
-                    clientResponse.Pagination = new PagingData()
+                    clientResponse.Pagination = new()
                     {
                         CurrentPage = paging.currentPage,
                         PageCount = paging.pageCount,
@@ -41,6 +41,38 @@ namespace N11.Client.Utilities
                 }
 
                 var response =  new BaseResponse<TResponse, TApiResponse>()
+                {
+                    ApiResponse = result,
+                    ClientResponse = clientResponse
+                };
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<BaseResponse<TApiResponse>> ExecuteAsync<TApiResponse>(Func<Task<TApiResponse>> action)
+        {
+            try
+            {
+                var result = await action();
+
+                if (result == null)
+                    throw new Exception("Service returned a null response.");
+
+                var @dynamic = result as dynamic;
+
+                BaseClientResponse clientResponse = new()
+                {
+                    Status = @dynamic.result.status == "success",
+                    ErrorCode = @dynamic.result.errorCode,
+                    ErrorMessage = @dynamic.result.errorMessage
+                };
+
+                var response = new BaseResponse<TApiResponse>()
                 {
                     ApiResponse = result,
                     ClientResponse = clientResponse

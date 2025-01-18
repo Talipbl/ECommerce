@@ -26,7 +26,13 @@ namespace N11.Client.UnitTest
         [TestMethod]
         public void Get_Products()
         {
-            var result = _client.GetProducts().Result;
+            var result = _client.GetProductList().Result;
+        }
+
+        [TestMethod]
+        public void Get_Product_Counts()
+        {
+            var result = _client.GetProductAllStatusCounts().Result;
         }
     }
 }

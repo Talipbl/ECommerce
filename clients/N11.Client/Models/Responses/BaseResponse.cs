@@ -2,7 +2,13 @@
 {
     public class BaseResponse<TResponse ,TApiResponse>
     {
-        public BaseClientResponse<TResponse> ClientResponse { get; set; }
+        public ClientResponse<TResponse> ClientResponse { get; set; }
+        public TApiResponse ApiResponse { get; set; }
+    }
+
+    public class BaseResponse<TApiResponse>
+    {
+        public BaseClientResponse ClientResponse { get; set; }
         public TApiResponse ApiResponse { get; set; }
     }
 }

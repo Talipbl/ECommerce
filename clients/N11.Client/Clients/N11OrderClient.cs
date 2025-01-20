@@ -90,7 +90,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<ClientResponse<OrderItemData[]>> ApproveOrderItems(long[] orderIds, int numberOfPackage = 1)
+        public async Task<ClientResponse<OrderItemData[]>> ApproveOrderItems(int[] orderIds, int numberOfPackage = 1)
         {
             if (orderIds.Length < 1 || orderIds is null)
             {
@@ -128,7 +128,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<ClientResponse<OrderItemData[]>> RejectOrderItems(long[] orderIds, string reason, string rejectType)
+        public async Task<ClientResponse<OrderItemData[]>> RejectOrderItems(int[] orderIds, string reason, string rejectType)
         {
             if (orderIds.Length < 1 || orderIds is null)
             {
@@ -221,7 +221,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<BaseClientResponse> SeperateCombinedOrderItems(long[] orderIds)
+        public async Task<BaseClientResponse> SeperateCombinedOrderItems(int[] orderIds)
         {
             if (orderIds.Length < 1 || orderIds is null)
             {

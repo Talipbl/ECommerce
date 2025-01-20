@@ -24,7 +24,7 @@ namespace N11.Client
             _serviceExecutor = new ServiceExecutor();
         }
 
-        public async Task<ClientResponse<Product>> GetProductById(long productId)
+        public async Task<ClientResponse<Product>> GetProductById(int productId)
         {
             GetProductByProductIdRequest request = new()
             {

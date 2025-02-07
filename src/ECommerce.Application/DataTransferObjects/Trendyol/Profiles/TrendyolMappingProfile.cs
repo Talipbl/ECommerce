@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ECommerce.Trendyol.Order;
 using Trendyol.Client;
 
 namespace ECommerce.Trendyol
@@ -27,6 +28,17 @@ namespace ECommerce.Trendyol
 
             CreateMap<ErrorModelDto, ErrorResultModel.ErrorModel>();
             CreateMap<ErrorResultModel.ErrorModel, ErrorModelDto>();
+
+            CreateMap<TrendyolPriceAndInventoryDto, PriceAndInventoryModel>();
+
+            CreateMap<FailureToSupplyReuqestDto, FailureToSupplyReuqest>();
+            CreateMap<FailureToSupplyReuqestDto.Line, FailureToSupplyReuqest.Line>();
+
+            CreateMap<UpdatePackageRequest, UpdatePackageRequestDto>();
+            CreateMap<UpdatePackageRequest.Line, UpdatePackageRequestDto.Line>();
+            CreateMap<UpdatePackageRequest.ParamsModel, UpdatePackageRequestDto.ParamsModel>();
+
+
         }
     }
 }

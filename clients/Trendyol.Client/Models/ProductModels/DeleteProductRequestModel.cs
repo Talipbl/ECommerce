@@ -11,6 +11,10 @@ namespace Trendyol.Client
     {
         [JsonProperty("items")]
         public List<DeleteProduct> Items { get; set; }
+        public DeleteProductRequestModel(List<DeleteProduct> items)
+        {
+            Items = items;
+        }
 
         public class DeleteProduct
         {

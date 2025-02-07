@@ -42,7 +42,7 @@ namespace Trendyol.Client
             public object LastPriceChangeDate { get; set; }
             public object LastStockChangeDate { get; set; }
             public object LastUpdateDate { get; set; }
-            public int ListPrice { get; set; }
+            public double ListPrice { get; set; }
             public bool Locked { get; set; }
             public bool OnSale { get; set; }
             public int PimCategoryId { get; set; }
@@ -51,7 +51,7 @@ namespace Trendyol.Client
             public int ProductContentId { get; set; }
             public string ProductMainId { get; set; }
             public int Quantity { get; set; }
-            public int SalePrice { get; set; }
+            public double SalePrice { get; set; }
             public string StockCode { get; set; }
             public string StockId { get; set; }
             public string StockUnitType { get; set; }

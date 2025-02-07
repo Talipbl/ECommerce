@@ -14,10 +14,10 @@ namespace ECommerce.AdminUI.Controllers.TrendyolControllers
         private readonly IConfiguration _configuration;
         private readonly TrendyolConfigurationModel _marketplaceModel;
 
-        ITrendyolService _trendyolService;
+        ITrendyolProductService _trendyolService;
         IMapper _mapper;
 
-        public TrendyolJsonController(ITrendyolService trendyolService, IMapper mapper, IConfiguration configuration)
+        public TrendyolJsonController(ITrendyolProductService trendyolService, IMapper mapper, IConfiguration configuration)
         {
             _trendyolService = trendyolService;
             _configuration = configuration;

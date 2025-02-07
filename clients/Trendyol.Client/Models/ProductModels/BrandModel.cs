@@ -10,4 +10,10 @@ namespace Trendyol.Client
         [JsonProperty("name")]
         public string Name { get; set; }
     }
+
+    public class BrandListModel
+    {
+        [JsonProperty("brands")]
+        public List<BrandModel> Brands { get; set; }
+    }
 }

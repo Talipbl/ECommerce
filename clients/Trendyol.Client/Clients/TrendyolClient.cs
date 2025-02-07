@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using static Trendyol.Client.DeleteProductRequestModel;
 
 namespace Trendyol.Client
 {
@@ -30,34 +31,8 @@ namespace Trendyol.Client
         /// <param name="productMainId">İlgili tedarikçinin productMainId bilgisi gönderilmelidir</param>
         /// <param name="brandIds">Belirtilen brandId'ye sahip ürünleri listelemek için kullanılmalıdır. String array olarak gönderilmelidir</param>
         /// <returns><paramref name="GetProductsResponseModel"></paramref></returns>
-        public async Task<RootResponseModel<GetProductsResponseModel>> GetProductsAsync(int page = 0, int size = 0,
-            QueryBooleanOption isApproved = QueryBooleanOption.All,
-            QueryBooleanOption isArchived = QueryBooleanOption.All,
-            QueryBooleanOption isOnSale = QueryBooleanOption.All,
-            QueryBooleanOption isRejected = QueryBooleanOption.All,
-            QueryBooleanOption isBlacklisted = QueryBooleanOption.All,
-            DateType dateType = DateType.CREATED_DATE,
-            DateTime startDate = default, DateTime endDate = default,
-            string barcode = "", string stockCode = "", string productMainId = "", string[]? brandIds = default)
+        public async Task<RootResponseModel<GetProductsResponseModel>> GetProductsAsync(ProductQueryParametersModel parameters)
         {
-            ProductQueryParametersModel parameters = new ProductQueryParametersModel()
-            {
-                Approved = isApproved,
-                Archived = isArchived,
-                Barcode = barcode,
-                StockCode = stockCode,
-                Blacklisted = isBlacklisted,
-                Rejected = isRejected,
-                DateQueryType = dateType,
-                ProductMainId = productMainId,
-                OnSale = isOnSale,
-                StartDate = startDate != default ? ((DateTimeOffset)startDate).ToUnixTimeSeconds() : null,
-                EndDate = endDate != default ? ((DateTimeOffset)endDate).ToUnixTimeSeconds() : null,
-                Page = page,
-                Size = size,
-                BrandIds = brandIds
-            };
-
             return await _productClient.GetProductsAsync(parameters);
         }
 
@@ -74,9 +49,23 @@ namespace Trendyol.Client
         /// CreateProductsAsync servisine yapılacak isteklerde gönderilecek brandId bilgisi bu servis kullanılarak alınacaktır.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<BrandModel>> GetBrandsAsync()
+        public async Task<BrandListModel> GetBrandsAsync()
         {
             var response = await _productClient.GetBrandsAsync();
+            if (response.IsSuccess && response.OkResponse.Brands.Count > 0)
+                return response.OkResponse;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// CreateProductsAsync servisine yapılacak isteklerde gönderilecek brandId bilgisi bu servis kullanılarak alınacaktır. <paramref name="name"/> parametresi ile arama değeri girilir.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public async Task<List<BrandModel>> GetBrandsAsync(string name)
+        {
+            var response = await _productClient.GetBrandsByNameAsync(name);
             if (response.IsSuccess && response.OkResponse.Count > 0)
                 return response.OkResponse;
             else
@@ -87,10 +76,10 @@ namespace Trendyol.Client
         /// CreateProductsAsync servisine yapılacak isteklerde gönderilecek categoryId bilgisi bu servis kullanılarak alınacaktır.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<CategoryModel>> GetCategoriesAsync()
+        public async Task<CategoryListModel> GetCategoriesAsync()
         {
             var response = await _productClient.GetCategoriesAsync();
-            if (response.IsSuccess && response.OkResponse.Count > 0)
+            if (response.IsSuccess && response.OkResponse.Categories.Count > 0)
                 return response.OkResponse;
             else
                 return null;
@@ -133,9 +122,9 @@ namespace Trendyol.Client
         /// </remarks>
         /// <param name="products"></param>
         /// <returns>İşlem başarılı ise geriye BatchRequestResultModel ile işlem sonucu döner. Başarısız ise ErrorResultModel döner.</returns>
-        public async Task<RootResponseModel<ServiceResponseModel, BatchRequestResultModel>> CreateProductsAsync(List<ProductModel> products)
+        public async Task<RootResponseModel<ServiceResponseModel>> CreateProductsAsync(List<ProductModel> products)
         {
-            RootResponseModel<ServiceResponseModel, BatchRequestResultModel> response = new RootResponseModel<ServiceResponseModel, BatchRequestResultModel>();
+            RootResponseModel<ServiceResponseModel> response = new RootResponseModel<ServiceResponseModel>();
             ProductRequestModel model = new ProductRequestModel(products);
 
             var productResult = await _productClient.CreateProductsAsync(model);
@@ -143,8 +132,7 @@ namespace Trendyol.Client
             response.IsSuccess = productResult.IsSuccess;
             if (response.IsSuccess)
             {
-                var batchResult = await _productClient.GetBatchRequestAsync(productResult.OkResponse.BatchRequestId);
-                response.AdditionalData = batchResult.OkResponse;
+                response.OkResponse.BatchRequestId = productResult.OkResponse.BatchRequestId;
                 response.OkResponse = productResult.OkResponse;
 
                 return response;
@@ -191,23 +179,20 @@ namespace Trendyol.Client
         /// </summary>
         /// <param name="priceAndInventories"></param>
         /// <returns></returns>
-        public async Task<RootResponseModel<ServiceResponseModel, BatchRequestResultModel>> UpdatePriceAndInventoryAsync(List<PriceAndInventoryModel> priceAndInventories)
+        public async Task<RootResponseModel<ServiceResponseModel>> UpdatePriceAndInventoryAsync(List<PriceAndInventoryModel> priceAndInventories)
         {
-            RootResponseModel<ServiceResponseModel, BatchRequestResultModel> response = new RootResponseModel<ServiceResponseModel, BatchRequestResultModel>();
-            PriceAndInventoryUpdateRequest requestModel = new PriceAndInventoryUpdateRequest(priceAndInventories);
-            var priceResult = await _productClient.UpdatePriceAndInventoryAsync(requestModel);
+            RootResponseModel<ServiceResponseModel> response = new();
+            PriceAndInventoryUpdateRequest requestModel = new(priceAndInventories);
+            var result = await _productClient.UpdatePriceAndInventoryAsync(requestModel);
+            return result;
+        }
 
-            response.IsSuccess = priceResult.IsSuccess;
-            if (response.IsSuccess)
-            {
-                var batchResult = await _productClient.GetBatchRequestAsync(priceResult.OkResponse.BatchRequestId);
-                response.AdditionalData = batchResult.OkResponse;
-                response.OkResponse = priceResult.OkResponse;
-
-                return response;
-            }
-
-            return response;
+        public async Task<RootResponseModel<ServiceResponseModel>> DeleteProductAsync(List<DeleteProduct> deleteProducts)
+        {
+            RootResponseModel<ServiceResponseModel> response = new();
+            DeleteProductRequestModel requestModel = new(deleteProducts);
+            var result = await _productClient.DeleteProductsAsync(requestModel);
+            return result;
         }
 
         #endregion

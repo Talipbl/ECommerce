@@ -7,15 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Shared\Partials\_footer.cshtml" />
-    <Content Remove="Views\Shared\Partials\_navbar.cshtml" />
-    <Content Remove="Views\Shared\Partials\_sidebar.cshtml" />
+    <Content Remove="Views\Shared\Partial\_footer.cshtml" />
+    <Content Remove="Views\Shared\Partial\_navbar.cshtml" />
+    <Content Remove="Views\Shared\Partial\_sidebar.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Shared\Partials\_footer.cshtml" />
-    <None Include="Views\Shared\Partials\_navbar.cshtml" />
-    <None Include="Views\Shared\Partials\_sidebar.cshtml" />
+    <None Include="Views\Shared\Partial\_footer.cshtml" />
+    <None Include="Views\Shared\Partial\_navbar.cshtml" />
+    <None Include="Views\Shared\Partial\_sidebar.cshtml" />
+    <None Include="wwwroot\source\trendyol\product.js" />
+    <None Include="wwwroot\source\utils.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,7 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\TrendyolControllers\" />
+    <ProjectReference Include="..\ECommerce.Application\ECommerce.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\source\trendyol\product.js" />
   </ItemGroup>
 
 </Project>

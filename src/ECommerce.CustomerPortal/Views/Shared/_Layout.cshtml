@@ -15,19 +15,20 @@
     <link rel="stylesheet" href="~/assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="~/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="~/plugins/sweetalert2/sweetalert2.css">
     <link rel="shortcut icon" href="~/assets/images/favicon.png" />
     @await RenderSectionAsync("Header", required: false)
 </head>
 <body>
     <div class="container-scroller">
-        @Html.Partial("Partials/_navbar")
+        @Html.Partial("Partial/_navbar")
         <div class="container-fluid page-body-wrapper">
-            @Html.Partial("Partials/_sidebar")
+            @Html.Partial("Partial/_sidebar")
             <div class="main-panel">
                 <div class="content-wrapper">
                     @RenderBody()
                 </div>
-                @Html.Partial("Partials/_footer")
+                @Html.Partial("Partial/_footer")
             </div>
         </div>
     </div>
@@ -38,6 +39,8 @@
     <script src="~/assets/js/settings.js"></script>
     <script src="~/assets/js/hoverable-collapse.js"></script>
     <script src="~/assets/js/todolist.js"></script>
+    <script src="~/plugins/sweetalert2/sweetalert2.js"></script>
+    <script src="~/plugins/notify.js/notify.min.js"></script>
     @await RenderSectionAsync("Script", required: false)
 </body>
 </html>

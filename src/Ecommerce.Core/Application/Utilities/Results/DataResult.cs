@@ -6,6 +6,17 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Core.Application
 {
+    public class DataResult : Result, IDataResult
+    {
+        public DataResult(bool success) : base(success)
+        {
+
+        }
+        public DataResult(bool success, string message) : base(success, message)
+        {
+
+        }
+    }
     public class DataResult<T> : Result, IDataResult<T>
     {
         public DataResult(T data, bool success, string message) : base(success, message)

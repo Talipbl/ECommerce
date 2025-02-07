@@ -55,7 +55,7 @@ namespace ECommerce.Application
 
             builder.RegisterType<SystemService>().As<ISystemService>().SingleInstance();
 
-            builder.RegisterType<TrendyolService>().As<ITrendyolService>().SingleInstance();
+            builder.RegisterType<TrendyolProductService>().As<ITrendyolProductService>().SingleInstance();
 
             builder.RegisterType<UserAddressService>().As<IUserAddressService>().SingleInstance();
 

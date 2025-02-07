@@ -14,13 +14,17 @@
             _supplierId = authentication.SellerId;
             Client = new BaseHttpClient(URL, _supplierId, authentication);
         }
-        public async Task<RootResponseModel<List<BrandModel>>> GetBrandsAsync()
+        public async Task<RootResponseModel<BrandListModel>> GetBrandsAsync()
         {
-            return await Client.GetAsync<List<BrandModel>>($"{PREFIX}/brands");
+            return await Client.GetAsync<BrandListModel>($"{PREFIX}/brands");
         }
-        public async Task<RootResponseModel<List<CategoryModel>>> GetCategoriesAsync()
+        public async Task<RootResponseModel<List<BrandModel>>> GetBrandsByNameAsync(string name)
         {
-            return await Client.GetAsync<List<CategoryModel>>($"{PREFIX}/product-categories");
+            return await Task.Run(() => Client.GetAsync<List<BrandModel>>($"{PREFIX}/brands/by-name?name={name}"));
+        }
+        public async Task<RootResponseModel<CategoryListModel>> GetCategoriesAsync()
+        {
+            return await Client.GetAsync<CategoryListModel>($"{PREFIX}/product-categories");
         }
         public async Task<RootResponseModel<AttributesModel>> GetCategoryAttributesAsync(int categoryId)
         {

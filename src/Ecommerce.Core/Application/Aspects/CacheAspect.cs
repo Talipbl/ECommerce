@@ -11,7 +11,7 @@ namespace ECommerce.Core.Application
         public CacheAspect()
         {
             _duration = Duration;
-            _memCache = CoreServiceRegistration.ServiceProvider.GetService<ICacheManager>();
+            _memCache = CoreServiceRegistration.ServiceProvider?.GetRequiredService<ICacheManager>();
         }
         public override void Intercept(IInvocation invocation)
         {

@@ -1,6 +1,6 @@
 ﻿namespace Trendyol.Client
 {
-    // bkz: https://developers.trendyol.com/docs/category/sipari%C5%9F-entegrasyonu
+    // bkz: https://developers.trendyol.com/docs/category/siparis-entegrasyonu
 
     public class TrendyolOrderClient
     {
@@ -44,7 +44,7 @@
         /// <returns></returns>
         public async Task<RootResponseModel<object>> UpdatePackage(UpdatePackageRequest request, string shipmentPackageId)
         {
-            return await Client.PutAsync<object>(request, $"{PREFIX}/suppliers/{_supplierId}/shipment-packages/{shipmentPackageId}");
+            return await Client.PutAsync<object>(request, $"/integration/order/sellers/{_supplierId}/shipment-packages/{shipmentPackageId}");
         }
 
         /// <summary>
@@ -55,7 +55,7 @@
         /// <returns></returns>
         public async Task<RootResponseModel<object>> SetFailureToSupply(FailureToSupplyReuqest request, string shipmentPackageId)
         {
-            return await Client.PutAsync<object>(request, $"/integration/oms/core/sellers/{_supplierId}/shipment-packages/{shipmentPackageId}/items/unsupplied");
+            return await Client.PutAsync<object>(request, $"/integration/order/sellers/{_supplierId}/shipment-packages/{shipmentPackageId}/items/unsupplied");
         }
 
         /// <summary>

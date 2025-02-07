@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace Trendyol.Client
 {
+    public class CategoryListModel
+    {
+        [JsonProperty("categories")]
+        public List<CategoryModel> Categories { get; set; }
+    }
     public class CategoryModel
     {
         [JsonProperty("id")]
@@ -16,24 +21,24 @@ namespace Trendyol.Client
         public string Name { get; set; }
 
         [JsonProperty("parentId")]
-        public object ParentId { get; set; }
+        public int? ParentId { get; set; }
+
+        [JsonProperty("subCategories")]
+        public List<CategoryModel> SubCategories { get; set; }
+    }
+
+    public class SubCategoryModel
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("parentId")]
+        public int ParentId { get; set; }
 
         [JsonProperty("subCategories")]
         public List<SubCategoryModel> SubCategories { get; set; }
-
-        public class SubCategoryModel
-        {
-            [JsonProperty("id")]
-            public int Id { get; set; }
-
-            [JsonProperty("name")]
-            public string Name { get; set; }
-
-            [JsonProperty("parentId")]
-            public int ParentId { get; set; }
-
-            [JsonProperty("subCategories")]
-            public List<SubCategoryModel> SubCategories { get; set; }
-        }
     }
 }

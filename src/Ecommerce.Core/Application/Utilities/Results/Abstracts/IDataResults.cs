@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Core.Application
 {
+    public interface IDataResult : IResult
+    {
+
+    }
     public interface IDataResult<T> : IResult
     {
         T Data { get; }

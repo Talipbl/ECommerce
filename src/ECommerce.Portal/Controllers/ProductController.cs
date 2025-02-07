@@ -1,6 +1,5 @@
 ﻿using ECommerce.AdminUI.Helpers;
 using ECommerce.AdminUI.Models;
-using ECommerce.Application.DataTransferObjects;
 using ECommerce.Brand;
 using ECommerce.Category;
 using ECommerce.Manufacturer;

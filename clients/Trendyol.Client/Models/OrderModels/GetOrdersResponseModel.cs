@@ -28,7 +28,7 @@ namespace Trendyol.Client
             public string CustomerEmail { get; set; }
             public int CustomerId { get; set; }
             public string CustomerLastName { get; set; }
-            public int Id { get; set; }
+            public long Id { get; set; }
             public long CargoTrackingNumber { get; set; }
             public string CargoTrackingLink { get; set; }
             public string CargoSenderNumber { get; set; }

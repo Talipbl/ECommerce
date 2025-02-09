@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ECommerce.Core.Application;
-using ECommerce.Domain.Common.Constants;
 using Trendyol.Client;
 using static Trendyol.Client.DeleteProductRequestModel;
 
@@ -12,17 +11,17 @@ namespace ECommerce.Trendyol
 
         private readonly IMapper _mapper = mapper;
 
-        public async Task<IDataResult<TrendyolErrorResultDto>> CreateProductAsync(TrendyolProductDto product)
+        public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductAsync(TrendyolProductDTO product)
         {
             try
             {
-                List<ProductModel> products = _mapper.Map<List<ProductModel>>(new List<TrendyolProductDto>() { product });
+                List<ProductModel> products = _mapper.Map<List<ProductModel>>(new List<TrendyolProductDTO>() { product });
                 var result = await _trendyolClient.CreateProductsAsync(products);
                 if (result.IsSuccess)
-                    return new DataResult<TrendyolErrorResultDto>(result.IsSuccess, result.OkResponse.BatchRequestId);
+                    return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-                var errorReturn = _mapper.Map<TrendyolErrorResultDto>(result.ErrorValueReturn);
-                return new DataResult<TrendyolErrorResultDto>(errorReturn, result.IsSuccess);
+                var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+                return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
             }
             catch (Exception)
             {
@@ -31,17 +30,17 @@ namespace ECommerce.Trendyol
             }
         }
 
-        public async Task<IDataResult<TrendyolErrorResultDto>> CreateProductsAsync(List<TrendyolProductDto> products)
+        public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductsAsync(List<TrendyolProductDTO> products)
         {
             try
             {
                 List<ProductModel> tyProducts = _mapper.Map<List<ProductModel>>(products);
                 var result = await _trendyolClient.CreateProductsAsync(tyProducts);
                 if (result.IsSuccess)
-                    return new DataResult<TrendyolErrorResultDto>(result.IsSuccess ,result.OkResponse.BatchRequestId);
+                    return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess ,result.OkResponse.BatchRequestId);
 
-                var errorReturn = _mapper.Map<TrendyolErrorResultDto>(result.ErrorValueReturn);
-                return new DataResult<TrendyolErrorResultDto>(errorReturn, result.IsSuccess);
+                var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+                return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
             }
             catch (Exception)
             {
@@ -50,16 +49,16 @@ namespace ECommerce.Trendyol
             }
         }
 
-        public async Task<IDataResult<TrendyolErrorResultDto>> DeleteProductAsync(List<string> productBarcodes)
+        public async Task<IDataResult<TrendyolErrorResultDTO>> DeleteProductAsync(List<string> productBarcodes)
         {
             List<DeleteProduct> model = productBarcodes.Select(x => new DeleteProduct() { Barcode = x }).ToList();
             var result = await _trendyolClient.DeleteProductAsync(model);
 
             if (result.IsSuccess)
-                return new DataResult<TrendyolErrorResultDto>(result.IsSuccess, result.OkResponse.BatchRequestId);
+                return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _mapper.Map<TrendyolErrorResultDto>(result.ErrorValueReturn);
-            return new DataResult<TrendyolErrorResultDto>(errorReturn, result.IsSuccess);
+            var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
         [CacheAspect(Duration = 300)]
         public async Task<IDataResult<List<BrandModel>>> GetBrandsAsync()
@@ -90,24 +89,24 @@ namespace ECommerce.Trendyol
             return new DataResult<List<CategoryModel>>(false, "Categories not found!");
         }
 
-        public async Task<IDataResult<GetProductsResponseModel>> GetProductsAsync(ProductQueryParametersDto parameters)
+        public async Task<IDataResult<GetProductsResponseModel>> GetProductsAsync(ProductQueryParametersDTO parameters)
         {
             ProductQueryParametersModel model = new()
             {
-                Barcode = parameters.Barcode,
-                StockCode = parameters.StockCode,
-                ProductMainId = parameters.ProductMainId,
-                Approved = parameters.Approved,
-                Archived = parameters.Archived,
-                Blacklisted = parameters.Blacklisted,
-                OnSale = parameters.OnSale,
-                Rejected = parameters.Rejected,
-                StartDate = parameters.StartDate != default ? ((DateTimeOffset)parameters.StartDate).ToUnixTimeSeconds() : null,
-                EndDate = parameters.EndDate != default ? ((DateTimeOffset)parameters.EndDate).ToUnixTimeSeconds() : null,
-                BrandIds = parameters.BrandIds,
-                DateQueryType = parameters.DateQueryType,
-                Page = parameters.Page,
-                Size = parameters.Size
+                //Barcode = parameters.Barcode,
+                //StockCode = parameters.StockCode,
+                //ProductMainId = parameters.ProductMainId,
+                //Approved = parameters.Approved,
+                //Archived = parameters.Archived,
+                //Blacklisted = parameters.Blacklisted,
+                //OnSale = parameters.OnSale,
+                //Rejected = parameters.Rejected,
+                //StartDate = parameters.StartDate != default ? ((DateTimeOffset)parameters.StartDate).ToUnixTimeSeconds() : null,
+                //EndDate = parameters.EndDate != default ? ((DateTimeOffset)parameters.EndDate).ToUnixTimeSeconds() : null,
+                //BrandIds = parameters.BrandIds,
+                //DateQueryType = parameters.DateQueryType,
+                //Page = parameters.Page,
+                //Size = parameters.Size
             };
 
             var result = await _trendyolClient.GetProductsAsync(model);
@@ -115,16 +114,16 @@ namespace ECommerce.Trendyol
             return new DataResult<GetProductsResponseModel>(result.OkResponse, result.IsSuccess);
         }
 
-        public async Task<IDataResult<TrendyolErrorResultDto>> UpdatePriceAndInventoryAsync(List<TrendyolPriceAndInventoryDto> priceAndInventories)
+        public async Task<IDataResult<TrendyolErrorResultDTO>> UpdatePriceAndInventoryAsync(List<TrendyolPriceAndInventoryDTO> priceAndInventories)
         {
             List<PriceAndInventoryModel> model = _mapper.Map<List<PriceAndInventoryModel>>(priceAndInventories);
             var result = await _trendyolClient.UpdatePriceAndInventoryAsync(model);
 
             if (result.IsSuccess)
-                return new DataResult<TrendyolErrorResultDto>(result.IsSuccess, result.OkResponse.BatchRequestId);
+                return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _mapper.Map<TrendyolErrorResultDto>(result.ErrorValueReturn);
-            return new DataResult<TrendyolErrorResultDto>(errorReturn, result.IsSuccess);
+            var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
     }
 }

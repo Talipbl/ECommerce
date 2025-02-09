@@ -6,7 +6,7 @@ namespace ECommerce.Trendyol;
 
 public interface ITrendyolOrderService
 {
-    Task<IDataResult<GetOrdersResponseModel>> GetOrdersAsync(OrderQueryParametersModelDto parameters);
-    Task<IDataResult> UpdateOrderPackageAsync(UpdatePackageRequestDto requestDto, string packageId);
-    Task<IDataResult> SetFailureOrderPackageAsync(FailureToSupplyReuqestDto requestDto, string packageId);
+    Task<IDataResult<GetOrdersResponseDTO>> GetOrdersAsync(OrderQueryParametersModelDTO parameters);
+    Task<IDataResult> PickingOrderPackageAsync(UpdatePackageRequestDTO requestDto, string packageId);
+    Task<IDataResult> SetFailureOrderPackageAsync(FailureToSupplyReuqestDTO requestDto, string packageId);
 }

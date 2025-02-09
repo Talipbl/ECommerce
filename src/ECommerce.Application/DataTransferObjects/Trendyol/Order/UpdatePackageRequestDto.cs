@@ -1,20 +1,25 @@
-﻿namespace ECommerce.Trendyol.Order
+﻿using AutoMapper;
+using Trendyol.Client;
+
+namespace ECommerce.Trendyol;
+
+public class UpdatePackageRequestDTO
 {
-    public class UpdatePackageRequestDto
+    public List<Line> Lines { get; set; }
+    public PackageStatus Status { get; set; }
+    public string InvoiceNumber { get; set; }
+
+    public class Line
     {
-        public List<Line> Lines { get; set; }
-        public ParamsModel Params { get; set; }
-        public string Status { get; set; }
+        public string LineId { get; set; }
+        public int Quantity { get; set; }
+    }
 
-        public class Line
+    public class StatusResolver : IValueResolver<UpdatePackageRequestDTO, UpdatePackageRequest, string>
+    {
+        public string Resolve(UpdatePackageRequestDTO source, UpdatePackageRequest destination, string destMember, ResolutionContext context)
         {
-            public string LineId { get; set; }
-            public int Quantity { get; set; }
-        }
-
-        public class ParamsModel
-        {
-            public string InvoiceNumber { get; set; }
+            return source.Status.ToString();
         }
     }
 }

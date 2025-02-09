@@ -6,30 +6,21 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolBatchRequestResultDto
+    public class TrendyolBatchRequestResultDTO
     {
         public string BatchRequestId { get; set; }
         public List<Item> Items { get; set; }
         public string Status { get; set; }
-        public long CreationDate { get; set; }
-        public long LastModification { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime LastModification { get; set; }
         public string SourceType { get; set; }
         public int ItemCount { get; set; }
-        public class Image
-        {
-            public string Url { get; set; }
-        }
 
         public class Item
         {
-            public RequestItem RequestItem { get; set; }
+            public List<TrendyolProductDTO> RequestItem { get; set; }
             public string Status { get; set; }
-            public List<object> FailureReasons { get; set; }
-        }
-
-        public class RequestItem
-        {
-            public TrendyolProductRequestDto Product { get; set; }
+            public List<string> FailureReasons { get; set; }
         }
     }
 }

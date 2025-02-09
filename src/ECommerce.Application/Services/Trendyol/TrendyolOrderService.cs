@@ -10,27 +10,15 @@ namespace ECommerce.Trendyol
         private readonly IMapper _mapper = mapper;
         TrendyolOrderClient _orderClient = new(ApiAuthentication.CreateAuthentication("atBqHAZm2Eg1ZttXGpMZ", "LSEzaIx17XkuFiYyXyRu", "836049"));
 
-        public async Task<IDataResult<GetOrdersResponseModel>> GetOrdersAsync(OrderQueryParametersModelDto parameters)
+        public async Task<IDataResult<GetOrdersResponseDTO>> GetOrdersAsync(OrderQueryParametersModelDTO parameters)
         {
-            OrderQueryParametersModel model = new()
-            {
-                StartDate = parameters.StartDate != default ? ((DateTimeOffset)parameters.StartDate).ToUnixTimeSeconds() : null,
-                EndDate = parameters.EndDate != default ? ((DateTimeOffset)parameters.EndDate).ToUnixTimeSeconds() : null,
-                OrderByDirection = parameters.OrderByDirection,
-                OrderByField = parameters.OrderByField,
-                OrderNumber = parameters.OrderNumber,
-                ShipmentPackageIds = parameters.ShipmentPackageIds,
-                Status = parameters.Status,
-                SupplierId = parameters.SupplierId,
-                Page = parameters.Page,
-                Size = parameters.Size
-            };
-
+            OrderQueryParametersModel model = _mapper.Map<OrderQueryParametersModel>(parameters);
             var result = await _orderClient.GetOrders(model);
-            return new DataResult<GetOrdersResponseModel>(result.OkResponse, result.IsSuccess);
+            var responseDto = _mapper.Map<GetOrdersResponseDTO>(result.OkResponse);
+            return new DataResult<GetOrdersResponseDTO>(responseDto, result.IsSuccess);
         }
 
-        public async Task<IDataResult> SetFailureOrderPackageAsync(FailureToSupplyReuqestDto requestDto, string packageId)
+        public async Task<IDataResult> SetFailureOrderPackageAsync(FailureToSupplyReuqestDTO requestDto, string packageId)
         {
             FailureToSupplyReuqest request = _mapper.Map<FailureToSupplyReuqest>(requestDto);
             var result = await _orderClient.SetFailureToSupply(request, packageId);
@@ -38,7 +26,7 @@ namespace ECommerce.Trendyol
             return new DataResult(result.IsSuccess);
         }
 
-        public async Task<IDataResult> UpdateOrderPackageAsync(UpdatePackageRequestDto requestDto, string packageId)
+        public async Task<IDataResult> PickingOrderPackageAsync(UpdatePackageRequestDTO requestDto, string packageId)
         {
             UpdatePackageRequest request = _mapper.Map<UpdatePackageRequest>(requestDto);
             var result = await _orderClient.UpdatePackage(request, packageId);

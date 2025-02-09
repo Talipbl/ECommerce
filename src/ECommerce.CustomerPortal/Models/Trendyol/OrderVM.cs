@@ -1,4 +1,5 @@
-﻿using Trendyol.Client;
+﻿using ECommerce.Trendyol;
+using Trendyol.Client;
 
 namespace Ecommerce.Trendyol
 {
@@ -18,7 +19,7 @@ namespace Ecommerce.Trendyol
         public string CargoTrackingLink { get; set; }
         public string CargoSenderNumber { get; set; }
         public string CargoProviderName { get; set; }
-        public long OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }
         public string TcIdentityNumber { get; set; }
         public string CurrencyCode { get; set; }
         public string ShipmentPackageStatus { get; set; }
@@ -26,24 +27,24 @@ namespace Ecommerce.Trendyol
         public string DeliveryType { get; set; }
         public int TimeSlotId { get; set; }
         public string ScheduledDeliveryStoreId { get; set; }
-        public long EstimatedDeliveryStartDate { get; set; }
-        public long EstimatedDeliveryEndDate { get; set; }
+        public DateTime EstimatedDeliveryStartDate { get; set; }
+        public DateTime EstimatedDeliveryEndDate { get; set; }
         public double TotalPrice { get; set; }
-        public long AgreedDeliveryDate { get; set; }
+        public DateTime AgreedDeliveryDate { get; set; }
         public bool AgreedDeliveryDateExtendible { get; set; }
-        public long ExtendedAgreedDeliveryDate { get; set; }
-        public long AgreedDeliveryExtensionStartDate { get; set; }
-        public long AgreedDeliveryExtensionEndDate { get; set; }
+        public DateTime ExtendedAgreedDeliveryDate { get; set; }
+        public DateTime AgreedDeliveryExtensionStartDate { get; set; }
+        public DateTime AgreedDeliveryExtensionEndDate { get; set; }
         public object InvoiceLink { get; set; }
         public bool FastDelivery { get; set; }
         public string FastDeliveryType { get; set; }
-        public long OriginShipmentDate { get; set; }
-        public long LastModifiedDate { get; set; }
+        public DateTime OriginShipmentDate { get; set; }
+        public DateTime LastModifiedDate { get; set; }
         public bool Commercial { get; set; }
         public bool DeliveredByService { get; set; }
         public bool Micro { get; set; }
 
-        internal static OrderVM GetOrderVM(GetOrdersResponseModel.ContentModel model)
+        internal static OrderVM GetOrderVM(GetOrdersResponseDTO.ContentDTO model)
         {
             return new OrderVM()
             {

@@ -26,7 +26,7 @@ namespace Ecommerce.Trendyol
         [Route("{barcode}")]
         public async Task<IActionResult> ProductDetails(string barcode) 
         {
-            var result = await _trendyolService.GetProductsAsync(new ProductQueryParametersDto() { Barcode = barcode });
+            var result = await _trendyolService.GetProductsAsync(new ProductQueryParametersDTO() { Barcode = barcode });
             return View(result.Data.Content.FirstOrDefault());
         }
 
@@ -46,9 +46,9 @@ namespace Ecommerce.Trendyol
                 Size = pageSize,
                 Barcode = request.Barcode,
                 StockCode = request.StockCode,
-                OnSale = request.Status == 1 ? QueryBooleanOption.True : QueryBooleanOption.All,
-                Archived = request.Status == 2 ? QueryBooleanOption.True: QueryBooleanOption.All,
-                Rejected = request.Status == 2 ? QueryBooleanOption.True: QueryBooleanOption.All,
+                OnSale = request.Status == 1 ? QueryOption.True : QueryOption.All,
+                Archived = request.Status == 2 ? QueryOption.True: QueryOption.All,
+                Rejected = request.Status == 2 ? QueryOption.True: QueryOption.All,
             });
 
             List<ProductVM> productVMs = products.Data.Content.Select(ProductVM.GetProductVM).ToList();
@@ -63,7 +63,7 @@ namespace Ecommerce.Trendyol
 
         [HttpPost]
         [Route("updatePriceInventory")]
-        public async Task<IActionResult> UpdatePriceInventory([FromBody] List<TrendyolPriceAndInventoryDto> request)
+        public async Task<IActionResult> UpdatePriceInventory([FromBody] List<TrendyolPriceAndInventoryDTO> request)
         {
             var result = await _trendyolService.UpdatePriceAndInventoryAsync(request);
             return Json(result);
@@ -89,7 +89,7 @@ namespace Ecommerce.Trendyol
         [Route("createProduct")]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequestVM product)
         {
-            var result = _trendyolService.CreateProductAsync(new TrendyolProductDto()
+            var result = _trendyolService.CreateProductAsync(new TrendyolProductDTO()
             {
                 Barcode = product.Barcode,
                 StockCode = product.StockCode,
@@ -97,7 +97,7 @@ namespace Ecommerce.Trendyol
                 BrandId = product.BrandId,
                 Title = product.Title,
                 Description = product.Description,
-                Images = product.Images.Select(i => new TrendyolImageDto() { Url = i}).ToList(),
+                Images = product.Images,
                 Attributes = product.Attributes,
                 VatRate = product.VatRate,
                 SalePrice   = product.SalePrice,

@@ -1,6 +1,6 @@
 ﻿namespace ECommerce.Trendyol
 {
-    public class TrendyolRequestAttributeDto
+    public class TrendyolRequestAttributeDTO
     {
         public int AttributeId { get; set; }
         public int AttributeValueId { get; set; }

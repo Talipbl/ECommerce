@@ -8,9 +8,9 @@ using Trendyol.Client;
 
 namespace ECommerce.Trendyol
 {
-    public class ProductQueryParametersDto
+    public class ProductQueryParametersDTO
     {
-        public QueryBooleanOption Approved { get; set; } = QueryBooleanOption.All;
+        public QueryOption Approved { get; set; } = QueryOption.All;
         public string Barcode { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -18,11 +18,11 @@ namespace ECommerce.Trendyol
         public DateType DateQueryType { get; set; }
         public int Size { get; set; } = 25;
         public string StockCode { get; set; }
-        public QueryBooleanOption Archived { get; set; } = QueryBooleanOption.All;
+        public QueryOption Archived { get; set; } = QueryOption.All;
         public string ProductMainId { get; set; }
-        public QueryBooleanOption OnSale { get; set; } = QueryBooleanOption.All;
-        public QueryBooleanOption Rejected { get; set; } = QueryBooleanOption.All;
-        public QueryBooleanOption Blacklisted { get; set; } = QueryBooleanOption.All;
+        public QueryOption OnSale { get; set; } = QueryOption.All;
+        public QueryOption Rejected { get; set; } = QueryOption.All;
+        public QueryOption Blacklisted { get; set; } = QueryOption.All;
         public string[] BrandIds { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolProductDto
+    public class TrendyolProductDTO
     {
         public string Barcode { get; set; }
         public string Title { get; set; }
@@ -25,8 +25,14 @@ namespace ECommerce.Trendyol
         public int ShipmentAddressId { get; set; }
         public int ReturningAddressId { get; set; }
         public int DeliveryDuration { get; set; }
-        public TrendyolDeliveryOptionDto DeliveryOption { get; set; }
-        public List<TrendyolImageDto> Images { get; set; }
-        public List<TrendyolRequestAttributeDto> Attributes { get; set; }
+        public TrendyolDeliveryOptionDTO DeliveryOption { get; set; }
+        public List<string> Images { get; set; }
+        public List<TrendyolRequestAttributeDTO> Attributes { get; set; }
+
+        public class TrendyolDeliveryOptionDTO
+        {
+            public int DeliveryDuration { get; set; }
+            public string FastDeliveryType { get; set; }
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Domain.Common.Constants
+namespace ECommerce.Trendyol
 {
     public static class TrendyolConst
     {

@@ -11,9 +11,5 @@ namespace Trendyol.Client
     {
         [JsonProperty("items")]
         public List<ProductModel> Items { get; set; }
-        public ProductRequestModel(List<ProductModel> items)
-        {
-            Items = items;
-        }
     }
 }

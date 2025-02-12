@@ -5,6 +5,7 @@ namespace ECommerce.Trendyol;
 
 public class UpdatePackageRequestDTO
 {
+    public string PackageId { get; set; }
     public List<Line> Lines { get; set; }
     public PackageStatus Status { get; set; }
     public string InvoiceNumber { get; set; }

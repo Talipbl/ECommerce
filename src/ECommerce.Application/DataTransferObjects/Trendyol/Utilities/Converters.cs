@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using ECommerce.Core.Application;
 using Trendyol.Client;
 
 namespace ECommerce.Trendyol;
 
 public class DateTimeConverter : ITypeConverter<DateTime, long>
 {
-    public long Convert(DateTime source, long destination, ResolutionContext context) => ((DateTimeOffset)source).ToUnixTimeSeconds();
+    public long Convert(DateTime source, long destination, ResolutionContext context) => (source.ToDateTimeOffset()).ToUnixTimeSeconds();
 }
 public class UnixMillisecondsToDateTimeConverter : ITypeConverter<long, DateTime>
 {
@@ -13,10 +14,8 @@ public class UnixMillisecondsToDateTimeConverter : ITypeConverter<long, DateTime
 }
 public class UnixMillisecondsToUtcDateTimeConverter : IValueConverter<long, DateTime>
 {
-
     public DateTime Convert(long sourceMember, ResolutionContext context) => DateTimeOffset.FromUnixTimeMilliseconds(sourceMember).UtcDateTime;
 }
-
 public class QueryOptionConverter : ITypeConverter<QueryOption, QueryBooleanOption>
 {
     public QueryBooleanOption Convert(QueryOption source, QueryBooleanOption destination, ResolutionContext context) => (QueryBooleanOption)((int)source);

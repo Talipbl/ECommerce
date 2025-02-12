@@ -1,11 +1,5 @@
 ﻿using Castle.DynamicProxy;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ECommerce.Core.Application
 {
@@ -14,12 +8,19 @@ namespace ECommerce.Core.Application
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
         {
             var classAttributes = type.GetCustomAttributes<MethodInterceptor>(true).ToList();
-            List<Type> types = new List<Type>();
-            method.GetParameters().ToList().ForEach(x => types.Add(x.ParameterType));
-            var generic = method.GetGenericArguments().Count();
-            var arrayTypes = types.ToArray();
-            var methodAttributes = type.GetMethod(method.Name, generic, arrayTypes).GetCustomAttributes<MethodInterceptor>(true);
-            classAttributes.AddRange(methodAttributes);
+            var parameterTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
+            var genericCount = method.IsGenericMethod ? method.GetGenericArguments().Length : 0;
+
+            var targetMethod = type.GetMethods()
+                .FirstOrDefault(m => m.Name == method.Name
+                    && m.GetGenericArguments().Length == genericCount
+                    && m.GetParameters().Select(p => p.ParameterType).SequenceEqual(parameterTypes));
+
+            if (targetMethod != null)
+            {
+                var methodAttributes = targetMethod.GetCustomAttributes<MethodInterceptor>(true);
+                classAttributes.AddRange(methodAttributes);
+            }
 
             return classAttributes.ToArray();
         }

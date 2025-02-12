@@ -1,4 +1,5 @@
-﻿using ECommerce.CustomerPortal.Models;
+﻿using ECommerce.Core.Application;
+using ECommerce.CustomerPortal.Models;
 using ECommerce.Order;
 using ECommerce.Trendyol;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,22 @@ namespace Ecommerce.Trendyol
             tableVM.draw = request.Draw;
 
             return Json(tableVM);
+        }
+
+        [HttpPost]
+        [Route("updatePackage")]
+        public async Task<IActionResult> UpdatePackage([FromBody] UpdatePackageRequestDTO request)
+        {
+            var result = await _orderService.PickingOrderPackageAsync(request, request.PackageId);
+            return Json(result.Success);
+        }
+
+        [HttpPost]
+        [Route("setFailure")]
+        public async Task<IActionResult> SetFailurePackage([FromBody] FailureToSupplyReuqestDTO request)
+        {
+            var result = await _orderService.SetFailureOrderPackageAsync(request, request.PackageId);
+            return Json(result.Success);
         }
     }
 }

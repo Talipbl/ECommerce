@@ -59,4 +59,10 @@ namespace ECommerce.Trendyol
         True,
         All
     }
+
+    public enum DateType
+    {
+        CREATED_DATE,
+        LAST_MODIFIED_DATE
+    }
 }

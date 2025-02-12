@@ -1,13 +1,13 @@
-﻿using AutoMapper;
-using ECommerce.Core.Application;
+﻿using ECommerce.Core.Application;
+using ECommerce.Services;
 using ECommerce.Trendyol.Order;
 using Trendyol.Client;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolOrderService(IMapper mapper) : ITrendyolOrderService
+    public class TrendyolOrderService(IMappingService mapper) : ITrendyolOrderService
     {
-        private readonly IMapper _mapper = mapper;
+        private readonly IMappingService _mapper = mapper;
         TrendyolOrderClient _orderClient = new(ApiAuthentication.CreateAuthentication("atBqHAZm2Eg1ZttXGpMZ", "LSEzaIx17XkuFiYyXyRu", "836049"));
 
         public async Task<IDataResult<GetOrdersResponseDTO>> GetOrdersAsync(OrderQueryParametersModelDTO parameters)

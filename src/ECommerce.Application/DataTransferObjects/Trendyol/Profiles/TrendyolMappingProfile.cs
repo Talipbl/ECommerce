@@ -2,6 +2,7 @@
 using ECommerce.Trendyol.Order;
 using Trendyol.Client;
 using static ECommerce.Trendyol.FailureToSupplyReuqestDTO;
+using static ECommerce.Trendyol.ProductQueryParametersDTO;
 using static ECommerce.Trendyol.UpdatePackageRequestDTO;
 using static Trendyol.Client.UpdatePackageRequest;
 
@@ -14,8 +15,6 @@ namespace ECommerce.Trendyol
             #region Type Convert
 
             CreateMap<DateTime, long>().ConvertUsing(new DateTimeConverter());
-
-            //NOTE: orderDate, Timestamp (milliseconds) formatında GMT +3 olarak iletilir. createdDate bilgileri ise GMT formatında iletilir. Convert işlemi yaparken bu bilgiye dikkat edilmelidir.
             CreateMap<long, DateTime>().ConvertUsing(new UnixMillisecondsToDateTimeConverter());
             CreateMap<QueryOption, QueryBooleanOption>().ConvertUsing<QueryOptionConverter>();
 
@@ -25,12 +24,19 @@ namespace ECommerce.Trendyol
                 .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.Url)));
             CreateMap<TrendyolProductDTO, ProductModel>()
                 .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(url => new ImageModel() { Url = url })));
+            CreateMap<List<TrendyolProductDTO>, ProductRequestModel>()
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
             CreateMap<ProductModel.RequestAttribute, TrendyolRequestAttributeDTO>();
             CreateMap<TrendyolRequestAttributeDTO, ProductModel.RequestAttribute>();
 
             CreateMap<DeliveryOptionModel, TrendyolProductDTO.TrendyolDeliveryOptionDTO>();
             CreateMap<TrendyolProductDTO.TrendyolDeliveryOptionDTO, DeliveryOptionModel>();
+
+            CreateMap<string, DeleteProductRequestModel.DeleteProduct>()
+                .ForMember(dest => dest.Barcode, opt => opt.MapFrom(src => src));
+            CreateMap<List<string>, DeleteProductRequestModel>()
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
             CreateMap<BatchRequestResultModel, TrendyolBatchRequestResultDTO>();
             CreateMap<BatchRequestResultModel.Item, TrendyolBatchRequestResultDTO.Item>().
@@ -40,6 +46,8 @@ namespace ECommerce.Trendyol
             CreateMap<ErrorResultModel.ErrorModel, TrendyolErrorResultDTO.ErrorModelDTO>();
 
             CreateMap<TrendyolPriceAndInventoryDTO, PriceAndInventoryModel>();
+            CreateMap<List<TrendyolPriceAndInventoryDTO>, PriceAndInventoryUpdateRequest>()
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
             CreateMap<ProductQueryParametersDTO, ProductQueryParametersModel>();
 

@@ -30,10 +30,11 @@ namespace Trendyol.Client
             {
                 object value = property.GetValue(obj);
 
-                if (value != null && value != "" && value != default &&
-                    !(value is int intValue && intValue == 0) &&
-                    !(value is QueryBooleanOption option && option == QueryBooleanOption.All))
+                if (value != null && !IsDefaultValue(value))
                 {
+                    if (value is string[] array && array.Length == 0)
+                        continue;
+
                     string jsonPropertyName = GetJsonPropertyName(property);
                     string encodedValue = HttpUtility.UrlEncode(value.ToString());
                     queryParts.Add($"{jsonPropertyName}={encodedValue}");
@@ -41,6 +42,21 @@ namespace Trendyol.Client
             }
 
             return string.Join("&", queryParts);
+        }
+        private static bool IsDefaultValue(object value)
+        {
+            if (value is long longValue)
+                return isDefaultDate(longValue);
+
+            if (value is QueryBooleanOption option)
+                return option == QueryBooleanOption.All;
+
+            return false;
+        }
+
+        private static bool isDefaultDate(long ticks)
+        {
+            return ticks < 0 || ticks == DateTime.MinValue.Ticks / 10000000;
         }
     }
 }

@@ -10,6 +10,7 @@
     <Content Remove="Views\Shared\Partial\_footer.cshtml" />
     <Content Remove="Views\Shared\Partial\_navbar.cshtml" />
     <Content Remove="Views\Shared\Partial\_sidebar.cshtml" />
+    <Content Remove="wwwroot\source\trendyol\product-detail.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\source\trendyol\product-detail.js">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="wwwroot\source\trendyol\product.js" />
   </ItemGroup>
 

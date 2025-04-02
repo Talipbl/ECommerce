@@ -15,7 +15,7 @@ namespace ECommerce.Core.Application
         }
         public override void Intercept(IInvocation invocation)
         {
-            var key = $"{invocation.TargetType.FullName}-{invocation.Method.Name}-{invocation.Method.Attributes}";
+            var key = $"{invocation.TargetType.FullName}/{invocation.Method.Name}/{string.Concat(invocation.Arguments)}";
             object cacheValue;
 
             if (_memCache.GetCache(key, out cacheValue))

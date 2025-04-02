@@ -1,7 +1,6 @@
 ﻿using ECommerce.Core.Application;
 using ECommerce.Services;
 using Trendyol.Client;
-using static Trendyol.Client.DeleteProductRequestModel;
 
 namespace ECommerce.Trendyol
 {
@@ -11,42 +10,28 @@ namespace ECommerce.Trendyol
 
         private readonly IMappingService _mapper = mapper;
 
+        [LogAspect]
         public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductAsync(TrendyolProductDTO product)
         {
-            try
-            {
-                ProductRequestModel model = _mapper.Map<ProductRequestModel>(new List<TrendyolProductDTO>() { product });
-                var result = await _productClient.CreateProductsAsync(model);
-                if (result.IsSuccess)
-                    return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
+            ProductRequestModel model = _mapper.Map<ProductRequestModel>(new List<TrendyolProductDTO>() { product });
+            var result = await _productClient.CreateProductsAsync(model);
+            if (result.IsSuccess)
+                return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-                var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
-                return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
+        [LogAspect]
         public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductsAsync(List<TrendyolProductDTO> products)
         {
-            try
-            {
-                ProductRequestModel model = _mapper.Map<ProductRequestModel>(products);
-                var result = await _productClient.CreateProductsAsync(model);
-                if (result.IsSuccess)
-                    return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
+            ProductRequestModel model = _mapper.Map<ProductRequestModel>(products);
+            var result = await _productClient.CreateProductsAsync(model);
+            if (result.IsSuccess)
+                return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-                var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
-                return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
         public async Task<IDataResult<TrendyolErrorResultDTO>> DeleteProductAsync(List<string> productBarcodes)
@@ -79,23 +64,25 @@ namespace ECommerce.Trendyol
             }
             return new DataResult<List<BrandModel>>(false, "Brands not found!");
         }
+
         [CacheAspect(Duration = 300)]
         public async Task<IDataResult<List<CategoryModel>>> GetCategoriesAsync(string search, int size = 100)
         {
-            //TO-DO: Kategori filtrelemesi yapılacak!
             var result = await _productClient.GetCategoriesAsync();
             if (result != null && result.OkResponse.Categories.Count > 0)
             {
-                return new DataResult<List<CategoryModel>>(result.OkResponse.Categories, true);
+                return new DataResult<List<CategoryModel>>(FindMatchingCategories(result.OkResponse.Categories, search), true);
             }
             return new DataResult<List<CategoryModel>>(false, "Categories not found!");
         }
+
         [LogAspect]
         public async Task<IDataResult<GetProductsResponseModel>> GetProductsAsync(ProductQueryParametersDTO parameters)
         {
             ProductQueryParametersModel model = _mapper.Map<ProductQueryParametersModel>(parameters);
             var result = await _productClient.GetProductsAsync(model);
 
+            var response = _mapper.Map<GetProductsResponseModel>(result.OkResponse);
             return new DataResult<GetProductsResponseModel>(result.OkResponse, result.IsSuccess);
         }
 
@@ -109,6 +96,59 @@ namespace ECommerce.Trendyol
 
             var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
+        }
+
+        public async Task<IDataResult<TrendyolErrorResultDTO>> UpdateProductAsync(TrendyolProductDTO product)
+        {
+            ProductRequestModel model = _mapper.Map<ProductRequestModel>(new List<TrendyolProductDTO>() { product });
+            var result = await _productClient.UpdateProductsAsync(model);
+
+            if (result.IsSuccess)
+                return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
+
+            var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
+        }
+
+
+        private List<CategoryModel> FindMatchingCategories(List<CategoryModel> categories, string search)
+        {
+            var matchingCategories = new List<CategoryModel>();
+
+            foreach (var category in categories)
+            {
+                var matchingSubCategories = FindMatchingCategoriesInSubCategories(category.SubCategories, search);
+                if (matchingSubCategories != null && matchingSubCategories.Any())
+                {
+                    matchingCategories.AddRange(matchingSubCategories);
+                }
+            }
+
+            return matchingCategories;
+
+            List<CategoryModel> FindMatchingCategoriesInSubCategories(List<CategoryModel> subCategories, string search)
+            {
+                var matchingCategories = new List<CategoryModel>();
+
+                if (subCategories == null || !subCategories.Any())
+                    return matchingCategories;
+
+                foreach (var subCategory in subCategories)
+                {
+                    if (subCategory.Name.ToLower().Contains(search))
+                    {
+                        matchingCategories.Add(subCategory);
+                    }
+
+                    var matchingSubCategory = FindMatchingCategoriesInSubCategories(subCategory.SubCategories, search);
+                    if (matchingSubCategory != null && matchingSubCategory.Any())
+                    {
+                        matchingCategories.AddRange(matchingSubCategory);
+                    }
+                }
+
+                return matchingCategories;
+            }
         }
     }
 }

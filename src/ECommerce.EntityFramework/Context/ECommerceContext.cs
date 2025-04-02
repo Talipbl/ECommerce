@@ -85,7 +85,7 @@ public partial class ECommerceContext : DbContext
     public virtual DbSet<SysVatRatio> SysVatRatios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=talipbulundu.com\\MSSQLSERVER2014;Database=ECommerce;User Id=root;Password=34Q1wt&n5; Encrypt=false;");
+        => optionsBuilder.UseSqlServer("Server=ATAK;Database=ECommerceNetCore;Integrated Security=True;Encrypt=false;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

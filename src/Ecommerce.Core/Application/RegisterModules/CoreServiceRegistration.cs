@@ -23,6 +23,7 @@ public static class CoreServiceRegistration
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IMemoryCache, MemoryCache>();
         services.AddSingleton<ILogManager, DbLogManager>();
+        services.AddSingleton<ICacheManager, CacheManager>();
 
         ServiceProvider = services.BuildServiceProvider();
         return services;

@@ -2,7 +2,7 @@
 
 namespace Ecommerce.Trendyol
 {
-    public class CreateProductRequestVM
+    public class ModifyProductRequestVM
     {
         public string Barcode { get; set; }
         public string Title { get; set; }
@@ -21,4 +21,5 @@ namespace Ecommerce.Trendyol
         public List<string> Images { get; set; }
         public List<TrendyolRequestAttributeDTO> Attributes { get; set; }
     }
+
 }

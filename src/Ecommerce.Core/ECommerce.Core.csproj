@@ -7,14 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Application\CrossCuttingConcerns\Caching\Redis\**" />
     <Compile Remove="Application\Utilities\Cryptography\DesCrypto\**" />
+    <EmbeddedResource Remove="Application\CrossCuttingConcerns\Caching\Redis\**" />
     <EmbeddedResource Remove="Application\Utilities\Cryptography\DesCrypto\**" />
+    <None Remove="Application\CrossCuttingConcerns\Caching\Redis\**" />
     <None Remove="Application\Utilities\Cryptography\DesCrypto\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Application\Exceptions\" />
-    <Folder Include="Application\CrossCuttingConcerns\Caching\Redis\" />
   </ItemGroup>
 
   <ItemGroup>

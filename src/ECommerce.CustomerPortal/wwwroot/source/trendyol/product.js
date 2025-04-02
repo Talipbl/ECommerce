@@ -116,7 +116,7 @@ async function getList() {
             { "orderable": false, "data": "CategoryName" },
             {
                 "orderable": false, "data": "ProductId", "render": function (data, type, row) {
-                    return '<a href="/trendyol/product/' + row.Barcode + '" target="_blank"><button type="button" class="btn btn-social-icon btn-outline-facebook"><i class="fa fa-info"></i></button></a><button type="button" class="btn btn-social-icon btn-outline-youtube"><i class="ti-youtube"></i></button><button type="button" class="btn btn-social-icon btn-outline-twitter"><i class="ti-twitter-alt"></i></button>';
+                    return '<a href="/trendyol/product/detail/' + row.Barcode + '" target="_blank"><button type="button" class="btn btn-social-icon btn-outline-facebook"><i class="fa fa-info"></i></button></a><button type="button" class="btn btn-social-icon btn-outline-youtube"><i class="ti-youtube"></i></button><button type="button" class="btn btn-social-icon btn-outline-twitter"><i class="ti-twitter-alt"></i></button>';
                 }
             }
         ],

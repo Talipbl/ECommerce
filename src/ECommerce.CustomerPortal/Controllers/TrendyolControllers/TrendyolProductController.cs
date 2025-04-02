@@ -23,11 +23,53 @@ namespace Ecommerce.Trendyol
         }
 
         [HttpGet]
-        [Route("{barcode}")]
+        [Route("detail/{barcode}")]
         public async Task<IActionResult> ProductDetails(string barcode) 
         {
             var result = await _trendyolService.GetProductsAsync(new ProductQueryParametersDTO() { Barcode = barcode });
             return View(result.Data.Content.FirstOrDefault());
+        }
+
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> CreateProduct([FromBody] ModifyProductRequestVM product)
+        {
+            var result = await _trendyolService.CreateProductAsync(new TrendyolProductDTO()
+            {
+                Barcode = product.Barcode,
+                StockCode = product.StockCode,
+                CategoryId = product.CategoryId,
+                BrandId = product.BrandId,
+                Title = product.Title,
+                Description = product.Description,
+                Images = product.Images,
+                Attributes = product.Attributes,
+                VatRate = product.VatRate,
+                SalePrice = product.SalePrice,
+                ListPrice = product.ListPrice
+            });
+            return Json(result);
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> UpdateProduct([FromBody] ModifyProductRequestVM product)
+        {
+            var result = await _trendyolService.UpdateProductAsync(new TrendyolProductDTO()
+            {
+                Barcode = product.Barcode,
+                StockCode = product.StockCode,
+                CategoryId = product.CategoryId,
+                BrandId = product.BrandId,
+                Title = product.Title,
+                Description = product.Description,
+                Images = product.Images,
+                Attributes = product.Attributes,
+                VatRate = product.VatRate,
+                SalePrice = product.SalePrice,
+                ListPrice = product.ListPrice
+            });
+            return Json(result);
         }
 
         [HttpPost]
@@ -77,33 +119,11 @@ namespace Ecommerce.Trendyol
             return Json(result);
         }
 
-        [HttpGet]
-        [Route("getCategories/{search}")]
+        [HttpGet("getCategories/{search}")]
         public async Task<IActionResult> GetCategories(string search)
         {
             var result = await _trendyolService.GetCategoriesAsync(search, 50);
             return Json(result);
-        }
-
-        [HttpPost]
-        [Route("createProduct")]
-        public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequestVM product)
-        {
-            var result = _trendyolService.CreateProductAsync(new TrendyolProductDTO()
-            {
-                Barcode = product.Barcode,
-                StockCode = product.StockCode,
-                CategoryId = product.CategoryId,
-                BrandId = product.BrandId,
-                Title = product.Title,
-                Description = product.Description,
-                Images = product.Images,
-                Attributes = product.Attributes,
-                VatRate = product.VatRate,
-                SalePrice   = product.SalePrice,
-                ListPrice = product.ListPrice
-            });
-            return Json(default);
         }
     }
 }

@@ -19,6 +19,7 @@
     <Compile Remove="Constants\Trendyol\**" />
     <Compile Remove="Constants\User\**" />
     <Compile Remove="Constants\Xml\**" />
+    <Compile Remove="Domains\Product\Configurations\**" />
     <Compile Remove="Repositories\Trendyol\**" />
     <EmbeddedResource Remove="Constants\Admin\**" />
     <EmbeddedResource Remove="Constants\Brand\**" />
@@ -32,6 +33,7 @@
     <EmbeddedResource Remove="Constants\Trendyol\**" />
     <EmbeddedResource Remove="Constants\User\**" />
     <EmbeddedResource Remove="Constants\Xml\**" />
+    <EmbeddedResource Remove="Domains\Product\Configurations\**" />
     <EmbeddedResource Remove="Repositories\Trendyol\**" />
     <None Remove="Constants\Admin\**" />
     <None Remove="Constants\Brand\**" />
@@ -45,6 +47,7 @@
     <None Remove="Constants\Trendyol\**" />
     <None Remove="Constants\User\**" />
     <None Remove="Constants\Xml\**" />
+    <None Remove="Domains\Product\Configurations\**" />
     <None Remove="Repositories\Trendyol\**" />
   </ItemGroup>
 
@@ -56,7 +59,6 @@
     <Folder Include="Domains\DiscountCoupon\Configurations\" />
     <Folder Include="Domains\Manufacturer\Configurations\" />
     <Folder Include="Domains\Order\Configurations\" />
-    <Folder Include="Domains\Product\Configurations\" />
     <Folder Include="Domains\Systems\Configurations\" />
     <Folder Include="Domains\User\Configurations\" />
     <Folder Include="Domains\Xml\Configurations\" />

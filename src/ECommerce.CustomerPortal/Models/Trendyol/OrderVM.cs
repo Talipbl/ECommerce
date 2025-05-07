@@ -44,6 +44,7 @@ namespace Ecommerce.Trendyol
         public bool DeliveredByService { get; set; }
         public bool Micro { get; set; }
 
+
         internal static OrderVM GetOrderVM(GetOrdersResponseDTO.ContentDTO model)
         {
             return new OrderVM()

@@ -67,7 +67,8 @@ namespace Ecommerce.Trendyol
                 Attributes = product.Attributes,
                 VatRate = product.VatRate,
                 SalePrice = product.SalePrice,
-                ListPrice = product.ListPrice
+                ListPrice = product.ListPrice,
+                Quantity = product.Quantity,
             });
             return Json(result);
         }

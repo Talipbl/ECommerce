@@ -20,18 +20,18 @@ namespace ECommerce.Trendyol
 
             #endregion
 
-            CreateMap<ProductModel, TrendyolProductDTO>()
-                .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.Url)));
-            CreateMap<TrendyolProductDTO, ProductModel>()
-                .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(url => new ImageModel() { Url = url })));
-            CreateMap<List<TrendyolProductDTO>, ProductRequestModel>()
+            CreateMap<ProductModel, ProductRequestDTO>()
+                .ForMember(dest => dest.Images, opt => opt.Ignore());
+            CreateMap<ProductRequestDTO, ProductModel>()
+                .ForMember(dest => dest.Images, opt => opt.Ignore());
+            CreateMap<List<ProductRequestDTO>, ProductRequestModel>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
             CreateMap<ProductModel.RequestAttribute, TrendyolRequestAttributeDTO>();
             CreateMap<TrendyolRequestAttributeDTO, ProductModel.RequestAttribute>();
 
-            CreateMap<DeliveryOptionModel, TrendyolProductDTO.TrendyolDeliveryOptionDTO>();
-            CreateMap<TrendyolProductDTO.TrendyolDeliveryOptionDTO, DeliveryOptionModel>();
+            CreateMap<DeliveryOptionModel, ProductRequestDTO.TrendyolDeliveryOptionDTO>();
+            CreateMap<ProductRequestDTO.TrendyolDeliveryOptionDTO, DeliveryOptionModel>();
 
             CreateMap<string, DeleteProductRequestModel.DeleteProduct>()
                 .ForMember(dest => dest.Barcode, opt => opt.MapFrom(src => src));
@@ -45,11 +45,15 @@ namespace ECommerce.Trendyol
             CreateMap<ErrorResultModel, TrendyolErrorResultDTO>();
             CreateMap<ErrorResultModel.ErrorModel, TrendyolErrorResultDTO.ErrorModelDTO>();
 
-            CreateMap<TrendyolPriceAndInventoryDTO, PriceAndInventoryModel>();
-            CreateMap<List<TrendyolPriceAndInventoryDTO>, PriceAndInventoryUpdateRequest>()
+            CreateMap<PriceAndInventoryUpdateRequestDTO, PriceAndInventoryModel>();
+            CreateMap<List<PriceAndInventoryUpdateRequestDTO>, PriceAndInventoryUpdateRequest>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
             CreateMap<ProductQueryParametersDTO, ProductQueryParametersModel>();
+
+            CreateMap<BrandResponseDTO, BrandModel>();
+            CreateMap<List<BrandResponseDTO>, BrandListModel>()
+                .ForMember(dest => dest.Brands, opt => opt.MapFrom(src => src));
 
             CreateMap<GetOrdersResponseModel, GetOrdersResponseDTO>();
             CreateMap<GetOrdersResponseModel.ContentModel, GetOrdersResponseDTO.ContentDTO>()

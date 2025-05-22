@@ -4,65 +4,67 @@ using Trendyol.Client;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolProductService(IMappingService mapper) : ITrendyolProductService
+    public class TrendyolProductService(ITrendyolProductAdapter _adapter) : ITrendyolProductService
     {
         TrendyolProductClient _productClient = new(ApiAuthentication.CreateAuthentication("atBqHAZm2Eg1ZttXGpMZ", "LSEzaIx17XkuFiYyXyRu", "836049"));
 
-        private readonly IMappingService _mapper = mapper;
-
         [LogAspect]
-        public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductAsync(TrendyolProductDTO product)
+        public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductAsync(ProductRequestDTO product)
         {
-            ProductRequestModel model = _mapper.Map<ProductRequestModel>(new List<TrendyolProductDTO>() { product });
+            ProductRequestModel model = _adapter.Adapt([product]);
             var result = await _productClient.CreateProductsAsync(model);
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
         [LogAspect]
-        public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductsAsync(List<TrendyolProductDTO> products)
+        public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductsAsync(List<ProductRequestDTO> products)
         {
-            ProductRequestModel model = _mapper.Map<ProductRequestModel>(products);
+            ProductRequestModel model = _adapter.Adapt(products);
             var result = await _productClient.CreateProductsAsync(model);
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
         public async Task<IDataResult<TrendyolErrorResultDTO>> DeleteProductAsync(List<string> productBarcodes)
         {
-            DeleteProductRequestModel model = _mapper.Map<DeleteProductRequestModel>(productBarcodes);
+            DeleteProductRequestModel model = _adapter.Adapt<DeleteProductRequestModel>(productBarcodes);
             var result = await _productClient.DeleteProductsAsync(model);
 
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
         [CacheAspect(Duration = 300)]
-        public async Task<IDataResult<List<BrandModel>>> GetBrandsAsync()
+        public async Task<IDataResult<List<BrandResponseDTO>>> GetBrandsAsync()
         {
             var result = await _productClient.GetBrandsAsync();
-            return new DataResult<List<BrandModel>>(result.OkResponse.Brands, true);
+            var dto = _adapter.Adapt<List<BrandResponseDTO>>(result.OkResponse);
+
+            return new DataResult<List<BrandResponseDTO>>(dto, true);
         }
 
         [CacheAspect(Duration = 500)]
-        public async Task<IDataResult<List<BrandModel>>> GetBrandsAsync(string search, int size = 100)
+        public async Task<IDataResult<List<BrandResponseDTO>>> GetBrandsAsync(string search, int size = 100)
         {
             var result = await _productClient.GetBrandsByNameAsync(search);
             if (result != null && result.OkResponse.Count > 0)
             {
                 result.OkResponse = result.OkResponse.Where(s => s.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).Take(size).ToList();
-                return new DataResult<List<BrandModel>>(result.OkResponse, true);
+                var dto = _adapter.Adapt<List<BrandResponseDTO>>(result.OkResponse);
+
+                return new DataResult<List<BrandResponseDTO>>(dto, true);
             }
-            return new DataResult<List<BrandModel>>(false, "Brands not found!");
+            return new DataResult<List<BrandResponseDTO>>(false, "Brands not found!");
         }
 
         [CacheAspect(Duration = 300)]
@@ -79,34 +81,33 @@ namespace ECommerce.Trendyol
         [LogAspect]
         public async Task<IDataResult<GetProductsResponseModel>> GetProductsAsync(ProductQueryParametersDTO parameters)
         {
-            ProductQueryParametersModel model = _mapper.Map<ProductQueryParametersModel>(parameters);
+            ProductQueryParametersModel model = _adapter.Adapt<ProductQueryParametersModel>(parameters);
             var result = await _productClient.GetProductsAsync(model);
 
-            var response = _mapper.Map<GetProductsResponseModel>(result.OkResponse);
             return new DataResult<GetProductsResponseModel>(result.OkResponse, result.IsSuccess);
         }
 
-        public async Task<IDataResult<TrendyolErrorResultDTO>> UpdatePriceAndInventoryAsync(List<TrendyolPriceAndInventoryDTO> priceAndInventories)
+        public async Task<IDataResult<TrendyolErrorResultDTO>> UpdatePriceAndInventoryAsync(List<PriceAndInventoryUpdateRequestDTO> priceAndInventories)
         {
-            PriceAndInventoryUpdateRequest model = _mapper.Map<PriceAndInventoryUpdateRequest>(priceAndInventories);
+            PriceAndInventoryUpdateRequest model = _adapter.Adapt(priceAndInventories);
             var result = await _productClient.UpdatePriceAndInventoryAsync(model);
 
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
-        public async Task<IDataResult<TrendyolErrorResultDTO>> UpdateProductAsync(TrendyolProductDTO product)
+        public async Task<IDataResult<TrendyolErrorResultDTO>> UpdateProductAsync(ProductRequestDTO product)
         {
-            ProductRequestModel model = _mapper.Map<ProductRequestModel>(new List<TrendyolProductDTO>() { product });
+            ProductRequestModel model = _adapter.Adapt([product]);
             var result = await _productClient.UpdateProductsAsync(model);
 
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _mapper.Map<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 

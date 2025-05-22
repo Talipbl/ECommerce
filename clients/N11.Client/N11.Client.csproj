@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Consts\Enums\" />
+    <Compile Remove="Consts\**" />
+    <EmbeddedResource Remove="Consts\**" />
+    <None Remove="Consts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Models\Requests\" />
   </ItemGroup>
 

@@ -18,7 +18,7 @@ namespace ECommerce.Trendyol
 
         public class Item
         {
-            public List<TrendyolProductDTO> RequestItem { get; set; }
+            public List<ProductRequestDTO> RequestItem { get; set; }
             public string Status { get; set; }
             public List<string> FailureReasons { get; set; }
         }

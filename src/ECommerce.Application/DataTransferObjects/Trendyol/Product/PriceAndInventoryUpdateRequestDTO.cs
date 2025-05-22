@@ -1,6 +1,6 @@
 ﻿namespace ECommerce.Trendyol
 {
-    public class TrendyolPriceAndInventoryDTO
+    public class PriceAndInventoryUpdateRequestDTO
     {
         public string Barcode { get; set; }
         public int Quantity { get; set; }

@@ -1,6 +1,8 @@
-﻿namespace ECommerce.Trendyol
+﻿using Newtonsoft.Json;
+
+namespace ECommerce.Trendyol
 {
-    public class TrendyolProductDTO
+    public class ProductRequestDTO
     {
         public string Barcode { get; set; }
         public string Title { get; set; }

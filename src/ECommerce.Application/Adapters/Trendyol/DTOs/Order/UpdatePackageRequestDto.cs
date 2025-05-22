@@ -15,12 +15,4 @@ public class UpdatePackageRequestDTO
         public string LineId { get; set; }
         public int Quantity { get; set; }
     }
-
-    public class StatusResolver : IValueResolver<UpdatePackageRequestDTO, UpdatePackageRequest, string>
-    {
-        public string Resolve(UpdatePackageRequestDTO source, UpdatePackageRequest destination, string destMember, ResolutionContext context)
-        {
-            return source.Status.ToString();
-        }
-    }
 }

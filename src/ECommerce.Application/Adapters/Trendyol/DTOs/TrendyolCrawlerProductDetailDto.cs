@@ -55,7 +55,7 @@ namespace ECommerce.Trendyol
         public MerchantModel Merchant { get; set; }
         public DeliveryInformationModel DeliveryInformation { get; set; }
         public int CargoRemainingDays { get; set; }
-        public bool IsMarketplace { get; set; }
+        public bool IsMarketplaces { get; set; }
         public List<ProductStamp> ProductStamps { get; set; }
         public bool HasHtmlContent { get; set; }
         public int FavoriteCount { get; set; }

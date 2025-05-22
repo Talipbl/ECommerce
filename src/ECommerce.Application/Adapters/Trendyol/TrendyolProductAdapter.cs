@@ -6,12 +6,12 @@ namespace ECommerce.Trendyol
 {
     public class TrendyolProductAdapter(IMapper mapper) : Adapter(mapper), ITrendyolProductAdapter
     {
-        public ProductModel Adapt(ProductRequestDTO dto)
+        public ProductModel AdaptProductRequest(ProductRequestDTO dto)
         {
             return _mapper.Map<ProductModel>(dto);
         }
 
-        public ProductRequestDTO Adapt(ProductModel model)
+        public ProductRequestDTO AdaptProductResponse(ProductModel model)
         {
             var dto = _mapper.Map<ProductRequestDTO>(model);
 
@@ -23,19 +23,14 @@ namespace ECommerce.Trendyol
             return dto;
         }
 
-        public ProductRequestModel Adapt(List<ProductRequestDTO> items)
+        public ProductRequestModel AdaptProductsRequest(List<ProductRequestDTO> items)
         {
             return _mapper.Map<ProductRequestModel>(items);
         }
 
-        public PriceAndInventoryUpdateRequest Adapt(List<PriceAndInventoryUpdateRequestDTO> items)
+        public PriceAndInventoryUpdateRequest AdaptPriceAndInventoryRequest(List<PriceAndInventoryUpdateRequestDTO> items)
         {
             return _mapper.Map<PriceAndInventoryUpdateRequest>(items);
-        }
-
-        public FailureToSupplyReuqest Adapt(FailureToSupplyReuqestDTO dto)
-        {
-            return _mapper.Map<FailureToSupplyReuqest>(dto);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ECommerce.Trendyol
+﻿using Newtonsoft.Json;
+
+namespace ECommerce.Trendyol
 {
     public class BrandResponseDTO
     {

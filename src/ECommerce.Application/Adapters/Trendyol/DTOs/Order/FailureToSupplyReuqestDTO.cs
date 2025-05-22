@@ -13,12 +13,4 @@ public class FailureToSupplyReuqestDTO
         public int LineId { get; set; }
         public int Quantity { get; set; }
     }
-
-    public class ReasonResolver : IValueResolver<FailureToSupplyReuqestDTO, FailureToSupplyReuqest, int>
-    {
-        public int Resolve(FailureToSupplyReuqestDTO source, FailureToSupplyReuqest destination, int destMember, ResolutionContext context)
-        {
-            return (int)source.Reason;
-        }
-    }
 }

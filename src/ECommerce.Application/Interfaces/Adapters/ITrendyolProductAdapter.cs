@@ -10,10 +10,9 @@ namespace ECommerce.Trendyol
 {
     public interface ITrendyolProductAdapter : IAdapter
     {
-        ProductModel Adapt(ProductRequestDTO dto);
-        ProductRequestDTO Adapt(ProductModel model);
-        ProductRequestModel Adapt(List<ProductRequestDTO> items);
-        PriceAndInventoryUpdateRequest Adapt(List<PriceAndInventoryUpdateRequestDTO> items);
-        FailureToSupplyReuqest Adapt(FailureToSupplyReuqestDTO dto);
+        ProductModel AdaptProductRequest(ProductRequestDTO dto);
+        ProductRequestDTO AdaptProductResponse(ProductModel model);
+        ProductRequestModel AdaptProductsRequest(List<ProductRequestDTO> items);
+        PriceAndInventoryUpdateRequest AdaptPriceAndInventoryRequest(List<PriceAndInventoryUpdateRequestDTO> items);
     }
 }

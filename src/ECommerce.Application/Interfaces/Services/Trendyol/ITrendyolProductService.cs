@@ -12,7 +12,7 @@ public interface ITrendyolProductService
     Task<IDataResult<TrendyolErrorResultDTO>> DeleteProductAsync(List<string> productBarcodes);
     Task<IDataResult<List<BrandResponseDTO>>> GetBrandsAsync();
     Task<IDataResult<List<BrandResponseDTO>>> GetBrandsAsync(string search, int size = 100);
-    Task<IDataResult<List<CategoryModel>>> GetCategoriesAsync(string search, int size = 100);
+    Task<IDataResult<List<CategoryResponseDTO>>> GetCategoriesAsync(string search, int size = 100);
     Task<IDataResult<TrendyolErrorResultDTO>> UpdateProductAsync(ProductRequestDTO product);
 
 }

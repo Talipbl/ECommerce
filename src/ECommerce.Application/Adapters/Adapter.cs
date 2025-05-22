@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using ECommerce.Application.Interfaces.Adapters;
+using ECommerce.Trendyol;
+using Trendyol.Client;
 
 namespace ECommerce.Application
 {
@@ -9,6 +11,11 @@ namespace ECommerce.Application
         public TDestination Adapt<TDestination>(object source)
         {
             return _mapper.Map<TDestination>(source);
+        }
+
+        public TrendyolErrorResultDTO AdaptErrorResult(object model)
+        {
+            return _mapper.Map<TrendyolErrorResultDTO>(model);
         }
     }
 }

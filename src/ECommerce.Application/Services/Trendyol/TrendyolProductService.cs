@@ -11,24 +11,24 @@ namespace ECommerce.Trendyol
         [LogAspect]
         public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductAsync(ProductRequestDTO product)
         {
-            ProductRequestModel model = _adapter.Adapt([product]);
+            ProductRequestModel model = _adapter.AdaptProductsRequest([product]);
             var result = await _productClient.CreateProductsAsync(model);
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            var errorReturn = _adapter.AdaptErrorResult(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
         [LogAspect]
         public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductsAsync(List<ProductRequestDTO> products)
         {
-            ProductRequestModel model = _adapter.Adapt(products);
+            ProductRequestModel model = _adapter.AdaptProductsRequest(products);
             var result = await _productClient.CreateProductsAsync(model);
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            var errorReturn = _adapter.AdaptErrorResult(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
@@ -40,7 +40,7 @@ namespace ECommerce.Trendyol
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            var errorReturn = _adapter.AdaptErrorResult(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
@@ -48,7 +48,7 @@ namespace ECommerce.Trendyol
         public async Task<IDataResult<List<BrandResponseDTO>>> GetBrandsAsync()
         {
             var result = await _productClient.GetBrandsAsync();
-            var dto = _adapter.Adapt<List<BrandResponseDTO>>(result.OkResponse);
+            var dto = _adapter.Adapt<List<BrandResponseDTO>>(result.OkResponse.Brands);
 
             return new DataResult<List<BrandResponseDTO>>(dto, true);
         }
@@ -68,14 +68,15 @@ namespace ECommerce.Trendyol
         }
 
         [CacheAspect(Duration = 300)]
-        public async Task<IDataResult<List<CategoryModel>>> GetCategoriesAsync(string search, int size = 100)
+        public async Task<IDataResult<List<CategoryResponseDTO>>> GetCategoriesAsync(string search, int size = 100)
         {
             var result = await _productClient.GetCategoriesAsync();
             if (result != null && result.OkResponse.Categories.Count > 0)
             {
-                return new DataResult<List<CategoryModel>>(FindMatchingCategories(result.OkResponse.Categories, search), true);
+                var dto = _adapter.Adapt<List<CategoryResponseDTO>>(result.OkResponse.Categories);
+                return new DataResult<List<CategoryResponseDTO>>(FindMatchingCategories(dto, search), true);
             }
-            return new DataResult<List<CategoryModel>>(false, "Categories not found!");
+            return new DataResult<List<CategoryResponseDTO>>(false, "Categories not found!");
         }
 
         [LogAspect]
@@ -89,32 +90,32 @@ namespace ECommerce.Trendyol
 
         public async Task<IDataResult<TrendyolErrorResultDTO>> UpdatePriceAndInventoryAsync(List<PriceAndInventoryUpdateRequestDTO> priceAndInventories)
         {
-            PriceAndInventoryUpdateRequest model = _adapter.Adapt(priceAndInventories);
+            PriceAndInventoryUpdateRequest model = _adapter.AdaptPriceAndInventoryRequest(priceAndInventories);
             var result = await _productClient.UpdatePriceAndInventoryAsync(model);
 
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            var errorReturn = _adapter.AdaptErrorResult(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
         public async Task<IDataResult<TrendyolErrorResultDTO>> UpdateProductAsync(ProductRequestDTO product)
         {
-            ProductRequestModel model = _adapter.Adapt([product]);
+            ProductRequestModel model = _adapter.AdaptProductsRequest([product]);
             var result = await _productClient.UpdateProductsAsync(model);
 
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
+            var errorReturn = _adapter.AdaptErrorResult(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
 
-        private List<CategoryModel> FindMatchingCategories(List<CategoryModel> categories, string search)
+        private List<CategoryResponseDTO> FindMatchingCategories(List<CategoryResponseDTO> categories, string search)
         {
-            var matchingCategories = new List<CategoryModel>();
+            var matchingCategories = new List<CategoryResponseDTO>();
 
             foreach (var category in categories)
             {
@@ -127,9 +128,9 @@ namespace ECommerce.Trendyol
 
             return matchingCategories;
 
-            List<CategoryModel> FindMatchingCategoriesInSubCategories(List<CategoryModel> subCategories, string search)
+            List<CategoryResponseDTO> FindMatchingCategoriesInSubCategories(List<CategoryResponseDTO> subCategories, string search)
             {
-                var matchingCategories = new List<CategoryModel>();
+                var matchingCategories = new List<CategoryResponseDTO>();
 
                 if (subCategories == null || !subCategories.Any())
                     return matchingCategories;

@@ -9,12 +9,11 @@
 
   <ItemGroup>
     <Compile Remove="Consts\**" />
+    <Compile Remove="Models\Requests\**" />
     <EmbeddedResource Remove="Consts\**" />
+    <EmbeddedResource Remove="Models\Requests\**" />
     <None Remove="Consts\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Requests\" />
+    <None Remove="Models\Requests\**" />
   </ItemGroup>
 
   <ItemGroup>

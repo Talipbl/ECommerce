@@ -5,7 +5,7 @@ namespace ECommerce.Trendyol;
 
 public interface ITrendyolProductService
 {
-    Task<IDataResult<GetProductsResponseModel>> GetProductsAsync(ProductQueryParametersDTO parameters);
+    Task<IDataResult<ProductsResponseDTO>> GetProductsAsync(ProductQueryParametersDTO parameters);
     Task<IDataResult<TrendyolErrorResultDTO>> CreateProductsAsync(List<ProductRequestDTO> products);
     Task<IDataResult<TrendyolErrorResultDTO>> CreateProductAsync(ProductRequestDTO product);
     Task<IDataResult<TrendyolErrorResultDTO>> UpdatePriceAndInventoryAsync(List<PriceAndInventoryUpdateRequestDTO> priceAndInventories);

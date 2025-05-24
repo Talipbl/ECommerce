@@ -1,7 +1,8 @@
 ﻿namespace Trendyol.Client
 {
-    // bkz: https://developers.trendyol.com/docs/category/soru-cevap-entegrasyonu
-
+    /// <summary>
+    /// <see cref="https://developers.trendyol.com/docs/category/soru-cevap-entegrasyonu"
+    /// </summary>
     public class TrendyolQuestionClient
     {
 

@@ -12,39 +12,39 @@ namespace ECommerce.Trendyol
     {
         public TrendyolCrawlerMappingProfile()
         {
-            CreateMap<CrawlerProductDetailModel.ResultModel, TrendyolCrawlerProductDetailDto>();
-            CreateMap<CrawlerProductDetailModel.AllVariant, TrendyolCrawlerProductDetailDto.AllVariant>();
-            CreateMap<CrawlerProductDetailModel.Attribute, TrendyolCrawlerProductDetailDto.Attribute>();
-            CreateMap<CrawlerProductDetailModel.Key, TrendyolCrawlerProductDetailDto.Key>();
-            CreateMap<CrawlerProductDetailModel.Gender, TrendyolCrawlerProductDetailDto.GenderModel>();
-            CreateMap<CrawlerProductDetailModel.Brand, TrendyolCrawlerProductDetailDto.BrandModel>();
-            CreateMap<CrawlerProductDetailModel.BuyMorePayLessPromotion, TrendyolCrawlerProductDetailDto.BuyMorePayLessPromotion>();
-            CreateMap<CrawlerProductDetailModel.Campaign, TrendyolCrawlerProductDetailDto.CampaignModel>();
-            CreateMap<CrawlerProductDetailModel.Category, TrendyolCrawlerProductDetailDto.CategoryModel>();
-            CreateMap<CrawlerProductDetailModel.CategoryTopRankings, TrendyolCrawlerProductDetailDto.CategoryTopRankingsModel>();
-            CreateMap<CrawlerProductDetailModel.ContentDescription, TrendyolCrawlerProductDetailDto.ContentDescription>();
-            CreateMap<CrawlerProductDetailModel.CrossPromotionAward, TrendyolCrawlerProductDetailDto.CrossPromotionAwardModel>();
-            CreateMap<CrawlerProductDetailModel.CustomValue, TrendyolCrawlerProductDetailDto.CustomValue>();
-            CreateMap<CrawlerProductDetailModel.CutOffCountDown, TrendyolCrawlerProductDetailDto.CutOffCountDown>();
-            CreateMap<CrawlerProductDetailModel.DeliveryInformation, TrendyolCrawlerProductDetailDto.DeliveryInformationModel>();
-            CreateMap<CrawlerProductDetailModel.Description, TrendyolCrawlerProductDetailDto.DescriptionModel>();
-            CreateMap<CrawlerProductDetailModel.DiscountedPrice, TrendyolCrawlerProductDetailDto.DiscountedPrice>();
-            CreateMap<CrawlerProductDetailModel.FastDeliveryOption, TrendyolCrawlerProductDetailDto.FastDeliveryOption>();
-            CreateMap<CrawlerProductDetailModel.FilterableLabel, TrendyolCrawlerProductDetailDto.FilterableLabel>();
-            CreateMap<CrawlerProductDetailModel.MetaBrand, TrendyolCrawlerProductDetailDto.MetaBrandModel>();
-            CreateMap<CrawlerProductDetailModel.Merchant, TrendyolCrawlerProductDetailDto.MerchantModel>();
-            CreateMap<CrawlerProductDetailModel.OriginalCategory, TrendyolCrawlerProductDetailDto.OriginalCategoryModel>();
-            CreateMap<CrawlerProductDetailModel.OriginalPrice, TrendyolCrawlerProductDetailDto.OriginalPrice>();
-            CreateMap<CrawlerProductDetailModel.Price, TrendyolCrawlerProductDetailDto.PriceModel>();
-            CreateMap<CrawlerProductDetailModel.ProductStamp, TrendyolCrawlerProductDetailDto.ProductStamp>();
-            CreateMap<CrawlerProductDetailModel.Promotion, TrendyolCrawlerProductDetailDto.Promotion>();
-            CreateMap<CrawlerProductDetailModel.RatingScore, TrendyolCrawlerProductDetailDto.RatingScoreModel>();
-            CreateMap<CrawlerProductDetailModel.SellingPrice, TrendyolCrawlerProductDetailDto.SellingPrice>();
-            CreateMap<CrawlerProductDetailModel.Stamp, TrendyolCrawlerProductDetailDto.Stamp>();
-            CreateMap<CrawlerProductDetailModel.UnitInfo, TrendyolCrawlerProductDetailDto.UnitInfo>();
-            CreateMap<CrawlerProductDetailModel.Value, TrendyolCrawlerProductDetailDto.Value>();
-            CreateMap<CrawlerProductDetailModel.Variant, TrendyolCrawlerProductDetailDto.Variant>();
-            CreateMap<CrawlerProductDetailModel.WalletRebate, TrendyolCrawlerProductDetailDto.WalletRebateModel>();
+            CreateMap<CrawlerProductDetailModel.ResultModel, TrendyolCrawlerProductDetailDTO>();
+            CreateMap<CrawlerProductDetailModel.AllVariant, TrendyolCrawlerProductDetailDTO.AllVariant>();
+            CreateMap<CrawlerProductDetailModel.Attribute, TrendyolCrawlerProductDetailDTO.Attribute>();
+            CreateMap<CrawlerProductDetailModel.Key, TrendyolCrawlerProductDetailDTO.Key>();
+            CreateMap<CrawlerProductDetailModel.Gender, TrendyolCrawlerProductDetailDTO.GenderModel>();
+            CreateMap<CrawlerProductDetailModel.Brand, TrendyolCrawlerProductDetailDTO.BrandModel>();
+            CreateMap<CrawlerProductDetailModel.BuyMorePayLessPromotion, TrendyolCrawlerProductDetailDTO.BuyMorePayLessPromotion>();
+            CreateMap<CrawlerProductDetailModel.Campaign, TrendyolCrawlerProductDetailDTO.CampaignModel>();
+            CreateMap<CrawlerProductDetailModel.Category, TrendyolCrawlerProductDetailDTO.CategoryModel>();
+            CreateMap<CrawlerProductDetailModel.CategoryTopRankings, TrendyolCrawlerProductDetailDTO.CategoryTopRankingsModel>();
+            CreateMap<CrawlerProductDetailModel.ContentDescription, TrendyolCrawlerProductDetailDTO.ContentDescription>();
+            CreateMap<CrawlerProductDetailModel.CrossPromotionAward, TrendyolCrawlerProductDetailDTO.CrossPromotionAwardModel>();
+            CreateMap<CrawlerProductDetailModel.CustomValue, TrendyolCrawlerProductDetailDTO.CustomValue>();
+            CreateMap<CrawlerProductDetailModel.CutOffCountDown, TrendyolCrawlerProductDetailDTO.CutOffCountDown>();
+            CreateMap<CrawlerProductDetailModel.DeliveryInformation, TrendyolCrawlerProductDetailDTO.DeliveryInformationModel>();
+            CreateMap<CrawlerProductDetailModel.Description, TrendyolCrawlerProductDetailDTO.DescriptionModel>();
+            CreateMap<CrawlerProductDetailModel.DiscountedPrice, TrendyolCrawlerProductDetailDTO.DiscountedPrice>();
+            CreateMap<CrawlerProductDetailModel.FastDeliveryOption, TrendyolCrawlerProductDetailDTO.FastDeliveryOption>();
+            CreateMap<CrawlerProductDetailModel.FilterableLabel, TrendyolCrawlerProductDetailDTO.FilterableLabel>();
+            CreateMap<CrawlerProductDetailModel.MetaBrand, TrendyolCrawlerProductDetailDTO.MetaBrandModel>();
+            CreateMap<CrawlerProductDetailModel.Merchant, TrendyolCrawlerProductDetailDTO.MerchantModel>();
+            CreateMap<CrawlerProductDetailModel.OriginalCategory, TrendyolCrawlerProductDetailDTO.OriginalCategoryModel>();
+            CreateMap<CrawlerProductDetailModel.OriginalPrice, TrendyolCrawlerProductDetailDTO.OriginalPrice>();
+            CreateMap<CrawlerProductDetailModel.Price, TrendyolCrawlerProductDetailDTO.PriceModel>();
+            CreateMap<CrawlerProductDetailModel.ProductStamp, TrendyolCrawlerProductDetailDTO.ProductStamp>();
+            CreateMap<CrawlerProductDetailModel.Promotion, TrendyolCrawlerProductDetailDTO.Promotion>();
+            CreateMap<CrawlerProductDetailModel.RatingScore, TrendyolCrawlerProductDetailDTO.RatingScoreModel>();
+            CreateMap<CrawlerProductDetailModel.SellingPrice, TrendyolCrawlerProductDetailDTO.SellingPrice>();
+            CreateMap<CrawlerProductDetailModel.Stamp, TrendyolCrawlerProductDetailDTO.Stamp>();
+            CreateMap<CrawlerProductDetailModel.UnitInfo, TrendyolCrawlerProductDetailDTO.UnitInfo>();
+            CreateMap<CrawlerProductDetailModel.Value, TrendyolCrawlerProductDetailDTO.Value>();
+            CreateMap<CrawlerProductDetailModel.Variant, TrendyolCrawlerProductDetailDTO.Variant>();
+            CreateMap<CrawlerProductDetailModel.WalletRebate, TrendyolCrawlerProductDetailDTO.WalletRebateModel>();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolWebSearchResultDto
+    public class TrendyolWebSearchResultDTO
     {
         public string SlpName { get; set; }
         public List<Product>? Products { get; set; }

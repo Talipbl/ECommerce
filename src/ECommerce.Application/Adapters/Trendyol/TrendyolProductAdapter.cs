@@ -25,7 +25,18 @@ namespace ECommerce.Trendyol
 
         public ProductRequestModel AdaptProductsRequest(List<ProductRequestDTO> items)
         {
-            return _mapper.Map<ProductRequestModel>(items);
+            var request = _mapper.Map<ProductRequestModel>(items);
+            for (int i = 0; i < request.Items.Count && i < items.Count; i++)
+            {
+                var dtoImages = items[i].Images;
+                request.Items[i].Images = dtoImages != null
+                    ? dtoImages
+                        .Where(img => !string.IsNullOrWhiteSpace(img))
+                        .Select(img => new ImageModel { Url = img })
+                        .ToList()
+                    : new List<ImageModel>();
+            }
+            return request;
         }
 
         public PriceAndInventoryUpdateRequest AdaptPriceAndInventoryRequest(List<PriceAndInventoryUpdateRequestDTO> items)

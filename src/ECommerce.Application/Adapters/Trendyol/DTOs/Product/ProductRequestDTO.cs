@@ -2,7 +2,7 @@
 
 namespace ECommerce.Trendyol
 {
-    public class ProductRequestDTO
+    public partial class ProductRequestDTO
     {
         public string Barcode { get; set; }
         public string Title { get; set; }
@@ -21,14 +21,8 @@ namespace ECommerce.Trendyol
         public int ShipmentAddressId { get; set; }
         public int ReturningAddressId { get; set; }
         public int DeliveryDuration { get; set; }
-        public TrendyolDeliveryOptionDTO DeliveryOption { get; set; }
+        public DeliveryOptionDTO DeliveryOption { get; set; }
         public List<string> Images { get; set; }
-        public List<TrendyolRequestAttributeDTO> Attributes { get; set; }
-
-        public class TrendyolDeliveryOptionDTO
-        {
-            public int DeliveryDuration { get; set; }
-            public string FastDeliveryType { get; set; }
-        }
+        public List<RequestAttributeDTO> Attributes { get; set; }
     }
 }

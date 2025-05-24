@@ -13,7 +13,6 @@ namespace ECommerce.Trendyol
 
             return request;
         }
-
         public UpdatePackageRequest AdaptUpdateRequest(UpdatePackageRequestDTO dto)
         {
             var request = _mapper.Map<UpdatePackageRequest>(dto);
@@ -22,5 +21,7 @@ namespace ECommerce.Trendyol
 
             return request;
         }
+
+
     }
 }

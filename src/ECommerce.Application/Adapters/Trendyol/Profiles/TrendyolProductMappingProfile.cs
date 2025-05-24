@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Trendyol.Client;
+using static Trendyol.Client.GetProductsResponseModel;
 
 namespace ECommerce.Trendyol
 {
@@ -14,11 +15,11 @@ namespace ECommerce.Trendyol
             CreateMap<List<ProductRequestDTO>, ProductRequestModel>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
-            CreateMap<ProductModel.RequestAttribute, TrendyolRequestAttributeDTO>();
-            CreateMap<TrendyolRequestAttributeDTO, ProductModel.RequestAttribute>();
+            CreateMap<ProductModel.RequestAttribute, RequestAttributeDTO>();
+            CreateMap<RequestAttributeDTO, ProductModel.RequestAttribute>();
 
-            CreateMap<DeliveryOptionModel, ProductRequestDTO.TrendyolDeliveryOptionDTO>();
-            CreateMap<ProductRequestDTO.TrendyolDeliveryOptionDTO, DeliveryOptionModel>();
+            CreateMap<DeliveryOptionModel, DeliveryOptionDTO>();
+            CreateMap<DeliveryOptionDTO, DeliveryOptionModel>();
 
             CreateMap<string, DeleteProductRequestModel.DeleteProduct>()
                 .ForMember(dest => dest.Barcode, opt => opt.MapFrom(src => src));
@@ -37,6 +38,12 @@ namespace ECommerce.Trendyol
 
             CreateMap<BrandModel, BrandResponseDTO>();
             CreateMap<CategoryModel, CategoryResponseDTO>();
+
+            CreateMap<GetProductsResponseModel, ProductsResponseDTO>();
+            CreateMap<GetProductsResponseModel.ContentModel, ProductsResponseDTO.ContentDTO>()
+                .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.Url)));
+            CreateMap<ResponseAttribute, ResponseAttributeDTO>();
+
         }
     }
 }

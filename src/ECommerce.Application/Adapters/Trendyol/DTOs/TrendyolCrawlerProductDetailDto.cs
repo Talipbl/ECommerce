@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolCrawlerProductDetailDto
+    public class TrendyolCrawlerProductDetailDTO
     {
         public List<Attribute> Attributes { get; set; }
         public List<object> SelectedVasAttributes { get; set; }

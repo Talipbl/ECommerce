@@ -1,7 +1,8 @@
 ﻿namespace Trendyol.Client
 {
-    //bkz: https://developers.trendyol.com/docs/category/%C3%BCr%C3%BCn-entegrasyonu
-
+    /// <summary>
+    /// <see cref="https://developers.trendyol.com/docs/category/%C3%BCr%C3%BCn-entegrasyonu"/>
+    /// </summary>
     public class TrendyolProductClient
     {
         private BaseHttpClient Client { get; set; }

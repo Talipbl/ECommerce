@@ -80,12 +80,13 @@ namespace ECommerce.Trendyol
         }
 
         [LogAspect]
-        public async Task<IDataResult<GetProductsResponseModel>> GetProductsAsync(ProductQueryParametersDTO parameters)
+        public async Task<IDataResult<ProductsResponseDTO>> GetProductsAsync(ProductQueryParametersDTO parameters)
         {
             ProductQueryParametersModel model = _adapter.Adapt<ProductQueryParametersModel>(parameters);
             var result = await _productClient.GetProductsAsync(model);
+            var dto = _adapter.Adapt<ProductsResponseDTO>(result.OkResponse);
 
-            return new DataResult<GetProductsResponseModel>(result.OkResponse, result.IsSuccess);
+            return new DataResult<ProductsResponseDTO>(dto, result.IsSuccess);
         }
 
         public async Task<IDataResult<TrendyolErrorResultDTO>> UpdatePriceAndInventoryAsync(List<PriceAndInventoryUpdateRequestDTO> priceAndInventories)

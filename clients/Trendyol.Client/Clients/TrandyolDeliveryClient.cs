@@ -3,7 +3,9 @@ using System.Text;
 
 namespace Trendyol.Client
 {
-    //bkz: https://developers.trendyol.com/docs/Marketplaces/ortak-etiket-entegrasyonu/ortak-etiket-entegrasyonu
+    /// <summary>
+    /// <see cref="https://developers.trendyol.com/docs/Marketplaces/ortak-etiket-entegrasyonu/ortak-etiket-entegrasyonu"/>
+    /// </summary>
     public class TrandyolDeliveryClient
     {
         private BaseHttpClient Client { get; set; }

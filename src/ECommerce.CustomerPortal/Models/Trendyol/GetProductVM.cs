@@ -1,5 +1,6 @@
 ﻿using static Trendyol.Client.GetProductsResponseModel;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ECommerce.Trendyol;
 
 namespace Ecommerce.Trendyol
 {
@@ -30,7 +31,7 @@ namespace Ecommerce.Trendyol
         public List<object> RejectReasonDetails { get; set; }
         public int? DeliveryDuration { get; set; }
 
-        internal static ProductVM GetProductVM(ContentModel pr)
+        internal static ProductVM GetProductVM(ProductsResponseDTO.ContentDTO pr)
         {
             return new ProductVM()
             {
@@ -43,7 +44,7 @@ namespace Ecommerce.Trendyol
                 Description = pr.Description,
                 Brand = pr.Brand,
                 CategoryName = pr.CategoryName,
-                ImageUrl = pr.Images.FirstOrDefault().Url,
+                ImageUrl = pr.Images.FirstOrDefault(),
                 CreateDateTime = pr.CreateDateTime,
                 LastUpdateDate = pr.LastUpdateDate,
                 ListPrice = pr.ListPrice,
@@ -61,7 +62,7 @@ namespace Ecommerce.Trendyol
             };
         }
 
-        private static string ResolveStatus(ContentModel pr)
+        private static string ResolveStatus(ProductsResponseDTO.ContentDTO pr)
         {
             var statusPriorities = new List<(bool statusOption, string status, int priority)>
             {

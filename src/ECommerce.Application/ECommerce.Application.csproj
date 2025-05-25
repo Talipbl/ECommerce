@@ -30,18 +30,7 @@
     <Compile Remove="Helpers\User\**" />
     <Compile Remove="Helpers\Xml\**" />
     <Compile Remove="Interfaces\Managers\**" />
-    <Compile Remove="Managers\Admin\**" />
-    <Compile Remove="Managers\Brand\**" />
-    <Compile Remove="Managers\Carrier\**" />
-    <Compile Remove="Managers\Category\**" />
-    <Compile Remove="Managers\DiscountCoupon\**" />
-    <Compile Remove="Managers\Manufacturer\**" />
-    <Compile Remove="Managers\Order\**" />
-    <Compile Remove="Managers\Product\**" />
-    <Compile Remove="Managers\System\**" />
-    <Compile Remove="Managers\Trendyol\**" />
-    <Compile Remove="Managers\User\**" />
-    <Compile Remove="Managers\Xml\**" />
+    <Compile Remove="Managers\**" />
     <Compile Remove="Utilities\**" />
     <Compile Remove="Validators\Admin\**" />
     <Compile Remove="Validators\Brand\**" />
@@ -77,18 +66,7 @@
     <EmbeddedResource Remove="Helpers\User\**" />
     <EmbeddedResource Remove="Helpers\Xml\**" />
     <EmbeddedResource Remove="Interfaces\Managers\**" />
-    <EmbeddedResource Remove="Managers\Admin\**" />
-    <EmbeddedResource Remove="Managers\Brand\**" />
-    <EmbeddedResource Remove="Managers\Carrier\**" />
-    <EmbeddedResource Remove="Managers\Category\**" />
-    <EmbeddedResource Remove="Managers\DiscountCoupon\**" />
-    <EmbeddedResource Remove="Managers\Manufacturer\**" />
-    <EmbeddedResource Remove="Managers\Order\**" />
-    <EmbeddedResource Remove="Managers\Product\**" />
-    <EmbeddedResource Remove="Managers\System\**" />
-    <EmbeddedResource Remove="Managers\Trendyol\**" />
-    <EmbeddedResource Remove="Managers\User\**" />
-    <EmbeddedResource Remove="Managers\Xml\**" />
+    <EmbeddedResource Remove="Managers\**" />
     <EmbeddedResource Remove="Utilities\**" />
     <EmbeddedResource Remove="Validators\Admin\**" />
     <EmbeddedResource Remove="Validators\Brand\**" />
@@ -124,18 +102,7 @@
     <None Remove="Helpers\User\**" />
     <None Remove="Helpers\Xml\**" />
     <None Remove="Interfaces\Managers\**" />
-    <None Remove="Managers\Admin\**" />
-    <None Remove="Managers\Brand\**" />
-    <None Remove="Managers\Carrier\**" />
-    <None Remove="Managers\Category\**" />
-    <None Remove="Managers\DiscountCoupon\**" />
-    <None Remove="Managers\Manufacturer\**" />
-    <None Remove="Managers\Order\**" />
-    <None Remove="Managers\Product\**" />
-    <None Remove="Managers\System\**" />
-    <None Remove="Managers\Trendyol\**" />
-    <None Remove="Managers\User\**" />
-    <None Remove="Managers\Xml\**" />
+    <None Remove="Managers\**" />
     <None Remove="Utilities\**" />
     <None Remove="Validators\Admin\**" />
     <None Remove="Validators\Brand\**" />
@@ -164,10 +131,6 @@
 
   <ItemGroup>
     <EditorConfigFiles Remove="C:\Users\talip\source\repos\ECommerce\ECommerce.Application\DataTransferObjects\Trendyol\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Managers\" />
   </ItemGroup>
 
   <ItemGroup>

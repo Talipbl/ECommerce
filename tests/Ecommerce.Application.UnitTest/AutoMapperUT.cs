@@ -11,7 +11,12 @@ public class AutoMapperUT
     {
         var configuration = new MapperConfiguration(cfg =>
         {
-            cfg.AddProfile<TrendyolMappingProfile>();
+            cfg.AddProfile(typeof(TrendyolTypeConvertProfile));
+            cfg.AddProfile(typeof(TrendyolBaseResultMappingProfile));
+            cfg.AddProfile(typeof(TrendyolCrawlerMappingProfile));
+            cfg.AddProfile(typeof(TrendyolProductMappingProfile));
+            cfg.AddProfile(typeof(TrendyolOrderMappingProfile));
+            cfg.AddProfile(typeof(TrendyolWebSearchMappingProfile));
         });
 
         configuration.AssertConfigurationIsValid();

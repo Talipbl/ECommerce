@@ -14,7 +14,7 @@ namespace Marketplaces.Hepsiburada
         private Uri EndPoint { get; set; }
         private string Host { get; set; }
         private string SupplierId { get; set; } = string.Empty;
-        private ApiAuthenticationModel? Headers { get; set; }
+        private ApiAuthentication? Headers { get; set; }
 
         public BaseHttpClient(string baseUrl)
         {
@@ -25,7 +25,7 @@ namespace Marketplaces.Hepsiburada
         {
             SupplierId = supplierId;
         }
-        public BaseHttpClient(string baseUri, string supplierId, ApiAuthenticationModel requestHeaders) : this(baseUri, supplierId)
+        public BaseHttpClient(string baseUri, string supplierId, ApiAuthentication requestHeaders) : this(baseUri, supplierId)
         {
             Headers = requestHeaders;
         }

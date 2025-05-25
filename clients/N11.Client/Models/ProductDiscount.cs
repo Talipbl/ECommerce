@@ -1,6 +1,6 @@
 ﻿namespace N11.Client
 {
-    public class ProductDiscountModel
+    public class ProductDiscount
     {
         public string StartDate { get; set; }
         public string EndDate { get; set; }

@@ -12,10 +12,5 @@ namespace ECommerce.Application
         {
             return _mapper.Map<TDestination>(source);
         }
-
-        public TrendyolErrorResultDTO AdaptErrorResult(object model)
-        {
-            return _mapper.Map<TrendyolErrorResultDTO>(model);
-        }
     }
 }

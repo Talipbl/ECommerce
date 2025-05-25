@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Trendyol.Client
 {
-    public static class StringHelper
+    public static class EnumHelper
     {
         public static string GetEnumDescription(Enum enums)
         {

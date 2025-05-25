@@ -1,9 +1,9 @@
 ﻿namespace N11.Client
 {
-    public class SkuListModel
+    public class SkuList
     {
         public long Id;
-        public ProductSkuModel[] StockItem;
+        public ProductSku[] StockItem;
         public string ProductSellerCode;
     }
 }

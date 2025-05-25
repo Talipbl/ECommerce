@@ -1,6 +1,8 @@
-﻿namespace N11.Client
+﻿using Newtonsoft.Json;
+
+namespace N11.Client
 {
-    public class ImageModel
+    public class Image
     {
         public string Url { get; set; }
         public string Order {  get; set; }

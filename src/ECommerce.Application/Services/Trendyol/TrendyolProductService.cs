@@ -16,7 +16,7 @@ namespace ECommerce.Trendyol
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _adapter.AdaptErrorResult(result.ErrorValueReturn);
+            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
@@ -28,7 +28,7 @@ namespace ECommerce.Trendyol
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _adapter.AdaptErrorResult(result.ErrorValueReturn);
+            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
@@ -40,7 +40,7 @@ namespace ECommerce.Trendyol
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _adapter.AdaptErrorResult(result.ErrorValueReturn);
+            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
@@ -97,7 +97,7 @@ namespace ECommerce.Trendyol
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _adapter.AdaptErrorResult(result.ErrorValueReturn);
+            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 
@@ -109,7 +109,7 @@ namespace ECommerce.Trendyol
             if (result.IsSuccess)
                 return new DataResult<TrendyolErrorResultDTO>(result.IsSuccess, result.OkResponse.BatchRequestId);
 
-            var errorReturn = _adapter.AdaptErrorResult(result.ErrorValueReturn);
+            var errorReturn = _adapter.Adapt<TrendyolErrorResultDTO>(result.ErrorValueReturn);
             return new DataResult<TrendyolErrorResultDTO>(errorReturn, result.IsSuccess);
         }
 

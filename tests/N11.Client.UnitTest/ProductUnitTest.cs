@@ -14,25 +14,25 @@ namespace N11.Client.UnitTest
         [TestMethod]
         public void Get_Product_By_Id()
         {
-            var result = _client.GetProductById(651305567).Result;
+            var result = _client.GetProductByIdAsync(651305567).Result;
         }
 
         [TestMethod]
         public void Get_Product_By_Code()
         {
-            var result = _client.GetProductBySellerCode("TEST-4567").Result;
+            var result = _client.GetProductBySellerCodeAsync("TEST-4567").Result;
         }
 
         [TestMethod]
         public void Get_Products()
         {
-            var result = _client.GetProductList().Result;
+            var result = _client.GetProductListAsync().Result;
         }
 
         [TestMethod]
         public void Get_Product_Counts()
         {
-            var result = _client.GetProductAllStatusCounts().Result;
+            var result = _client.GetProductAllStatusCountsAsync().Result;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using N11.Client.Models.Response;
 using N11.Client.Services.ProductService;
 using N11.Client.Utilities;
 
@@ -7,10 +7,15 @@ namespace N11.Client
     public class N11ProductClient
     {
         private readonly ProductServicePortClient _client;
+        private readonly BaseHttpClient _httpClient;
         private readonly ServiceExecutor _serviceExecutor;
         private readonly Authentication _auth;
+        private readonly ApiAuthentication _apiAuth;
 
-        private readonly Uri URL = new("https://api.n11.com/ws/ProductService.wsdl");
+        private readonly Uri Url = new("https://api.n11.com/ws/ProductService.wsdl");
+        private const string RestUrl = "https://api.n11.com";
+        private const string Prefix = "/ms/product";
+
 
         public N11ProductClient(string appKey, string appSecretKey)
         {
@@ -19,12 +24,78 @@ namespace N11.Client
                 appKey = appKey,
                 appSecret = appSecretKey
             };
+            _apiAuth = new()
+            {
+                AppKey = appKey,
+                AppSecretKey = appSecretKey,
+                IntegratorName = "SelfIntegration",
+            };
 
-            _client = new BaseClient<ProductServicePortClient, ProductServicePort>(URL).GetClient();
+            _client = new BaseClient<ProductServicePortClient, ProductServicePort>(Url).GetClient();
+            _httpClient = new BaseHttpClient(RestUrl, _apiAuth);
             _serviceExecutor = new ServiceExecutor();
         }
 
-        public async Task<ClientResponse<Product>> GetProductById(int productId)
+        public async Task<BaseResponse<RestResponse>> CreateProductAsync(List<StockItem> skus)
+        {
+            var createRequest = new ProductRequest
+            {
+                Payload = new Payload
+                {
+                    Integrator = _apiAuth.IntegratorName,
+                    Skus = skus
+                }
+            };
+            return await _httpClient.PostAsync<RestResponse>(createRequest, $"{Prefix}/tasks/product-create");
+        }
+
+        public async Task<BaseResponse<RestResponse>> UpdateProductAsync(List<StockItem> skus)
+        {
+            var updateRequest = new ProductRequest
+            {
+                Payload = new Payload
+                {
+                    Integrator = _apiAuth.IntegratorName,
+                    Skus = skus
+                }
+            };
+            return await _httpClient.PostAsync<RestResponse>(updateRequest, $"{Prefix}/tasks/product-update");
+        }
+
+        public async Task<BaseResponse<RestResponse>> UpdateProductPriceAndStockAsync(List<StockItem> skus)
+        {
+            var skuRequest = new StockUpdateRequest
+            {
+                Payload = new Payload()
+                {
+                    Integrator = _apiAuth.IntegratorName,
+                    Skus = skus
+                }
+            };
+            return await _httpClient.PostAsync<RestResponse>(skuRequest, $"{Prefix}/tasks/price-stock-update");
+        }
+
+        public async Task<BaseResponse<TaskDetailsResponse>> TaskDetailAsync(int taskId)
+        {
+            var detailRequest = new TaskDetailsRequest
+            {
+                TaskId = taskId,
+                Pageable = new Pagination
+                {
+                    Page = 0,
+                    Size = 100
+                },
+            };
+            return await _httpClient.PostAsync<TaskDetailsResponse>(detailRequest, $"{Prefix}/task-details/page-query");
+        }
+
+        public async Task<BaseResponse<ProductQueryResponse>> GetProductQueryAsync(ProductQueryParameter queries)
+        {
+            string queryString = JsonHelper.BuildQueryString(queries);
+            return await _httpClient.GetAsync<ProductQueryResponse>($"/ms/product-query?{queryString}");
+        }
+
+        public async Task<ClientResponse<Services.ProductService.Product>> GetProductByIdAsync(int productId)
         {
             GetProductByProductIdRequest request = new()
             {
@@ -32,7 +103,7 @@ namespace N11.Client
                 productId = productId
             };
 
-            var response = await _serviceExecutor.ExecuteAsync<Product, GetProductByProductIdResponse>(async () =>
+            var response = await _serviceExecutor.ExecuteAsync<Services.ProductService.Product, GetProductByProductIdResponse>(async () =>
             {
                 var result = await _client.GetProductByProductIdAsync(request);
                 return result.GetProductByProductIdResponse;
@@ -42,7 +113,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<ClientResponse<Product>> GetProductBySellerCode(string sellerCode)
+        public async Task<ClientResponse<Services.ProductService.Product>> GetProductBySellerCodeAsync(string sellerCode)
         {
             GetProductBySellerCodeRequest request = new()
             {
@@ -50,7 +121,7 @@ namespace N11.Client
                 sellerCode = sellerCode
             };
 
-            var response = await _serviceExecutor.ExecuteAsync<Product, GetProductBySellerCodeResponse>(async () =>
+            var response = await _serviceExecutor.ExecuteAsync<Services.ProductService.Product, GetProductBySellerCodeResponse>(async () =>
             {
                 var result = await _client.GetProductBySellerCodeAsync(request);
                 return result.GetProductBySellerCodeResponse;
@@ -60,7 +131,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<ClientResponse<ProductBasic[]>> GetProductList(int currentPage = 0, int pageSize = 100)
+        public async Task<ClientResponse<Services.ProductService.ProductBasic[]>> GetProductListAsync(int currentPage = 0, int pageSize = 100)
         {
             GetProductListRequest request = new()
             {
@@ -72,7 +143,7 @@ namespace N11.Client
                 }
             };
 
-            var response = await _serviceExecutor.ExecuteAsync<ProductBasic[], GetProductListResponse>(async () =>
+            var response = await _serviceExecutor.ExecuteAsync<Services.ProductService.ProductBasic[], GetProductListResponse>(async () =>
             {
                 var result = await _client.GetProductListAsync(request);
                 return result.GetProductListResponse;
@@ -82,7 +153,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<ClientResponse<ProductBasic>> CreateAndUpdateProduct(ProductRequest product)
+        public async Task<ClientResponse<Services.ProductService.ProductBasic>> CreateAndUpdateProductAsync(Services.ProductService.ProductRequest product)
         {
             SaveProductRequest request = new()
             {
@@ -90,7 +161,7 @@ namespace N11.Client
                 product = product
             };
 
-            var response = await _serviceExecutor.ExecuteAsync<ProductBasic, SaveProductResponse>(async () =>
+            var response = await _serviceExecutor.ExecuteAsync<Services.ProductService.ProductBasic, SaveProductResponse>(async () =>
             {
                 var result = await _client.SaveProductAsync(request);
                 return result.SaveProductResponse;
@@ -100,7 +171,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<ClientResponse<ProductBasic[]>> SearchProducts(ProductSearch search, int currentPage = 0, int pageSize = 100)
+        public async Task<ClientResponse<Services.ProductService.ProductBasic[]>> SearchProductsAsync(ProductSearch search, int currentPage = 0, int pageSize = 100)
         {
             SearchProductsRequest request = new()
             {
@@ -113,7 +184,7 @@ namespace N11.Client
                 }
             };
 
-            var response = await _serviceExecutor.ExecuteAsync<ProductBasic[], SearchProductsResponse>(async () =>
+            var response = await _serviceExecutor.ExecuteAsync<Services.ProductService.ProductBasic[], SearchProductsResponse>(async () =>
             {
                 var result = await _client.SearchProductsAsync(request);
                 return result.SearchProductsResponse;
@@ -123,7 +194,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<ClientResponse<ProductBasic>> DeleteProductById(int productId)
+        public async Task<ClientResponse<Services.ProductService.ProductBasic>> DeleteProductByIdAsync(int productId)
         {
             DeleteProductByIdRequest request = new()
             {
@@ -131,7 +202,7 @@ namespace N11.Client
                 productId = productId
             };
 
-            var response = await _serviceExecutor.ExecuteAsync<ProductBasic, DeleteProductByIdResponse>(async () =>
+            var response = await _serviceExecutor.ExecuteAsync<Services.ProductService.ProductBasic, DeleteProductByIdResponse>(async () =>
             {
                 var result = await _client.DeleteProductByIdAsync(request);
                 return result.DeleteProductByIdResponse;
@@ -141,7 +212,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<ClientResponse<ProductBasic>> DeleteProductByStockCode(string stockCode)
+        public async Task<ClientResponse<Services.ProductService.ProductBasic>> DeleteProductByStockCodeAsync(string stockCode)
         {
             DeleteProductBySellerCodeRequest request = new()
             {
@@ -149,7 +220,7 @@ namespace N11.Client
                 productSellerCode = stockCode
             };
 
-            var response = await _serviceExecutor.ExecuteAsync<ProductBasic, DeleteProductBySellerCodeResponse>(async () =>
+            var response = await _serviceExecutor.ExecuteAsync<Services.ProductService.ProductBasic, DeleteProductBySellerCodeResponse>(async () =>
             {
                 var result = await _client.DeleteProductBySellerCodeAsync(request);
                 return result.DeleteProductBySellerCodeResponse;
@@ -159,7 +230,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<ClientResponse<ProductQuestion[]>> GetProductQuestionList(ProductQuestionSearch questionSearch, int currentPage = 0, int pageSize = 100)
+        public async Task<ClientResponse<ProductQuestion[]>> GetProductQuestionListAsync(ProductQuestionSearch questionSearch, int currentPage = 0, int pageSize = 100)
         {
             GetProductQuestionListRequest request = new()
             {
@@ -182,7 +253,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<ClientResponse<ProductQuestionDetail>> GetProductQuestionDetail(int questionId)
+        public async Task<ClientResponse<ProductQuestionDetail>> GetProductQuestionDetailAsync(int questionId)
         {
             GetProductQuestionDetailRequest request = new()
             {
@@ -200,7 +271,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<BaseClientResponse> SaveProductAnswer(int questionId, string answer)
+        public async Task<BaseClientResponse> SaveProductAnswerAsync(int questionId, string answer)
         {
             SaveProductAnswerRequest request = new()
             {
@@ -218,7 +289,7 @@ namespace N11.Client
             return response.ClientResponse;
         }
 
-        public async Task<ClientResponse<ProductApprovalStatusApi>> GetProductAllStatusCounts()
+        public async Task<ClientResponse<ProductApprovalStatusApi>> GetProductAllStatusCountsAsync()
         {
             try
             {

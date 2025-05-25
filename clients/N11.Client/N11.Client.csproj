@@ -8,16 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Consts\**" />
     <Compile Remove="Models\Requests\**" />
-    <EmbeddedResource Remove="Consts\**" />
     <EmbeddedResource Remove="Models\Requests\**" />
-    <None Remove="Consts\**" />
     <None Remove="Models\Requests\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.*" />
     <PackageReference Include="System.ServiceModel.Federation" Version="6.0.*" />

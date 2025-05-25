@@ -1,7 +1,7 @@
 ﻿using ECommerce.Trendyol;
 using Trendyol.Client;
 
-namespace ECommerce.Application.Interfaces.Adapters
+namespace ECommerce.Application.Adapters
 {
     public interface IAdapter
     {

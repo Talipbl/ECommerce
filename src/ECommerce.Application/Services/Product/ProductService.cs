@@ -1,4 +1,5 @@
-﻿using ECommerce.Core.Application;
+﻿using Ecommerce.Shared.Utilities.Results;
+using ECommerce.Application;
 using ECommerce.Systems;
 
 namespace ECommerce.Product;

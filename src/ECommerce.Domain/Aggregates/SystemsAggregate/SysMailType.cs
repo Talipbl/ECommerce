@@ -1,4 +1,4 @@
-﻿using ECommerce.Core.Domain;
+﻿using ECommerce.Domain;
 using ECommerce.User;
 using System;
 using System.Collections.Generic;

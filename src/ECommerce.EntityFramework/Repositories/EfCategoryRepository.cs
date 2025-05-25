@@ -1,5 +1,5 @@
-﻿using ECommerce.Core.Persistance;
-using ECommerce.Persistance;
+﻿using ECommerce.EntityFramework;
+
 using Microsoft.Data.SqlClient;
 
 namespace ECommerce.Category;

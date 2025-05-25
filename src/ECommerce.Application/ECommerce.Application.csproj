@@ -29,20 +29,19 @@
     <Compile Remove="Helpers\Trendyol\**" />
     <Compile Remove="Helpers\User\**" />
     <Compile Remove="Helpers\Xml\**" />
-    <Compile Remove="Interfaces\Managers\**" />
     <Compile Remove="Managers\**" />
     <Compile Remove="Utilities\**" />
-    <Compile Remove="Validators\Admin\**" />
-    <Compile Remove="Validators\Brand\**" />
-    <Compile Remove="Validators\Carrier\**" />
-    <Compile Remove="Validators\Category\**" />
-    <Compile Remove="Validators\DiscountCoupon\**" />
-    <Compile Remove="Validators\Manufacturer\**" />
-    <Compile Remove="Validators\Order\**" />
-    <Compile Remove="Validators\System\**" />
-    <Compile Remove="Validators\Trendyol\**" />
-    <Compile Remove="Validators\User\**" />
-    <Compile Remove="Validators\Xml\**" />
+    <Compile Remove="Validations\Admin\**" />
+    <Compile Remove="Validations\Brand\**" />
+    <Compile Remove="Validations\Carrier\**" />
+    <Compile Remove="Validations\Category\**" />
+    <Compile Remove="Validations\DiscountCoupon\**" />
+    <Compile Remove="Validations\Manufacturer\**" />
+    <Compile Remove="Validations\Order\**" />
+    <Compile Remove="Validations\System\**" />
+    <Compile Remove="Validations\Trendyol\**" />
+    <Compile Remove="Validations\User\**" />
+    <Compile Remove="Validations\Xml\**" />
     <EmbeddedResource Remove="DataTransferObjects\Admin\Profiles\**" />
     <EmbeddedResource Remove="DataTransferObjects\Brand\**" />
     <EmbeddedResource Remove="DataTransferObjects\Carrier\**" />
@@ -65,20 +64,19 @@
     <EmbeddedResource Remove="Helpers\Trendyol\**" />
     <EmbeddedResource Remove="Helpers\User\**" />
     <EmbeddedResource Remove="Helpers\Xml\**" />
-    <EmbeddedResource Remove="Interfaces\Managers\**" />
     <EmbeddedResource Remove="Managers\**" />
     <EmbeddedResource Remove="Utilities\**" />
-    <EmbeddedResource Remove="Validators\Admin\**" />
-    <EmbeddedResource Remove="Validators\Brand\**" />
-    <EmbeddedResource Remove="Validators\Carrier\**" />
-    <EmbeddedResource Remove="Validators\Category\**" />
-    <EmbeddedResource Remove="Validators\DiscountCoupon\**" />
-    <EmbeddedResource Remove="Validators\Manufacturer\**" />
-    <EmbeddedResource Remove="Validators\Order\**" />
-    <EmbeddedResource Remove="Validators\System\**" />
-    <EmbeddedResource Remove="Validators\Trendyol\**" />
-    <EmbeddedResource Remove="Validators\User\**" />
-    <EmbeddedResource Remove="Validators\Xml\**" />
+    <EmbeddedResource Remove="Validations\Admin\**" />
+    <EmbeddedResource Remove="Validations\Brand\**" />
+    <EmbeddedResource Remove="Validations\Carrier\**" />
+    <EmbeddedResource Remove="Validations\Category\**" />
+    <EmbeddedResource Remove="Validations\DiscountCoupon\**" />
+    <EmbeddedResource Remove="Validations\Manufacturer\**" />
+    <EmbeddedResource Remove="Validations\Order\**" />
+    <EmbeddedResource Remove="Validations\System\**" />
+    <EmbeddedResource Remove="Validations\Trendyol\**" />
+    <EmbeddedResource Remove="Validations\User\**" />
+    <EmbeddedResource Remove="Validations\Xml\**" />
     <None Remove="DataTransferObjects\Admin\Profiles\**" />
     <None Remove="DataTransferObjects\Brand\**" />
     <None Remove="DataTransferObjects\Carrier\**" />
@@ -101,20 +99,19 @@
     <None Remove="Helpers\Trendyol\**" />
     <None Remove="Helpers\User\**" />
     <None Remove="Helpers\Xml\**" />
-    <None Remove="Interfaces\Managers\**" />
     <None Remove="Managers\**" />
     <None Remove="Utilities\**" />
-    <None Remove="Validators\Admin\**" />
-    <None Remove="Validators\Brand\**" />
-    <None Remove="Validators\Carrier\**" />
-    <None Remove="Validators\Category\**" />
-    <None Remove="Validators\DiscountCoupon\**" />
-    <None Remove="Validators\Manufacturer\**" />
-    <None Remove="Validators\Order\**" />
-    <None Remove="Validators\System\**" />
-    <None Remove="Validators\Trendyol\**" />
-    <None Remove="Validators\User\**" />
-    <None Remove="Validators\Xml\**" />
+    <None Remove="Validations\Admin\**" />
+    <None Remove="Validations\Brand\**" />
+    <None Remove="Validations\Carrier\**" />
+    <None Remove="Validations\Category\**" />
+    <None Remove="Validations\DiscountCoupon\**" />
+    <None Remove="Validations\Manufacturer\**" />
+    <None Remove="Validations\Order\**" />
+    <None Remove="Validations\System\**" />
+    <None Remove="Validations\Trendyol\**" />
+    <None Remove="Validations\User\**" />
+    <None Remove="Validations\Xml\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -137,9 +134,9 @@
     <ProjectReference Include="..\..\clients\Hepsiburada.Client\Hepsiburada.Client.csproj" />
     <ProjectReference Include="..\..\clients\N11.Client\N11.Client.csproj" />
     <ProjectReference Include="..\..\clients\Trendyol.Client\Trendyol.Client.csproj" />
-    <ProjectReference Include="..\Ecommerce.Core\ECommerce.Core.csproj" />
     <ProjectReference Include="..\ECommerce.Domain\ECommerce.Domain.csproj" />
     <ProjectReference Include="..\ECommerce.EntityFramework\ECommerce.EntityFramework.csproj" />
+    <ProjectReference Include="..\Ecommerce.Shared\Ecommerce.Shared.csproj" />
   </ItemGroup>
 
 </Project>

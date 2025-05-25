@@ -1,5 +1,4 @@
-﻿using ECommerce.Core.Application;
-using ECommerce.Core.Persistance;
+﻿using ECommerce.Domain;
 
 namespace ECommerce.Brand
 {

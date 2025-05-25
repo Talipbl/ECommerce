@@ -2,10 +2,10 @@
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
 using ECommerce.Admin;
+using ECommerce.Application;
 using ECommerce.Brand;
 using ECommerce.Carrier;
 using ECommerce.Category;
-using ECommerce.Core.Application;
 using ECommerce.DiscountCoupon;
 using ECommerce.Manufacturer;
 using ECommerce.Order;

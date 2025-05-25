@@ -1,4 +1,4 @@
-﻿using ECommerce.Core.Domain;
+﻿using ECommerce.Domain;
 
 namespace ECommerce.Admin;
 

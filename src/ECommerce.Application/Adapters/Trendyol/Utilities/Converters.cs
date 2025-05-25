@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using ECommerce.Core.Application;
+using Ecommerce.Shared.Extensions;
+using Ecommerce.Shared.Utilities.Results;
 using Trendyol.Client;
 
 namespace ECommerce.Trendyol;

@@ -1,5 +1,5 @@
-﻿using ECommerce.Core.Application;
-using ECommerce.Services;
+﻿using Ecommerce.Shared.Utilities.Results;
+using ECommerce.Application;
 using Trendyol.Client;
 
 namespace ECommerce.Trendyol

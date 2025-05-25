@@ -1,4 +1,4 @@
-﻿using ECommerce.Application.Interfaces.Adapters;
+﻿using ECommerce.Application.Adapters;
 using Trendyol.Client;
 
 namespace ECommerce.Trendyol

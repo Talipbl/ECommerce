@@ -1,4 +1,4 @@
-﻿using ECommerce.Core.Domain;
+﻿using ECommerce.Domain;
 using ECommerce.Systems;
 using ECommerce.Xml;
 using System;

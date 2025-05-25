@@ -1,4 +1,4 @@
-﻿using ECommerce.Core.Application;
+﻿using Ecommerce.Shared.Utilities.Results;
 using ECommerce.Product;
 using ECommerce.Systems;
 

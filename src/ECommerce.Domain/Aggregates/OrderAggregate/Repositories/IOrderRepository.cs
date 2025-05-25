@@ -1,4 +1,4 @@
-﻿using ECommerce.Core.Persistance;
+﻿using ECommerce.Domain;
 
 namespace ECommerce.Order
 {

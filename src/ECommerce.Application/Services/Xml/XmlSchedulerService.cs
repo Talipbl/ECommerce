@@ -1,4 +1,4 @@
-﻿using ECommerce.Core.Application;
+﻿using Ecommerce.Shared.Utilities.Results;
 
 namespace ECommerce.Xml;
 

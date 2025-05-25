@@ -1,14 +1,14 @@
 ﻿using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using ECommerce.Application;
-using ECommerce.Core.Application;
+using ECommerce.Infrastructure.RegisterModules;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddCoreServices();
+builder.Services.AddInfrastructureServices();
 builder.Services.AddMappingProfiles();
 
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
@@ -19,6 +19,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterMod
 builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacEFModule()));
 
 var app = builder.Build();
+
+ServiceTool.ServiceProvider = app.Services;
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

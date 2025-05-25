@@ -15,8 +15,4 @@
     <Folder Include="source\12052023\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Ecommerce.Core\ECommerce.Core.csproj" />
-  </ItemGroup>
-
 </Project>

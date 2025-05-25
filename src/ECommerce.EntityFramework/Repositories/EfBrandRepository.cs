@@ -1,10 +1,4 @@
-﻿using ECommerce.Core.Persistance;
-using ECommerce.Persistance;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ECommerce.EntityFramework;
 
 namespace ECommerce.Brand;
 

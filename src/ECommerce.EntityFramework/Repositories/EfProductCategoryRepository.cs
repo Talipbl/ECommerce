@@ -1,6 +1,6 @@
-﻿using ECommerce.Core.Persistance;
+﻿using ECommerce.EntityFramework;
 using ECommerce.Category;
-using ECommerce.Persistance;
+
 
 namespace ECommerce.Product;
 

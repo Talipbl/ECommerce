@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ECommerce.Application.Interfaces.Adapters;
+using ECommerce.Application.Adapters;
 using ECommerce.Trendyol;
 using Trendyol.Client;
 

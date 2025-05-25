@@ -1,5 +1,5 @@
-﻿using ECommerce.Core.Persistance;
-using ECommerce.Persistance;
+﻿using ECommerce.EntityFramework;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Systems;

@@ -11,7 +11,7 @@ using ECommerce.User;
 using ECommerce.Xml;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerce.Persistance;
+namespace ECommerce.EntityFramework;
 
 public partial class ECommerceContext : DbContext
 {

@@ -1,5 +1,4 @@
-﻿using ECommerce.Core.Application;
-using ECommerce.Core.Persistance;
+﻿using ECommerce.Domain;
 using ECommerce.Systems;
 
 namespace ECommerce.Category

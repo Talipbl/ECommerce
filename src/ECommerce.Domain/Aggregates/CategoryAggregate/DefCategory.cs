@@ -1,4 +1,4 @@
-﻿using ECommerce.Core.Domain;
+﻿using ECommerce.Domain;
 using ECommerce.DiscountCoupon;
 using ECommerce.Product;
 using System;

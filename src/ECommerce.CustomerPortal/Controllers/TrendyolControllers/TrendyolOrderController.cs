@@ -1,6 +1,4 @@
-﻿using ECommerce.Core.Application;
-using ECommerce.CustomerPortal.Models;
-using ECommerce.Order;
+﻿using ECommerce.CustomerPortal.Models;
 using ECommerce.Trendyol;
 using Microsoft.AspNetCore.Mvc;
 

@@ -11,7 +11,7 @@ namespace N11.Client
         private readonly Authentication _auth;
         private readonly ApiAuthentication _apiAuth;
 
-        private readonly Uri URL = new("https://api.n11.com/ws/OrderService.wsdl"); 
+        private readonly Uri Url = new("https://api.n11.com/ws/OrderService.wsdl"); 
         private const string RestUrl = "https://api.n11.com";
         private const string Prefix = "/rest/order/v1";
 
@@ -29,7 +29,7 @@ namespace N11.Client
                 IntegratorName = "SelfIntegration",
             };
 
-            _client = new BaseClient<OrderServicePortClient, OrderServicePort>(URL).GetClient();
+            _client = new BaseClient<OrderServicePortClient, OrderServicePort>(Url).GetClient();
             _httpClient = new BaseHttpClient(RestUrl, _apiAuth);
             _serviceExecutor = new ServiceExecutor();
         }

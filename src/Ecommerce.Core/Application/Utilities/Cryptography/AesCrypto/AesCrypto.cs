@@ -13,7 +13,7 @@ namespace ECommerce.Core.Application
         {
             using (Aes aes = Aes.Create())
             {
-                aes.Key = Encoding.UTF8.GetBytes(privateKey);   // Burada hata veriyor.
+                aes.Key = Encoding.UTF8.GetBytes(privateKey);
                 aes.GenerateIV();
 
                 ICryptoTransform cryptoTransform = aes.CreateEncryptor(aes.Key, aes.IV);

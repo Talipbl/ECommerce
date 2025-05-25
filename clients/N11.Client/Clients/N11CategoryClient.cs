@@ -9,7 +9,7 @@ namespace N11.Client
         private readonly ServiceExecutor _serviceExecutor;
         private readonly Authentication _auth;
 
-        private readonly Uri URL = new("https://api.n11.com/ws/CategoryService.wsdl");
+        private readonly Uri Url = new("https://api.n11.com/ws/CategoryService.wsdl");
 
         public N11CategoryClient(string appKey, string appSecretKey)
         {
@@ -19,7 +19,7 @@ namespace N11.Client
                 appSecret = appSecretKey
             };
 
-            _client = new BaseClient<CategoryServicePortClient, CategoryServicePort>(URL).GetClient();
+            _client = new BaseClient<CategoryServicePortClient, CategoryServicePort>(Url).GetClient();
             _serviceExecutor = new ServiceExecutor();
         }
 

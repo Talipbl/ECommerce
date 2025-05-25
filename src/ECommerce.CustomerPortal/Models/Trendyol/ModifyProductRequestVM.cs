@@ -19,7 +19,7 @@ namespace Ecommerce.Trendyol
         public int DeliveryDuration { get; set; }
         public string FastDeliveryType { get; set; }
         public List<string> Images { get; set; }
-        public List<TrendyolRequestAttributeDTO> Attributes { get; set; }
+        public List<RequestAttributeDTO> Attributes { get; set; }
     }
 
 }

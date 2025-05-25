@@ -6,10 +6,14 @@ namespace N11.Client
     public class N11OrderClient
     {
         private readonly OrderServicePortClient _client;
+        private readonly BaseHttpClient _httpClient;
         private readonly ServiceExecutor _serviceExecutor;
         private readonly Authentication _auth;
+        private readonly ApiAuthentication _apiAuth;
 
-        private readonly Uri URL = new("https://api.n11.com/ws/OrderService.wsdl");
+        private readonly Uri Url = new("https://api.n11.com/ws/OrderService.wsdl"); 
+        private const string RestUrl = "https://api.n11.com";
+        private const string Prefix = "/rest/order/v1";
 
         public N11OrderClient(string appKey, string appSecretKey)
         {
@@ -18,9 +22,29 @@ namespace N11.Client
                 appKey = appKey,
                 appSecret = appSecretKey
             };
+            _apiAuth = new()
+            {
+                AppKey = appKey,
+                AppSecretKey = appSecretKey,
+                IntegratorName = "SelfIntegration",
+            };
 
-            _client = new BaseClient<OrderServicePortClient, OrderServicePort>(URL).GetClient();
+            _client = new BaseClient<OrderServicePortClient, OrderServicePort>(Url).GetClient();
+            _httpClient = new BaseHttpClient(RestUrl, _apiAuth);
             _serviceExecutor = new ServiceExecutor();
+        }
+
+        public async Task<BaseResponse<ShipmentPackagesResponse>> GetShipmentPackagesAsync(ShipmentPackagesQueryParameter queries)
+        {
+            string queryString = JsonHelper.BuildQueryString(queries);
+            return await _httpClient.GetAsync<ShipmentPackagesResponse>($"/rest/delivery/v1/shipmentPackages?{queryString}");
+        }
+
+        public async Task<BaseResponse<UpdateOrderResponse>> UpdateOrderAsync(UpdateOrderRequest request)
+        {
+            //Şu an için UpdateOrder servisi ile yalnızca Picking status update yapılabilmekte, yani sipariş kalemleri onaylanabilmektedir. Diğer statü güncellemeleri ilerleyen süreçte yayınlanarak bu dökümana eklenecektir.
+            request.Status = "Picking";
+            return await _httpClient.PutAsync<UpdateOrderResponse>(request, $"{Prefix}/update");
         }
 
         public async Task<ClientResponse<OrderData[]>> GetOrderList(OrderDataListRequest search, int currentPage = 0, int pageSize = 100)

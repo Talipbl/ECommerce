@@ -3,8 +3,9 @@ using System.Text;
 
 namespace Trendyol.Client
 {
-    //bkz: https://developers.trendyol.com/docs/category/i%CC%87ade-entegrasyonu
-
+    /// <summary>
+    /// <see cref="https://developers.trendyol.com/docs/category/i%CC%87ade-entegrasyonu"/>
+    /// </summary>
     public class TrendyolClaimReturnClient
     {
         private BaseHttpClient Client { get; set; }

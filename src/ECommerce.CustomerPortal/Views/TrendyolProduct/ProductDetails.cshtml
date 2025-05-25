@@ -1,5 +1,4 @@
-﻿@using Trendyol.Client
-@model GetProductsResponseModel.ContentModel
+﻿@model ProductsResponseDTO.ContentDTO
 
 @{
     ViewBag.Title = "Ürün Düzenle";
@@ -98,8 +97,8 @@
                             @foreach (var image in Model.Images)
                             {
                                 <div class="image-box m-2 position-relative">
-                                    <button type="button" class="btn btn-danger btn-sm position-absolute" style="top: 5px; right: 5px;" onclick="remove(this, '@image.Url')">&times;</button>
-                                    <img src="@image.Url" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
+                                    <button type="button" class="btn btn-danger btn-sm position-absolute" style="top: 5px; right: 5px;" onclick="remove(this, '@image')">&times;</button>
+                                    <img src="@image" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
                                 </div>
                             }
                         </div>

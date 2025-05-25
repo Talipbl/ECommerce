@@ -34,7 +34,7 @@ namespace Ecommerce.Trendyol
         [Route("create")]
         public async Task<IActionResult> CreateProduct([FromBody] ModifyProductRequestVM product)
         {
-            var result = await _trendyolService.CreateProductAsync(new TrendyolProductDTO()
+            var result = await _trendyolService.CreateProductAsync(new ProductRequestDTO()
             {
                 Barcode = product.Barcode,
                 StockCode = product.StockCode,
@@ -55,7 +55,7 @@ namespace Ecommerce.Trendyol
         [Route("update")]
         public async Task<IActionResult> UpdateProduct([FromBody] ModifyProductRequestVM product)
         {
-            var result = await _trendyolService.UpdateProductAsync(new TrendyolProductDTO()
+            var result = await _trendyolService.UpdateProductAsync(new ProductRequestDTO()
             {
                 Barcode = product.Barcode,
                 StockCode = product.StockCode,
@@ -106,7 +106,7 @@ namespace Ecommerce.Trendyol
 
         [HttpPost]
         [Route("updatePriceInventory")]
-        public async Task<IActionResult> UpdatePriceInventory([FromBody] List<TrendyolPriceAndInventoryDTO> request)
+        public async Task<IActionResult> UpdatePriceInventory([FromBody] List<PriceAndInventoryUpdateRequestDTO> request)
         {
             var result = await _trendyolService.UpdatePriceAndInventoryAsync(request);
             return Json(result);

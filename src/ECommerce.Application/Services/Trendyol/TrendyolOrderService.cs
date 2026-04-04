@@ -6,7 +6,7 @@ namespace ECommerce.Trendyol
 {
     public class TrendyolOrderService(ITrendyolOrderAdapter _adapter) : ITrendyolOrderService
     {
-        TrendyolOrderClient _orderClient = new(ApiAuthentication.CreateAuthentication("atBqHAZm2Eg1ZttXGpMZ", "LSEzaIx17XkuFiYyXyRu", "836049"));
+        TrendyolOrderClient _orderClient = ******", "*********", "00000"));
 
         public async Task<IDataResult<GetOrdersResponseDTO>> GetOrdersAsync(OrderQueryParametersModelDTO parameters)
         {

@@ -6,7 +6,7 @@ namespace ECommerce.Trendyol
 {
     public class TrendyolProductService(ITrendyolProductAdapter _adapter) : ITrendyolProductService
     {
-        TrendyolProductClient _productClient = new(ApiAuthentication.CreateAuthentication("atBqHAZm2Eg1ZttXGpMZ", "LSEzaIx17XkuFiYyXyRu", "836049"));
+        TrendyolProductClient _productClient = ********", "*********", "000000"));
 
         [LogAspect]
         public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductAsync(ProductRequestDTO product)

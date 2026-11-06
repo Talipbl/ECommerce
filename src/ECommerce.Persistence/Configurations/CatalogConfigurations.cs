@@ -54,10 +54,10 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         entity.HasOne<Category>().WithMany().HasForeignKey(e => e.CategoryId).OnDelete(DeleteBehavior.Restrict);
 
         entity.HasMany(e => e.Variants).WithOne().HasForeignKey(v => v.ProductId).OnDelete(DeleteBehavior.Cascade);
-        entity.Navigation(e => e.Variants).UsePropertyAccessMode(PropertyAccessMode.Field);
+        entity.Navigation(e => e.Variants).UsePropertyAccessMode(PropertyAccessMode.Field).AutoInclude();
 
         entity.HasMany(e => e.Images).WithOne().HasForeignKey(i => i.ProductId).OnDelete(DeleteBehavior.Cascade);
-        entity.Navigation(e => e.Images).UsePropertyAccessMode(PropertyAccessMode.Field);
+        entity.Navigation(e => e.Images).UsePropertyAccessMode(PropertyAccessMode.Field).AutoInclude();
     }
 }
 

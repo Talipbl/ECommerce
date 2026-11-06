@@ -21,18 +21,20 @@ namespace ECommerce.Persistence.Migrations
                 schema: "dbo",
                 table: "Def_Admins");
 
-            migrationBuilder.AlterColumn<string>(
+            // varbinary -> nvarchar dönüşümü ALTER ile yapılamaz; eski hash formatı zaten uyumsuz olduğu için sütun yeniden oluşturulur.
+            migrationBuilder.DropColumn(
+                name: "PasswordHash",
+                schema: "dbo",
+                table: "Def_Admins");
+
+            migrationBuilder.AddColumn<string>(
                 name: "PasswordHash",
                 schema: "dbo",
                 table: "Def_Admins",
                 type: "nvarchar(500)",
                 maxLength: 500,
                 nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(byte[]),
-                oldType: "varbinary(500)",
-                oldMaxLength: 500,
-                oldNullable: true);
+                defaultValue: "");
 
             migrationBuilder.AlterColumn<bool>(
                 name: "IsActive",
@@ -145,16 +147,18 @@ namespace ECommerce.Persistence.Migrations
                 schema: "dbo",
                 table: "Def_Admins");
 
-            migrationBuilder.AlterColumn<byte[]>(
+            migrationBuilder.DropColumn(
+                name: "PasswordHash",
+                schema: "dbo",
+                table: "Def_Admins");
+
+            migrationBuilder.AddColumn<byte[]>(
                 name: "PasswordHash",
                 schema: "dbo",
                 table: "Def_Admins",
                 type: "varbinary(500)",
                 maxLength: 500,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(500)",
-                oldMaxLength: 500);
+                nullable: true);
 
             migrationBuilder.AlterColumn<bool>(
                 name: "IsActive",

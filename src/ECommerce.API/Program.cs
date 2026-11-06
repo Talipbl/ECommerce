@@ -5,6 +5,7 @@ using ECommerce.Persistence;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Scalar.AspNetCore;
 using Serilog;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,11 @@ builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApiSecurity(builder.Configuration);
 
-builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>());
+builder.Services.AddHostedService<TrendyolBatchStatusWorker>();
+
+builder.Services
+    .AddControllers(options => options.Filters.Add<ValidationFilter>())
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services
@@ -33,7 +38,7 @@ builder.Services
         options.GroupNameFormat = "'v'V";
         options.SubstituteApiVersionInUrl = true;
     })
-    .AddOpenApi();
+    .AddOpenApi(options => options.Document.AddDocumentTransformer<BearerSecuritySchemeTransformer>());
 
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<ECommerceContext>("database", tags: ["ready"]);

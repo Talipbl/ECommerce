@@ -3,7 +3,3 @@
 # CS8601: Possible null reference assignment.
 dotnet_diagnostic.CS8601.severity = suggestion
 
-
-# Faz 3: Trendyol modelleri/DTO'lari ve portal ViewModel'leri yeniden yazilana kadar gecici.
-[{marketplaces/Trendyol.Client/Models/**.cs,src/ECommerce.Application/Adapters/Trendyol/DTOs/**.cs,src/ECommerce.CustomerPortal/Models/**.cs}]
-dotnet_diagnostic.CS8618.severity = none

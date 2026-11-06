@@ -1,5 +1,4 @@
 using ECommerce.Admin;
-using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +20,6 @@ public static class AuthServiceCollectionExtensions
         services.AddSingleton<IPasswordHasher<DefAdmin>, PasswordHasher<DefAdmin>>();
         services.AddSingleton<ITokenService, JwtTokenService>();
         services.AddScoped<IAuthService, AuthService>();
-        services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
 
         return services;
     }

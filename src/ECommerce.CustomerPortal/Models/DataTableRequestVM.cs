@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-
+﻿
 namespace ECommerce.CustomerPortal.Models
 {
     public class DataTableRequestVM

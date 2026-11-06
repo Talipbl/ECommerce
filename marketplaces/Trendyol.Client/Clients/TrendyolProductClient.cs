@@ -1,4 +1,6 @@
-﻿namespace Trendyol.Client
+﻿using Microsoft.Extensions.Options;
+
+namespace Trendyol.Client
 {
     /// <summary>
     /// <see cref="https://developers.trendyol.com/docs/category/%C3%BCr%C3%BCn-entegrasyonu"/>
@@ -7,13 +9,12 @@
     {
         private readonly BaseHttpClient _client;
 
-        readonly string Url = "https://api.trendyol.com"; 
         readonly string Prefix = "/sapigw";
         readonly string _supplierId;
-        public TrendyolProductClient(ApiAuthentication authentication)
+        public TrendyolProductClient(HttpClient httpClient, IOptions<TrendyolOptions> options)
         {
-            _supplierId = authentication.SellerId;
-            _client = new BaseHttpClient(Url, _supplierId, authentication);
+            _supplierId = options.Value.SellerId;
+            _client = new BaseHttpClient(httpClient);
         }
         public async Task<RootResponseModel<BrandListModel>> GetBrandsAsync()
         {

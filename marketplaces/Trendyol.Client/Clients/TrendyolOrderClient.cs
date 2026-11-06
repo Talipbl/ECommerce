@@ -1,4 +1,6 @@
-﻿namespace Trendyol.Client
+﻿using Microsoft.Extensions.Options;
+
+namespace Trendyol.Client
 {
     /// <summary>
     /// <see cref="https://developers.trendyol.com/docs/category/siparis-entegrasyonu"/>
@@ -7,13 +9,12 @@
     {
         private BaseHttpClient Client { get; set; }
 
-        readonly string URL = "https://api.trendyol.com";
         readonly string PREFIX = "/sapigw";
         readonly string _supplierId;
-        public TrendyolOrderClient(ApiAuthentication authentication)
+        public TrendyolOrderClient(HttpClient httpClient, IOptions<TrendyolOptions> options)
         {
-            _supplierId = authentication.SellerId;
-            Client = new BaseHttpClient(URL, _supplierId, authentication);
+            _supplierId = options.Value.SellerId;
+            Client = new BaseHttpClient(httpClient);
         }
 
         /// <summary>

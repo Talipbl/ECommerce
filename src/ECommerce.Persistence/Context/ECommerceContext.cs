@@ -20,6 +20,8 @@ public class ECommerceContext(DbContextOptions<ECommerceContext> options) : DbCo
 {
     public DbSet<DefAdmin> DefAdmins => Set<DefAdmin>();
 
+    public DbSet<AdminRefreshToken> AdminRefreshTokens => Set<AdminRefreshToken>();
+
     public DbSet<DefBrand> DefBrands => Set<DefBrand>();
 
     public DbSet<DefCarrier> DefCarriers => Set<DefCarrier>();

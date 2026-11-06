@@ -18,11 +18,11 @@ public class ApiPipelineTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Unknown_route_returns_problem_details()
+    public async Task Unknown_route_for_anonymous_returns_401_problem_without_revealing_routes()
     {
         var response = await _factory.CreateClient().GetAsync("/api/v1/unknown", TestContext.Current.CancellationToken);
 
-        response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
+        response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         response.Content.Headers.ContentType?.MediaType.ShouldBe("application/problem+json");
     }
 

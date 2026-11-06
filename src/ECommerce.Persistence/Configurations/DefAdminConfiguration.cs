@@ -21,9 +21,10 @@ public class DefAdminConfiguration : IEntityTypeConfiguration<DefAdmin>
             .HasMaxLength(250)
             .HasColumnName("OTPSetupCode");
         entity.Property(e => e.PasswordHash).HasMaxLength(500);
-        entity.Property(e => e.PasswordSalt).HasMaxLength(500);
         entity.Property(e => e.RegisterDate).HasColumnType("datetime");
-        entity.Property(e => e.SecurityLevel).HasDefaultValueSql("((1))");
         entity.Property(e => e.UserName).HasMaxLength(30);
+        entity.Property(e => e.Role).HasMaxLength(30);
+        entity.Property(e => e.IsActive).HasDefaultValue(true);
+        entity.HasIndex(e => e.UserName).IsUnique();
     }
 }

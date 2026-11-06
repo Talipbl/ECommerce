@@ -156,17 +156,30 @@ dotnet run --project src/ECommerce.API
 
 ## Faz 2 — Giriş ve güvenlik (4–5 gün) · TDD
 
-- [ ] **Yönetici girişi:** `DefAdmin` + `PasswordHasher<T>` (PBKDF2); mevcut `HashigHelper` kaldırılır.
-- [ ] **JWT access token** (kısa ömürlü) + **refresh token** (veritabanında, rotasyonlu, httpOnly cookie ile SPA'ya).
-- [ ] Uçlar: `POST /auth/login`, `/auth/refresh`, `/auth/logout`, `GET /auth/me`, şifre değiştirme.
-- [ ] Roller: `Admin` (MVP'de tek rol yeterli; policy yapısı genişlemeye açık).
-- [ ] Brute-force koruması: login için rate limiting + hesap kilitleme.
-- [ ] İlk yönetici için seed / CLI komutu (şifre ortam değişkeninden).
-- [ ] Güvenlik: CORS (sadece front-end origin'i), HTTPS/HSTS, güvenlik header'ları, gizli bilgiler sadece secret/ortam değişkeninde.
-- [ ] FluentValidation endpoint filtresi ve ortak validasyon hata cevabı (Faz 1'den taşındı).
+- [x] **Yönetici girişi:** `DefAdmin` + `PasswordHasher<T>` (PBKDF2, tek `PasswordHash` alanı); eski salt/hash ve `SecurityLevel` kaldırıldı. Gerektiğinde hash otomatik yenileniyor.
+- [x] **JWT access token** (15 dk, HS256, `sub`/`name`/`role`) + **refresh token** (7 gün, veritabanında SHA-256 özeti, her kullanımda döndürülüyor, `httpOnly` + `Secure` + `SameSite=Strict` cookie, path `/api/v1/auth`).
+- [x] Döndürülmüş bir refresh token tekrar kullanılırsa yöneticinin tüm oturumları kapatılıyor (çalınma tespiti).
+- [x] Uçlar: `POST /api/v1/auth/login`, `/refresh`, `/logout`, `GET /me`, `POST /change-password` (parola değişince tüm oturumlar kapanıyor).
+- [x] Yetkilendirme: varsayılan (fallback) politika kimliği doğrulanmış + `Admin` rolü; `[AllowAnonymous]` olmayan her uç korumalı. Anonim istekler bilinmeyen route'larda da 401 alıyor (route bilgisi sızmıyor).
+- [x] Brute-force: login/refresh için IP başına rate limit (varsayılan 10/dk, 429 ProblemDetails) + 5 hatalı denemede 15 dk hesap kilitleme. Geçersiz kullanıcı ve kilitli hesap aynı genel 401 mesajını alıyor.
+- [x] İlk yönetici seed'i: `Seed:Admin:*` ayarları verilirse ve kullanıcı yoksa açılışta oluşturuluyor; parola kuralları uygulanıyor.
+- [x] Güvenlik: CORS (`Cors:AllowedOrigins`, credentials), HSTS (Development dışı), `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy`, CSP. `Jwt:SigningKey` en az 32 bayt değilse uygulama açılmıyor.
+- [x] FluentValidation global action filtresi → 400 `ValidationProblemDetails`. Parola kuralı: en az 12 karakter, büyük/küçük harf, rakam, eskisinden farklı.
+- [x] Bulunan hata: `PasswordHash` sütunu `varbinary`'den `nvarchar`'a `ALTER` ile çevrilemiyordu; migration sütunu silip yeniden ekleyecek şekilde düzeltildi (entegrasyon testi yakaladı).
 - [ ] Müşteri (site kullanıcısı) kimlik doğrulaması Faz 4.2'de aynı altyapıyla eklenir.
+- [ ] Scalar arayüzüne Bearer güvenlik şeması eklenmesi (OpenAPI document transformer) → Faz 3'te ilk Trendyol uçlarıyla.
 
-**Kabul:** Korunan uçlar token'sız 401 dönüyor; refresh rotasyonu ve kilitleme testlerle doğrulanmış.
+**Kabul:** Korunan uçlar token'sız 401 dönüyor ✔; refresh rotasyonu, tekrar kullanım tespiti, kilitleme ve rate limit testlerle doğrulandı ✔ (48 unit + 18 entegrasyon testi).
+
+**Yerel ayarlar (API):**
+```bash
+cd src/ECommerce.API
+dotnet user-secrets set "Jwt:SigningKey" "<en az 32 karakterlik rastgele değer>"
+dotnet user-secrets set "Seed:Admin:UserName" "admin"
+dotnet user-secrets set "Seed:Admin:Password" "<güçlü parola>"
+dotnet user-secrets set "Seed:Admin:Email" "<e-posta>"
+dotnet user-secrets set "Cors:AllowedOrigins:0" "http://localhost:5173"
+```
 
 ---
 

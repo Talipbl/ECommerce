@@ -17,6 +17,7 @@ builder.Host.UseSerilog((context, services, logger) => logger
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApiSecurity(builder.Configuration);
+builder.Services.AddMedia(builder.Configuration);
 
 builder.Services.AddHostedService<TrendyolBatchStatusWorker>();
 
@@ -61,6 +62,7 @@ else
 }
 
 app.UseHttpsRedirection();
+app.UseMedia();
 app.UseCors(SecurityRegistration.FrontendCorsPolicy);
 app.UseRateLimiter();
 app.UseAuthentication();

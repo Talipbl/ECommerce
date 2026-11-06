@@ -39,7 +39,7 @@ frontend/                    ← Faz 6
 docker/                      ← Faz 5
 ```
 
-- `ECommerce.CustomerPortal` (MVC) dondurulur, Faz 3 sonunda silinir (git geçmişinde kalır).
+- `ECommerce.CustomerPortal` (MVC) Faz 3'te silindi (git geçmişinde duruyor).
 - `N11.Client` ve `Hepsiburada.Client` Application'dan bağlantısı kesilip solution'dan çıkarılır; MVP sonrası geri alınır.
 - `ECommerce.ImageAPI` ayrı servis olarak kalmaz; görsel yükleme API'nin bir modülü olur (bkz. Açık kararlar #3).
 
@@ -59,7 +59,7 @@ docker/                      ← Faz 5
 | User-Agent | `{SellerId} - SelfIntegration` ✔ | Aynı; eksikse 403 |
 | `TrendyolDiscoveryClient` | Trendyol web sitesini tarıyor | Resmi API değil — kaldırılacak |
 
-Bu yüzden Faz 3'ün ilk işi client'ı güncel uçlara taşımak.
+Bu yüzden Faz 3'ün ilk işi client'ı güncel uçlara taşımaktı. **Durum (Faz 3):** tablodaki tüm farklar giderildi; client v2 uçlarına göre yeniden yazıldı.
 
 ---
 
@@ -186,36 +186,47 @@ dotnet user-secrets set "Cors:AllowedOrigins:0" "http://localhost:5173"
 ## Faz 3 — Trendyol ürün ve sipariş, uçtan uca (8–11 gün) · TDD
 
 ### 3.1 Client modernizasyonu
-- [ ] Base URL ve path'ler güncel uçlara taşınır (yukarıdaki tablo); Prod/Stage ortam seçimi konfigürasyondan.
-- [x] Typed `HttpClient`, Basic auth + User-Agent, 429/5xx için resilience (Faz 1'de yapıldı).
-- [ ] Client'lar için arayüzler (`ITrendyolProductClient` vb.) — servis testlerinde mock'lanabilmesi için.
-- [ ] Her uç için WireMock sözleşme testi (dokümandaki örnek JSON'larla).
-- [x] `TrendyolDiscoveryClient` ve kullanılmayan modeller kaldırıldı (Faz 1'de yapıldı).
-- [ ] Modeller/DTO'lar nullable uyumlu hale getirilir; `.editorconfig`'teki geçici CS8618 istisnası kaldırılır.
-- [ ] `QueryBooleanOption` query string'e `True/False` olarak yazılıyor; Trendyol `true/false` bekliyor.
-- [ ] Stage ortamı için çıkış IP'sinin Trendyol'a whitelist ettirilmesi (çağrı merkezi üzerinden — operasyonel iş).
+- [x] Client güncel uçlara göre baştan yazıldı: `apigw.trendyol.com` / `stageapigw.trendyol.com` (`Trendyol:BaseUrl`), `/integration/...` path'leri, sipariş için v2.
+- [x] Arayüzler: `ITrendyolCatalogClient`, `ITrendyolProductClient`, `ITrendyolOrderClient`; sonuç tipi `TrendyolResponse<T>` (exception yerine durum kodu + ayrıştırılmış hata).
+- [x] System.Text.Json; null alanlar gönderilmiyor. Boolean'lar `true/false`, tarihler Unix milisaniye olarak yazılıyor (eski `QueryBooleanOption` sorunu ortadan kalktı).
+- [x] Resilience: GET'ler tekrar deneniyor; POST/PUT/DELETE **tekrar denenmiyor** (ürün yaratma/fiyat güncelleme idempotent değil). Ağ hataları, zaman aşımı ve devre kesici 503 sonucu olarak dönüyor.
+- [x] 24 WireMock sözleşme testi: metod, path, Basic auth, User-Agent, query string, gövde JSON'u ve doküman örneklerine göre cevap ayrıştırma.
+- [x] Nullable uyumlu modeller; `.editorconfig`'teki geçici CS8618 istisnası kaldırıldı. Newtonsoft.Json bağımlılığı kalktı.
+- [ ] Stage ortamı için çıkış IP'sinin Trendyol'a whitelist ettirilmesi (çağrı merkezi üzerinden — operasyonel iş, satıcı tarafından).
 
 ### 3.2 Referans veriler
-- [ ] Kategori ağacı, kategori özellikleri ve değerleri, marka arama — cache'li (servis limiti düşük: dakikada 50).
+- [x] Kategori ağacı, leaf kategori araması (yol bilgisiyle, Türkçe büyük/küçük harf duyarsız), kategori özellikleri, özellik değerleri (tüm sayfalar), marka araması. Başarılı cevaplar 6 saat önbellekte; hatalar önbelleğe alınmıyor.
 
 ### 3.3 Ürün
-- [ ] Ürün listeleme/filtreleme (barkod, onay durumu, sayfalama).
-- [ ] Ürün yaratma (v2), onaylı/onaysız ürün güncelleme (v2), silme.
-- [ ] Fiyat ve stok güncelleme (barkod başına dakikada 30 fiyat güncellemesi sınırına dikkat).
-- [ ] **Batch takibi:** dönen `batchRequestId` veritabanına yazılır; arka plan görevi sonucu sorgular, hatalı kalemleri kaydeder.
+- [x] Onaylı (`approved`, contentId + varyantlar) ve onaysız (`unapproved`, red sebepleri) ürün listeleme.
+- [x] Ürün yaratma (v2), onaylı ürün içerik güncellemesi (`content-bulk-update`), onaysız ürün güncellemesi, silme, fiyat/stok güncelleme.
+- [x] İstek validasyonu: 1000 kalem, barkod karakterleri, en fazla 8 https görsel, liste fiyatı ≥ satış fiyatı, KDV 0/1/10/20, stok ≤ 20.000, istek içinde tekrar eden barkod yok.
+- [x] **Batch takibi:** dönen `batchRequestId` `Gnl_MarketplaceBatchRequests` tablosuna yazılıyor; `TrendyolBatchStatusWorker` (varsayılan 60 sn) bekleyenleri sorguluyor, hatalı kalemleri (barkod + sebepler) saklıyor. Trendyol sonuçları ~4 saat tuttuğu için daha eski veya Trendyol'da bulunamayan kayıtlar `Expired` oluyor.
+- [ ] Varyant ve teslimat bilgisi güncellemesi (`variant-bulk-update`, `delivery-info-bulk-update`) → ihtiyaç olursa Faz 4.3'te.
 
 ### 3.4 Sipariş
-- [ ] Sipariş paketlerini çekme (v2, sayfa başı max 200, max 2 haftalık aralık); periyodik çekme işi.
-- [ ] Paket statüsü: Picking → Invoiced.
-- [ ] Tedarik edememe bildirimi.
-- [ ] Fatura linki gönderme/silme.
-- [ ] (Opsiyonel) Webhook ile sipariş bildirimi — public URL gerektirdiği için Faz 5 sonrasında açılır; o zamana kadar polling.
+- [x] Sipariş paketlerini çekme (v2): sayfa ≤ 200, aralık ≤ 14 gün, en fazla son 1 ay, 10.000 kayıt sınırı ve statü doğrulaması Trendyol'a gitmeden yapılıyor.
+- [x] Paket statüsü: Picking → Invoiced (fatura numarasıyla).
+- [x] Tedarik edememe bildirimi (sebep kodları 500–506, API'de isimle).
+- [x] Fatura linki gönderme (https, fatura numarası biçimi) ve silme.
+- [ ] **Periyodik sipariş çekme → Faz 4.3'e taşındı:** siparişlerin yerel veritabanına alınmasıyla birlikte yapılacak; Faz 3'te siparişler canlı olarak Trendyol'dan listeleniyor.
+- [ ] (Opsiyonel) Webhook ile sipariş bildirimi — public URL gerektirdiği için Faz 5 sonrasında.
 
 ### 3.5 API uçları
-- [ ] `/api/v1/marketplaces/trendyol/...` altında ürün, referans veri, sipariş ve batch uçları; hepsi `Admin` yetkili.
-- [ ] `ECommerce.CustomerPortal` silinir.
+- [x] `/api/v1/marketplaces/trendyol/` altında katalog (5), ürün (7), batch (2) ve sipariş (6) uçları; hepsi `Admin` yetkili (fallback politika).
+- [x] Pazaryeri hataları ProblemDetails'e eşleniyor: Trendyol 400 → 400, 404 → 404, 409 → 409, 401/403 → 502 ("kimlik bilgileri reddedildi"), 429 → 503 + `Retry-After`, ulaşılamıyor → 502; Trendyol mesajları `errors`, orijinal kod `upstreamStatus` alanında.
+- [x] API JSON'unda enum'lar string (`"ProductCreate"`, `"OutOfStock"`).
+- [x] Scalar/OpenAPI'ye Bearer güvenlik şeması eklendi (Faz 2'den taşınan madde).
+- [x] `ECommerce.CustomerPortal` ve eski Trendyol katmanı (adapter, DTO, mapping, servis) silindi.
 
-**Kabul:** Stage ortamında (veya prod test ürünüyle) ürün yaratma → batch sonucu → fiyat/stok güncelleme → sipariş çekme → Picking → Invoiced → fatura linki akışı API üzerinden baştan sona çalışıyor; sözleşme ve entegrasyon testleri yeşil.
+**Kabul:** Sözleşme (24), unit (83) ve entegrasyon (29) testleri yeşil ✔. Stage/prod ortamında uçtan uca canlı akış ⏳ — Trendyol stage bilgileri ve IP whitelist'i gerekiyor; satıcı tarafında yapılınca `Trendyol:BaseUrl=https://stageapigw.trendyol.com` ile denenecek.
+
+**Uçtan uca deneme sırası (Scalar üzerinden):**
+1. `POST /api/v1/auth/login` → `accessToken`'ı Scalar'daki Bearer alanına gir.
+2. `GET .../trendyol/categories/search?term=...` → leaf kategori, `GET .../categories/{id}/attributes` ve `.../values` → özellikler; `GET .../brands?name=...` → marka.
+3. `POST .../trendyol/products` → 202 + `Location` (batch). `GET .../batches/{id}` ile sonucu izle.
+4. `GET .../products/unapproved` / `approved` → ürün durumu; `POST .../products/price-inventory` → fiyat/stok.
+5. `GET .../orders/packages?status=Created` → `POST .../{packageId}/picking` → `POST .../{packageId}/invoiced` → `POST .../{packageId}/invoice-link`.
 
 ---
 
@@ -239,6 +250,7 @@ dotnet user-secrets set "Cors:AllowedOrigins:0" "http://localhost:5173"
 - [ ] **Yayınlama:** yerel üründen Trendyol ürün isteği üretme; durum (bekliyor / onaylandı / hatalı) takibi.
 - [ ] **Tek stok ve fiyat:** yerelde stok/fiyat değişince outbox kaydı → arka plan işçisi Trendyol'a toplu gönderir (rate limit'e uygun).
 - [ ] **Sipariş içe alma:** Trendyol siparişleri yerel siparişe dönüştürülür (kanal = Trendyol); stok düşer; idempotent (aynı paket iki kez işlenmez).
+- [ ] Periyodik sipariş çekme işi (Faz 3.4'ten taşındı): son çekim zamanından itibaren 14 günlük pencerelerle, `PackageLastModifiedDate`'e göre.
 - [ ] **Statü geri bildirimi:** yerelde "Hazırlanıyor/Kargoda" olan Trendyol siparişi için Trendyol'a Picking/Invoiced gönderilir.
 - [ ] Senkron logu ve tekrar deneme uçları.
 

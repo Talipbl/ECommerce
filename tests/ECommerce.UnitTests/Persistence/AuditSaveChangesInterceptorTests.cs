@@ -1,4 +1,4 @@
-using ECommerce.Brand;
+﻿using ECommerce.Catalog;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Time.Testing;
 
@@ -14,7 +14,7 @@ public class AuditSaveChangesInterceptorTests
     {
         await using var context = PersistenceTestContext.Create(_clock);
 
-        var brand = new DefBrand { BrandName = "Acme" };
+        var brand = Brand.Create("Acme", "acme");
         context.Add(brand);
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
@@ -26,12 +26,12 @@ public class AuditSaveChangesInterceptorTests
     public async Task Modified_entity_gets_updated_date()
     {
         await using var context = PersistenceTestContext.Create(_clock);
-        var brand = new DefBrand { BrandName = "Acme" };
+        var brand = Brand.Create("Acme", "acme");
         context.Add(brand);
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         _clock.Advance(TimeSpan.FromHours(1));
-        brand.BrandName = "Acme Ltd";
+        brand.Update("Acme Ltd", "acme-ltd");
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         brand.CreatedDate.ShouldBe(Now.UtcDateTime);
@@ -44,7 +44,7 @@ public class AuditSaveChangesInterceptorTests
         var databaseName = Guid.NewGuid().ToString();
         await using (var context = PersistenceTestContext.Create(_clock, databaseName))
         {
-            var brand = new DefBrand { BrandName = "Acme" };
+            var brand = Brand.Create("Acme", "acme");
             context.Add(brand);
             await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
@@ -53,9 +53,9 @@ public class AuditSaveChangesInterceptorTests
         }
 
         await using var verify = PersistenceTestContext.Create(_clock, databaseName);
-        (await verify.DefBrands.CountAsync(TestContext.Current.CancellationToken)).ShouldBe(0);
+        (await verify.Brands.CountAsync(TestContext.Current.CancellationToken)).ShouldBe(0);
 
-        var deleted = await verify.DefBrands.IgnoreQueryFilters().SingleAsync(TestContext.Current.CancellationToken);
+        var deleted = await verify.Brands.IgnoreQueryFilters().SingleAsync(TestContext.Current.CancellationToken);
         deleted.DeletedDate.ShouldBe(Now.UtcDateTime);
     }
 }

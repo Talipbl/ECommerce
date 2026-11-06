@@ -23,6 +23,51 @@ namespace ECommerce.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ECommerce.Admin.AdminRefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AdminId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReplacedByTokenHash")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime?>("RevokedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.HasIndex("TokenHash")
+                        .IsUnique();
+
+                    b.ToTable("Def_AdminRefreshTokens", "dbo");
+                });
+
             modelBuilder.Entity("ECommerce.Admin.DefAdmin", b =>
                 {
                     b.Property<int>("Id")
@@ -37,13 +82,18 @@ namespace ECommerce.Persistence.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("FailedLoginCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<bool?>("IsEnable2Fa")
                         .HasColumnType("bit")
@@ -57,6 +107,9 @@ namespace ECommerce.Persistence.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
+                    b.Property<DateTime?>("LockoutEndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("MailAdress")
                         .IsRequired()
                         .HasMaxLength(75)
@@ -67,21 +120,18 @@ namespace ECommerce.Persistence.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasColumnName("OTPSetupCode");
 
-                    b.Property<byte[]>("PasswordHash")
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("varbinary(500)");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .HasMaxLength(500)
-                        .HasColumnType("varbinary(500)");
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("SecurityLevel")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("((1))");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -93,6 +143,9 @@ namespace ECommerce.Persistence.Migrations
 
                     b.HasKey("Id")
                         .HasName("Def_Admins_pk");
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
 
                     b.ToTable("Def_Admins", "dbo");
                 });
@@ -1535,6 +1588,17 @@ namespace ECommerce.Persistence.Migrations
                     b.ToTable("Gnl_XmlSchedulerLogs", "dbo");
                 });
 
+            modelBuilder.Entity("ECommerce.Admin.AdminRefreshToken", b =>
+                {
+                    b.HasOne("ECommerce.Admin.DefAdmin", "Admin")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+                });
+
             modelBuilder.Entity("ECommerce.DiscountCoupon.DefDiscountCoupon", b =>
                 {
                     b.HasOne("ECommerce.Category.DefCategory", "Category")
@@ -1876,6 +1940,11 @@ namespace ECommerce.Persistence.Migrations
                     b.Navigation("Scheduler");
 
                     b.Navigation("Xml");
+                });
+
+            modelBuilder.Entity("ECommerce.Admin.DefAdmin", b =>
+                {
+                    b.Navigation("RefreshTokens");
                 });
 
             modelBuilder.Entity("ECommerce.Brand.DefBrand", b =>

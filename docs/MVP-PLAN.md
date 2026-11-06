@@ -100,36 +100,57 @@ dotnet user-secrets set "Trendyol:ApiSecret" "<api-secret>"
 ## Faz 1 — Proje temeli ve altyapı (6–8 gün)
 
 ### 1.1 API projesi
-- [ ] `ECommerce.API` oluştur: controller tabanlı Web API, OpenAPI + Scalar/Swagger UI, API versiyonlama (`/api/v1`).
-- [ ] Standart cevap modeli: `IDataResult` / ProblemDetails; global exception handler.
-- [ ] Komposizyon kökü API'de: `AddApplication()`, `AddPersistence()`, `AddTrendyol()` extension'ları. Autofac + Castle interceptor zinciri kaldırılır, yerleşik DI kullanılır.
+- [x] `ECommerce.API`: controller tabanlı Web API, OpenAPI + Scalar (`/scalar`, sadece Development), versiyonlama (`/api/v1`, versiyon başına OpenAPI dokümanı).
+- [x] ProblemDetails + `GlobalExceptionHandler` (stack trace dışarı sızmıyor), bilinmeyen route'lar için `application/problem+json`.
+- [x] Komposizyon kökü: `AddApplication()`, `AddPersistence()`, `AddTrendyol()`. Autofac + Castle kaldırıldı, yerleşik DI kullanılıyor.
 
 ### 1.2 Veri erişimi
-- [ ] Bağlantı dizesini konfigürasyona taşı; `AddDbContext<ECommerceContext>`.
-- [ ] `EfBaseEntityRepository` içindeki `new TContext()` kaldırılır; context DI'dan gelir, metotlar async olur.
-- [ ] DB-first'ten code-first'e geç: mevcut şemadan baseline `InitialCreate` migration'ı.
-- [ ] Entity konfigürasyonlarını `IEntityTypeConfiguration<T>` sınıflarına ayır.
-- [ ] Ortak alanlar (`CreatedAt`, `UpdatedAt`, soft-delete) için interceptor.
+- [x] Bağlantı dizesi `ConnectionStrings:ECommerce`; `AddDbContext<ECommerceContext>`, eksikse açılışta hata.
+- [x] Eski `EfBaseEntityRepository` + 21 servis-özel repository kaldırıldı; yerine generic async `IRepository<T>` / `EfRepository<T>` ve `IUnitOfWork`. Özel repository'ler Faz 4'te ihtiyaç oldukça TDD ile eklenecek.
+- [x] Code-first: `InitialCreate` migration'ı (30 tablo), `dotnet-ef` yerel tool olarak (`dotnet-tools.json`), `DesignTimeContextFactory` (`ECOMMERCE_CONNECTION`).
+- [x] 29 entity konfigürasyonu `IEntityTypeConfiguration<T>` sınıflarına ayrıldı.
+- [x] `AuditSaveChangesInterceptor`: `CreatedDate`/`UpdatedDate` (TimeProvider ile, UTC) ve soft-delete (`DeletedDate` + global query filter).
+- [x] Bulunan hata: 9 entity `CreatedDate`/`UpdatedDate` alanlarını yeniden tanımlayıp base sınıfı gizliyordu; audit değerleri bu tablolara yazılmayacaktı. Gizleyen alanlar kaldırıldı.
 
 ### 1.3 Cross-cutting
-- [ ] Loglama: `ILogger` + Serilog (konsol + dosya/Seq); `DbLogManager` ve `LogAspect` kaldırılır.
-- [ ] Cache: `IMemoryCache` / `HybridCache` doğrudan servis içinde; `CacheAspect` kaldırılır.
-- [ ] Validasyon: FluentValidation, endpoint filtresi ile; `ValidationAspect` kaldırılır.
-- [ ] `SecurityOperationAspect` kaldırılır (Faz 2'de policy tabanlı yetkilendirme gelir).
-- [ ] HTTP client'lar: `IHttpClientFactory` + `Microsoft.Extensions.Http.Resilience` (retry, timeout, 429 için bekleme).
+- [x] Loglama: Serilog (konsol, istek logları); `DbLogManager` ve `LogAspect` kaldırıldı.
+- [x] Cache: Trendyol marka/kategori listeleri `IMemoryCache` ile (5 dk); `CacheAspect` kaldırıldı.
+- [ ] Validasyon: FluentValidation endpoint filtresi → **Faz 2'ye taşındı** (ilk gerçek uçlar orada geliyor). `ValidationAspect` kaldırıldı.
+- [x] `SecurityOperationAspect` kaldırıldı (Faz 2'de policy tabanlı yetkilendirme).
+- [x] Trendyol client'ları typed `HttpClient` + `AddStandardResilienceHandler` (retry, timeout, circuit breaker); Basic auth ve User-Agent `TrendyolOptions`'tan.
+- [x] Trendyol hata gövdesi artık JSON olarak ayrıştırılıyor (`TrendyolErrorParser`); önceden ham string DTO'ya map edilmeye çalışılıyordu.
 
 ### 1.4 Temizlik ve bağımlılıklar
-- [ ] csproj'lardaki ölü `Compile Remove` blokları, `Model1.tt`, `EntityFramework 6.5.1`, `System.Data.SqlClient` kaldırılır.
-- [ ] AutoMapper kaldırılır, profiller **Mapster** `TypeAdapterConfig`'e taşınır (NU1903 güvenlik açığı da böylece kapanır). Mevcut `AutoMapperUT` testi Mapster konfigürasyon doğrulama testine dönüşür.
-- [ ] Nullable uyarıları temizlenir; `TreatWarningsAsErrors`.
-- [ ] Boş `NotImplementedException` servisleri silinir; Faz 4'te TDD ile yeniden yazılır.
+- [x] Ölü `Compile Remove` blokları, `Model1.tt`, EF6, Autofac, Castle, `System.Data.SqlClient`, `Microsoft.AspNetCore.Http 2.2.2` kaldırıldı.
+- [x] AutoMapper → **Mapster** (`IRegister` sınıfları). Bulunan hata: Trendyol tarih parametreleri saniye gönderiliyordu, doküman milisaniye istiyor; düzeltildi.
+- [x] `TreatWarningsAsErrors` (`Directory.Build.props`); tam derleme 0 uyarı. Geçici istisna: eski Trendyol modelleri/DTO'ları ve portal ViewModel'lerinde CS8618 kapalı (`.editorconfig`) → Faz 3'te kaldırılacak.
+- [x] Kullanılmayan yerel servisler, DTO'lar, validator'lar ve helper'lar silindi; Faz 2 (giriş) ve Faz 4'te TDD ile yeniden yazılacak.
+- [x] Faz 3.1'den öne alındı: `TrendyolDiscoveryClient` (web scraping) ile kapsam dışı Claim/Question/Delivery client'ları silindi. `ECommerce.ImageAPI` kaldırıldı (görsel yükleme Faz 4.1).
+- [x] Yapı: `ECommerce.EntityFramework` → `ECommerce.Persistence`, `clients/` → `marketplaces/`; N11/Hepsiburada solution dışında.
 
 ### 1.5 Test altyapısı ve geliştirme ortamı
-- [ ] Yeni xUnit test projeleri (yapı yukarıda); eski MSTest projeleri xUnit'e taşınır, boş olanlar silinir.
-- [ ] `docker-compose.dev.yml`: yerel geliştirme için SQL Server.
-- [ ] İlk entegrasyon testi: `GET /health` → 200.
+- [x] xUnit v3 + Microsoft Testing Platform (`global.json`), Shouldly, NSubstitute; MSTest projeleri kaldırıldı.
+- [x] `ECommerce.UnitTests`: Trendyol mapping karakterizasyon testleri, hata ayrıştırıcı, audit interceptor ve repository testleri (EF InMemory).
+- [x] `ECommerce.IntegrationTests`: `WebApplicationFactory` + Testcontainers (SQL Server, migration uygulanmış) ile health, ProblemDetails ve exception handler testleri. Docker yoksa yerelde atlanır, CI'da hata verir.
+- [x] `docker-compose.dev.yml` (SQL Server) + `.env.example`.
+- [x] Health: `/health/live` (bağımlılıksız), `/health/ready` (veritabanı).
 
-**Kabul:** API boş bir veritabanına migration ile kuruluyor ve ayağa kalkıyor; hiçbir sınıf `new DbContext` / `new HttpClient` yapmıyor; test altyapısı CI'da çalışıyor.
+**Kabul:** API boş veritabanına migration ile kuruluyor ✔; hiçbir sınıf `new DbContext` / `new HttpClient` yapmıyor ✔; 28 test (23 unit + 5 entegrasyon) yerelde yeşil ✔; CI ⏳ (PR ile doğrulanacak).
+
+**Yerel çalıştırma:**
+```bash
+cp .env.example .env   # MSSQL_SA_PASSWORD değerini doldurun
+docker compose -f docker-compose.dev.yml up -d
+dotnet tool restore
+cd src/ECommerce.API
+dotnet user-secrets set "ConnectionStrings:ECommerce" "Server=localhost,1433;Database=ECommerce;User Id=sa;Password=<şifre>;TrustServerCertificate=True"
+dotnet user-secrets set "Trendyol:SellerId" "<seller-id>"
+dotnet user-secrets set "Trendyol:ApiKey" "<api-key>"
+dotnet user-secrets set "Trendyol:ApiSecret" "<api-secret>"
+cd ../..
+ECOMMERCE_CONNECTION="Server=localhost,1433;Database=ECommerce;User Id=sa;Password=<şifre>;TrustServerCertificate=True" dotnet ef database update --project src/ECommerce.Persistence
+dotnet run --project src/ECommerce.API
+```
 
 ---
 
@@ -142,6 +163,7 @@ dotnet user-secrets set "Trendyol:ApiSecret" "<api-secret>"
 - [ ] Brute-force koruması: login için rate limiting + hesap kilitleme.
 - [ ] İlk yönetici için seed / CLI komutu (şifre ortam değişkeninden).
 - [ ] Güvenlik: CORS (sadece front-end origin'i), HTTPS/HSTS, güvenlik header'ları, gizli bilgiler sadece secret/ortam değişkeninde.
+- [ ] FluentValidation endpoint filtresi ve ortak validasyon hata cevabı (Faz 1'den taşındı).
 - [ ] Müşteri (site kullanıcısı) kimlik doğrulaması Faz 4.2'de aynı altyapıyla eklenir.
 
 **Kabul:** Korunan uçlar token'sız 401 dönüyor; refresh rotasyonu ve kilitleme testlerle doğrulanmış.
@@ -152,9 +174,12 @@ dotnet user-secrets set "Trendyol:ApiSecret" "<api-secret>"
 
 ### 3.1 Client modernizasyonu
 - [ ] Base URL ve path'ler güncel uçlara taşınır (yukarıdaki tablo); Prod/Stage ortam seçimi konfigürasyondan.
-- [ ] Typed `HttpClient`, Basic auth + User-Agent handler, 429/5xx için resilience.
+- [x] Typed `HttpClient`, Basic auth + User-Agent, 429/5xx için resilience (Faz 1'de yapıldı).
+- [ ] Client'lar için arayüzler (`ITrendyolProductClient` vb.) — servis testlerinde mock'lanabilmesi için.
 - [ ] Her uç için WireMock sözleşme testi (dokümandaki örnek JSON'larla).
-- [ ] `TrendyolDiscoveryClient` ve kullanılmayan modeller kaldırılır.
+- [x] `TrendyolDiscoveryClient` ve kullanılmayan modeller kaldırıldı (Faz 1'de yapıldı).
+- [ ] Modeller/DTO'lar nullable uyumlu hale getirilir; `.editorconfig`'teki geçici CS8618 istisnası kaldırılır.
+- [ ] `QueryBooleanOption` query string'e `True/False` olarak yazılıyor; Trendyol `true/false` bekliyor.
 - [ ] Stage ortamı için çıkış IP'sinin Trendyol'a whitelist ettirilmesi (çağrı merkezi üzerinden — operasyonel iş).
 
 ### 3.2 Referans veriler

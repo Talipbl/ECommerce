@@ -190,5 +190,18 @@ public sealed class ProductClientContractTests : IDisposable
         _api.Server.LogEntries.Count.ShouldBe(1);
     }
 
+    [Fact]
+    public async Task Transport_failure_is_returned_as_unavailable_instead_of_throwing()
+    {
+        var client = Client;
+        _api.Server.Stop();
+
+        var result = await client.UpdateApprovedContentAsync([new ApprovedContentUpdateItem { ContentId = 1 }], Ct);
+
+        result.IsSuccess.ShouldBeFalse();
+        result.StatusCode.ShouldBe(503);
+        result.Error!.Messages.ShouldNotBeEmpty();
+    }
+
     public void Dispose() => _api.Dispose();
 }

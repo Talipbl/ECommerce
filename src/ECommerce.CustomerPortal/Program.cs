@@ -2,6 +2,7 @@
 using Autofac;
 using ECommerce.Application;
 using ECommerce.Core.Application;
+using Trendyol.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,11 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddCoreServices();
 builder.Services.AddMappingProfiles();
+
+builder.Services.AddOptions<TrendyolOptions>()
+    .Bind(builder.Configuration.GetSection(TrendyolOptions.SectionName))
+    .Validate(o => o.IsConfigured, "Trendyol ayarları eksik. SellerId, ApiKey ve ApiSecret değerlerini user-secrets veya ortam değişkenleri ile tanımlayın.")
+    .ValidateOnStart();
 
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
 

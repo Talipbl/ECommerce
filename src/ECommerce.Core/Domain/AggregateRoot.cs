@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ECommerce.Core.Domain
+﻿namespace ECommerce.Core.Domain
 {
-    public class AggregateRoot<TId> : IEntity
+    public class AggregateRoot<TId> : IEntity, IAuditableEntity
     {
-        public TId Id { get; set; }
+        public TId Id { get; set; } = default!;
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
 
         public AggregateRoot()
         {
-            Id = default;
         }
 
         public AggregateRoot(TId id)

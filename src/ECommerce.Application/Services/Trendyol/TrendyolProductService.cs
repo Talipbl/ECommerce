@@ -1,12 +1,13 @@
 ﻿using ECommerce.Core.Application;
 using ECommerce.Services;
+using Microsoft.Extensions.Options;
 using Trendyol.Client;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolProductService(ITrendyolProductAdapter _adapter) : ITrendyolProductService
+    public class TrendyolProductService(ITrendyolProductAdapter _adapter, IOptions<TrendyolOptions> options) : ITrendyolProductService
     {
-        TrendyolProductClient _productClient = ********", "*********", "000000"));
+        private readonly TrendyolProductClient _productClient = new(options.Value.ToAuthentication());
 
         [LogAspect]
         public async Task<IDataResult<TrendyolErrorResultDTO>> CreateProductAsync(ProductRequestDTO product)

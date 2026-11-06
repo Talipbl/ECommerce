@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N11.Client", "clients\N11.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.EntityFramework", "src\ECommerce.EntityFramework\ECommerce.EntityFramework.csproj", "{C88DCC11-859E-437C-B748-90D0637F3B51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.CustomerPortal", "src\Ecommerce.CustomerPortal\Ecommerce.CustomerPortal.csproj", "{955E36D5-D591-41C1-81BE-8D84AA320779}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.CustomerPortal", "src\ECommerce.CustomerPortal\ECommerce.CustomerPortal.csproj", "{955E36D5-D591-41C1-81BE-8D84AA320779}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N11.Client.UnitTest", "tests\N11.Client.UnitTest\N11.Client.UnitTest.csproj", "{0D17831E-7E91-4285-9611-CD4DC728D57F}"
 EndProject

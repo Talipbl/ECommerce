@@ -1,12 +1,13 @@
 ﻿using ECommerce.Core.Application;
 using ECommerce.Trendyol.Order;
+using Microsoft.Extensions.Options;
 using Trendyol.Client;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolOrderService(ITrendyolOrderAdapter _adapter) : ITrendyolOrderService
+    public class TrendyolOrderService(ITrendyolOrderAdapter _adapter, IOptions<TrendyolOptions> options) : ITrendyolOrderService
     {
-        TrendyolOrderClient _orderClient = ******", "*********", "00000"));
+        private readonly TrendyolOrderClient _orderClient = new(options.Value.ToAuthentication());
 
         public async Task<IDataResult<GetOrdersResponseDTO>> GetOrdersAsync(OrderQueryParametersModelDTO parameters)
         {

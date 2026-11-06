@@ -1,17 +1,12 @@
-using AutoMapper;
+using ECommerce.Application;
 using ECommerce.Trendyol;
+using MapsterMapper;
 
 namespace ECommerce.UnitTests.Trendyol;
 
 public static class TrendyolMappingFixture
 {
-    private static readonly IMapper Mapper = new MapperConfiguration(cfg =>
-    {
-        cfg.AddProfile<TrendyolTypeConvertProfile>();
-        cfg.AddProfile<TrendyolBaseResultMappingProfile>();
-        cfg.AddProfile<TrendyolProductMappingProfile>();
-        cfg.AddProfile<TrendyolOrderMappingProfile>();
-    }).CreateMapper();
+    private static readonly IMapper Mapper = new Mapper(MappingRegistration.CreateConfig());
 
     public static ITrendyolProductAdapter CreateProductAdapter() => new TrendyolProductAdapter(Mapper);
 

@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using ECommerce.Application;
+﻿using ECommerce.Application;
+using MapsterMapper;
 using Trendyol.Client;
 
 namespace ECommerce.Trendyol
@@ -8,40 +8,35 @@ namespace ECommerce.Trendyol
     {
         public ProductModel AdaptProductRequest(ProductRequestDTO dto)
         {
-            return _mapper.Map<ProductModel>(dto);
+            var model = _mapper.Map<ProductModel>(dto);
+            model.Images = ToImageModels(dto.Images);
+            return model;
         }
 
         public ProductRequestDTO AdaptProductResponse(ProductModel model)
         {
             var dto = _mapper.Map<ProductRequestDTO>(model);
-
             dto.Images = model.Images?
-            .Where(x => !string.IsNullOrWhiteSpace(x.Url))
-            .Select(x => x.Url)
-            .ToList();
-
+                .Where(x => !string.IsNullOrWhiteSpace(x.Url))
+                .Select(x => x.Url)
+                .ToList();
             return dto;
         }
 
         public ProductRequestModel AdaptProductsRequest(List<ProductRequestDTO> items)
         {
-            var request = _mapper.Map<ProductRequestModel>(items);
-            for (int i = 0; i < request.Items.Count && i < items.Count; i++)
-            {
-                var dtoImages = items[i].Images;
-                request.Items[i].Images = dtoImages != null
-                    ? dtoImages
-                        .Where(img => !string.IsNullOrWhiteSpace(img))
-                        .Select(img => new ImageModel { Url = img })
-                        .ToList()
-                    : new List<ImageModel>();
-            }
-            return request;
+            return new ProductRequestModel { Items = items.Select(AdaptProductRequest).ToList() };
         }
 
         public PriceAndInventoryUpdateRequest AdaptPriceAndInventoryRequest(List<PriceAndInventoryUpdateRequestDTO> items)
         {
             return _mapper.Map<PriceAndInventoryUpdateRequest>(items);
         }
+
+        private static List<ImageModel> ToImageModels(List<string>? images) =>
+            images?
+                .Where(img => !string.IsNullOrWhiteSpace(img))
+                .Select(img => new ImageModel { Url = img })
+                .ToList() ?? [];
     }
 }

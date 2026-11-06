@@ -1,5 +1,4 @@
 ﻿using ECommerce.Core.Application;
-using ECommerce.Services;
 using Microsoft.Extensions.Options;
 using Trendyol.Client;
 

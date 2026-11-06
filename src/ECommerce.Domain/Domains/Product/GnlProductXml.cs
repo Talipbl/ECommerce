@@ -87,9 +87,7 @@ public partial class GnlProductXml : AggregateRoot<int>
 
     public int StatusId { get; set; }
 
-    public DateTime CreatedDate { get; set; }
 
-    public DateTime? UpdatedDate { get; set; }
 
     public virtual ICollection<GnlXmlSchedulerLog> GnlXmlSchedulerLogs { get; } = new List<GnlXmlSchedulerLog>();
 

@@ -1,35 +1,27 @@
 ﻿using ECommerce.Core.Application;
 using ECommerce.Trendyol.Order;
-using Microsoft.Extensions.Options;
 using Trendyol.Client;
 
 namespace ECommerce.Trendyol
 {
-    public class TrendyolOrderService(ITrendyolOrderAdapter _adapter, IOptions<TrendyolOptions> options) : ITrendyolOrderService
+    public class TrendyolOrderService(ITrendyolOrderAdapter adapter, TrendyolOrderClient orderClient) : ITrendyolOrderService
     {
-        private readonly TrendyolOrderClient _orderClient = new(options.Value.ToAuthentication());
-
         public async Task<IDataResult<GetOrdersResponseDTO>> GetOrdersAsync(OrderQueryParametersModelDTO parameters)
         {
-            OrderQueryParametersModel model = _adapter.Adapt<OrderQueryParametersModel>(parameters);
-            var result = await _orderClient.GetOrders(model);
-            var responseDto = _adapter.Adapt<GetOrdersResponseDTO>(result.OkResponse);
+            var result = await orderClient.GetOrders(adapter.Adapt<OrderQueryParametersModel>(parameters));
+            var responseDto = adapter.Adapt<GetOrdersResponseDTO>(result.OkResponse);
             return new DataResult<GetOrdersResponseDTO>(responseDto, result.IsSuccess);
         }
 
         public async Task<IDataResult> SetFailureOrderPackageAsync(FailureToSupplyReuqestDTO requestDto, string packageId)
         {
-            FailureToSupplyReuqest request = _adapter.AdaptFailureRequest(requestDto);
-            var result = await _orderClient.SetFailureToSupply(request, packageId);
-
+            var result = await orderClient.SetFailureToSupply(adapter.AdaptFailureRequest(requestDto), packageId);
             return new DataResult(result.IsSuccess);
         }
 
         public async Task<IDataResult> PickingOrderPackageAsync(UpdatePackageRequestDTO requestDto, string packageId)
         {
-            UpdatePackageRequest request = _adapter.AdaptUpdateRequest(requestDto);
-            var result = await _orderClient.UpdatePackage(request, packageId);
-
+            var result = await orderClient.UpdatePackage(adapter.AdaptUpdateRequest(requestDto), packageId);
             return new DataResult(result.IsSuccess);
         }
     }

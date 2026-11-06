@@ -45,9 +45,7 @@ public partial class GnlProduct : AggregateRoot<int>
 
     public string? StockCode { get; set; }
 
-    public DateTime CreatedDate { get; set; }
 
-    public DateTime? UpdatedDate { get; set; }
 
     public virtual DefBrand Brand { get; set; } = null!;
 

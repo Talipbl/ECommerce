@@ -1,36 +1,15 @@
-﻿using Autofac.Extensions.DependencyInjection;
-using Autofac;
-using ECommerce.Application;
-using ECommerce.Core.Application;
-using Trendyol.Client;
+﻿using ECommerce.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddCoreServices();
-builder.Services.AddMappingProfiles();
-
-builder.Services.AddOptions<TrendyolOptions>()
-    .Bind(builder.Configuration.GetSection(TrendyolOptions.SectionName))
-    .Validate(o => o.IsConfigured, "Trendyol ayarları eksik. SellerId, ApiKey ve ApiSecret değerlerini user-secrets veya ortam değişkenleri ile tanımlayın.")
-    .ValidateOnStart();
-
-builder.Services.AddMvc().AddRazorRuntimeCompilation();
-
-//bkz: https://learn.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=aspnetcore-6.0
-builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacApplicationModule()));
-builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacEFModule()));
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.AddApplication(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

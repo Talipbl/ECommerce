@@ -18,7 +18,6 @@ public partial class GnlUserMailQueue : AggregateRoot<int>
 
     public string Content { get; set; } = null!;
 
-    public DateTime CreatedDate { get; set; }
 
     public DateTime? SendDate { get; set; }
 

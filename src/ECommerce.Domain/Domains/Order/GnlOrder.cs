@@ -25,7 +25,6 @@ public partial class GnlOrder : AggregateRoot<int>
 
     public DateTime OrderDate { get; set; }
 
-    public DateTime? UpdatedDate { get; set; }
 
     public int PaymentTypeId { get; set; }
 

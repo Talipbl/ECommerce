@@ -12,7 +12,6 @@ public partial class GnlUserCoupon : AggregateRoot<int>
 
     public int CouponId { get; set; }
 
-    public DateTime? CreatedDate { get; set; }
 
     public DateTime? UsedDate { get; set; }
 

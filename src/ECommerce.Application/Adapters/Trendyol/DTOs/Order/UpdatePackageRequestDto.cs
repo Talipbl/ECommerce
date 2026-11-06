@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Trendyol.Client;
+﻿using Trendyol.Client;
 
 namespace ECommerce.Trendyol;
 

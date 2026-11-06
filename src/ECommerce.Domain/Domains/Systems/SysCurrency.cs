@@ -13,7 +13,7 @@ public partial class SysCurrency : AggregateRoot<int>
 
     public string CurrencyCode { get; set; } = null!;
 
-    public string Icon { get; set; } = null;
+    public string? Icon { get; set; }
 
     public virtual ICollection<GnlOrderPayment> GnlOrderPayments { get; } = new List<GnlOrderPayment>();
 

@@ -28,8 +28,8 @@ jobs:
         run: dotnet build ECommerce.sln --no-restore --configuration Release
 
       - name: Test
-        # Canlı pazaryeri API'lerine giden testler (TestCategory=Live) CI'da çalıştırılmaz.
-        run: dotnet test ECommerce.sln --no-build --configuration Release --filter "TestCategory!=Live" --logger "trx" --results-directory TestResults
+        # Canlı pazaryeri API'lerine giden testler (Category=Live) CI'da çalıştırılmaz.
+        run: dotnet test --solution ECommerce.sln --no-build --configuration Release --filter-not-trait "Category=Live" --report-xunit-trx --results-directory TestResults
 
       - name: Upload test results
         if: always()

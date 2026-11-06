@@ -11,5 +11,4 @@ public partial class SysErrorLog : AggregateRoot<int>
 
     public string ErrorMessage { get; set; } = null!;
 
-    public DateTime CreatedDate { get; set; }
 }

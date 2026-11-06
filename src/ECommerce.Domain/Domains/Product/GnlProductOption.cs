@@ -12,7 +12,7 @@ public partial class GnlProductOption : AggregateRoot<int>
 
     public string OptionName { get; set; } = null!;
 
-    public string StockCode { get; set; }
+    public string StockCode { get; set; } = null!;
 
     public decimal UnitOfStock { get; set; }
 

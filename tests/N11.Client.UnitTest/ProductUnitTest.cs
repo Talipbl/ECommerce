@@ -1,14 +1,27 @@
-using N11.Client;
+﻿using N11.Client;
 
 namespace N11.Client.UnitTest
 {
+    /// <summary>
+    /// Canlı N11 API'sine giden testler. CI'da çalışmaz (TestCategory=Live).
+    /// Çalıştırmak için N11_APP_KEY ve N11_APP_SECRET ortam değişkenlerini tanımlayın.
+    /// </summary>
     [TestClass]
+    [TestCategory("Live")]
     public class ProductUnitTest
     {
-        private readonly N11ProductClient _client;
-        public ProductUnitTest()
+        private N11ProductClient _client = null!;
+
+        [TestInitialize]
+        public void Initialize()
         {
-            _client = new N11ProductClient("b4be11bf-9517-4aa2-b4ed-0abeec287516", "KHQWHrHbMEIymEA8");
+            var appKey = Environment.GetEnvironmentVariable("N11_APP_KEY");
+            var appSecret = Environment.GetEnvironmentVariable("N11_APP_SECRET");
+
+            if (string.IsNullOrWhiteSpace(appKey) || string.IsNullOrWhiteSpace(appSecret))
+                Assert.Inconclusive("N11_APP_KEY / N11_APP_SECRET tanımlı değil; canlı test atlandı.");
+
+            _client = new N11ProductClient(appKey, appSecret);
         }
 
         [TestMethod]

@@ -12,8 +12,9 @@ public static class DependencyInjection
 
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString(ConnectionStringName)
-            ?? throw new InvalidOperationException($"'ConnectionStrings:{ConnectionStringName}' tanımlı değil.");
+        var connectionString = configuration.GetConnectionString(ConnectionStringName);
+        if (string.IsNullOrWhiteSpace(connectionString))
+            throw new InvalidOperationException($"'ConnectionStrings:{ConnectionStringName}' tanımlı değil.");
 
         services.TryAddSingleton(TimeProvider.System);
         services.AddScoped<AuditSaveChangesInterceptor>();

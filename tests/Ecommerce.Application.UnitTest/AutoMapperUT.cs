@@ -13,10 +13,8 @@ public class AutoMapperUT
         {
             cfg.AddProfile(typeof(TrendyolTypeConvertProfile));
             cfg.AddProfile(typeof(TrendyolBaseResultMappingProfile));
-            cfg.AddProfile(typeof(TrendyolCrawlerMappingProfile));
             cfg.AddProfile(typeof(TrendyolProductMappingProfile));
             cfg.AddProfile(typeof(TrendyolOrderMappingProfile));
-            cfg.AddProfile(typeof(TrendyolWebSearchMappingProfile));
         });
 
         configuration.AssertConfigurationIsValid();

@@ -1,4 +1,4 @@
-﻿using ECommerce.Core.Persistance;
+﻿using ECommerce.Core.Persistence;
 using ECommerce.Category;
 
 namespace ECommerce.Product

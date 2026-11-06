@@ -134,12 +134,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\clients\Hepsiburada.Client\Hepsiburada.Client.csproj" />
-    <ProjectReference Include="..\..\clients\N11.Client\N11.Client.csproj" />
-    <ProjectReference Include="..\..\clients\Trendyol.Client\Trendyol.Client.csproj" />
-    <ProjectReference Include="..\Ecommerce.Core\ECommerce.Core.csproj" />
+    <ProjectReference Include="..\..\marketplaces\Trendyol.Client\Trendyol.Client.csproj" />
+    <ProjectReference Include="..\ECommerce.Core\ECommerce.Core.csproj" />
     <ProjectReference Include="..\ECommerce.Domain\ECommerce.Domain.csproj" />
-    <ProjectReference Include="..\ECommerce.EntityFramework\ECommerce.EntityFramework.csproj" />
+    <ProjectReference Include="..\ECommerce.Persistence\ECommerce.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

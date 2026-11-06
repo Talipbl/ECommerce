@@ -1,5 +1,5 @@
 ﻿using ECommerce.Core.Application;
-using ECommerce.Core.Persistance;
+using ECommerce.Core.Persistence;
 
 namespace ECommerce.Brand
 {

@@ -11,10 +11,8 @@ public static class AutoMapperRegisterModule
         services.AddAutoMapper(
             typeof(TrendyolTypeConvertProfile),
             typeof(TrendyolBaseResultMappingProfile),
-            typeof(TrendyolCrawlerMappingProfile),
             typeof(TrendyolProductMappingProfile),
-            typeof(TrendyolOrderMappingProfile),
-            typeof(TrendyolWebSearchMappingProfile));
+            typeof(TrendyolOrderMappingProfile));
 
         return services;
     }

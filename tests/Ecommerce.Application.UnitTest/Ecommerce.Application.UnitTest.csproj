@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\clients\Trendyol.Client\Trendyol.Client.csproj" />
+    <ProjectReference Include="..\..\marketplaces\Trendyol.Client\Trendyol.Client.csproj" />
     <ProjectReference Include="..\..\src\ECommerce.Application\ECommerce.Application.csproj" />
   </ItemGroup>
 

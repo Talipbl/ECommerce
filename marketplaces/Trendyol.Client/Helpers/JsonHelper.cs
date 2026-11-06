@@ -13,12 +13,7 @@ namespace Trendyol.Client
     {
         public static string GetJsonPropertyName(PropertyInfo property)
         {
-            JsonPropertyAttribute attribute = property.GetCustomAttribute<JsonPropertyAttribute>();
-            if (attribute != null)
-            {
-                return attribute.PropertyName;
-            }
-            return property.Name;
+            return property.GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName ?? property.Name;
         }
 
         public static string BuildQueryString(object obj)
@@ -28,7 +23,7 @@ namespace Trendyol.Client
 
             foreach (PropertyInfo property in properties)
             {
-                object value = property.GetValue(obj);
+                object? value = property.GetValue(obj);
 
                 if (value != null && !IsDefaultValue(value))
                 {
@@ -36,7 +31,7 @@ namespace Trendyol.Client
                         continue;
 
                     string jsonPropertyName = GetJsonPropertyName(property);
-                    string encodedValue = HttpUtility.UrlEncode(value.ToString());
+                    string encodedValue = HttpUtility.UrlEncode(value.ToString() ?? string.Empty);
                     queryParts.Add($"{jsonPropertyName}={encodedValue}");
                 }
             }

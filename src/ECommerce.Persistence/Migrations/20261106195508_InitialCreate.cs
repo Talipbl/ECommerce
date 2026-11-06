@@ -174,7 +174,7 @@ namespace ECommerce.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CurrencyName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     CurrencyCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Icon = table.Column<string>(type: "nvarchar(1)", maxLength: 1, nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(1)", maxLength: 1, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -422,10 +422,10 @@ namespace ECommerce.Persistence.Migrations
                     Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(500)", maxLength: 500, nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(500)", maxLength: 500, nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     StatusId = table.Column<int>(type: "int", nullable: false, defaultValueSql: "((1))"),
                     IsCorporate = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -567,9 +567,9 @@ namespace ECommerce.Persistence.Migrations
                     XmlId = table.Column<int>(type: "int", nullable: true),
                     Frequency = table.Column<int>(type: "int", nullable: true),
                     FrequnecyPeriod = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     LastWorkingTime = table.Column<DateTime>(type: "datetime", nullable: true),
                     StatusId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -605,11 +605,11 @@ namespace ECommerce.Persistence.Migrations
                     ShipAmount = table.Column<decimal>(type: "decimal(18,0)", nullable: true),
                     CarrierId = table.Column<int>(type: "int", nullable: true),
                     OrderDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     PaymentTypeId = table.Column<int>(type: "int", nullable: false),
                     CouponId = table.Column<int>(type: "int", nullable: true),
                     StatusId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -647,9 +647,9 @@ namespace ECommerce.Persistence.Migrations
                     MailAddress = table.Column<string>(type: "nvarchar(75)", maxLength: 75, nullable: true),
                     MailTypeId = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     SendDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     IsSend = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -679,10 +679,10 @@ namespace ECommerce.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     CouponId = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     UsedDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     IsUsed = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "((0))"),
                     ExpireDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },

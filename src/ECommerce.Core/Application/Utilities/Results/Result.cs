@@ -21,6 +21,6 @@ namespace ECommerce.Core.Application
 
         }
         public bool Success { get; }
-        public string Message { get; }
+        public string Message { get; } = string.Empty;
     }
 }

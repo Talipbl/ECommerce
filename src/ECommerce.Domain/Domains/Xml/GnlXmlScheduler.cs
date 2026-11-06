@@ -15,7 +15,6 @@ public partial class GnlXmlScheduler : AggregateRoot<int>
 
     public int? FrequnecyPeriod { get; set; }
 
-    public DateTime? CreatedDate { get; set; }
 
     public DateTime? LastWorkingTime { get; set; }
 

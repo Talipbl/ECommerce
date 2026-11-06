@@ -19,7 +19,6 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddOpenApi();
 builder.Services
     .AddApiVersioning(options =>
     {
@@ -32,7 +31,8 @@ builder.Services
     {
         options.GroupNameFormat = "'v'V";
         options.SubstituteApiVersionInUrl = true;
-    });
+    })
+    .AddOpenApi();
 
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<ECommerceContext>("database", tags: ["ready"]);
@@ -45,7 +45,7 @@ app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.MapOpenApi().WithDocumentPerVersion();
     app.MapScalarApiReference();
 }
 

@@ -24,7 +24,6 @@ public partial class DefDiscountCoupon : AggregateRoot<int>
 
     public int ProductId { get; set; }
 
-    public DateTime CreatedDate { get; set; }
 
     public virtual DefCategory? Category { get; set; }
 

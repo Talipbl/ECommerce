@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerce.Persistence.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    [Migration("20261106193910_InitialCreate")]
+    [Migration("20261106195508_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -1022,7 +1022,6 @@ namespace ECommerce.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Icon")
-                        .IsRequired()
                         .HasMaxLength(1)
                         .HasColumnType("nvarchar(1)");
 
@@ -1372,7 +1371,7 @@ namespace ECommerce.Persistence.Migrations
                     b.Property<int>("CouponId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CreatedDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -1466,7 +1465,7 @@ namespace ECommerce.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("CreatedDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime?>("DeletedDate")

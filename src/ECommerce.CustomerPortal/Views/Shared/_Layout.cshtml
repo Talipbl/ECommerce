@@ -21,14 +21,14 @@
 </head>
 <body>
     <div class="container-scroller">
-        @Html.Partial("Partial/_navbar")
+        <partial name="Partial/_navbar" />
         <div class="container-fluid page-body-wrapper">
-            @Html.Partial("Partial/_sidebar")
+            <partial name="Partial/_sidebar" />
             <div class="main-panel">
                 <div class="content-wrapper">
                     @RenderBody()
                 </div>
-                @Html.Partial("Partial/_footer")
+                <partial name="Partial/_footer" />
             </div>
         </div>
     </div>

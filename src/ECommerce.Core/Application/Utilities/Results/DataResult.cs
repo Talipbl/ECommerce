@@ -32,7 +32,7 @@ namespace ECommerce.Core.Application
 
         }
 
-        public T Data { get; }
+        public T Data { get; } = default!;
     }
 
     public class DataResult<T, E> : Result, IDataResult<T, E>
@@ -55,7 +55,7 @@ namespace ECommerce.Core.Application
             Additional = additional;
         }
 
-        public T Data { get; }
-        public E Additional { get; }
+        public T Data { get; } = default!;
+        public E Additional { get; } = default!;
     }
 }

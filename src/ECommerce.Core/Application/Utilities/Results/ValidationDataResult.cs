@@ -22,6 +22,6 @@ namespace ECommerce.Core.Application
 
         }
 
-        public List<string> Errors { get; set; }
+        public List<string> Errors { get; set; } = [];
     }
 }

@@ -31,9 +31,7 @@ public partial class GnlUser : AggregateRoot<int>
 
     public byte[] PasswordHash { get; set; } = null!;
 
-    public DateTime CreatedDate { get; set; }
 
-    public DateTime? UpdatedDate { get; set; }
 
     public int StatusId { get; set; }
 

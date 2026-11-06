@@ -4,6 +4,7 @@ using ECommerce.Carrier;
 using ECommerce.Category;
 using ECommerce.DiscountCoupon;
 using ECommerce.Manufacturer;
+using ECommerce.Marketplaces;
 using ECommerce.Order;
 using ECommerce.Product;
 using ECommerce.Systems;
@@ -21,6 +22,8 @@ public class ECommerceContext(DbContextOptions<ECommerceContext> options) : DbCo
     public DbSet<DefAdmin> DefAdmins => Set<DefAdmin>();
 
     public DbSet<AdminRefreshToken> AdminRefreshTokens => Set<AdminRefreshToken>();
+
+    public DbSet<MarketplaceBatchRequest> MarketplaceBatchRequests => Set<MarketplaceBatchRequest>();
 
     public DbSet<DefBrand> DefBrands => Set<DefBrand>();
 

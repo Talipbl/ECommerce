@@ -83,6 +83,21 @@ public class ProductTests
     }
 
     [Fact]
+    public void Images_can_be_reordered_only_with_the_complete_set()
+    {
+        var product = NewProduct();
+        var a = product.AddImage("a.jpg", null);
+        var b = product.AddImage("b.jpg", null);
+        a.Id = 1;
+        b.Id = 2;
+
+        product.ReorderImages([2, 1]);
+
+        product.Images.OrderBy(i => i.SortOrder).Select(i => i.Path).ShouldBe(["b.jpg", "a.jpg"]);
+        Should.Throw<DomainException>(() => product.ReorderImages([2]));
+    }
+
+    [Fact]
     public void Variant_price_and_stock_can_change()
     {
         var variant = NewProduct().AddVariant("SKU-1", "BRK-1", 100, null, 1, []);

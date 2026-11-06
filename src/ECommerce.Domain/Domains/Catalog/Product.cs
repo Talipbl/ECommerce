@@ -115,6 +115,15 @@ public class Product : AggregateRoot<int>
             _images[i].SortOrder = i;
     }
 
+    public void ReorderImages(IReadOnlyList<int> imageIds)
+    {
+        if (imageIds.Count != _images.Count || imageIds.Distinct().Count() != _images.Count || !_images.All(i => imageIds.Contains(i.Id)))
+            throw new DomainException("Sıralama ürünün tüm görsellerini bir kez içermelidir.");
+
+        foreach (var image in _images)
+            image.SortOrder = imageIds.ToList().IndexOf(image.Id);
+    }
+
     private void EnsureActiveVariantRemains(ProductVariant variant)
     {
         if (IsActive && variant.IsActive && _variants.Count(v => v.IsActive) == 1)

@@ -1,4 +1,3 @@
-using ECommerce.Trendyol;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Trendyol.Client;
@@ -12,11 +11,6 @@ public static class DependencyInjection
         services.AddMappings();
         services.AddMemoryCache();
         services.AddTrendyol(configuration);
-
-        services.AddScoped<ITrendyolProductAdapter, TrendyolProductAdapter>();
-        services.AddScoped<ITrendyolOrderAdapter, TrendyolOrderAdapter>();
-        services.AddScoped<ITrendyolProductService, TrendyolProductService>();
-        services.AddScoped<ITrendyolOrderService, TrendyolOrderService>();
 
         return services;
     }

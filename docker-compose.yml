@@ -1,0 +1,41 @@
+# Yayın ortamı. Kullanım: docker compose up -d
+name: ecommerce-prod
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?MSSQL_SA_PASSWORD .env dosyasında tanımlanmalı}
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q \"SELECT 1\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  api:
+    build: .
+    image: ecommerce-api:dev
+    restart: unless-stopped
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__ECommerce: "Server=sqlserver,1433;Database=ECommerce;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True"
+      Jwt__SigningKey: ${JWT_SIGNING_KEY:?JWT_SIGNING_KEY .env dosyasında tanımlanmalı}
+      Trendyol__SellerId: ${TRENDYOL_SELLER_ID:?TRENDYOL_SELLER_ID .env dosyasında tanımlanmalı}
+      Trendyol__ApiKey: ${TRENDYOL_API_KEY:?TRENDYOL_API_KEY .env dosyasında tanımlanmalı}
+      Trendyol__ApiSecret: ${TRENDYOL_API_SECRET:?TRENDYOL_API_SECRET .env dosyasında tanımlanmalı}
+    ports:
+      - "8080:8080"
+    volumes:
+      - media:/app/media
+
+volumes:
+  sqlserver-data:
+  media:

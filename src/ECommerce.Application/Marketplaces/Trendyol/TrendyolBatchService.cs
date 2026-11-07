@@ -1,3 +1,4 @@
+using ECommerce.Application.Common;
 using ECommerce.Core.Persistence;
 using ECommerce.Marketplaces;
 using Trendyol.Client.Products;

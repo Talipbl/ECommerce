@@ -23,6 +23,15 @@ public class EfRepository<TEntity>(ECommerceContext context) : IRepository<TEnti
     public async Task<IReadOnlyList<TEntity>> ListAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken = default) =>
         await query(_set).ToListAsync(cancellationToken);
 
+    public async Task<IReadOnlyList<TResult>> ListAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> query, CancellationToken cancellationToken = default) =>
+        await query(_set).ToListAsync(cancellationToken);
+
+    public Task<TResult?> FirstOrDefaultAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> query, CancellationToken cancellationToken = default) =>
+        query(_set).FirstOrDefaultAsync(cancellationToken);
+
+    public Task<int> CountAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> query, CancellationToken cancellationToken = default) =>
+        query(_set).CountAsync(cancellationToken);
+
     public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default) =>
         _set.AnyAsync(predicate, cancellationToken);
 

@@ -233,9 +233,11 @@ dotnet user-secrets set "Cors:AllowedOrigins:0" "http://localhost:5173"
 ## Faz 4 — Yerel e-ticaret + pazaryeri entegrasyonu (13–18 gün) · TDD
 
 ### 4.1 Katalog (yönetim + vitrin okuma)
-- [ ] Kategori, marka, ürün, varyant/seçenek, fiyat, görsel, stok — yönetici CRUD uçları.
-- [ ] Görsel yükleme (Trendyol herkese açık URL istediği için kalıcı ve erişilebilir depolama).
-- [ ] Vitrin için herkese açık okuma uçları: listeleme, filtre, arama, ürün detayı.
+- [x] Eski domain (29 entity, Sys* durum tabloları) kaldırıldı; yeni model: tek tablo kategori ağacı, marka, ürün + varyant (stok kodu, barkod, fiyat, liste fiyatı, stok, özellikler), en fazla 8 görsel. Türkçe slug üretimi.
+- [x] Yönetici uçları (`/api/v1/catalog/...`): kategori (döngü ve silme kontrolleri), marka, ürün, varyant, yayınlama. Barkod/stok kodu tüm ürünlerde tekil; soft-delete edilenler tekilliği engellemiyor (filtreli unique index).
+- [x] Görsel yükleme: JPEG/PNG/WEBP, içerik imzası kontrolü, 5 MB; yerel diskte saklanıp `/media` altından sunuluyor (`Media:RootPath`, `Media:PublicBaseUrl`). Silme ve sıralama.
+- [x] Vitrin uçları (`/api/v1/store/...`, anonim): aktif kategori ağacı, ürün arama (kategori + alt kategoriler, marka, fiyat aralığı, stokta olanlar, sıralama), ürün detayı (kategori yolu, aktif varyantlar).
+- [x] İş kuralı ihlalleri (`DomainException`) 400 ProblemDetails olarak dönüyor.
 
 ### 4.2 Müşteri, sepet ve sipariş (yerel site)
 - [ ] Müşteri kaydı/girişi (Faz 2 altyapısıyla), adres yönetimi; misafir siparişi (opsiyonel).
@@ -302,9 +304,7 @@ Back-end (Faz 0–5): yaklaşık **7–9 hafta**. Front-end dahil: **10–14 haf
 ## Açık kararlar
 
 1. **React mı Vue mu?** Faz 6'ya kadar gerekmiyor. Yönetim paneli ve vitrin tek uygulama mı, iki ayrı uygulama mı olacak? (Vitrin için SEO önemliyse Next.js/Nuxt gibi SSR değerlendirilir.)
-2. **Ödeme:** MVP'de havale/kapıda ödeme mi, yoksa iyzico/PayTR gibi bir sağlayıcı mı? Sağlayıcı Faz 4'e +3–5 gün ekler.
-3. **Görsel depolama:** Docker volume + reverse proxy üzerinden servis etmek (basit) mi, S3 uyumlu nesne depolama/CDN mi?
-4. **Yayın hedefi:** VPS (Hetzner/DigitalOcean vb.) varsayıldı.
+2. **Yayın hedefi:** VPS (Hetzner/DigitalOcean vb.) varsayıldı.
 
 ## Alınan kararlar
 
@@ -314,3 +314,8 @@ Back-end (Faz 0–5): yaklaşık **7–9 hafta**. Front-end dahil: **10–14 haf
 | 2026-11-06 | Mapping: AutoMapper kaldırılır, **Mapster** kullanılır. |
 | 2026-11-06 | DI: Autofac + Castle interceptor'ları kaldırılır, **.NET'in yerleşik DI**'ı kullanılır. |
 | 2026-11-06 | Test framework'ü: **xUnit**. |
+
+| 2026-11-07 | Domain modeli yeniden tasarlandı; eski tablolar migration ile kaldırıldı. |
+| 2026-11-07 | Ödeme (MVP): havale/EFT ve kapıda ödeme; sipariş yönetici onayıyla ödendi sayılır. Sağlayıcı (iyzico/PayTR) sonra, arayüz arkasında. |
+| 2026-11-07 | Görseller yerel diskte, API `/media` altından sunuyor; depolama `IFileStorage` arkasında (S3'e geçiş kolay). |
+| 2026-11-07 | Yerel sitede sipariş için üyelik zorunlu (misafir sipariş yok). |

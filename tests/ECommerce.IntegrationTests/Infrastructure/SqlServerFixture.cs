@@ -10,7 +10,7 @@ namespace ECommerce.IntegrationTests.Infrastructure;
 /// </summary>
 public class SqlServerFixture : IAsyncLifetime
 {
-    private readonly MsSqlContainer _container = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest").Build();
+    private MsSqlContainer? _container;
 
     public string ConnectionString { get; private set; } = string.Empty;
     public string? UnavailableReason { get; private set; }
@@ -19,6 +19,7 @@ public class SqlServerFixture : IAsyncLifetime
     {
         try
         {
+            _container = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest").Build();
             await _container.StartAsync();
         }
         catch (Exception ex) when (Environment.GetEnvironmentVariable("CI") is null)
@@ -37,7 +38,11 @@ public class SqlServerFixture : IAsyncLifetime
         await context.Database.MigrateAsync();
     }
 
-    public async ValueTask DisposeAsync() => await _container.DisposeAsync();
+    public async ValueTask DisposeAsync()
+    {
+        if (_container is not null)
+            await _container.DisposeAsync();
+    }
 }
 
 [CollectionDefinition(Name)]

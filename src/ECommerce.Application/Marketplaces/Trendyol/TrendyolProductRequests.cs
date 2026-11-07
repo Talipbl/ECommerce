@@ -14,8 +14,3 @@ public record UpdatePriceInventoryRequest(IReadOnlyList<PriceInventoryItem> Item
 public record DeleteTrendyolProductsRequest(IReadOnlyList<string> Barcodes);
 
 public record BatchAcceptedDto(string BatchRequestId, MarketplaceBatchOperation Operation, int ItemCount);
-
-public record PagedResult<T>(int Page, int Size, int TotalElements, IReadOnlyList<T> Content)
-{
-    public int TotalPages => Size == 0 ? 0 : (int)Math.Ceiling(TotalElements / (double)Size);
-}

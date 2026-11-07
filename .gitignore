@@ -368,3 +368,6 @@ appsettings.*.local.json
 .env.*
 !.env.example
 secrets.json
+
+# Yüklenen ürün görselleri (yerel geliştirme)
+src/ECommerce.API/media/

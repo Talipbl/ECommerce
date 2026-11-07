@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using ECommerce.Application.Common;
 using ECommerce.Application.Marketplaces.Trendyol;
 using ECommerce.Marketplaces;
 using Microsoft.AspNetCore.Mvc;

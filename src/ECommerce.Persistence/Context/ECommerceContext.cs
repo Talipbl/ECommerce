@@ -41,6 +41,8 @@ public class ECommerceContext(DbContextOptions<ECommerceContext> options) : DbCo
 
     public DbSet<MarketplaceListing> MarketplaceListings => Set<MarketplaceListing>();
 
+    public DbSet<MarketplaceInventoryChange> MarketplaceInventoryChanges => Set<MarketplaceInventoryChange>();
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         try

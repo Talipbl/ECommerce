@@ -2,6 +2,7 @@ using ECommerce.Admin;
 using ECommerce.Catalog;
 using ECommerce.Core.Domain;
 using ECommerce.Core.Persistence;
+using ECommerce.Customers;
 using ECommerce.Marketplaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -23,6 +24,10 @@ public class ECommerceContext(DbContextOptions<ECommerceContext> options) : DbCo
     public DbSet<Product> Products => Set<Product>();
 
     public DbSet<ProductVariant> ProductVariants => Set<ProductVariant>();
+
+    public DbSet<Customer> Customers => Set<Customer>();
+
+    public DbSet<CustomerRefreshToken> CustomerRefreshTokens => Set<CustomerRefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -251,16 +251,16 @@ dotnet user-secrets set "Cors:AllowedOrigins:0" "http://localhost:5173"
 - [ ] Sipariş/kargo e-posta bildirimleri → MVP sonrası.
 
 ### 4.3 Pazaryeri entegrasyon modülü
-- [ ] Soyutlama: `IMarketplaceProvider` (ürün yayınla, fiyat/stok gönder, sipariş çek, statü güncelle); Trendyol ilk implementasyon. N11 ileride aynı arayüze eklenir.
-- [ ] **Ürün eşleştirme:** yerel ürün/varyant ↔ Trendyol barkodu; yerel kategori ↔ Trendyol kategorisi + özellik eşlemesi.
-- [ ] **Yayınlama:** yerel üründen Trendyol ürün isteği üretme; durum (bekliyor / onaylandı / hatalı) takibi.
-- [ ] **Tek stok ve fiyat:** yerelde stok/fiyat değişince outbox kaydı → arka plan işçisi Trendyol'a toplu gönderir (rate limit'e uygun).
-- [ ] **Sipariş içe alma:** Trendyol siparişleri yerel siparişe dönüştürülür (kanal = Trendyol); stok düşer; idempotent (aynı paket iki kez işlenmez).
-- [ ] Periyodik sipariş çekme işi (Faz 3.4'ten taşındı): son çekim zamanından itibaren 14 günlük pencerelerle, `PackageLastModifiedDate`'e göre.
-- [ ] **Statü geri bildirimi:** yerelde "Hazırlanıyor/Kargoda" olan Trendyol siparişi için Trendyol'a Picking/Invoiced gönderilir.
-- [ ] Senkron logu ve tekrar deneme uçları.
+- [ ] Genel `IMarketplaceProvider` soyutlaması → **ertelendi:** tek pazaryeri varken soyutlama erken olur; N11 eklenirken mevcut Trendyol servislerinden çıkarılacak. Veri modeli (`Marketplace` sütunu, `OrderChannel`) şimdiden çok pazaryerine uygun.
+- [x] **Eşleştirme:** yerel kategori ↔ Trendyol leaf kategorisi (Trendyol ağacından doğrulanıyor), yerel marka ↔ Trendyol markası. Varyantlar barkodla eşleşiyor.
+- [x] **Yayınlama** (`POST .../listings/{productId}`): aktif varyantlardan Trendyol v2 ürün isteği üretiliyor (model kodu, eşlenmiş kategori/marka, stok, fiyat, KDV, herkese açık https görseller, ürün + varyant özellikleri), Trendyol kurallarıyla doğrulanıp gönderiliyor. Listing durumu: Gönderildi → (batch sonucu) Onay bekliyor / Hatalı → (onaylı/onaysız sorgusu) Yayında / Reddedildi + sebepler.
+- [x] **Tek stok ve fiyat:** varyantın fiyat/stok/aktiflik değişikliği `InventoryOutboxInterceptor` ile aynı kayıtta outbox'a yazılıyor (sipariş, iptal, içe alma, yönetici güncellemesi dahil); worker kabul edilmiş ürünler için toplu fiyat/stok gönderiyor. Satıştan kalkan ürün 0 stokla kapatılıyor. Geçici hatalarda tekrar deneniyor, Trendyol'un reddettiği istekler hata mesajıyla kapatılıyor.
+- [x] **Sipariş içe alma:** son 14 günün paketleri her çalışmada sayfalı okunuyor; yeni paketler `TY{paketNo}` numarasıyla yerel siparişe dönüşüyor (paket no tekil dış referans → idempotent), barkodla eşleşen varyantların stoğu düşüyor (sıfırın altına inmiyor). Sonraki çalışmalarda durum ileri yönde yansıtılıyor (Hazırlanıyor/Kargoda/Teslim edildi), Trendyol'da iptal edilen siparişin stoğu geri ekleniyor.
+- [x] Arka plan işleri: batch + listing durumu (60 sn), stok/fiyat (60 sn), sipariş içe alma (5 dk); `Trendyol:{BatchPolling|InventorySync|OrderImport}` ile açılıp kapatılabiliyor. Elle tetikleme uçları: `POST .../sync/listings|inventory|orders`.
+- [ ] **Statü geri bildirimi:** Trendyol siparişleri için Picking/Invoiced, Faz 3'teki `orders/packages/{id}/picking|invoiced` uçlarıyla gönderiliyor; yerel durum bir sonraki içe almada yansıyor. Yerel sipariş ekranından otomatik gönderim → Faz 6 (panel) ile birlikte.
+- [ ] Onaylı ürün içerik güncellemesinin (başlık/açıklama/görsel) yerelden otomatik gönderimi → MVP sonrası (fiyat/stok otomatik).
 
-**Kabul:** Bir ürün yerelde oluşturulup Trendyol'a yayınlanabiliyor; stok yerelden değişince Trendyol'a yansıyor; hem siteden hem Trendyol'dan gelen siparişler tek listede, ortak stoğu düşürüyor.
+**Kabul:** Ürün yerelde oluşturulup Trendyol'a yayınlanabiliyor ✔; yerel stok/fiyat değişikliği Trendyol'a gidiyor ✔; site ve Trendyol siparişleri `/api/v1/orders` altında tek listede, ortak stoğu düşürüyor ✔ (testlerde Trendyol mock; canlı deneme stage bilgileri gelince).
 
 ---
 

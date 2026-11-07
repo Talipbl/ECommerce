@@ -98,6 +98,19 @@ public class ProductTests
     }
 
     [Fact]
+    public void Stock_is_decreased_for_orders_and_cannot_go_negative()
+    {
+        var variant = NewProduct().AddVariant("SKU-1", "BRK-1", 100, null, 3, []);
+
+        variant.DecreaseStock(2);
+        variant.StockQuantity.ShouldBe(1);
+        Should.Throw<DomainException>(() => variant.DecreaseStock(2));
+
+        variant.IncreaseStock(4);
+        variant.StockQuantity.ShouldBe(5);
+    }
+
+    [Fact]
     public void Variant_price_and_stock_can_change()
     {
         var variant = NewProduct().AddVariant("SKU-1", "BRK-1", 100, null, 1, []);

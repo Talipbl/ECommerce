@@ -74,6 +74,9 @@ public class ProductVariantConfiguration : IEntityTypeConfiguration<ProductVaria
         entity.HasIndex(e => e.Sku).IsUnique().HasFilter(CatalogTables.NotDeleted);
         entity.HasIndex(e => e.Barcode).IsUnique().HasFilter(CatalogTables.NotDeleted);
 
+        // Aynı stok için eşzamanlı siparişlerde fazla satışı önler.
+        entity.Property<byte[]>("RowVersion").IsRowVersion();
+
         entity.Ignore(e => e.Attributes);
         entity.Property<List<VariantAttribute>>("_attributes")
             .HasColumnName("Attributes")

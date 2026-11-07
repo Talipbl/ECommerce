@@ -110,6 +110,67 @@ public class Order : AggregateRoot<int>
         return order;
     }
 
+    /// <summary>Pazaryerinden gelen siparişi içe alır; ödeme pazaryerinde yapıldığı için onaylı başlar.</summary>
+    public static Order ImportMarketplaceOrder(
+        string orderNumber, OrderChannel channel, string externalReference, string customerEmail, string customerName,
+        OrderAddress address, IReadOnlyList<OrderLineInput> lines, DateTime placedAt)
+    {
+        if (channel == OrderChannel.Web)
+            throw new DomainException("Pazaryeri siparişi web kanalıyla içe alınamaz.");
+
+        var order = Create(orderNumber, channel, externalReference, customerEmail, customerName, address, PaymentMethod.Marketplace, lines, 0m, 0m, placedAt);
+        order.PaidAt = placedAt;
+        order.SetStatus(OrderStatus.Confirmed, placedAt, "Pazaryerinden içe alındı.");
+        return order;
+    }
+
+    /// <summary>
+    /// Pazaryerindeki durumu yansıtır; yalnızca ileri yönde ilerler. Durum değiştiyse true döner.
+    /// </summary>
+    public bool ApplyMarketplaceStatus(OrderStatus target, string? cargoProvider, string? trackingNumber, DateTime now)
+    {
+        if (Channel == OrderChannel.Web)
+            throw new DomainException("Web siparişinin durumu pazaryerinden güncellenemez.");
+
+        if (Status is OrderStatus.Cancelled or OrderStatus.Delivered || target == Status)
+            return false;
+
+        if (target == OrderStatus.Cancelled)
+        {
+            if (Status == OrderStatus.Shipped)
+                return false;
+            CancelReason = "Pazaryerinde iptal edildi.";
+            CancelledAt = now;
+            SetStatus(OrderStatus.Cancelled, now, CancelReason);
+            return true;
+        }
+
+        if (Rank(target) <= Rank(Status))
+            return false;
+
+        if (target is OrderStatus.Shipped or OrderStatus.Delivered)
+        {
+            CargoProvider = cargoProvider ?? CargoProvider;
+            TrackingNumber = trackingNumber ?? TrackingNumber;
+            ShippedAt ??= now;
+        }
+        if (target == OrderStatus.Delivered)
+            DeliveredAt = now;
+
+        SetStatus(target, now, null);
+        return true;
+    }
+
+    private static int Rank(OrderStatus status) => status switch
+    {
+        OrderStatus.PendingPayment => 0,
+        OrderStatus.Confirmed => 1,
+        OrderStatus.Preparing => 2,
+        OrderStatus.Shipped => 3,
+        OrderStatus.Delivered => 4,
+        _ => -1
+    };
+
     protected static Order Create(
         string orderNumber, OrderChannel channel, string? externalReference, string customerEmail, string customerName, OrderAddress address,
         PaymentMethod paymentMethod, IReadOnlyList<OrderLineInput> lines, decimal shippingFee, decimal paymentFee, DateTime now)

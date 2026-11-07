@@ -43,6 +43,9 @@ public static class DependencyInjection
         services.AddScoped<ITrendyolProductService, TrendyolProductService>();
         services.AddScoped<ITrendyolBatchService, TrendyolBatchService>();
         services.AddScoped<ITrendyolOrderService, TrendyolOrderService>();
+        services.AddScoped<ITrendyolListingService, TrendyolListingService>();
+        services.AddScoped<ITrendyolInventorySyncService, TrendyolInventorySyncService>();
+        services.AddScoped<ITrendyolOrderImportService, TrendyolOrderImportService>();
 
         return services;
     }

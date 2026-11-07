@@ -640,6 +640,68 @@ namespace ECommerce.Persistence.Migrations
                     b.ToTable("Gnl_MarketplaceBatchRequests", "dbo");
                 });
 
+            modelBuilder.Entity("ECommerce.Shopping.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId")
+                        .IsUnique()
+                        .HasFilter("[DeletedDate] IS NULL");
+
+                    b.ToTable("Shopping_Carts", "dbo");
+                });
+
+            modelBuilder.Entity("ECommerce.Shopping.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("VariantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId", "VariantId");
+
+                    b.ToTable("Shopping_CartItems", "dbo");
+                });
+
             modelBuilder.Entity("ECommerce.Admin.AdminRefreshToken", b =>
                 {
                     b.HasOne("ECommerce.Admin.DefAdmin", "Admin")
@@ -710,6 +772,24 @@ namespace ECommerce.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ECommerce.Shopping.Cart", b =>
+                {
+                    b.HasOne("ECommerce.Customers.Customer", null)
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ECommerce.Shopping.CartItem", b =>
+                {
+                    b.HasOne("ECommerce.Shopping.Cart", null)
+                        .WithMany("Items")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ECommerce.Admin.DefAdmin", b =>
                 {
                     b.Navigation("RefreshTokens");
@@ -725,6 +805,11 @@ namespace ECommerce.Persistence.Migrations
             modelBuilder.Entity("ECommerce.Customers.Customer", b =>
                 {
                     b.Navigation("Addresses");
+                });
+
+            modelBuilder.Entity("ECommerce.Shopping.Cart", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

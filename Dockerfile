@@ -16,8 +16,6 @@ COPY src/ src/
 COPY marketplaces/Trendyol.Client/ marketplaces/Trendyol.Client/
 RUN dotnet publish src/ECommerce.API/ECommerce.API.csproj -c Release -o /app/publish --no-restore /p:UseAppHost=false
 
-# Çalışma aşaması: sadece ASP.NET runtime
-
 # Migration bundle aşaması: tüm migration'lar tek bir çalıştırılabilir dosyada
 FROM build AS migrations-build
 COPY dotnet-tools.json ./
@@ -35,6 +33,7 @@ COPY --from=migrations-build /app/efbundle .
 USER $APP_UID
 ENTRYPOINT ["./efbundle"]
 
+# Çalışma aşaması: sadece ASP.NET runtime; hedef verilmeyen build bu son aşamayı üretir
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 RUN apt-get update \
  && apt-get install -y --no-install-recommends curl \

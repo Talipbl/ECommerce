@@ -6,7 +6,8 @@ export MSYS_NO_PATHCONV=1  # Windows Git Bash container yollarını dönüştür
 cd "$(dirname "$0")/.."
 
 BACKUP_DIR="${1:-${BACKUP_DIR:-./backups}}"
-KEEP_DAYS="${BACKUP_KEEP_DAYS:-14}"
+KEEP_DAYS="${BACKUP_KEEP_DAYS:-$(grep -E '^BACKUP_KEEP_DAYS=' .env 2>/dev/null | cut -d= -f2 | tr -d '\r' || true)}"
+KEEP_DAYS="${KEEP_DAYS:-14}"
 STAMP="$(date -u +%Y%m%d-%H%M%S)"
 CONTAINER_FILE="/var/opt/mssql/backup/ECommerce-$STAMP.bak"
 mkdir -p "$BACKUP_DIR"

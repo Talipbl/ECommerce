@@ -36,7 +36,7 @@ tests/
   ECommerce.IntegrationTests ← WebApplicationFactory + Testcontainers
   Trendyol.Client.Tests      ← WireMock ile sözleşme testleri
 frontend/                    ← Faz 6
-docker/                      ← Faz 5
+docker/                      ← Faz 5: Caddyfile, yedekleme betikleri
 ```
 
 - `ECommerce.CustomerPortal` (MVC) Faz 3'te silindi (git geçmişinde duruyor).
@@ -266,16 +266,17 @@ dotnet user-secrets set "Cors:AllowedOrigins:0" "http://localhost:5173"
 
 ## Faz 5 — Docker ile yayın (3–4 gün)
 
-- [ ] Multi-stage `Dockerfile` (API), non-root kullanıcı, health check.
-- [ ] `docker-compose.yml`: API + SQL Server (+ opsiyonel Seq) ve kalıcı volume'ler (veritabanı, görseller).
-- [ ] Migration'lar ayrı bir başlangıç adımı/komutu ile uygulanır.
-- [ ] Reverse proxy + HTTPS (Caddy veya Nginx + Let's Encrypt).
-- [ ] Ortam konfigürasyonu: `.env` / Docker secrets; Trendyol Prod/Stage seçimi.
-- [ ] CI: image build + registry'ye push (GHCR); sunucuda `docker compose pull && up -d`.
-- [ ] Veritabanı yedekleme betiği.
-- [ ] Sunucu çıkış IP'sinin Trendyol stage whitelist'ine eklenmesi; Trendyol webhook'unun açılması (Faz 3.4).
+- [x] Multi-stage `Dockerfile`: `runtime` (API, `app` kullanıcısı, `/health/live` health check) ve `migrator` aşamaları; restore katmanı cache'leniyor.
+- [x] `docker-compose.yml` (`ecommerce-prod`): sqlserver, migrator, api, caddy; volume'ler: veritabanı, görseller, Caddy sertifikaları. Veritabanı ve API portu dışarıya kapalı; container logları döndürülüyor. Seq eklenmedi (gerekirse Serilog sink'i ile).
+- [x] Migration'lar EF Core **migration bundle** ile ayrı `migrator` container'ında; API, migrator başarıyla bitmeden başlamıyor. İkinci çalıştırmada değişiklik yapmıyor (idempotent).
+- [x] Reverse proxy + HTTPS: **Caddy** (Let's Encrypt otomatik); `ASPNETCORE_FORWARDEDHEADERS_ENABLED` ile gerçek istemci IP'si (giriş hız sınırı IP'ye göre çalışıyor).
+- [x] Ortam konfigürasyonu: `.env` (şablon `.env.example`); `TRENDYOL_BASE_URL` ile Prod/Stage, ilk yönetici, havale bilgileri, `MSSQL_PID` (varsayılan Express).
+- [x] CI: PR'larda image derleniyor; `master`'da `latest` + `sha-`, `v*` etiketlerinde sürüm etiketiyle GHCR'a push (`ecommerce-api`, `ecommerce-migrator`). Sunucuda `docker compose pull && docker compose up -d --no-build`.
+- [x] Yedekleme: `docker/backup.sh` (veritabanı + görseller, gzip, `BACKUP_KEEP_DAYS`), `docker/restore.sh` (onaylı). Geri yükleme yerelde denendi.
+- [ ] Sunucu çıkış IP'sinin Trendyol stage whitelist'ine eklenmesi → sunucu açılınca satıcı tarafından (adımlar `docs/DEPLOYMENT.md` §8).
+- [ ] Trendyol webhook'u → API'de webhook ucu henüz yok (Faz 3.4, opsiyonel); periyodik sipariş çekme ile Faz 4.3'e bağlı.
 
-**Kabul:** Temiz bir sunucuda tek komutla ayağa kalkıyor; health check yeşil; yedekten geri dönüş denenmiş.
+**Kabul:** Yerelde `docker compose up -d` ile tüm yığın ayağa kalkıyor ✔; `https://localhost/health/ready` 200 ✔; HTTP → HTTPS yönlendirmesi ✔; yedek → değişiklik → geri yükleme denendi ✔. Temiz bir VPS'te ilk kurulum ⏳ (sunucu ve alan adı bekleniyor; adımlar `docs/DEPLOYMENT.md`).
 
 ---
 
@@ -318,8 +319,9 @@ Back-end (Faz 0–5): yaklaşık **7–9 hafta**. Front-end dahil: **10–14 haf
 | 2026-11-06 | Mapping: AutoMapper kaldırılır, **Mapster** kullanılır. |
 | 2026-11-06 | DI: Autofac + Castle interceptor'ları kaldırılır, **.NET'in yerleşik DI**'ı kullanılır. |
 | 2026-11-06 | Test framework'ü: **xUnit**. |
-
 | 2026-11-07 | Domain modeli yeniden tasarlandı; eski tablolar migration ile kaldırıldı. |
 | 2026-11-07 | Ödeme (MVP): havale/EFT ve kapıda ödeme; sipariş yönetici onayıyla ödendi sayılır. Sağlayıcı (iyzico/PayTR) sonra, arayüz arkasında. |
 | 2026-11-07 | Görseller yerel diskte, API `/media` altından sunuyor; depolama `IFileStorage` arkasında (S3'e geçiş kolay). |
+| 2026-11-07 | Yayın: tek VPS, Docker Compose; reverse proxy **Caddy**; gizli bilgiler `.env` (chmod 600) — Docker secrets tek sunucuda ek koruma sağlamadığı için kullanılmadı. |
+| 2026-11-07 | Migration'lar API açılışında değil, ayrı `migrator` container'ında (EF Core migration bundle). SQL Server yayında Express sürümü. |
 | 2026-11-07 | Yerel sitede sipariş için üyelik zorunlu (misafir sipariş yok). |

@@ -1,6 +1,8 @@
 using Asp.Versioning;
 using ECommerce.API.Infrastructure;
+using ECommerce.Application.Marketplaces;
 using ECommerce.Application.Marketplaces.Trendyol;
+using ECommerce.Marketplaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.API.Controllers.Trendyol;
@@ -11,8 +13,10 @@ namespace ECommerce.API.Controllers.Trendyol;
 [Tags("Trendyol - Entegrasyon")]
 public class TrendyolIntegrationController(
     ITrendyolListingService listings,
-    ITrendyolInventorySyncService inventory,
-    ITrendyolOrderImportService orderImport) : ControllerBase
+    ITrendyolBatchService batches,
+    IMarketplaceInventorySyncService inventory,
+    IMarketplaceOrderImportService orderImport,
+    IMarketplaceOrderStatusSyncService orderStatus) : ControllerBase
 {
     [HttpGet("mappings/categories")]
     public async Task<IReadOnlyList<CategoryMappingDto>> ListCategoryMappings(CancellationToken cancellationToken) =>
@@ -21,6 +25,11 @@ public class TrendyolIntegrationController(
     [HttpPut("mappings/categories/{categoryId:int}")]
     public async Task<IActionResult> MapCategory(int categoryId, MapCategoryRequest request, CancellationToken cancellationToken) =>
         this.ToActionResult(await listings.MapCategoryAsync(categoryId, request, cancellationToken), Ok);
+
+    /// <summary>Kategori özellik eşlemesi: sabit değerler ve varyant özelliği → Trendyol değer eşlemeleri (tümünü değiştirir).</summary>
+    [HttpPut("mappings/categories/{categoryId:int}/attributes")]
+    public async Task<IActionResult> MapCategoryAttributes(int categoryId, SetCategoryAttributesRequest request, CancellationToken cancellationToken) =>
+        this.ToActionResult(await listings.SetCategoryAttributesAsync(categoryId, request, cancellationToken), Ok);
 
     [HttpGet("mappings/brands")]
     public async Task<IReadOnlyList<BrandMappingDto>> ListBrandMappings(CancellationToken cancellationToken) =>
@@ -42,7 +51,7 @@ public class TrendyolIntegrationController(
     /// <summary>Arka plan işlerini beklemeden elle tetikler.</summary>
     [HttpPost("sync/listings")]
     public async Task<IActionResult> SyncListings(CancellationToken cancellationToken) =>
-        Ok(new { updated = await listings.RefreshStatusesAsync(cancellationToken) });
+        Ok(new { batches = await batches.RefreshPendingAsync(cancellationToken), updated = await listings.RefreshStatusesAsync(cancellationToken) });
 
     [HttpPost("sync/inventory")]
     public async Task<IActionResult> SyncInventory(CancellationToken cancellationToken) =>
@@ -50,5 +59,9 @@ public class TrendyolIntegrationController(
 
     [HttpPost("sync/orders")]
     public async Task<OrderImportSummary> SyncOrders(CancellationToken cancellationToken) =>
-        await orderImport.ImportAsync(cancellationToken);
+        await orderImport.ImportAsync(MarketplaceNames.Trendyol, cancellationToken);
+
+    [HttpPost("sync/order-status")]
+    public async Task<IActionResult> SyncOrderStatus(CancellationToken cancellationToken) =>
+        Ok(new { processed = await orderStatus.SyncPendingAsync(cancellationToken) });
 }

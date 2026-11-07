@@ -22,6 +22,7 @@ builder.Services.AddMedia(builder.Configuration);
 builder.Services.AddHostedService<TrendyolBatchStatusWorker>();
 builder.Services.AddHostedService<TrendyolInventorySyncWorker>();
 builder.Services.AddHostedService<TrendyolOrderImportWorker>();
+builder.Services.AddHostedService<TrendyolOrderStatusWorker>();
 
 builder.Services
     .AddControllers(options => options.Filters.Add<ValidationFilter>())

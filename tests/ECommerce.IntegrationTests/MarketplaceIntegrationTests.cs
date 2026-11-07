@@ -52,6 +52,8 @@ public class MarketplaceIntegrationTests : IAsyncLifetime
 
         _catalog.GetCategoryTreeAsync(Arg.Any<CancellationToken>()).Returns(TrendyolResponse<TrendyolCategoryTree>.Success(200,
             new TrendyolCategoryTree([new TrendyolCategory(1, "Giyim", null, [new TrendyolCategory(411, "Tişört", 1, [])])])));
+        _catalog.GetCategoryAttributesAsync(Arg.Any<long>(), Arg.Any<CancellationToken>()).Returns(TrendyolResponse<TrendyolCategoryAttributes>.Success(200,
+            new TrendyolCategoryAttributes(411, "Tişört", "Tişört", [])));
         return ValueTask.CompletedTask;
     }
 

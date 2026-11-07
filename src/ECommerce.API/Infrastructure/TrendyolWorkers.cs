@@ -1,3 +1,4 @@
+using ECommerce.Application.Marketplaces;
 using ECommerce.Application.Marketplaces.Trendyol;
 
 namespace ECommerce.API.Infrastructure;
@@ -63,7 +64,7 @@ public class TrendyolInventorySyncWorker(IServiceScopeFactory scopeFactory, ICon
 
     protected override async Task<string?> RunAsync(IServiceProvider services, CancellationToken cancellationToken)
     {
-        var processed = await services.GetRequiredService<ITrendyolInventorySyncService>().SyncPendingAsync(cancellationToken);
+        var processed = await services.GetRequiredService<IMarketplaceInventorySyncService>().SyncPendingAsync(cancellationToken);
         return processed > 0 ? $"{processed} stok/fiyat değişikliği işlendi" : null;
     }
 }
@@ -77,9 +78,24 @@ public class TrendyolOrderImportWorker(IServiceScopeFactory scopeFactory, IConfi
 
     protected override async Task<string?> RunAsync(IServiceProvider services, CancellationToken cancellationToken)
     {
-        var summary = await services.GetRequiredService<ITrendyolOrderImportService>().ImportAsync(cancellationToken);
-        return summary.Imported + summary.Updated > 0 || summary.Error is not null
-            ? $"{summary.Imported} yeni, {summary.Updated} güncellenen sipariş{(summary.Error is null ? string.Empty : $"; hata: {summary.Error}")}"
-            : null;
+        var summaries = await services.GetRequiredService<IMarketplaceOrderImportService>().ImportAllAsync(cancellationToken);
+        var changed = summaries.Where(s => s.Imported + s.Updated > 0 || s.Error is not null)
+            .Select(s => $"{s.Marketplace}: {s.Imported} yeni, {s.Updated} güncellenen sipariş{(s.Error is null ? string.Empty : $"; hata: {s.Error}")}")
+            .ToList();
+        return changed.Count > 0 ? string.Join(" | ", changed) : null;
+    }
+}
+
+public class TrendyolOrderStatusWorker(IServiceScopeFactory scopeFactory, IConfiguration configuration, ILogger<TrendyolOrderStatusWorker> logger)
+    : PeriodicTrendyolWorker(scopeFactory, configuration, logger)
+{
+    protected override string Section => "OrderStatusSync";
+
+    protected override int DefaultIntervalSeconds => 60;
+
+    protected override async Task<string?> RunAsync(IServiceProvider services, CancellationToken cancellationToken)
+    {
+        var processed = await services.GetRequiredService<IMarketplaceOrderStatusSyncService>().SyncPendingAsync(cancellationToken);
+        return processed > 0 ? $"{processed} sipariş durumu bildirildi" : null;
     }
 }

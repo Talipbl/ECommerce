@@ -12,28 +12,17 @@ public record MapCategoryRequest(long ExternalCategoryId, string? ExternalCatego
 
 public record MapBrandRequest(long ExternalBrandId, string? ExternalBrandName);
 
-public record CategoryMappingDto(int CategoryId, long ExternalCategoryId, string? ExternalCategoryName);
+public record CategoryMappingDto(int CategoryId, long ExternalCategoryId, string? ExternalCategoryName, IReadOnlyList<CategoryAttributeMapping> Attributes);
+
+public record SetCategoryAttributesRequest(IReadOnlyList<CategoryAttributeMapping> Attributes);
 
 public record BrandMappingDto(int BrandId, long ExternalBrandId, string? ExternalBrandName);
-
-public record PublishListingRequest(IReadOnlyList<ListingAttribute> ProductAttributes, IReadOnlyList<VariantListingAttributes> VariantAttributes, int? DeliveryDuration);
-
-public record ListingDto(
-    int ProductId,
-    ListingStatus Status,
-    long? ExternalContentId,
-    string? LastBatchRequestId,
-    string? StatusMessage,
-    DateTime? LastSubmittedAt,
-    DateTime? LastCheckedAt,
-    IReadOnlyList<ListingAttribute> ProductAttributes,
-    IReadOnlyList<VariantListingAttributes> VariantAttributes,
-    int? DeliveryDuration);
 
 public interface ITrendyolListingService
 {
     Task<IReadOnlyList<CategoryMappingDto>> ListCategoryMappingsAsync(CancellationToken cancellationToken = default);
     Task<Result<CategoryMappingDto>> MapCategoryAsync(int categoryId, MapCategoryRequest request, CancellationToken cancellationToken = default);
+    Task<Result<CategoryMappingDto>> SetCategoryAttributesAsync(int categoryId, SetCategoryAttributesRequest request, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<BrandMappingDto>> ListBrandMappingsAsync(CancellationToken cancellationToken = default);
     Task<Result<BrandMappingDto>> MapBrandAsync(int brandId, MapBrandRequest request, CancellationToken cancellationToken = default);
     Task<Result<ListingDto>> GetAsync(int productId, CancellationToken cancellationToken = default);
@@ -52,6 +41,7 @@ public class TrendyolListingService(
     IRepository<Product> products,
     IRepository<Category> categories,
     IRepository<Brand> brands,
+    IRepository<MarketplaceSyncLog> logs,
     IUnitOfWork unitOfWork,
     ITrendyolProductService trendyolProducts,
     ITrendyolCatalogService trendyolCatalog,
@@ -64,8 +54,7 @@ public class TrendyolListingService(
     private DateTime Now => clock.GetUtcNow().UtcDateTime;
 
     public async Task<IReadOnlyList<CategoryMappingDto>> ListCategoryMappingsAsync(CancellationToken cancellationToken = default) =>
-        await categoryMappings.ListAsync(q => q.Where(m => m.Marketplace == Marketplace)
-            .Select(m => new CategoryMappingDto(m.CategoryId, m.ExternalCategoryId, m.ExternalCategoryName)), cancellationToken);
+        (await categoryMappings.ListAsync(m => m.Marketplace == Marketplace, cancellationToken)).Select(ToDto).ToList();
 
     public async Task<Result<CategoryMappingDto>> MapCategoryAsync(int categoryId, MapCategoryRequest request, CancellationToken cancellationToken = default)
     {
@@ -87,7 +76,43 @@ public class TrendyolListingService(
             mapping.Update(request.ExternalCategoryId, name);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        return Result<CategoryMappingDto>.Success(new CategoryMappingDto(categoryId, mapping.ExternalCategoryId, mapping.ExternalCategoryName));
+        return Result<CategoryMappingDto>.Success(ToDto(mapping));
+    }
+
+    public async Task<Result<CategoryMappingDto>> SetCategoryAttributesAsync(int categoryId, SetCategoryAttributesRequest request, CancellationToken cancellationToken = default)
+    {
+        var mapping = await categoryMappings.FirstOrDefaultAsync(m => m.Marketplace == Marketplace && m.CategoryId == categoryId, cancellationToken);
+        if (mapping is null)
+            return Result<CategoryMappingDto>.NotFound("Kategori önce bir Trendyol kategorisiyle eşleştirilmelidir.");
+
+        var attributes = await trendyolCatalog.GetCategoryAttributesAsync(mapping.ExternalCategoryId, cancellationToken);
+        if (!attributes.Succeeded)
+            return ToAppError(attributes.Error!);
+
+        var byId = attributes.Value!.ToDictionary(a => a.Id);
+        foreach (var item in request.Attributes)
+        {
+            if (!byId.TryGetValue(item.ExternalAttributeId, out var attribute))
+                return Result<CategoryMappingDto>.Invalid($"{item.ExternalAttributeId} numaralı özellik Trendyol kategorisinde yok.");
+
+            var custom = item.Values.Select(v => v.CustomValue).Append(item.DefaultCustomValue).Any(v => !string.IsNullOrWhiteSpace(v));
+            if (custom && !attribute.AllowCustom)
+                return Result<CategoryMappingDto>.Invalid($"{attribute.Name} özelliği serbest değer kabul etmiyor; değer numarası seçin.");
+
+            var valueIds = item.Values.Select(v => v.ValueId).Append(item.DefaultValueId).OfType<long>().Distinct().ToList();
+            if (valueIds.Count == 0)
+                continue;
+            var values = await trendyolCatalog.GetAttributeValuesAsync(mapping.ExternalCategoryId, attribute.Id, cancellationToken);
+            if (!values.Succeeded)
+                return ToAppError(values.Error!);
+            var unknown = valueIds.Except(values.Value!.Select(v => v.Id)).ToList();
+            if (unknown.Count > 0)
+                return Result<CategoryMappingDto>.Invalid($"{attribute.Name} için geçersiz değer numarası: {string.Join(", ", unknown)}.");
+        }
+
+        mapping.SetAttributes(request.Attributes);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+        return Result<CategoryMappingDto>.Success(ToDto(mapping));
     }
 
     public async Task<IReadOnlyList<BrandMappingDto>> ListBrandMappingsAsync(CancellationToken cancellationToken = default) =>
@@ -138,8 +163,20 @@ public class TrendyolListingService(
         if (listing is { IsSyncable: true })
             return Result<ListingDto>.Conflict("Ürün Trendyol'da zaten kabul edildi; stok ve fiyat otomatik güncelleniyor.");
 
-        var variantAttributes = request.VariantAttributes.ToDictionary(v => v.VariantId, v => v.Attributes);
-        var items = product.Variants.Where(v => v.IsActive).Select(v => new CreateProductItem
+        // Talepteki özellikler kategori eşlemesinden çözülenleri aynı özellik numarasında ezer.
+        var requestVariantAttributes = (request.VariantAttributes ?? []).ToDictionary(v => v.VariantId, v => v.Attributes);
+        var productAttributes = Merge(categoryMapping.ResolveProductAttributes(), request.ProductAttributes ?? []);
+        var activeVariants = product.Variants.Where(v => v.IsActive).ToList();
+        var variantAttributes = activeVariants
+            .Select(v => new VariantListingAttributes(v.Id, Merge(categoryMapping.ResolveVariantAttributes(v.Attributes), requestVariantAttributes.GetValueOrDefault(v.Id) ?? [])))
+            .ToList();
+
+        var missing = await MissingRequiredAttributesAsync(categoryMapping.ExternalCategoryId, productAttributes, variantAttributes, cancellationToken);
+        if (missing.Count > 0)
+            return Result<ListingDto>.Invalid("Trendyol kategorisinin zorunlu özellikleri eksik: " + string.Join(", ", missing) +
+                ". Kategori özellik eşlemesini tamamlayın veya istekte gönderin.");
+
+        var items = activeVariants.Select(v => new CreateProductItem
         {
             Barcode = v.Barcode,
             Title = product.Name,
@@ -153,8 +190,8 @@ public class TrendyolListingService(
             SalePrice = v.Price,
             VatRate = product.VatRate,
             Images = images.Select(url => new TrendyolImage(url)).ToList(),
-            Attributes = request.ProductAttributes
-                .Concat(variantAttributes.GetValueOrDefault(v.Id) ?? [])
+            Attributes = productAttributes
+                .Concat(variantAttributes.Single(a => a.VariantId == v.Id).Attributes)
                 .Select(a => new TrendyolProductAttribute(a.AttributeId, a.ValueId, a.CustomValue))
                 .ToList(),
             DeliveryOption = request.DeliveryDuration is null ? null : new TrendyolDeliveryOption(request.DeliveryDuration)
@@ -167,12 +204,19 @@ public class TrendyolListingService(
 
         var response = await trendyolProducts.CreateAsync(createRequest, cancellationToken);
         if (!response.Succeeded)
-            return ToAppError(response.Error!);
+        {
+            var error = ToAppError(response.Error!);
+            logs.Add(MarketplaceSyncLog.Write(Marketplace, SyncOperation.Publish, productId.ToString(), false, error.Message, Now));
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+            return error;
+        }
 
         if (listing is null)
             listings.Add(listing = MarketplaceListing.Create(Marketplace, productId));
-        listing.SetContent(request.ProductAttributes, request.VariantAttributes, request.DeliveryDuration);
+        listing.SetContent(productAttributes, variantAttributes, request.DeliveryDuration);
         listing.MarkSubmitted(response.Value!.BatchRequestId, Now);
+        logs.Add(MarketplaceSyncLog.Write(Marketplace, SyncOperation.Publish, productId.ToString(), true,
+            $"{items.Count} varyant gönderildi (batch {response.Value.BatchRequestId}).", Now));
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result<ListingDto>.Success(ToDto(listing));
@@ -237,6 +281,31 @@ public class TrendyolListingService(
         return product?.Variants.Where(v => v.IsActive).Select(v => v.Barcode).Take(50).ToList() ?? [];
     }
 
+    private static List<ListingAttribute> Merge(IEnumerable<ListingAttribute> resolved, IEnumerable<ListingAttribute> overrides)
+    {
+        var result = resolved.ToDictionary(a => a.AttributeId);
+        foreach (var attribute in overrides)
+            result[attribute.AttributeId] = attribute;
+        return result.Values.ToList();
+    }
+
+    // Özellik listesi alınamazsa kontrol atlanır; Trendyol batch sonucunda yine reddeder.
+    private async Task<List<string>> MissingRequiredAttributesAsync(
+        long externalCategoryId, IReadOnlyList<ListingAttribute> productAttributes, IReadOnlyList<VariantListingAttributes> variantAttributes, CancellationToken cancellationToken)
+    {
+        var attributes = await trendyolCatalog.GetCategoryAttributesAsync(externalCategoryId, cancellationToken);
+        if (attributes is not { Succeeded: true, Value: { } list })
+            return [];
+
+        var productIds = productAttributes.Select(a => a.AttributeId).ToHashSet();
+        return list
+            .Where(a => a.Required && !productIds.Contains(a.Id) && (variantAttributes.Count == 0 || variantAttributes.Any(v => v.Attributes.All(x => x.AttributeId != a.Id))))
+            .Select(a => a.Name)
+            .ToList();
+    }
+
+    private static CategoryMappingDto ToDto(MarketplaceCategoryMapping m) => new(m.CategoryId, m.ExternalCategoryId, m.ExternalCategoryName, m.Attributes);
+
     private Task<MarketplaceListing?> FindListingAsync(int productId, CancellationToken cancellationToken) =>
         listings.FirstOrDefaultAsync(l => l.Marketplace == Marketplace && l.ProductId == productId, cancellationToken);
 
@@ -264,8 +333,6 @@ public class PublishListingRequestValidator : AbstractValidator<PublishListingRe
 {
     public PublishListingRequestValidator()
     {
-        RuleFor(x => x.ProductAttributes).NotNull();
-        RuleFor(x => x.VariantAttributes).NotNull();
         RuleForEach(x => x.ProductAttributes).Must(a => a.AttributeId > 0 && (a.ValueId is not null || !string.IsNullOrWhiteSpace(a.CustomValue)))
             .WithMessage("Her özellik için değer numarası veya serbest değer girilmelidir.");
         RuleFor(x => x.DeliveryDuration).InclusiveBetween(1, 30).When(x => x.DeliveryDuration is not null);

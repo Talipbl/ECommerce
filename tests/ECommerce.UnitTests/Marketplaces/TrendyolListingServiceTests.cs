@@ -25,7 +25,7 @@ public sealed class TrendyolListingServiceTests : IAsyncLifetime
     private TrendyolListingService Service(IMediaUrlBuilder? media = null) => new(
         new EfRepository<MarketplaceListing>(_db.Context), new EfRepository<MarketplaceCategoryMapping>(_db.Context),
         new EfRepository<MarketplaceBrandMapping>(_db.Context), new EfRepository<MarketplaceBatchRequest>(_db.Context),
-        _db.Products, _db.Categories, _db.Brands, _db.Context, _products, _catalog, media ?? _db.Media, _clock);
+        _db.Products, _db.Categories, _db.Brands, new EfRepository<MarketplaceSyncLog>(_db.Context), _db.Context, _products, _catalog, media ?? _db.Media, _clock);
 
     public async ValueTask InitializeAsync()
     {
@@ -172,6 +172,105 @@ public sealed class TrendyolListingServiceTests : IAsyncLifetime
         var listing = await _db.Context.MarketplaceListings.SingleAsync(Ct);
         listing.Status.ShouldBe(ListingStatus.Rejected);
         listing.StatusMessage!.ShouldContain("Çözünürlük düşük");
+    }
+
+    private void StubAttributes()
+    {
+        _catalog.GetCategoryAttributesAsync(411, Arg.Any<CancellationToken>()).Returns(MarketplaceResult<IReadOnlyList<CategoryAttributeDto>>.Success(
+        [
+            new CategoryAttributeDto(47, "Renk", Required: true, AllowCustom: true, Varianter: false, Slicer: true, AllowMultipleValues: false),
+            new CategoryAttributeDto(293, "Beden", Required: true, AllowCustom: false, Varianter: true, Slicer: false, AllowMultipleValues: false),
+            new CategoryAttributeDto(14, "Materyal", Required: false, AllowCustom: false, Varianter: false, Slicer: false, AllowMultipleValues: false)
+        ]));
+        _catalog.GetAttributeValuesAsync(411, 293, Arg.Any<CancellationToken>()).Returns(MarketplaceResult<IReadOnlyList<AttributeValueDto>>.Success(
+            [new AttributeValueDto(2001, "M"), new AttributeValueDto(2002, "L")]));
+        _catalog.GetAttributeValuesAsync(411, 14, Arg.Any<CancellationToken>()).Returns(MarketplaceResult<IReadOnlyList<AttributeValueDto>>.Success(
+            [new AttributeValueDto(901, "Pamuk")]));
+    }
+
+    private static readonly CategoryAttributeMapping[] AttributeMappings =
+    [
+        new(47, null, null, "Mavi", []),
+        new(293, "Beden", null, null, [new AttributeValueMapping("M", 2001, null), new AttributeValueMapping("L", 2002, null)])
+    ];
+
+    [Fact]
+    public async Task Attribute_mapping_is_validated_against_the_trendyol_category()
+    {
+        await MapAsync();
+        StubAttributes();
+
+        (await Service().SetCategoryAttributesAsync(_product.CategoryId, new SetCategoryAttributesRequest([new(999, null, null, "x", [])]), Ct))
+            .Error!.Message.ShouldContain("999");
+        (await Service().SetCategoryAttributesAsync(_product.CategoryId, new SetCategoryAttributesRequest([new(293, "Beden", null, null, [new("M", 7777, null)])]), Ct))
+            .Error!.Message.ShouldContain("7777");
+        (await Service().SetCategoryAttributesAsync(_product.CategoryId, new SetCategoryAttributesRequest([new(14, null, null, "Keten", [])]), Ct))
+            .Error!.Message.ShouldContain("serbest");
+
+        var saved = await Service().SetCategoryAttributesAsync(_product.CategoryId, new SetCategoryAttributesRequest(AttributeMappings), Ct);
+        saved.Value!.Attributes.Count.ShouldBe(2);
+        (await Service().ListCategoryMappingsAsync(Ct)).Single().Attributes.Count.ShouldBe(2);
+    }
+
+    [Fact]
+    public async Task Attribute_mapping_needs_a_category_mapping()
+    {
+        var result = await Service().SetCategoryAttributesAsync(_product.CategoryId, new SetCategoryAttributesRequest(AttributeMappings), Ct);
+
+        result.Error!.Kind.ShouldBe(ErrorKind.NotFound);
+    }
+
+    [Fact]
+    public async Task Publish_without_request_attributes_uses_the_category_mapping_and_logs()
+    {
+        await MapAsync();
+        StubAttributes();
+        await Service().SetCategoryAttributesAsync(_product.CategoryId, new SetCategoryAttributesRequest(AttributeMappings), Ct);
+
+        var result = await Service().PublishAsync(_product.Id, new PublishListingRequest(), Ct);
+
+        result.Succeeded.ShouldBeTrue();
+        await _products.Received(1).CreateAsync(Arg.Is<CreateTrendyolProductsRequest>(r =>
+            r.Items.Single(i => i.Barcode == "BRK-L").Attributes.Any(a => a.AttributeId == 293 && a.AttributeValueId == 2002) &&
+            r.Items.Single(i => i.Barcode == "BRK-basic-tisort").Attributes.Any(a => a.AttributeId == 293 && a.AttributeValueId == 2001) &&
+            r.Items.All(i => i.Attributes.Any(a => a.AttributeId == 47 && a.CustomAttributeValue == "Mavi"))), Arg.Any<CancellationToken>());
+        var log = await _db.Context.MarketplaceSyncLogs.SingleAsync(Ct);
+        log.Operation.ShouldBe(SyncOperation.Publish);
+        log.Reference.ShouldBe(_product.Id.ToString());
+        log.Succeeded.ShouldBeTrue();
+    }
+
+    [Fact]
+    public async Task Request_attributes_override_mapping_and_missing_required_attributes_are_reported()
+    {
+        await MapAsync();
+        StubAttributes();
+        await Service().SetCategoryAttributesAsync(_product.CategoryId, new SetCategoryAttributesRequest([new(47, null, null, "Mavi", [])]), Ct);
+
+        var missing = await Service().PublishAsync(_product.Id, new PublishListingRequest(), Ct);
+        missing.Error!.Message.ShouldContain("Beden");
+        await _products.DidNotReceiveWithAnyArgs().CreateAsync(default!, Ct);
+
+        var result = await Service().PublishAsync(_product.Id, new PublishListingRequest([new ListingAttribute(47, null, "Kırmızı")],
+            _product.Variants.Where(v => v.IsActive).Select(v => new VariantListingAttributes(v.Id, [new ListingAttribute(293, 2001, null)])).ToList()), Ct);
+
+        result.Succeeded.ShouldBeTrue();
+        await _products.Received(1).CreateAsync(Arg.Is<CreateTrendyolProductsRequest>(r =>
+            r.Items.All(i => i.Attributes.Count(a => a.AttributeId == 47) == 1 && i.Attributes.Any(a => a.CustomAttributeValue == "Kırmızı"))), Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
+    public async Task Rejected_publish_is_logged_as_failure()
+    {
+        await MapAsync();
+        _products.CreateAsync(Arg.Any<CreateTrendyolProductsRequest>(), Arg.Any<CancellationToken>())
+            .Returns(MarketplaceResult<BatchAcceptedDto>.Failure(new MarketplaceError(MarketplaceErrorKind.Validation, 400, ["Kategori özelliği eksik"])));
+
+        await Service().PublishAsync(_product.Id, Request(), Ct);
+
+        var log = await _db.Context.MarketplaceSyncLogs.SingleAsync(Ct);
+        log.Succeeded.ShouldBeFalse();
+        log.Message!.ShouldContain("Kategori özelliği eksik");
     }
 
     public ValueTask DisposeAsync() => _db.DisposeAsync();

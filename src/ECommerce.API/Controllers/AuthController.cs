@@ -59,7 +59,7 @@ public class AuthController(IAuthService authService) : ControllerBase
     [ProducesResponseType<AdminProfile>(StatusCodes.Status200OK)]
     public async Task<IActionResult> Me(CancellationToken cancellationToken)
     {
-        var profile = await authService.GetProfileAsync(User.GetAdminId(), cancellationToken);
+        var profile = await authService.GetProfileAsync(User.GetAccountId(), cancellationToken);
         return profile is null ? Unauthorized401("Oturum geçersiz.") : Ok(profile);
     }
 
@@ -68,7 +68,7 @@ public class AuthController(IAuthService authService) : ControllerBase
     [ProducesResponseType<ProblemDetails>(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ChangePassword(ChangePasswordRequest request, CancellationToken cancellationToken)
     {
-        var result = await authService.ChangePasswordAsync(User.GetAdminId(), request, cancellationToken);
+        var result = await authService.ChangePasswordAsync(User.GetAccountId(), request, cancellationToken);
         if (!result.Succeeded)
             return Problem(title: "Mevcut parola hatalı.", statusCode: StatusCodes.Status400BadRequest);
 

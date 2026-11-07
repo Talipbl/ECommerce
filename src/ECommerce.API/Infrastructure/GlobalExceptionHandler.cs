@@ -1,4 +1,5 @@
 using ECommerce.Core.Domain;
+using ECommerce.Core.Persistence;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +10,12 @@ public class GlobalExceptionHandler(IProblemDetailsService problemDetails, ILogg
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         // İş kuralı ihlallerinin mesajları kullanıcıya yöneliktir; diğer hataların ayrıntısı dışarı verilmez.
-        var (status, title) = exception is DomainException
-            ? (StatusCodes.Status400BadRequest, exception.Message)
-            : (StatusCodes.Status500InternalServerError, "Beklenmeyen bir hata oluştu.");
+        var (status, title) = exception switch
+        {
+            DomainException => (StatusCodes.Status400BadRequest, exception.Message),
+            ConcurrencyConflictException => (StatusCodes.Status409Conflict, exception.Message),
+            _ => (StatusCodes.Status500InternalServerError, "Beklenmeyen bir hata oluştu.")
+        };
 
         if (status == StatusCodes.Status500InternalServerError)
             logger.LogError(exception, "İşlenmeyen hata: {Path}", httpContext.Request.Path);

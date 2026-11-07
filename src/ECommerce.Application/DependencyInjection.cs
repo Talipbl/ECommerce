@@ -1,4 +1,9 @@
 using ECommerce.Application.Catalog;
+using ECommerce.Application.Customers;
+using ECommerce.Application.Ordering;
+using ECommerce.Application.Shopping;
+using ECommerce.Customers;
+using Microsoft.AspNetCore.Identity;
 using ECommerce.Application.Marketplaces.Trendyol;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +28,14 @@ public static class DependencyInjection
         services.AddScoped<IProductAdminService>(sp => sp.GetRequiredService<ProductAdminService>());
         services.AddScoped<IProductImageService, ProductImageService>();
         services.AddScoped<IStorefrontService, StorefrontService>();
+
+        services.Configure<CheckoutOptions>(configuration.GetSection(CheckoutOptions.SectionName));
+        services.AddSingleton<IPasswordHasher<Customer>, PasswordHasher<Customer>>();
+        services.AddScoped<ICustomerAuthService, CustomerAuthService>();
+        services.AddScoped<ICustomerAddressService, CustomerAddressService>();
+        services.AddScoped<ICartService, CartService>();
+        services.AddScoped<ICheckoutService, CheckoutService>();
+        services.AddScoped<IOrderManagementService, OrderManagementService>();
 
         services.AddTrendyol(configuration);
         services.AddScoped<ITrendyolCatalogService, TrendyolCatalogService>();

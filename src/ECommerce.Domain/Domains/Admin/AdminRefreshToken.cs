@@ -1,3 +1,4 @@
+using ECommerce.Accounts;
 using ECommerce.Core.Domain;
 
 namespace ECommerce.Admin;
@@ -5,8 +6,10 @@ namespace ECommerce.Admin;
 /// <summary>
 /// Yöneticinin refresh token kaydı. Token'ın kendisi değil, SHA-256 özeti saklanır.
 /// </summary>
-public class AdminRefreshToken : AggregateRoot<int>
+public class AdminRefreshToken : AggregateRoot<int>, IRefreshToken<AdminRefreshToken>
 {
+    int IRefreshToken<AdminRefreshToken>.AccountId => AdminId;
+
     public int AdminId { get; private set; }
 
     public string TokenHash { get; private set; } = null!;

@@ -17,6 +17,24 @@ COPY marketplaces/Trendyol.Client/ marketplaces/Trendyol.Client/
 RUN dotnet publish src/ECommerce.API/ECommerce.API.csproj -c Release -o /app/publish --no-restore /p:UseAppHost=false
 
 # Çalışma aşaması: sadece ASP.NET runtime
+
+# Migration bundle aşaması: tüm migration'lar tek bir çalıştırılabilir dosyada
+FROM build AS migrations-build
+COPY dotnet-tools.json ./
+RUN dotnet tool restore
+RUN dotnet ef migrations bundle \
+      --project src/ECommerce.Persistence/ECommerce.Persistence.csproj \
+      --startup-project src/ECommerce.Persistence/ECommerce.Persistence.csproj \
+      --configuration Release \
+      --output /app/efbundle
+
+# Migrator image'ı: bundle'ı çalıştırıp kapanır
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS migrator
+WORKDIR /app
+COPY --from=migrations-build /app/efbundle .
+USER $APP_UID
+ENTRYPOINT ["./efbundle"]
+
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 RUN apt-get update \
  && apt-get install -y --no-install-recommends curl \

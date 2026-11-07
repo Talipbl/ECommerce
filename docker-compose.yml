@@ -1,6 +1,6 @@
 # Yayın ortamı. Kullanım: docker compose up -d
 name: ecommerce-prod
-
+x-db-connection: &db-connection "Server=sqlserver,1433;Database=ECommerce;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True"
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -16,17 +16,31 @@ services:
       timeout: 5s
       retries: 10
       start_period: 30s
-
+  migrator:
+    build:
+      context: .
+      target: migrator
+    image: ecommerce-migrator:dev
+    restart: "no"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      ECOMMERCE_CONNECTION: *db-connection
   api:
-    build: .
+    build:
+      context: .
+      target: runtime
     image: ecommerce-api:dev
     restart: unless-stopped
     depends_on:
       sqlserver:
         condition: service_healthy
+      migrator:
+        condition: service_completed_successfully
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-      ConnectionStrings__ECommerce: "Server=sqlserver,1433;Database=ECommerce;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True"
+      ConnectionStrings__ECommerce: *db-connection
       Jwt__SigningKey: ${JWT_SIGNING_KEY:?JWT_SIGNING_KEY .env dosyasında tanımlanmalı}
       Trendyol__SellerId: ${TRENDYOL_SELLER_ID:?TRENDYOL_SELLER_ID .env dosyasında tanımlanmalı}
       Trendyol__ApiKey: ${TRENDYOL_API_KEY:?TRENDYOL_API_KEY .env dosyasında tanımlanmalı}

@@ -1,0 +1,14 @@
+**/bin/
+**/obj/
+**/.vs/
+**/TestResults/
+**/media/
+.git/
+.github/
+.claude/
+.env
+**/*.local.json
+**/secrets.json
+docs/
+tests/
+clients/

@@ -1,5 +1,6 @@
 using ECommerce.Admin;
 using ECommerce.Application.Auth;
+using ECommerce.Customers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ public static class SecurityRegistration
 {
     public const string AuthRateLimitPolicy = "auth";
     public const string FrontendCorsPolicy = "frontend";
+    public const string CustomerPolicy = "Customer";
 
     public static IServiceCollection AddApiSecurity(this IServiceCollection services, IConfiguration configuration)
     {
@@ -42,7 +44,8 @@ public static class SecurityRegistration
             .SetFallbackPolicy(new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .RequireRole(AdminRoles.Admin)
-                .Build());
+                .Build())
+            .AddPolicy(CustomerPolicy, policy => policy.RequireAuthenticatedUser().RequireRole(CustomerRoles.Customer));
 
         services.AddRateLimiter(options =>
         {

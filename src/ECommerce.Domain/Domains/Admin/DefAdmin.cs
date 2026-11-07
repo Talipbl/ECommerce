@@ -1,9 +1,12 @@
-﻿using ECommerce.Core.Domain;
+﻿using ECommerce.Accounts;
+using ECommerce.Core.Domain;
 
 namespace ECommerce.Admin;
 
-public partial class DefAdmin : AggregateRoot<int>
+public partial class DefAdmin : AggregateRoot<int>, IAccount
 {
+    public string DisplayName => UserName;
+
     public string FirstName { get; set; } = null!;
 
     public string LastName { get; set; } = null!;

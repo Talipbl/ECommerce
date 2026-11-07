@@ -2,7 +2,10 @@ using ECommerce.Admin;
 using ECommerce.Catalog;
 using ECommerce.Core.Domain;
 using ECommerce.Core.Persistence;
+using ECommerce.Customers;
 using ECommerce.Marketplaces;
+using ECommerce.Ordering;
+using ECommerce.Shopping;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -23,6 +26,26 @@ public class ECommerceContext(DbContextOptions<ECommerceContext> options) : DbCo
     public DbSet<Product> Products => Set<Product>();
 
     public DbSet<ProductVariant> ProductVariants => Set<ProductVariant>();
+
+    public DbSet<Customer> Customers => Set<Customer>();
+
+    public DbSet<CustomerRefreshToken> CustomerRefreshTokens => Set<CustomerRefreshToken>();
+
+    public DbSet<Cart> Carts => Set<Cart>();
+
+    public DbSet<Order> Orders => Set<Order>();
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            throw new ConcurrencyConflictException(ex);
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

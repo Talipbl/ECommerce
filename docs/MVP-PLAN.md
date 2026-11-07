@@ -240,11 +240,15 @@ dotnet user-secrets set "Cors:AllowedOrigins:0" "http://localhost:5173"
 - [x] İş kuralı ihlalleri (`DomainException`) 400 ProblemDetails olarak dönüyor.
 
 ### 4.2 Müşteri, sepet ve sipariş (yerel site)
-- [ ] Müşteri kaydı/girişi (Faz 2 altyapısıyla), adres yönetimi; misafir siparişi (opsiyonel).
-- [ ] Sepet → sipariş oluşturma; stok rezervasyonu.
-- [ ] Sipariş durum makinesi: Oluşturuldu → Ödendi → Hazırlanıyor → Kargoda → Teslim edildi / İptal.
-- [ ] Ödeme: Açık kararlar #2'ye göre (havale/kapıda ödeme veya sağlayıcı sandbox'ı).
-- [ ] Yönetici sipariş uçları: listeleme, detay, durum güncelleme, kargo takip numarası.
+- [x] Müşteri kaydı/girişi (`/api/v1/customer/auth`): e-posta normalize ve tekil, kayıt sonrası otomatik giriş, ayrı refresh cookie'si. Giriş akışı yönetici ile ortak (`AccountAuthService<TAccount, TToken>`): kilitleme, rotasyon, tekrar kullanım tespiti. Misafir sipariş yok (karar).
+- [x] Profil ve adres yönetimi (en fazla 10 adres, varsayılan adres kuralları). Müşteri uçları ayrı `Customer` politikasıyla korunuyor; müşteri ve yönetici token'ları birbirinin uçlarına erişemiyor (403).
+- [x] Sepet: fiyat saklanmıyor, her okumada güncel fiyat/stok; yayından kalkan veya stoğu düşen ürün işaretleniyor; satır başı en fazla 20 adet.
+- [x] Checkout: önizleme ve sipariş oluşturma. Stok sipariş anında düşülüyor (ayrı rezervasyon yok); varyanttaki `rowversion` ile eşzamanlı siparişlerde fazla satış engelleniyor (409). Ücretsiz kargo eşiği, kargo ücreti ve kapıda ödeme ücreti `Checkout` ayarlarından.
+- [x] Sipariş durum makinesi: Ödeme bekliyor (havale) / Onaylandı (kapıda) → Hazırlanıyor → Kargoda → Teslim edildi; teslimattan önce İptal (stok geri ekleniyor). Durum geçmişi tutuluyor.
+- [x] Ödeme: havale/EFT (banka bilgileri ve açıklama sipariş detayında; yönetici ödemeyi onaylıyor) ve kapıda ödeme.
+- [x] Müşteri sipariş uçları: listeleme, detay, hazırlanmadan önce iptal. Yönetici sipariş uçları (`/api/v1/orders`): listeleme (durum, kanal, arama), detay, ödeme onayı, hazırlama, kargo (firma + takip no), teslim, iptal.
+- [ ] Ödenmeyen havale siparişlerinin belirli süre sonra otomatik iptali → Faz 5 sonrası (zamanlanmış iş).
+- [ ] Sipariş/kargo e-posta bildirimleri → MVP sonrası.
 
 ### 4.3 Pazaryeri entegrasyon modülü
 - [ ] Soyutlama: `IMarketplaceProvider` (ürün yayınla, fiyat/stok gönder, sipariş çek, statü güncelle); Trendyol ilk implementasyon. N11 ileride aynı arayüze eklenir.

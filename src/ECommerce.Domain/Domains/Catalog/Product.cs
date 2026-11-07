@@ -180,6 +180,22 @@ public class ProductVariant : AggregateRoot<int>
     }
 
     public void SetAttributes(IEnumerable<VariantAttribute> attributes) => _attributes = attributes.ToList();
+
+    public void DecreaseStock(int quantity)
+    {
+        if (quantity <= 0)
+            throw new DomainException("Adet pozitif olmalıdır.");
+        if (StockQuantity < quantity)
+            throw new DomainException($"'{Barcode}' için yeterli stok yok.");
+        StockQuantity -= quantity;
+    }
+
+    public void IncreaseStock(int quantity)
+    {
+        if (quantity <= 0)
+            throw new DomainException("Adet pozitif olmalıdır.");
+        StockQuantity += quantity;
+    }
 }
 
 public class ProductImage : AggregateRoot<int>

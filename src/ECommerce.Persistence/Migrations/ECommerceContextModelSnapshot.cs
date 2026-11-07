@@ -731,6 +731,40 @@ namespace ECommerce.Persistence.Migrations
                     b.ToTable("Marketplace_CategoryMappings", "dbo");
                 });
 
+            modelBuilder.Entity("ECommerce.Marketplaces.MarketplaceInventoryChange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Error")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTime?>("ProcessedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("VariantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProcessedAt");
+
+                    b.ToTable("Marketplace_InventoryOutbox", "dbo");
+                });
+
             modelBuilder.Entity("ECommerce.Marketplaces.MarketplaceListing", b =>
                 {
                     b.Property<int>("Id")

@@ -68,3 +68,14 @@ public class MarketplaceListingConfiguration : IEntityTypeConfiguration<Marketpl
         entity.AsJson<MarketplaceListing, VariantListingAttributes>("_variantAttributes", "VariantAttributes");
     }
 }
+
+public class MarketplaceInventoryChangeConfiguration : IEntityTypeConfiguration<MarketplaceInventoryChange>
+{
+    public void Configure(EntityTypeBuilder<MarketplaceInventoryChange> entity)
+    {
+        entity.ToTable("Marketplace_InventoryOutbox", "dbo");
+        entity.HasKey(e => e.Id);
+        entity.Property(e => e.Error).HasMaxLength(2000);
+        entity.HasIndex(e => e.ProcessedAt);
+    }
+}

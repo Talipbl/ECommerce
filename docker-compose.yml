@@ -45,6 +45,13 @@ services:
       Trendyol__SellerId: ${TRENDYOL_SELLER_ID:?TRENDYOL_SELLER_ID .env dosyasında tanımlanmalı}
       Trendyol__ApiKey: ${TRENDYOL_API_KEY:?TRENDYOL_API_KEY .env dosyasında tanımlanmalı}
       Trendyol__ApiSecret: ${TRENDYOL_API_SECRET:?TRENDYOL_API_SECRET .env dosyasında tanımlanmalı}
+      Trendyol__BaseUrl: ${TRENDYOL_BASE_URL:-https://apigw.trendyol.com}
+      Seed__Admin__UserName: ${SEED_ADMIN_USERNAME:-}
+      Seed__Admin__Password: ${SEED_ADMIN_PASSWORD:-}
+      Seed__Admin__Email: ${SEED_ADMIN_EMAIL:-}
+      Checkout__BankTransfer__BankName: ${BANK_NAME:-}
+      Checkout__BankTransfer__AccountHolder: ${BANK_ACCOUNT_HOLDER:-}
+      Checkout__BankTransfer__Iban: ${BANK_IBAN:-}
     ports:
       - "8080:8080"
     volumes:
